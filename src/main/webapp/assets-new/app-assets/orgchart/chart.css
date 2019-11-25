@@ -1,0 +1,196 @@
+@CHARSET "ISO-8859-1";
+
+.btn-group.red.tree_action a {
+	padding: 3px 4px;
+}
+
+.btn-group.red.tree_action li {
+	text-align: left;
+}
+
+.btn-group.red.tree_action li a {
+	padding: 6px 0 6px 13px;
+}
+
+.btn-group.red.tree_action ul {
+	padding: 0px;
+}
+
+.btn-group.red.tree_action {
+	margin-left: 7px !important;
+	top: 2px !important;
+	position: absolute;
+	right: 2px;
+}
+
+.google-visualization-orgchart-node-medium {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.google-visualization-orgchart-node-medium b {
+	padding-right: 42px;
+	display: inline-block;
+	position: relative;
+	min-width: 80px;
+	white-space: nowrap;
+}
+
+.label {
+	background-color: #555555;
+}
+/*    .btn-group.red.tree_action a {
+            padding: 3px 4px;
+        }
+        .btn-group.red.tree_action li {
+            text-align: left;
+        }
+        .btn-group.red.tree_action li a{
+            padding: 6px 0 6px 13px;
+        }
+        .btn-group.red.tree_action ul{
+            padding: 0px;
+        }
+        .btn-group.red.tree_action {
+            margin-left: 7px !important;
+            top: 2px !important;
+            position: relative;
+            right: 2px;
+        }
+        .google-visualization-orgchart-node-medium {
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .google-visualization-orgchart-node-medium b {
+            padding-right: 42px;
+            display: inline-block;
+            position: relative;
+            min-width: 80px;
+            white-space: nowrap;
+        }
+        .label {
+            background-color: #555555;
+        }
+        .google-visualization-orgchart-node {
+            background: none;
+            border: none;
+            box-shadow: none;
+        }
+        .menu_title {
+            color: #fff;
+            padding: 4px 6px 0px;
+            position: relative;
+            top: -7px;
+            box-shadow: 3px 3px 3px #ddd;
+        }
+        .head {
+            position: relative;
+            top: 3px;
+            background: #777;
+        }
+        .style1{
+            background: #c881bb
+        }
+        .style2{
+            background:#56bedb
+        }
+        .style3{
+            background: #8792d4
+        }
+        .style4{
+            background: #a9b44b
+        }
+        .style5{
+            background:#c22423
+        }
+        .style6{
+            background:#e6b221
+        }
+        .style7{
+            background:#e69369
+        }*/
+.google-visualization-orgchart-node.google-visualization-orgchart-node-medium
+	{
+	border: none;
+	padding: 0;
+	box-shadow: none;
+	background: none;
+}
+
+.google-visualization-orgchart-node.google-visualization-orgchart-node-medium b
+	{
+	border: 3px solid #b5d9ea;
+	padding-top: 3px;
+	padding-bottom: 2px;
+	/*-webkit-box-shadow: rgba(0, 0, 0, 0.5) 3px 3px 3px;
+        -moz-box-shadow: rgba(0, 0, 0, 0.5) 3px 3px 3px;*/
+	background-color: #edf7ff;
+	background: -webkit-gradient(linear, left top, left bottom, from(#edf7ff),
+		to(#cde7ee));
+}
+
+.google-visualization-orgchart-node.google-visualization-orgchart-node-medium b.top_menu
+	{
+	border-top: 3px solid #505A97;
+}
+
+.google-visualization-orgchart-node.google-visualization-orgchart-node-medium b.left_menu
+	{
+	border-left: 3px solid #505A97;
+}
+
+.google-visualization-orgchart-node.google-visualization-orgchart-node-medium b.right_menu
+	{
+	border-right: 3px solid #505A97;
+}
+
+.google-visualization-orgchart-node.google-visualization-orgchart-node-medium b.bottom_menu
+	{
+	border-bottom: 3px solid #505A97;
+}
+
+/************** for click ******************/
+.google-visualization-orgchart-node.google-visualization-orgchart-node-medium.google-visualization-orgchart-nodesel b
+	{
+	border: 2px solid #e3ca4b;
+	background-color: #fff7ae;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff7ae),
+		to(#eee79e));
+}
+
+.google-visualization-orgchart-node.google-visualization-orgchart-node-medium.google-visualization-orgchart-nodesel b
+	{
+	border: 3px solid #e3ca4b;
+}
+
+.google-visualization-orgchart-node.google-visualization-orgchart-node-medium.google-visualization-orgchart-nodesel b.top_menu
+	{
+	border-top: 3px solid #505A97;
+}
+
+.google-visualization-orgchart-node.google-visualization-orgchart-node-medium.google-visualization-orgchart-nodesel b.bottom_menu
+	{
+	border-bottom: 3px solid #505A97;
+}
+
+.google-visualization-orgchart-node.google-visualization-orgchart-node-medium.google-visualization-orgchart-nodesel b.left_menu
+	{
+	border-left: 3px solid #505A97;
+}
+
+.google-visualization-orgchart-node.google-visualization-orgchart-node-medium.google-visualization-orgchart-nodesel b.right_menu
+	{
+	border-right: 3px solid #505A97;
+}
+
+.tree_desc {
+	width: 550px;
+	float: left;
+	border: 1px solid #ddd;
+	border-radius: 5px !important;
+}
+
+.tree_desc img {
+	width: 100%;
+	border-radius: 5px !important;
+}

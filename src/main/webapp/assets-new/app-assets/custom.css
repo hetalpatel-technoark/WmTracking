@@ -1,0 +1,40 @@
+.label-success {
+    background-color: #4CAF4A;
+}
+.label-info {
+    background-color: #00BCD4;
+}
+.label-danger {
+    background-color: #ea1c0d;
+}
+.label-default{
+   background-color:  #ccc;
+}
+.label {
+    display: inline-block;
+    font-weight: 500;
+    padding: 2px 5px 1px 5px;
+    line-height: 1.5384616;
+    border: 1px solid transparent;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.1px;
+    border-radius: 2px;
+    color: #fff;
+}
+.icons-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: 1;
+    font-size: 0;
+}
+.icons-list > li:first-child {
+    margin-left: 0;
+}
+.icons-list > li {
+    position: relative;
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 13px;
+}
