@@ -28,7 +28,6 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "ma_customer")
 @SequenceGenerator(name = "ma_customer_seq", sequenceName = "ma_customer_seq", allocationSize = 1)
-
 @NamedQueries({
     @NamedQuery(name = "MaCustomer.findAll", query = "SELECT m FROM MaCustomer m")})
 public class MaCustomer implements Serializable {
@@ -37,9 +36,10 @@ public class MaCustomer implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ma_customer_seq")
+
     @Column(name = "id")
     private Long id;
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ma_customer_seq")
 
     @Size(max = 2147483647)
     @Column(name = "companyname")

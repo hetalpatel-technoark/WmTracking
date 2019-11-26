@@ -6,7 +6,9 @@
 package com.wmtrucking.repositories;
 
 import com.wmtrucking.entities.MaCustomer;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,7 +18,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface customerRepository extends JpaRepository<MaCustomer, Long> {
 
-//   @Query(nativeQuery = true, value = "select u.* from ma_authobject u where u.email=?1 and u.password=?2")
-//    MaAuthobject findUser(String email, String password);
+    @Query(nativeQuery = true, value = "select u.* from ma_customer u where u.status=?1")
+    List<MaCustomer> list(String satus);
+
+    @Query(nativeQuery = true, value = "select u.* from ma_customer u where u.status=?1 and u.id=?2")
+    MaCustomer findone(String satus, Long id);
 
 }

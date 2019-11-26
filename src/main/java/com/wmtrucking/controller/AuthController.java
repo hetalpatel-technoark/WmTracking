@@ -7,6 +7,8 @@ package com.wmtrucking.controller;
 
 import com.wmtrucking.entities.MaAuthobject;
 import com.wmtrucking.services.authService;
+import com.wmtrucking.utils.Constant;
+import com.wmtrucking.utils.SessionUtils;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -41,15 +43,11 @@ public class AuthController {
         MaAuthobject accounts = auService.findUser(request.getParameter("username"), request.getParameter("password"));
         if (accounts == null) {
             model.addAttribute("error", "Username or password is incorrect.");
-             return "index";
+            return "index";
         }
-      
-//        new SessionUtils().setSessionValue(request, Constant.ADMIN, accounts);
-//        new SessionUtils().setSessionValue(request, Constant.UER_PERMISSION, userPermissions);
-//        accounts = null;
-
+        SessionUtils sessionUtils = new SessionUtils();
+        sessionUtils.setSessionValue(request, Constant.AUTHSESSION.toString(), accounts);
         return "redirect:/Dashboard/Dashboard";
     }
 
-    
 }

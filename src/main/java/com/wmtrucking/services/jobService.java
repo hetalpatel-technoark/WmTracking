@@ -5,8 +5,10 @@
  */
 package com.wmtrucking.services;
 
+import com.wmtrucking.entities.MaCustomer;
 import com.wmtrucking.entities.MaJobs;
 import com.wmtrucking.repositories.jobRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,4 +26,11 @@ public class jobService {
         jobRepository.save(maJobs);
     }
 
+    public List<MaJobs> list(String satus) {
+        return jobRepository.list(satus);
+    }
+
+    public MaJobs findone(String satus, Long id) {
+        return jobRepository.findone(satus, id);
+    }
 }

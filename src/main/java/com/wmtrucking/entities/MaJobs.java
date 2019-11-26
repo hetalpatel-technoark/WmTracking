@@ -51,8 +51,12 @@ public class MaJobs implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date jobdate;
     @Size(max = 2147483647)
-    @Column(name = "selectfill")
-    private String selectfill;
+    @Column(name = "hauloff")
+    private String hauloff;
+    @Size(max = 2147483647)
+    @Column(name = "haulback")
+    private String haulback;
+
     @Size(max = 400)
     @Column(name = "notes")
     private String notes;
@@ -97,12 +101,20 @@ public class MaJobs implements Serializable {
         this.jobdate = jobdate;
     }
 
-    public String getSelectfill() {
-        return selectfill;
+    public String getHauloff() {
+        return hauloff;
     }
 
-    public void setSelectfill(String selectfill) {
-        this.selectfill = selectfill;
+    public void setHauloff(String hauloff) {
+        this.hauloff = hauloff;
+    }
+
+    public String getHaulback() {
+        return haulback;
+    }
+
+    public void setHaulback(String haulback) {
+        this.haulback = haulback;
     }
 
     public String getNotes() {

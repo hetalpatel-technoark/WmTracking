@@ -7,6 +7,7 @@ package com.wmtrucking.services;
 
 import com.wmtrucking.entities.MaCustomer;
 import com.wmtrucking.repositories.customerRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,4 +25,11 @@ public class customerService {
         cuRepository.save(maCustomer);
     }
 
+    public List<MaCustomer> list(String satus) {
+        return cuRepository.list(satus);
+    }
+
+    public MaCustomer findone(String satus, Long id) {
+        return cuRepository.findone(satus, id);
+    }
 }

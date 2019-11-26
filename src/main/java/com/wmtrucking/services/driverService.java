@@ -7,6 +7,7 @@ package com.wmtrucking.services;
 
 import com.wmtrucking.entities.MaDriver;
 import com.wmtrucking.repositories.driverRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,14 @@ public class driverService {
 
     public void save(MaDriver maDriver) {
         dRepository.save(maDriver);
+    }
+
+    public List<MaDriver> list(String satus) {
+        return dRepository.list(satus);
+    }
+
+    public MaDriver findone(String satus, Long id) {
+        return dRepository.findone(satus, id);
     }
 
 }

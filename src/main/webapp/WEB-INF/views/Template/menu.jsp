@@ -15,19 +15,17 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li  class=" <%--=uu.containsKey("Dashboard") ? "active" : ""--%> nav-item"><a href="<%=request.getContextPath()%>/AdminDashboard/"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">Customer</span></a>
+             <li  class=" <%--=uu.containsKey("Dashboard") ? "active" : ""--%> nav-item">
+                <a href="<%=request.getContextPath()%>/Dashboard/Dashboard"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span></a>
+            </li>
+            <li  class=" <%--=uu.containsKey("Dashboard") ? "active" : ""--%> nav-item">
+                <a href="<%=request.getContextPath()%>/customer/List"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Customer">Customer</span></a>
             </li>
 
-            <li class=" nav-item"><a href="<%=request.getContextPath()%>/AdminProfile/" title="My Profile"><i class="feather icon-user"></i><span class="menu-title" data-i18n="Email">R</span></a>
+            <li class=" nav-item"><a href="<%=request.getContextPath()%>/driver/List" title="Driver"><i class="feather icon-user"></i><span class="menu-title" data-i18n="Email">Driver</span></a>
             </li>
-
-
-            
-            
-           
-           
-
-
+             <li class=" nav-item"><a href="<%=request.getContextPath()%>/job/List" title="Job"><i class="feather icon-user"></i><span class="menu-title" data-i18n="Email">Job</span></a>
+            </li>
         </ul>
     </div>
 </div>

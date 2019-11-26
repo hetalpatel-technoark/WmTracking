@@ -35,7 +35,6 @@ public class MaDriver implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Size(max = 2147483647)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ma_driver_seq")
 
     @Column(name = "licensenumber")
     private String licensenumber;
@@ -79,6 +78,8 @@ public class MaDriver implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ma_driver_seq")
+
     @Column(name = "id")
     private Long id;
     @Size(max = 2147483647)
