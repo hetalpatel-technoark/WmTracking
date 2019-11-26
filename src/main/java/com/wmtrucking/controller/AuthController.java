@@ -9,6 +9,7 @@ import com.wmtrucking.entities.MaAuthobject;
 import com.wmtrucking.services.authService;
 import com.wmtrucking.utils.Constant;
 import com.wmtrucking.utils.SessionUtils;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -47,7 +48,15 @@ public class AuthController {
         }
         SessionUtils sessionUtils = new SessionUtils();
         sessionUtils.setSessionValue(request, Constant.AUTHSESSION.toString(), accounts);
-        return "redirect:/Dashboard/Dashboard";
+       // return "redirect:/Dashboard/Dashboard";
+        return "redirect:/customer/List";
     }
 
+     @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(Model model, HttpServletRequest request, HttpServletResponse response) {
+      
+        SessionUtils sessionUtils = new SessionUtils();
+        sessionUtils.invelidate(request);
+        return "redirect:/";
+    }
 }

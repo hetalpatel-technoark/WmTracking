@@ -32,4 +32,8 @@ public class customerService {
     public MaCustomer findone(String satus, Long id) {
         return cuRepository.findone(satus, id);
     }
+    
+    public  MaCustomer findoneDelete(String satus, Long id) {
+        return cuRepository.findoneDelete(satus, id);
+    }
 }

@@ -91,12 +91,11 @@ public class jobController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String Delete(HttpServletRequest request, Model model, @PathVariable("id") String id) {
 
-        MaDriver maDriver = drService.findone(Constant.ACTIVE.toString(), Long.parseLong(id));
+        MaJobs maJobs = jobService.findone(Constant.ACTIVE.toString(), Long.parseLong(id));
 
-        if (maDriver != null) {
-            maDriver.setStatus(Constant.DETETED.toString());
-            drService.save(maDriver);
-
+        if (maJobs != null) {
+            maJobs.setStatus(Constant.DETETED.toString());
+            jobService.save(maJobs);
         }
         return "redirect:/driver/List?m=d";
     }
@@ -127,11 +126,17 @@ public class jobController {
         validateUtil.checkLength(errors, request, "jobdate", 255, 0);
         validateUtil.checkLength(errors, request, "haulOff", 255, 0);
         validateUtil.checkLength(errors, request, "haulBack", 255, 0);
+        MaJobs majob = jobService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
+
         if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
-            return "Job/Create";
+            model.addAttribute("maJobs", majob);
+            List<MaCustomer> maCustomer = cusService.list(Constant.ACTIVE.toString());
+            model.addAttribute("maCustomer", maCustomer);
+            List<MaDriver> maDriver = drService.list(Constant.ACTIVE.toString());
+            model.addAttribute("maDriver", maDriver);
+            return "Job/Edit";
         }
-        MaJobs majob = new MaJobs();
         MaCustomer maCustomer = cusService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("customer")));
         if (maCustomer != null) {
             majob.setCustId(maCustomer);
@@ -146,19 +151,23 @@ public class jobController {
         majob.setJobnumber(validateUtil.getStringValue(request.getParameter("jno")));
         majob.setStatus(Constant.ACTIVE.toString());
         jobService.save(majob);
-        return "redirect:/job/List?m=c";
+        return "redirect:/job/List?m=e";
     }
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String view(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
 
-        MaDriver maDriver = drService.findone(Constant.ACTIVE.toString(), id);
+        MaJobs majob = jobService.findone(Constant.ACTIVE.toString(), id);
 
-        if (maDriver != null) {
+        if (majob != null) {
+            model.addAttribute("maJobs", majob);
+            List<MaCustomer> maCustomer = cusService.list(Constant.ACTIVE.toString());
+            model.addAttribute("maCustomer", maCustomer);
+            List<MaDriver> maDriver = drService.list(Constant.ACTIVE.toString());
             model.addAttribute("maDriver", maDriver);
-            return "Driver/view";
+            return "Job/view";
         }
-        return "redirect:/driver/List?m=n";
+        return "redirect:/jov/List?m=n";
     }
 
 }

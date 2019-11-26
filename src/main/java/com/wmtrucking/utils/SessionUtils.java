@@ -15,6 +15,11 @@ public class SessionUtils {
         session.setAttribute(key, value);
     }
 
+    public synchronized void invelidate(HttpServletRequest request) {
+        HttpSession session = (HttpSession) request.getSession(true);
+        session.invalidate();
+    }
+
     public synchronized Object getSessionValue(HttpServletRequest request, String key) {
         HttpSession session = (HttpSession) request.getSession(true);
         return session.getAttribute(key);

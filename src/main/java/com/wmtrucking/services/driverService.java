@@ -33,4 +33,7 @@ public class driverService {
         return dRepository.findone(satus, id);
     }
 
+    public MaDriver findoneDelete(String satus, Long id) {
+        return dRepository.findoneDelete(satus, id);
+    }
 }

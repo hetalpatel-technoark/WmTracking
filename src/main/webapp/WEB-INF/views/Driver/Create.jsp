@@ -60,12 +60,12 @@
                                                         <span>First Name*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="first-name" class="form-control" name="fname" value="<%=checkInput.checkValue(request.getParameter("fname"))%>" placeholder="First Name">
+                                                        <input type="text" required id="first-name" class="form-control" name="fname" value="<%=checkInput.checkValue(request.getParameter("fname"))%>" placeholder="First Name">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Middle Name*</span>
+                                                        <span>Middle Name</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" id="first-name" class="form-control" name="mname" value="<%=checkInput.checkValue(request.getParameter("mname"))%>" placeholder="Middle Name">
@@ -73,7 +73,7 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Last Name*</span>
+                                                        <span>Last Name</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" id="first-name" class="form-control" name="lname" value="<%=checkInput.checkValue(request.getParameter("lname"))%>" placeholder="Last Name">
@@ -92,10 +92,10 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Mobile no</span>
+                                                        <span>Mobile Number*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" required="" id="first-name" class="form-control" name="mob" value="<%=checkInput.checkValue(request.getParameter("mob"))%>" placeholder="Mobile no">
+                                                        <input type="text" required="" id="first-name" class="form-control" name="mob" value="<%=checkInput.checkValue(request.getParameter("mob"))%>" placeholder="Mobile Number">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -103,7 +103,7 @@
                                                         <span>email*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" required="" id="first-name" class="form-control" name="email" value="<%=checkInput.checkValue(request.getParameter("email"))%>" placeholder="Email">
+                                                        <input type="email" required="" id="first-name" class="form-control" name="email" value="<%=checkInput.checkValue(request.getParameter("email"))%>" placeholder="Email">
                                                     </div>
                                                 </div>
 

@@ -1,7 +1,9 @@
 <%@page import="java.util.Iterator"%>
 <%@page import="com.wmtrucking.utils.CheckInput"%>
 <%@page import="com.wmtrucking.entities.MaCustomer"%>
+<%@page import="com.wmtrucking.entities.MaJobs"%>
 <%@page import="com.wmtrucking.entities.MaDriver"%>
+<%@page import="com.wmtrucking.utils.DateUtils"%>
 
 <%@page import="java.util.List"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/pickers/pickadate/pickadate.css">  
@@ -13,14 +15,14 @@
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">Job</h2>
+                        <h2 class="content-header-title float-left mb-0">Driver</h2>
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/Dashboard/Dashboard">Home</a>
                             </li>
                             <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/job/List">Job</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="#">Create</a>
+                            <li class="breadcrumb-item"><a href="#">View</a>
                             </li>
                         </ol>
                     </div>
@@ -50,12 +52,18 @@
                     </div>
                     <%                        }
                         CheckInput checkInput = new CheckInput();
+  DateUtils dateUtils = new DateUtils();
+        MaJobs majob = null;
+                        if (request.getAttribute("maJobs") != null) {
+                            majob = (MaJobs) request.getAttribute("maJobs");
+                        }
+
                     %>
 
                     <div class="card">
                         <div class="card-content">
                             <div class="card-body">
-                                <form method="post"  class="form-horizontal bordered-row" id="user-form" action="<%=request.getContextPath()%>/job/PostCreate">
+                                    <input readonly type="hidden" name="id" value="<%=checkInput.checkValue(majob.getId())%>">
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-6">
@@ -64,7 +72,7 @@
                                                         <span>Job number*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="first-name" class="form-control" name="jno" value="<%=checkInput.checkValue(request.getParameter("jno"))%>" placeholder="Job number">
+                                                        <input readonly  type="text" id="first-name" class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber() ,request.getParameter("jno"))%>" placeholder="Job number">
                                                     </div>
                                                 </div>
 
@@ -73,12 +81,12 @@
                                                         <span>Customer *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <select class="form-control select-class" name="customer" id="advertisementType" required>
+                                                        <select readonly class="form-control select-class" name="customer" id="advertisementType" required>
                                                             <%
                                                             List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
  for (MaCustomer maCustomer : maCustomers) {
                                                             %>
-                                                            <option  value="<%=maCustomer.getId() %>"><%= maCustomer.getFirstname()%></option>
+                                                            <option <%= maCustomer.getId().equals(checkInput.checkValueEdit(majob.getCustId().getId(),request.getParameter("customer")))?"selected":"" %>  value="<%=maCustomer.getId() %>"><%= maCustomer.getFirstname()%></option>
                                                             <%}%>
                                                         </select>
                                                     </div>
@@ -88,12 +96,12 @@
                                                         <span>Driver *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <select class="form-control select-class" name="driver" id="advertisementType" required>
+                                                        <select readonly class="form-control select-class" name="driver" id="advertisementType" required>
                                                             <%
  List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
  for (MaDriver maDriver : maDrivers) {
                                                             %>
-                                                            <option  value="<%=maDriver.getId() %>"><%= maDriver.getFirstname()%></option>
+                                                            <option <%= maDriver.getId().equals(checkInput.checkValueEdit(majob.getDriverId().getId(),request.getParameter("driver")))?"selected":"" %>  value="<%=maDriver.getId() %>"><%= maDriver.getFirstname()%></option>
                                                             <%}%>
                                                         </select>
                                                     </div>
@@ -107,10 +115,10 @@
                                                     <div class="col-md-4">                                                    
                                                         <span>Job date</span></div>
                                                     <div class="col-md-8">
-                                                        <input type="text" readonly id="expirydate" name="jobdate" value="<%=checkInput.checkValue(request.getParameter("jobdate"))%>" class="form-control pickadate1" placeholder="Job Date">
+                                                        <input readonly type="text" readonly id="expirydate" name="jobdate" value="<%=checkInput.checkValueEdit(dateUtils.dateWithFormat(majob.getJobdate(), "dd-MM-yyyy"),request.getParameter("jobdate"))%>" class="form-control pickadate1" placeholder="Job Date">
                                                     </div>
                                                 </div>
-                                         
+
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Select fill</span></div>
@@ -120,7 +128,7 @@
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input"  value="haulOff" name="haulOff" id="customCheck1">
+                                                                            <input readonly type="checkbox" class="custom-control-input" <%= (majob.getHauloff()!=null&&majob.getHauloff().equals(checkInput.checkValueEdit(majob.getHauloff(),request.getParameter("haulOff"))))?"checked":"" %>  value="haulOff" name="haulOff" id="customCheck1">
                                                                             <label class="custom-control-label" for="customCheck1">Haul Off </label>
                                                                         </div>
                                                                     </fieldset></li>
@@ -128,11 +136,11 @@
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" value="haulBack"  name="haulBack" id="customCheck2">
+                                                                            <input readonly type="checkbox" class="custom-control-input" <%= majob.getHaulback()!=null&&majob.getHaulback().equals(checkInput.checkValueEdit(majob.getHaulback(),request.getParameter("haulBack")))?"checked":"" %> value="haulBack"  name="haulBack" id="customCheck2">
                                                                             <label class="custom-control-label" for="customCheck2">Haul Back</label>
                                                                         </div>
                                                                     </fieldset></li>
-                                                                </ul>
+                                                            </ul>
                                                         </div> 
                                                     </div>
                                                 </div>
@@ -141,12 +149,10 @@
 
                                             </div>
                                             <div class="col-md-8 offset-md-4">
-                                                <button type="submit" class="btn btn-primary mr-1 mb-1">Save Information</button>
                                                 <a href="<%= request.getContextPath()%>/job/List" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
                             </div>
                         </div>
                     </div>

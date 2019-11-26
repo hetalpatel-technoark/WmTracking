@@ -64,6 +64,7 @@
                         <div class="card-content">
                             <div class="card-body">
                                 <form method="post"  class="form-horizontal bordered-row" id="user-form" action="<%=request.getContextPath()%>/job/PostEdit">
+                                    <input type="hidden" name="id" value="<%=checkInput.checkValue(majob.getId())%>">
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-6">
@@ -101,7 +102,7 @@
  List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
  for (MaDriver maDriver : maDrivers) {
                                                             %>
-                                                            <option  value="<%=maDriver.getId() %>"><%= maDriver.getFirstname()%></option>
+                                                            <option <%= maDriver.getId().equals(checkInput.checkValueEdit(majob.getDriverId().getId(),request.getParameter("driver")))?"selected":"" %>  value="<%=maDriver.getId() %>"><%= maDriver.getFirstname()%></option>
                                                             <%}%>
                                                         </select>
                                                     </div>
@@ -118,7 +119,7 @@
                                                         <input type="text" readonly id="expirydate" name="jobdate" value="<%=checkInput.checkValueEdit(dateUtils.dateWithFormat(majob.getJobdate(), "dd-MM-yyyy"),request.getParameter("jobdate"))%>" class="form-control pickadate1" placeholder="Job Date">
                                                     </div>
                                                 </div>
-                                         
+
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Select fill</span></div>
@@ -128,7 +129,7 @@
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input"  checked="" value="haulOff" name="haulOff" id="customCheck1">
+                                                                            <input type="checkbox" class="custom-control-input" <%= (majob.getHauloff()!=null&&majob.getHauloff().equals(checkInput.checkValueEdit(majob.getHauloff(),request.getParameter("haulOff"))))?"checked":"" %>  value="haulOff" name="haulOff" id="customCheck1">
                                                                             <label class="custom-control-label" for="customCheck1">Haul Off </label>
                                                                         </div>
                                                                     </fieldset></li>
@@ -136,11 +137,11 @@
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" value="haulBack"  name="haulBack" id="customCheck2">
+                                                                            <input type="checkbox" class="custom-control-input" <%= majob.getHaulback()!=null&&majob.getHaulback().equals(checkInput.checkValueEdit(majob.getHaulback(),request.getParameter("haulBack")))?"checked":"" %> value="haulBack"  name="haulBack" id="customCheck2">
                                                                             <label class="custom-control-label" for="customCheck2">Haul Back</label>
                                                                         </div>
                                                                     </fieldset></li>
-                                                                </ul>
+                                                            </ul>
                                                         </div> 
                                                     </div>
                                                 </div>
@@ -149,7 +150,7 @@
 
                                             </div>
                                             <div class="col-md-8 offset-md-4">
-                                                <button type="submit" class="btn btn-primary mr-1 mb-1">Save Information</button>
+                                                <button type="submit" class="btn btn-primary mr-1 mb-1">Update Information</button>
                                                 <a href="<%= request.getContextPath()%>/job/List" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a>
                                             </div>
                                         </div>

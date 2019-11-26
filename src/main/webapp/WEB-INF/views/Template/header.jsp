@@ -45,7 +45,7 @@
 
     </head>
 
-    <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static   menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+    <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static   menu-expanded" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
         <jsp:include page="../Template/menu.jsp"></jsp:include>
         <div class="app-content content">
 
@@ -70,8 +70,8 @@
                                             </span></div><span><img class="round" src="<%=request.getContextPath()%>/assets-new/app-assets/images/common.png" alt="avatar" height="40" width="40" /></span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="<%= request.getContextPath()%>/AdminProfile/"><i class="feather icon-user"></i> My Profile</a>                                        
-                                        <a class="dropdown-item" href="<%= request.getContextPath()%>/Admin/logout"><i class="feather icon-power"></i> Logout</a>
+<!--                                        <a class="dropdown-item" href="<%= request.getContextPath()%>/AdminProfile/"><i class="feather icon-user"></i> My Profile</a>                                        -->
+                                        <a class="dropdown-item" href="<%= request.getContextPath()%>/auth/logout"><i class="feather icon-power"></i> Logout</a>
                                     </div>
                                 </li>
                             </ul>

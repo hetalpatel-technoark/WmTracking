@@ -61,6 +61,11 @@
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
                                     Customer has been successfully deleted.
                                 </div>
+                                <%}else if (request.getParameter("m").equals("n")) {%>
+                                <div class="alert alert-danger">
+                                    <button class="close" data-dismiss="alert"><span>x</span></button>
+                                    This customer is available in job, So, You can not disable it
+                                </div>
                                 <%}%>
                                 <%}%>
                                 <div class="table-responsive">

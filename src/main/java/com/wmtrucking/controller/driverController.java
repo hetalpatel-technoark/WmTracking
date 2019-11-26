@@ -98,14 +98,14 @@ public class driverController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String Delete(HttpServletRequest request, Model model, @PathVariable("id") String id) {
 
-        MaDriver maDriver = drService.findone(Constant.ACTIVE.toString(), Long.parseLong(id));
+        MaDriver maDriver = drService.findoneDelete(Constant.ACTIVE.toString(), Long.parseLong(id));
 
         if (maDriver != null) {
             maDriver.setStatus(Constant.DETETED.toString());
             drService.save(maDriver);
-
+            return "redirect:/driver/List?m=d";
         }
-        return "redirect:/driver/List?m=d";
+        return "redirect:/driver/List?m=n";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)

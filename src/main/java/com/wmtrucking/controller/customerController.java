@@ -103,14 +103,15 @@ public class customerController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String Delete(HttpServletRequest request, Model model, @PathVariable("id") String id) {
 
-        MaCustomer maCustomer = cusService.findone(Constant.ACTIVE.toString(), Long.parseLong(id));
+        MaCustomer maCustomer = cusService.findoneDelete(Constant.ACTIVE.toString(), Long.parseLong(id));
 
         if (maCustomer != null) {
             maCustomer.setStatus(Constant.DETETED.toString());
             cusService.save(maCustomer);
+            return "redirect:/customer/List?m=d";
 
         }
-        return "redirect:/customer/List?m=d";
+        return "redirect:/customer/List?m=n";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
