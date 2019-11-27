@@ -63,6 +63,10 @@ public class MaJobs implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "status")
     private String status;
+
+    @Column(name = "createddate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createddate;
     @JoinColumn(name = "cust_id", referencedColumnName = "id")
     @ManyToOne
     private MaCustomer custId;
@@ -95,6 +99,14 @@ public class MaJobs implements Serializable {
 
     public Date getJobdate() {
         return jobdate;
+    }
+
+    public Date getCreateddate() {
+        return createddate;
+    }
+
+    public void setCreateddate(Date createddate) {
+        this.createddate = createddate;
     }
 
     public void setJobdate(Date jobdate) {

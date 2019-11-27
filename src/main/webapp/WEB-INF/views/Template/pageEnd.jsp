@@ -9,8 +9,8 @@
             WM Trucking & Excavating</span>
 
         <!--            <span class="float-md-right d-none d-md-block">Hand-crafted & Made with<i class="feather icon-heart pink"></i></span>-->
-        <span class="float-md-right d-none d-md-block"> Developed by <a href="https://www.kbizzsolutions.com/" target="_blank"><img src="<%=request.getContextPath()%>/assets-new/app-assets/images/kbg.jpg" style="max-height:40%; max-width: 30% "  ></a></span>
-
+        <span class="float-md-right d-none d-md-block"> Developed by <a href="https://www.kbizzsolutions.com/" target="_blank">
+                <img src="<%=request.getContextPath()%>/assets-new/app-assets/images/kbg.jpg" style="max-height:38%; max-width: 30%"></a></span>
         <button class="btn btn-primary btn-icon scroll-top" type="button"><i class="feather icon-arrow-up"></i></button>
     </p>
 </footer>

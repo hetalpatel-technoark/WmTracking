@@ -44,7 +44,7 @@ public class customerController {
         }
     }
 
-    @RequestMapping(value = "/List", method = RequestMethod.GET)
+    @RequestMapping(value = "/customerList", method = RequestMethod.GET)
     public String createnote(HttpServletRequest request, Model model) {
 
         // MaAuthobject iamObjects = (MaAuthobject) sessionUtils.getSessionValue(request, Constant.AUTHSESSION.toString());
@@ -97,7 +97,7 @@ public class customerController {
         maCustomer.setStatus(Constant.ACTIVE.toString());
 
         cusService.save(maCustomer);
-        return "redirect:/customer/List?m=c";
+        return "redirect:/customer/customerList?m=c";
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
@@ -108,10 +108,10 @@ public class customerController {
         if (maCustomer != null) {
             maCustomer.setStatus(Constant.DETETED.toString());
             cusService.save(maCustomer);
-            return "redirect:/customer/List?m=d";
+            return "redirect:/customer/customerList?m=d";
 
         }
-        return "redirect:/customer/List?m=n";
+        return "redirect:/customer/customerList?m=n";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -124,7 +124,7 @@ public class customerController {
             return "Customer/Edit";
         }
         model.addAttribute("message", "notFound");
-        return "redirect:/customer/List";
+        return "redirect:/customer/customerList";
     }
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
@@ -137,7 +137,7 @@ public class customerController {
             return "Customer/view";
         }
         model.addAttribute("message", "notFound");
-        return "redirect:/customer/List";
+        return "redirect:/customer/customerList";
     }
 
     @RequestMapping(value = "/postEdit", method = RequestMethod.POST)
@@ -178,7 +178,7 @@ public class customerController {
         maCustomer.setStatus(Constant.ACTIVE.toString());
 
         cusService.save(maCustomer);
-        return "redirect:/customer/List?m=e";
+        return "redirect:/customer/customerList?m=e";
     }
 
     @ExceptionHandler(Exception.class)

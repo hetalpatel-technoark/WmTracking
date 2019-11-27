@@ -20,12 +20,15 @@ import org.springframework.stereotype.Repository;
 public interface driverRepository extends JpaRepository<MaDriver, Long> {
 
     @Query(nativeQuery = true, value = "select u.* from ma_driver u where u.status=?1")
-   List<MaDriver> list(String satus);
+    List<MaDriver> list(String satus);
 
     @Query(nativeQuery = true, value = "select u.* from ma_driver u where u.status=?1 and u.id=?2")
     MaDriver findone(String satus, Long id);
 
-     @Query(nativeQuery = true, value = "select u.* from ma_driver u where u.status=?1 and u.id=?2 and u.id not in (select driver_id from ma_jobs where status=?1) ")
+    @Query(nativeQuery = true, value = "select u.* from ma_driver u where u.status=?1 and u.id=?2 and u.id not in (select driver_id from ma_jobs where status=?1) ")
     MaDriver findoneDelete(String satus, Long id);
+
+    @Query(nativeQuery = true, value = "select count(u.id) from ma_driver u where u.status=?1")
+    Long count(String satus);
 
 }

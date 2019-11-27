@@ -36,4 +36,8 @@ public class driverService {
     public MaDriver findoneDelete(String satus, Long id) {
         return dRepository.findoneDelete(satus, id);
     }
+
+    public Long count(String satus) {
+        return dRepository.count(satus);
+    }
 }

@@ -40,7 +40,7 @@ public class driverController {
         }
     }
 
-    @RequestMapping(value = "/List", method = RequestMethod.GET)
+    @RequestMapping(value = "/drivelist", method = RequestMethod.GET)
     public String createnote(HttpServletRequest request, Model model) {
 
         // MaAuthobject iamObjects = (MaAuthobject) sessionUtils.getSessionValue(request, Constant.AUTHSESSION.toString());
@@ -92,7 +92,7 @@ public class driverController {
         maDriver.setStatus(Constant.ACTIVE.toString());
 
         drService.save(maDriver);
-        return "redirect:/driver/List?m=c";
+        return "redirect:/driver/drivelist?m=c";
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
@@ -103,9 +103,9 @@ public class driverController {
         if (maDriver != null) {
             maDriver.setStatus(Constant.DETETED.toString());
             drService.save(maDriver);
-            return "redirect:/driver/List?m=d";
+            return "redirect:/driver/drivelist?m=d";
         }
-        return "redirect:/driver/List?m=n";
+        return "redirect:/driver/drivelist?m=n";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -117,7 +117,7 @@ public class driverController {
             model.addAttribute("maDriver", maDriver);
             return "Driver/Edit";
         }
-        return "redirect:/driver/List?m=n";
+        return "redirect:/driver/drivelist?m=n";
     }
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
@@ -129,7 +129,7 @@ public class driverController {
             model.addAttribute("maDriver", maDriver);
             return "Driver/view";
         }
-        return "redirect:/driver/List?m=n";
+        return "redirect:/driver/drivelist?m=n";
     }
 
     @RequestMapping(value = "/postEdit", method = RequestMethod.POST)
@@ -170,7 +170,7 @@ public class driverController {
         maDriver.setStatus(Constant.ACTIVE.toString());
 
         drService.save(maDriver);
-        return "redirect:/driver/List?m=e";
+        return "redirect:/driver/drivelist?m=e";
     }
 
 }

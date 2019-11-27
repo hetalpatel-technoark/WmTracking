@@ -48,8 +48,8 @@ public class AuthController {
         }
         SessionUtils sessionUtils = new SessionUtils();
         sessionUtils.setSessionValue(request, Constant.AUTHSESSION.toString(), accounts);
-       // return "redirect:/Dashboard/Dashboard";
-        return "redirect:/customer/List";
+        return "redirect:/Dashboard/Dashboard";
+//        return "redirect:/customer/List";
     }
 
      @RequestMapping(value = "/logout", method = RequestMethod.GET)

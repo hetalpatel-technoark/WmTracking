@@ -23,9 +23,11 @@ public interface customerRepository extends JpaRepository<MaCustomer, Long> {
 
     @Query(nativeQuery = true, value = "select u.* from ma_customer u where u.status=?1 and u.id=?2")
     MaCustomer findone(String satus, Long id);
-   
+
+    @Query(nativeQuery = true, value = "select count(u.id) from ma_customer u where u.status=?1")
+    Long count(String satus);
+
     @Query(nativeQuery = true, value = "select u.* from ma_customer u where u.status=?1 and u.id=?2 and u.id not in (select cust_id from ma_jobs where status=?1) ")
     MaCustomer findoneDelete(String satus, Long id);
-
 
 }

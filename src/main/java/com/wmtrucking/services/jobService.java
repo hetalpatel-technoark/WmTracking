@@ -5,7 +5,6 @@
  */
 package com.wmtrucking.services;
 
-import com.wmtrucking.entities.MaCustomer;
 import com.wmtrucking.entities.MaJobs;
 import com.wmtrucking.repositories.jobRepository;
 import java.util.List;
@@ -32,5 +31,17 @@ public class jobService {
 
     public MaJobs findone(String satus, Long id) {
         return jobRepository.findone(satus, id);
+    }
+
+    public Long count(String satus) {
+        return jobRepository.count(satus);
+    }
+
+    public List<Object[]> findMonthWiseJob() {
+        return jobRepository.findMonthWiseJob();
+    }
+
+    public List<Object[]> findDriverWiseJob() {
+        return jobRepository.findDriverWiseJob();
     }
 }

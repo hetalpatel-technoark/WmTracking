@@ -163,7 +163,7 @@
                                             </div>
                                             <div class="col-md-8 offset-md-4">
                                                 <button type="submit" class="btn btn-primary mr-1 mb-1">Save Information</button>
-                                                <a href="<%= request.getContextPath()%>/driver/List" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a>
+                                                <a href="<%= request.getContextPath()%>/driver/drivelist" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a>
                                             </div>
                                         </div>
                                     </div>

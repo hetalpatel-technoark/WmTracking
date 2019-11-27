@@ -14,7 +14,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/Dashboard/Dashboard">Home</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/customer/List">Customers</a>
+                            <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/customer/customerList">Customers</a>
                             </li>
                             <li class="breadcrumb-item"><a href="#">Edit</a>
                             </li>
@@ -177,7 +177,7 @@
                                             </div>
                                             <div class="col-md-8 offset-md-4">
                                                 <button type="submit" class="btn btn-primary mr-1 mb-1">Update Information</button>
-                                                <a href="<%= request.getContextPath()%>/customer/List" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a>
+                                                <a href="<%= request.getContextPath()%>/customer/customerList" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a>
                                             </div>
                                         </div>
                                     </div>

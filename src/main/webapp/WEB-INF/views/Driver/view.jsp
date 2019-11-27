@@ -14,7 +14,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/Dashboard/Dashboard">Home</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/driver/List">Driver</a>
+                            <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/driver/drivelist">Driver</a>
                             </li>
                             <li class="breadcrumb-item"><a href="#">View</a>
                             </li>
@@ -158,7 +158,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-8 offset-md-4">
-                                                <a href="<%= request.getContextPath()%>/driver/List" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a>
+                                                <a href="<%= request.getContextPath()%>/driver/drivelist" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a>
                                             </div>
                                         </div>
                                     </div>
