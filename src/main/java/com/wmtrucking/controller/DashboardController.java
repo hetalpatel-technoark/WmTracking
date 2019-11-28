@@ -38,7 +38,7 @@ public class DashboardController {
     @RequestMapping(value = "/Dashboard", method = RequestMethod.GET)
     public String dashboard(Model model, HttpServletRequest request, HttpServletResponse response) {
 
-        model.addAttribute("customer", cuService.count(Constant.ACTIVE.toString()));
+        model.addAttribute("customer", cuService.count(Constant.DETETED.toString()));
         model.addAttribute("driver", drService.count(Constant.ACTIVE.toString()));
         model.addAttribute("job", joService.count(Constant.ACTIVE.toString()));
 

@@ -34,8 +34,8 @@
             <div class="row match-height">
                 <div class="col-md-12 col-12">
                     <%
-                        if (request.getAttribute("errors") != null) {
-                            List<String> errors = (List<String>) request.getAttribute("errors");
+                        if (request.getAttribute("error") != null) {
+                            List<String> errors = (List<String>) request.getAttribute("error");
                             if (!errors.isEmpty()) {
                     %>
                     <div class="alert alert-danger">
@@ -61,34 +61,11 @@
                                             <div class="col-6">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Job number*</span>
+                                                        <span>Assign Driver *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="first-name" class="form-control" name="jno" value="<%=checkInput.checkValue(request.getParameter("jno"))%>" placeholder="Job number">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Customers *</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <select class="form-control select-class" name="customer" id="advertisementType" required>
-                                                            <%
-                                                            List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
- for (MaCustomer maCustomer : maCustomers) {
-                                                            %>
-                                                            <option  value="<%=maCustomer.getId() %>"><%= maCustomer.getFirstname()%></option>
-                                                            <%}%>
-                                                        </select>
-                                                    </div>
-                                                </div> 
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Drivers *</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <select class="form-control select-class" name="driver" id="advertisementType" required>
+                                                        <select class="form-control select-class" name="driver" required>
+                                                            <option selected="" disabled="">Select Driver </option>
                                                             <%
  List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
  for (MaDriver maDriver : maDrivers) {
@@ -99,24 +76,59 @@
                                                     </div>
                                                 </div> 
 
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Customers *</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <select onchange="searchAddress()" id="customer" class="form-control select-class" name="customer" required>
+                                                            <option selected="" disabled="">Select Customer </option>
 
+                                                            <%
+                                                            List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
+ for (MaCustomer maCustomer : maCustomers) {
+                                                            %>
+                                                            <option  value="<%=maCustomer.getId() %>"><%= maCustomer.getFirstname()%></option>
+                                                            <%}%>
+                                                        </select>
+                                                    </div>
+                                                </div> 
+                                                <div class="modal-body">
+
+                                                </div>
 
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-group row">
-                                                    <div class="col-md-4">                                                    
-                                                        <span>Job date</span></div>
+                                                    <div class="col-md-4">
+                                                        <span>Job number*</span>
+                                                    </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" readonly id="expirydate" name="jobdate" value="<%=checkInput.checkValue(request.getParameter("jobdate"))%>" class="form-control pickadate1" placeholder="Job Date">
+                                                        <input type="text" required="" id="first-name" class="form-control" name="jno" value="<%=checkInput.checkValue(request.getParameter("jno"))%>" placeholder="Job number">
                                                     </div>
                                                 </div>
-                                         
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">                                                    
+                                                        <span>Job date *</span></div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" required readonly id="expirydate" name="jobdate" value="<%=checkInput.checkValue(request.getParameter("jobdate"))%>" class="form-control pickadate1" placeholder="Job Date">
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Select fill</span></div>
-                                                    <div class="col-sm-8">
+                                                        <!--                                                        <span>Select fill</span>-->
+                                                    </div>
+                                                    <div class="col-md-8">
                                                         <div class="col-sm-12">
                                                             <ul class="list-unstyled mb-0">
+                                                                <li class="d-inline-block mr-2">
+                                                                    <fieldset>
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" value="selectfill"  name="selectfill" id="customCheck3">
+                                                                            <label class="custom-control-label" for="customCheck3">Select Fill</label>
+                                                                        </div>
+                                                                    </fieldset></li>
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
@@ -124,7 +136,7 @@
                                                                             <label class="custom-control-label" for="customCheck1">Haul Off </label>
                                                                         </div>
                                                                     </fieldset></li>
-                                                                <br>
+
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
@@ -132,11 +144,26 @@
                                                                             <label class="custom-control-label" for="customCheck2">Haul Back</label>
                                                                         </div>
                                                                     </fieldset></li>
-                                                                </ul>
+                                                            </ul>
                                                         </div> 
                                                     </div>
                                                 </div>
-
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Others</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text"  id="pincode" class="form-control" name="others" value="<%=checkInput.checkValue(request.getParameter("others"))%>" placeholder="Others">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Notes</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <textarea class="form-control" name="notes"><%=checkInput.checkValue(request.getParameter("notes"))%> </textarea>
+                                                    </div>
+                                                </div>
 
 
                                             </div>
@@ -169,13 +196,23 @@
             $(".pickadate1").pickadate({
                 format: "mm-dd-yyyy"
             });
-
-
         });
 
-    </script>
+        function searchAddress() {
+            var id = $('#customer').val();
+            $.ajax({
+                method: "GET",
+                url: "<%=request.getContextPath()%>/job/searchAddress/" + id,
+                success: function (data) {
+                    console.log(data);
+                    $('.modal-body').html(data);
+                }
+            });
+        }
 
-    <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/picker.js"></script>
+</script>
+
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/picker.js"></script>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>

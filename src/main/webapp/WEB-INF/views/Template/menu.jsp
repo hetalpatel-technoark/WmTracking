@@ -2,7 +2,6 @@
 
 <%     
     URL url = new URL(request.getRequestURL().toString());
-        System.out.println("url.."+ url);
 %>
 <!-- BEGIN: Main Menu-->
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
@@ -10,7 +9,7 @@
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item mr-auto"><a class="navbar-brand">
                     <!--                                        <div class="brand-logo"></div>-->
-                    <img src="<%=request.getContextPath()%>/assets-new/app-assets/images/CompLogo.jpg" alt="" width="120" style="height:32px;">
+                    <img src="<%=request.getContextPath()%>/assets-new/app-assets/images/CompLogo.jpg" alt="" width="160" style="height:47px;">
                     <h2 class="brand-text mb-0"></h2>
                 </a></li>
             <!--            <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="icon-disc"></i></a></li>-->

@@ -44,4 +44,8 @@ public class driverService {
     public MaDriver checkEmail(String satus, String email) {
         return dRepository.checkEmail(satus, email);
     }
+
+    public List<MaDriver> activeList(String satus) {
+        return dRepository.activeList(satus);
+    }
 }

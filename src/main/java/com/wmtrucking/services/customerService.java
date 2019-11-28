@@ -44,4 +44,8 @@ public class customerService {
     public Long count(String satus) {
         return cuRepository.count(satus);
     }
+
+    public List<MaCustomer> activeList(String satus) {
+        return cuRepository.activeList(satus);
+    }
 }

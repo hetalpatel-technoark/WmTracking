@@ -15,6 +15,7 @@ import com.wmtrucking.services.jobService;
 import com.wmtrucking.utils.Constant;
 import com.wmtrucking.utils.SessionUtils;
 import com.wmtrucking.utils.ValidateUtil;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,43 +50,80 @@ public class jobController {
 
     @RequestMapping(value = "/Create", method = RequestMethod.GET)
     public String Create(HttpServletRequest request, Model model) {
-        List<MaCustomer> maCustomer = cusService.list(Constant.ACTIVE.toString());
+        List<MaCustomer> maCustomer = cusService.activeList(Constant.ACTIVE.toString());
         model.addAttribute("maCustomer", maCustomer);
-        List<MaDriver> maDriver = drService.list(Constant.ACTIVE.toString());
+        List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
         model.addAttribute("maDriver", maDriver);
         return "Job/Create";
     }
 
     @RequestMapping(value = "/PostCreate", method = RequestMethod.POST)
     public String PostCreate(HttpServletRequest request, Model model) {
-        JsonObject errors = new JsonObject();
+        //JsonObject errors = new JsonObject();
         ValidateUtil validateUtil = new ValidateUtil();
-        validateUtil.checkNullAndLength(errors, request, "jno", 255, 1);
-        validateUtil.checkNullAndLength(errors, request, "customer", 255, 1);
-        validateUtil.checkNullAndLength(errors, request, "driver", 255, 1);
-        validateUtil.checkLength(errors, request, "jobdate", 255, 0);
-        validateUtil.checkLength(errors, request, "haulOff", 255, 0);
-        validateUtil.checkLength(errors, request, "haulBack", 255, 0);
+        List<String> errors = new ArrayList<>();
+
+        validateUtil.checkNull(request, "jno", "Job Number", errors);
+        validateUtil.checkNull(request, "customer", "Customer", errors);
+        validateUtil.checkNull(request, "driver", "Driver", errors);
+        validateUtil.checkNull(request, "jobdate", "Job Date", errors);
+
         if (errors.size() > 0) {
+            List<MaCustomer> maCustomer = cusService.activeList(Constant.ACTIVE.toString());
+            model.addAttribute("maCustomer", maCustomer);
+            List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
+            model.addAttribute("maDriver", maDriver);
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Job/Create";
         }
         MaJobs majob = new MaJobs();
-        MaCustomer maCustomer = cusService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("customer")));
+        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("customer")));
         if (maCustomer != null) {
             majob.setCustId(maCustomer);
         }
-        MaDriver maDriver = drService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("driver")));
+        MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("driver")));
         if (maDriver != null) {
             majob.setDriverId(maDriver);
         }
+        System.out.println("add1." + request.getParameter("add1"));
         majob.setHaulback(validateUtil.getStringValue(request.getParameter("haulBack")));
         majob.setHauloff(validateUtil.getStringValue(request.getParameter("haulOff")));
         majob.setJobdate(validateUtil.getDateValue(request.getParameter("jobdate")));
         majob.setJobnumber(validateUtil.getStringValue(request.getParameter("jno")));
         majob.setStatus(Constant.ACTIVE.toString());
+
+        majob.setSelectfill(validateUtil.getStringValue(request.getParameter("selectfill")));
+        majob.setOther(validateUtil.getStringValue(request.getParameter("others")));
+        majob.setNotes(validateUtil.getStringValue(request.getParameter("notes")));
+        majob.setAddress1(validateUtil.getStringValue(request.getParameter("add1")));
+        majob.setAddress2(validateUtil.getStringValue(request.getParameter("add2")));
+        majob.setAddress3(validateUtil.getStringValue(request.getParameter("add3")));
+        majob.setCity(validateUtil.getStringValue(request.getParameter("city")));
+        majob.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
+        majob.setState(validateUtil.getStringValue(request.getParameter("state")));
+        majob.setCountry(validateUtil.getStringValue(request.getParameter("country")));
         jobService.save(majob);
         return "redirect:/job/List?m=c";
+    }
+
+    @RequestMapping(value = "/searchAddress/{id}", method = RequestMethod.GET)
+    public String searchAddress(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
+
+        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), id);
+        if (maCustomer != null) {
+            model.addAttribute("maCustomer", maCustomer);
+        }
+        return "Job/Address";
+    }
+
+    @RequestMapping(value = "/searchAddressDilivery/{id}", method = RequestMethod.GET)
+    public String searchAddressDilivery(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
+
+        MaJobs majob = jobService.findone(Constant.ACTIVE.toString(), id);
+        if (majob != null) {
+            model.addAttribute("majob", majob);
+        }
+        return "Job/DiliveryAddress";
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
@@ -107,9 +145,9 @@ public class jobController {
 
         if (maJobs != null) {
             model.addAttribute("maJobs", maJobs);
-            List<MaCustomer> maCustomer = cusService.list(Constant.ACTIVE.toString());
+            List<MaCustomer> maCustomer = cusService.activeList(Constant.ACTIVE.toString());
             model.addAttribute("maCustomer", maCustomer);
-            List<MaDriver> maDriver = drService.list(Constant.ACTIVE.toString());
+            List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
             model.addAttribute("maDriver", maDriver);
             return "Job/Edit";
         }
@@ -131,17 +169,17 @@ public class jobController {
         if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             model.addAttribute("maJobs", majob);
-            List<MaCustomer> maCustomer = cusService.list(Constant.ACTIVE.toString());
+            List<MaCustomer> maCustomer = cusService.activeList(Constant.ACTIVE.toString());
             model.addAttribute("maCustomer", maCustomer);
-            List<MaDriver> maDriver = drService.list(Constant.ACTIVE.toString());
+            List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
             model.addAttribute("maDriver", maDriver);
             return "Job/Edit";
         }
-        MaCustomer maCustomer = cusService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("customer")));
+        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("customer")));
         if (maCustomer != null) {
             majob.setCustId(maCustomer);
         }
-        MaDriver maDriver = drService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("driver")));
+        MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("driver")));
         if (maDriver != null) {
             majob.setDriverId(maDriver);
         }
@@ -150,6 +188,18 @@ public class jobController {
         majob.setJobdate(validateUtil.getDateValue(request.getParameter("jobdate")));
         majob.setJobnumber(validateUtil.getStringValue(request.getParameter("jno")));
         majob.setStatus(Constant.ACTIVE.toString());
+
+        majob.setSelectfill(validateUtil.getStringValue(request.getParameter("selectfill")));
+        majob.setOther(validateUtil.getStringValue(request.getParameter("others")));
+        majob.setNotes(validateUtil.getStringValue(request.getParameter("notes")));
+
+        majob.setAddress1(validateUtil.getStringValue(request.getParameter("add1")));
+        majob.setAddress2(validateUtil.getStringValue(request.getParameter("add2")));
+        majob.setAddress3(validateUtil.getStringValue(request.getParameter("add3")));
+        majob.setCity(validateUtil.getStringValue(request.getParameter("city")));
+        majob.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
+        majob.setState(validateUtil.getStringValue(request.getParameter("state")));
+        majob.setCountry(validateUtil.getStringValue(request.getParameter("country")));
         jobService.save(majob);
         return "redirect:/job/List?m=e";
     }
@@ -161,9 +211,9 @@ public class jobController {
 
         if (majob != null) {
             model.addAttribute("maJobs", majob);
-            List<MaCustomer> maCustomer = cusService.list(Constant.ACTIVE.toString());
+            List<MaCustomer> maCustomer = cusService.activeList(Constant.ACTIVE.toString());
             model.addAttribute("maCustomer", maCustomer);
-            List<MaDriver> maDriver = drService.list(Constant.ACTIVE.toString());
+            List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
             model.addAttribute("maDriver", maDriver);
             return "Job/view";
         }

@@ -48,8 +48,7 @@ public class customerController {
     @RequestMapping(value = "/customerList", method = RequestMethod.GET)
     public String createnote(HttpServletRequest request, Model model) {
 
-        // MaAuthobject iamObjects = (MaAuthobject) sessionUtils.getSessionValue(request, Constant.AUTHSESSION.toString());
-        List<MaCustomer> maCustomer = cusService.list(Constant.ACTIVE.toString());
+        List<MaCustomer> maCustomer = cusService.list(Constant.DETETED.toString());
         model.addAttribute("maCustomer", maCustomer);
 
         return "Customer/List";
@@ -68,7 +67,7 @@ public class customerController {
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "phone", "Phone number", errors);
         validateUtil.checkNull(request, "email", "Email", errors);
-        MaCustomer checkEmail = cusService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
+        MaCustomer checkEmail = cusService.checkEmail(Constant.DETETED.toString(), request.getParameter("email"));
         if (checkEmail != null) {
             errors.add("Email is already exist");
         }
@@ -91,7 +90,8 @@ public class customerController {
         maCustomer.setCountry(validateUtil.getStringValue(request.getParameter("country")));
         maCustomer.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maCustomer.setPhone(validateUtil.getStringValue(request.getParameter("phone")));
-        maCustomer.setStatus(Constant.ACTIVE.toString());
+        maCustomer.setStatus(validateUtil.getStringValue(request.getParameter("status")));
+        //maCustomer.setStatus(Constant.ACTIVE.toString());
 
         cusService.save(maCustomer);
         return "redirect:/customer/customerList?m=c";
@@ -114,7 +114,7 @@ public class customerController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String edit(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
 
-        MaCustomer maCustomer = cusService.findone(Constant.ACTIVE.toString(), id);
+        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), id);
 
         if (maCustomer != null) {
             model.addAttribute("maCustomer", maCustomer);
@@ -126,14 +126,14 @@ public class customerController {
 
     @RequestMapping(value = "/postEdit", method = RequestMethod.POST)
     public String postEdit(HttpServletRequest request, Model model) {
-        MaCustomer maCustomer = cusService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
+        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("id")));
         List<String> errors = new ArrayList<>();
         ValidateUtil validateUtil = new ValidateUtil();
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "phone", "Phone number", errors);
         validateUtil.checkNull(request, "email", "Email", errors);
 
-        MaCustomer checkEmail = cusService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
+        MaCustomer checkEmail = cusService.checkEmail(Constant.DETETED.toString(), request.getParameter("email"));
         if (checkEmail != null && !maCustomer.getEmail().equals(checkEmail.getEmail())) {
             errors.add("Email is already exist");
         }
@@ -143,7 +143,7 @@ public class customerController {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Customer/Edit";
         }
-       
+
         maCustomer.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
         maCustomer.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
         maCustomer.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
@@ -157,7 +157,8 @@ public class customerController {
         maCustomer.setCountry(validateUtil.getStringValue(request.getParameter("country")));
         maCustomer.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maCustomer.setPhone(validateUtil.getStringValue(request.getParameter("phone")));
-        maCustomer.setStatus(Constant.ACTIVE.toString());
+//        maCustomer.setStatus(Constant.ACTIVE.toString());
+        maCustomer.setStatus(validateUtil.getStringValue(request.getParameter("status")));
 
         cusService.save(maCustomer);
         return "redirect:/customer/customerList?m=e";
@@ -166,7 +167,7 @@ public class customerController {
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String view(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
 
-        MaCustomer maCustomer = cusService.findone(Constant.ACTIVE.toString(), id);
+        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), id);
 
         if (maCustomer != null) {
             model.addAttribute("maCustomer", maCustomer);

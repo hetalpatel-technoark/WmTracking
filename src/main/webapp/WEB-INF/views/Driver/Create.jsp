@@ -60,7 +60,7 @@
                                                         <span>First Name*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" required id="first-name" class="form-control" name="fname" value="<%=checkInput.checkValue(request.getParameter("fname"))%>" placeholder="First Name">
+                                                        <input type="text" required  class="form-control" name="fname" value="<%=checkInput.checkValue(request.getParameter("fname"))%>" placeholder="First Name">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -68,7 +68,7 @@
                                                         <span>Middle Name</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="first-name" class="form-control" name="mname" value="<%=checkInput.checkValue(request.getParameter("mname"))%>" placeholder="Middle Name">
+                                                        <input type="text"  class="form-control" name="mname" value="<%=checkInput.checkValue(request.getParameter("mname"))%>" placeholder="Middle Name">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -76,17 +76,17 @@
                                                         <span>Last Name</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="first-name" class="form-control" name="lname" value="<%=checkInput.checkValue(request.getParameter("lname"))%>" placeholder="Last Name">
+                                                        <input type="text"  class="form-control" name="lname" value="<%=checkInput.checkValue(request.getParameter("lname"))%>" placeholder="Last Name">
                                                     </div>
                                                 </div>
 
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>License number</span>
+                                                        <span>License Number</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="first-name" class="form-control" name="lno" value="<%=checkInput.checkValue(request.getParameter("lno"))%>" placeholder="Company name">
+                                                        <input type="text"  class="form-control" name="lno" value="<%=checkInput.checkValue(request.getParameter("lno"))%>" placeholder="License Number">
                                                     </div>
                                                 </div>
 
@@ -95,34 +95,44 @@
                                                         <span>Mobile Number*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" required="" id="first-name" class="form-control" name="mob" value="<%=checkInput.checkValue(request.getParameter("mob"))%>" placeholder="Mobile Number">
+                                                        <input type="text" required=""  class="form-control" name="mob" value="<%=checkInput.checkValue(request.getParameter("mob"))%>" placeholder="Mobile Number">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>email*</span>
+                                                        <span>Email*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="email" required="" id="first-name" class="form-control" name="email" value="<%=checkInput.checkValue(request.getParameter("email"))%>" placeholder="Email">
+                                                        <input type="email" required=""  class="form-control" name="email" value="<%=checkInput.checkValue(request.getParameter("email"))%>" placeholder="Email">
                                                     </div>
                                                 </div>
-
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Status</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <select class="form-control select-class" name="status" required>
+                                                            <option value="Active">Active</option>
+                                                            <option value="Inactive">Inactive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>address1</span>
+                                                        <span>Address 1</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="first-name" class="form-control" name="add1" value="<%=checkInput.checkValue(request.getParameter("add1"))%>" placeholder="Address 1">
+                                                        <input type="text"  class="form-control" name="add1" value="<%=checkInput.checkValue(request.getParameter("add1"))%>" placeholder="Address 1">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>address2</span>
+                                                        <span>Address 2</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="first-name" class="form-control" name="add2" value="<%=checkInput.checkValue(request.getParameter("add2"))%>" placeholder="Address 2">
+                                                        <input type="text"  class="form-control" name="add2" value="<%=checkInput.checkValue(request.getParameter("add2"))%>" placeholder="Address 2">
                                                     </div>
                                                 </div>
 
@@ -130,15 +140,15 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>city</span>
+                                                        <span>City</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text"  id="first-name" class="form-control" name="city" value="<%=checkInput.checkValue(request.getParameter("city"))%>" placeholder="City">
+                                                        <input type="text"   class="form-control" name="city" value="<%=checkInput.checkValue(request.getParameter("city"))%>" placeholder="City">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>state</span>
+                                                        <span>State</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" id="state" class="form-control" name="state" value="<%=checkInput.checkValue(request.getParameter("state"))%>" placeholder="State">

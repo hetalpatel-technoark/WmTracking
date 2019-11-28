@@ -45,7 +45,7 @@ public class driverController {
     public String createnote(HttpServletRequest request, Model model) {
 
         // MaAuthobject iamObjects = (MaAuthobject) sessionUtils.getSessionValue(request, Constant.AUTHSESSION.toString());
-        List<MaDriver> maDriver = drService.list(Constant.ACTIVE.toString());
+        List<MaDriver> maDriver = drService.list(Constant.DETETED.toString());
         model.addAttribute("maDriver", maDriver);
 
         return "Driver/List";
@@ -101,7 +101,8 @@ public class driverController {
         maDriver.setCountry(validateUtil.getStringValue(request.getParameter("country")));
         maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maDriver.setMobile(validateUtil.getStringValue(request.getParameter("mob")));
-        maDriver.setStatus(Constant.ACTIVE.toString());
+        //maDriver.setStatus(Constant.ACTIVE.toString());
+        maDriver.setStatus(validateUtil.getStringValue(request.getParameter("status")));
 
         drService.save(maDriver);
         return "redirect:/driver/drivelist?m=c";
@@ -123,7 +124,7 @@ public class driverController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String edit(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
 
-        MaDriver maDriver = drService.findone(Constant.ACTIVE.toString(), id);
+        MaDriver maDriver = drService.findone(Constant.DETETED.toString(), id);
 
         if (maDriver != null) {
             model.addAttribute("maDriver", maDriver);
@@ -135,7 +136,7 @@ public class driverController {
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String view(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
 
-        MaDriver maDriver = drService.findone(Constant.ACTIVE.toString(), id);
+        MaDriver maDriver = drService.findone(Constant.DETETED.toString(), id);
 
         if (maDriver != null) {
             model.addAttribute("maDriver", maDriver);
@@ -146,7 +147,7 @@ public class driverController {
 
     @RequestMapping(value = "/postEdit", method = RequestMethod.POST)
     public String postEdit(HttpServletRequest request, Model model) {
-        MaDriver maDriver = drService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
+        MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("id")));
         ValidateUtil validateUtil = new ValidateUtil();
 
         List<String> errors = new ArrayList<>();
@@ -176,7 +177,8 @@ public class driverController {
         maDriver.setCountry(validateUtil.getStringValue(request.getParameter("country")));
         maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maDriver.setMobile(validateUtil.getStringValue(request.getParameter("mob")));
-        maDriver.setStatus(Constant.ACTIVE.toString());
+        //maDriver.setStatus(Constant.ACTIVE.toString());
+        maDriver.setStatus(validateUtil.getStringValue(request.getParameter("status")));
 
         drService.save(maDriver);
         return "redirect:/driver/drivelist?m=e";

@@ -57,13 +57,32 @@ public class MaJobs implements Serializable {
     @Column(name = "haulback")
     private String haulback;
 
-    @Size(max = 400)
+    @Size(max = 4000)
     @Column(name = "notes")
     private String notes;
     @Size(max = 2147483647)
     @Column(name = "status")
     private String status;
 
+    @Column(name = "other")
+    private String other;
+    @Column(name = "pincode")
+    private String pincode;
+    @Column(name = "state")
+    private String state;
+
+    @Column(name = "address1")
+    private String address1;
+    @Column(name = "address2")
+    private String address2;
+    @Column(name = "address3")
+    private String address3;
+    @Column(name = "city")
+    private String city;
+    @Column(name = "country")
+    private String country;
+    @Column(name = "selectfill")
+    private String selectfill;
     @Column(name = "createddate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createddate;
@@ -95,6 +114,78 @@ public class MaJobs implements Serializable {
 
     public void setJobnumber(String jobnumber) {
         this.jobnumber = jobnumber;
+    }
+
+    public String getSelectfill() {
+        return selectfill;
+    }
+
+    public void setSelectfill(String selectfill) {
+        this.selectfill = selectfill;
+    }
+
+    public String getOther() {
+        return other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
+    }
+
+    public String getPincode() {
+        return pincode;
+    }
+
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getAddress1() {
+        return address1;
+    }
+
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getAddress3() {
+        return address3;
+    }
+
+    public void setAddress3(String address3) {
+        this.address3 = address3;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public Date getJobdate() {

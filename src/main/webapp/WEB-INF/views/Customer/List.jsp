@@ -69,22 +69,22 @@
                                 <%}%>
                                 <%}%>
                                 <div class="table-responsive">
-                                    <table class="table nowrap scroll-horizontal-vertical">
+                                    <table class="table zero-configuration">
                                         <thead>
                                             <tr>
-                                                <th>First Name</th>
-                                                <th>Middle Name</th>
-                                                <th>Last Name</th>
+                                                <th>Name</th>                                                
                                                 <th>Company Name</th>
                                                 <th>Phone</th>
                                                 <th>Email</th>
-                                                <th>Address1</th>
+                                                <th>Status</th>
+                                                
+<!--                                                <th>Address1</th>
                                                 <th>Address2</th>
                                                 <th>Address3</th>
                                                 <th>City</th>
                                                 <th>State</th>
                                                 <th>Country</th>
-                                                <th>Pincode</th>
+                                                <th>Pincode</th>-->
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -96,22 +96,21 @@
                                                     List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
                                                     if (!maCustomers.isEmpty()) {
                                                         for (MaCustomer maCustomer : maCustomers) {
+                                                  String name=maCustomer.getFirstname()+""+(maCustomer.getMiddlename()!=null? " "+maCustomer.getMiddlename() :"")+""+(maCustomer.getLastname()!=null? " "+maCustomer.getLastname():"");
                                             %>
                                             <tr >
-                                                <td><%=checkInput.checkValue(maCustomer.getFirstname())%></td>
-                                                <td><%=checkInput.checkValue(maCustomer.getMiddlename())%></td>
-                                                <td><%=checkInput.checkValue(maCustomer.getLastname())%></td>
+                                                <td><%=name %></td>                                               
                                                 <td><%=checkInput.checkValue(maCustomer.getCompanyname()) %></td>
                                                 <td><%=checkInput.checkValue(maCustomer.getPhone())%></td>
                                                 <td><%=checkInput.checkValue(maCustomer.getEmail())%></td>                                             
-                                                <td><%=checkInput.checkValue(maCustomer.getAddress1())%></td>
+<!--                                                <td><%=checkInput.checkValue(maCustomer.getAddress1())%></td>
                                                 <td><%=checkInput.checkValue(maCustomer.getAddress2())%></td>
                                                 <td><%=checkInput.checkValue(maCustomer.getAddress3())%></td>
                                                 <td><%=checkInput.checkValue(maCustomer.getCity())%></td>
                                                 <td><%=checkInput.checkValue(maCustomer.getState())%></td>
                                                 <td><%=checkInput.checkValue(maCustomer.getCountry())%></td>
-                                                <td><%=checkInput.checkValue(maCustomer.getPincode())%></td>
-<!--                                                <td><span class="label label-success"><%=maCustomer.getStatus()%></span></td>-->
+                                                <td><%=checkInput.checkValue(maCustomer.getPincode())%></td>-->
+                                                <td><span class="label <%=maCustomer.getStatus().equals("Active")?"label-success":"label-danger" %> "><%=maCustomer.getStatus()%></span></td>
 
                                                 <td>
                                                     <div class="btn-group">
@@ -188,8 +187,6 @@
                                                                         }).then(function (result) {
                                                                             if (result.value) {
                                                                                 window.location = "<%=request.getContextPath()%>/customer/delete/" + id;
-
-
                                                                             }
                                                                         })
                                                                     }

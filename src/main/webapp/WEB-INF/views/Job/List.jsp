@@ -66,20 +66,20 @@
                                 <%}else if (request.getParameter("m").equals("n")) {%>
                                 <div class="alert alert-success">
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
-                                  Record not found
+                                    Record not found
                                 </div>
                                 <%}%>
                                 <%}%>
                                 <div class="table-responsive">
-                                    <table class="table zero-configuration">
+                                <table class="table zero-configuration">
                                         <thead>
                                             <tr>
                                                 <th>Job number</th>
                                                 <th>Customer Name</th>
                                                 <th>Driver Name</th>
                                                 <th>Job date</th>
-                                                <th>Haul Off </th>                                          
-                                                <th>Haul Back</th>                                          
+<!--                                                <th>Haul Off </th>                                          
+                                                <th>Haul Back</th>                                          -->
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -92,14 +92,15 @@
                                                     List<MaJobs> majobs = (List<MaJobs>) request.getAttribute("maJobs");
                                                     if (!majobs.isEmpty()) {
                                                         for (MaJobs majob : majobs) {
+
                                             %>
                                             <tr >
                                                 <td><%=checkInput.checkValue(majob.getJobnumber())%></td>
                                                 <td><%=checkInput.checkValue(majob.getCustId().getFirstname())%></td>
                                                 <td><%=checkInput.checkValue(majob.getDriverId().getFirstname())%></td>
                                                 <td><%=checkInput.checkValue(dateUtils.dateWithFormat(majob.getJobdate(), "dd/MM/yyyy") ) %></td>
-                                                <td><%=majob.getHauloff()!=null?"on":"" %></td>
-                                                <td><%=majob.getHaulback()!=null?"on":""%></td>
+<!--                                                <td><%=majob.getHauloff()!=null?"on":"" %></td>
+                                                <td><%=majob.getHaulback()!=null?"on":""%></td>-->
                                                 <td>
                                                     <div class="btn-group">
                                                         <div class="dropdown">
@@ -130,7 +131,7 @@
                                                     }
                                                 }%>
                                         </tbody>
-                                        
+
                                     </table>
                                 </div>
                             </div>

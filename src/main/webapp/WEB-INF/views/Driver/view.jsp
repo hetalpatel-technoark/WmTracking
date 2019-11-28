@@ -49,7 +49,7 @@
                                                         <span>First Name*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input readonly  type="text" id="first-name" class="form-control" name="fname" value="<%=checkInput.checkValueEdit(madriver.getFirstname(),request.getParameter("fname"))%>" placeholder="First Name">
+                                                        <input readonly  type="text"  class="form-control" name="fname" value="<%=checkInput.checkValueEdit(madriver.getFirstname(),request.getParameter("fname"))%>" placeholder="First Name">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -57,7 +57,7 @@
                                                         <span>Middle Name*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input readonly type="text" id="first-name" class="form-control" name="mname" value="<%=checkInput.checkValueEdit (madriver.getMiddlename(),request.getParameter("mname"))%>" placeholder="Middle Name">
+                                                        <input readonly type="text"  class="form-control" name="mname" value="<%=checkInput.checkValueEdit (madriver.getMiddlename(),request.getParameter("mname"))%>" placeholder="Middle Name">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -65,7 +65,7 @@
                                                         <span>Last Name*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input readonly type="text" id="first-name" class="form-control" name="lname" value="<%=checkInput.checkValueEdit (madriver.getLastname(),request.getParameter("lname"))%>" placeholder="Last Name">
+                                                        <input readonly type="text"  class="form-control" name="lname" value="<%=checkInput.checkValueEdit (madriver.getLastname(),request.getParameter("lname"))%>" placeholder="Last Name">
                                                     </div>
                                                 </div>
 
@@ -75,7 +75,7 @@
                                                         <span>License number</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input readonly type="text" id="first-name" class="form-control" name="cmpname" value="<%=checkInput.checkValueEdit (madriver.getLicensenumber(),request.getParameter("cmpname"))%>" placeholder="License number">
+                                                        <input readonly type="text"  class="form-control" name="cmpname" value="<%=checkInput.checkValueEdit (madriver.getLicensenumber(),request.getParameter("cmpname"))%>" placeholder="License number">
                                                     </div>
                                                 </div>
 
@@ -84,57 +84,67 @@
                                                         <span>Mobile</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input readonly type="text" readonly="" id="first-name" class="form-control" name="phone" value="<%=checkInput.checkValueEdit (madriver.getMobile(),request.getParameter("phone"))%>" placeholder="Mobile no">
+                                                        <input readonly type="text" readonly=""  class="form-control" name="phone" value="<%=checkInput.checkValueEdit (madriver.getMobile(),request.getParameter("phone"))%>" placeholder="Mobile no">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>email*</span>
+                                                        <span>Email*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input readonly type="text" readonly="" id="first-name" class="form-control" name="email" value="<%=checkInput.checkValueEdit (madriver.getEmail(),request.getParameter("email"))%>" placeholder="Email">
+                                                        <input readonly type="text" readonly=""  class="form-control" name="email" value="<%=checkInput.checkValueEdit (madriver.getEmail(),request.getParameter("email"))%>" placeholder="Email">
                                                     </div>
                                                 </div>
-
+<div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Status</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <select disabled="" class="form-control select-class" name="status" required>
+                                                            <option <%= madriver.getStatus().equals("Active")?"selected":"" %> value="Active">Active</option>
+                                                            <option <%= madriver.getStatus().equals("Inactive")?"selected":"" %> value="Inactive">Inactive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>address1</span>
+                                                        <span>Address 1</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input readonly type="text" id="first-name" class="form-control" name="add1" value="<%=checkInput.checkValueEdit (madriver.getAddress1(),request.getParameter("add1"))%>" placeholder="Address 1">
+                                                        <input readonly type="text"  class="form-control" name="add1" value="<%=checkInput.checkValueEdit (madriver.getAddress1(),request.getParameter("add1"))%>" placeholder="Address 1">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>address2</span>
+                                                        <span>Address 2</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input readonly type="text" id="first-name" class="form-control" name="add2" value="<%=checkInput.checkValueEdit (madriver.getAddress2(),request.getParameter("add2"))%>" placeholder="Address 2">
+                                                        <input readonly type="text"  class="form-control" name="add2" value="<%=checkInput.checkValueEdit (madriver.getAddress2(),request.getParameter("add2"))%>" placeholder="Address 2">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>address3</span>
+                                                        <span>Address 3</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input readonly type="text" id="first-name" class="form-control" name="add3" value="<%=checkInput.checkValueEdit (madriver.getAddress3(),request.getParameter("add3"))%>" placeholder="Address 3">
+                                                        <input readonly type="text"  class="form-control" name="add3" value="<%=checkInput.checkValueEdit (madriver.getAddress3(),request.getParameter("add3"))%>" placeholder="Address 3">
                                                     </div>
                                                 </div>
 
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>city</span>
+                                                        <span>City</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input readonly type="text"  id="first-name" class="form-control" name="city" value="<%=checkInput.checkValueEdit (madriver.getCity(),request.getParameter("city"))%>" placeholder="City">
+                                                        <input readonly type="text"   class="form-control" name="city" value="<%=checkInput.checkValueEdit (madriver.getCity(),request.getParameter("city"))%>" placeholder="City">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>state</span>
+                                                        <span>State</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input readonly type="text" id="state" class="form-control" name="state" value="<%=checkInput.checkValueEdit (madriver.getState(),request.getParameter("state"))%>" placeholder="State">

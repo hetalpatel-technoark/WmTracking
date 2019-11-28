@@ -70,22 +70,22 @@
                                 <%}%>
 
                                 <div class="table-responsive">
-                                    <table class="table nowrap scroll-horizontal-vertical">
+                                 <table class="table zero-configuration">
                                         <thead>
                                             <tr>
-                                                <th>First Name</th>
-                                                <th>Middle Name</th>
-                                                <th>Last Name</th>
-                                                <th>licensenumber</th>
+                                                <th> Name</th>
+                                             
+                                                <th>License Number</th>
                                                 <th>Mobile</th>
                                                 <th>Email</th>
-                                                <th>Address1</th>
+                                                <th>Status</th>
+<!--                                                <th>Address1</th>
                                                 <th>Address2</th>
                                                 <th>Address3</th>
                                                 <th>City</th>
                                                 <th>State</th>
                                                 <th>Country</th>
-                                                <th>Pincode</th>
+                                                <th>Pincode</th>-->
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -97,23 +97,17 @@
                                                     List<MaDriver> madrivers = (List<MaDriver>) request.getAttribute("maDriver");
                                                     if (!madrivers.isEmpty()) {
                                                         for (MaDriver madriver : madrivers) {
+                                 String name=madriver.getFirstname()+""+(madriver.getMiddlename()!=null? " "+madriver.getMiddlename() :"")+""+(madriver.getLastname()!=null? " "+madriver.getLastname():"");
+
                                             %>
                                             <tr >
-                                                <td><%=checkInput.checkValue(madriver.getFirstname())%></td>
-                                                <td><%=checkInput.checkValue(madriver.getMiddlename())%></td>
-                                                <td><%=checkInput.checkValue(madriver.getLastname())%></td>
+                                                <td><%=name%></td>
+                                              
                                                 <td><%=checkInput.checkValue(madriver.getLicensenumber()) %></td>
                                                 <td><%=checkInput.checkValue(madriver.getMobile())%></td>
                                                 <td><%=checkInput.checkValue(madriver.getEmail())%></td>
-                                                <td><%=checkInput.checkValue(madriver.getAddress1())%></td>
-                                                <td><%=checkInput.checkValue(madriver.getAddress2())%></td>
-                                                <td><%=checkInput.checkValue(madriver.getAddress3())%></td>
-                                                <td><%=checkInput.checkValue(madriver.getCity())%></td>
-                                                <td><%=checkInput.checkValue(madriver.getState())%></td>
-                                                <td><%=checkInput.checkValue(madriver.getCountry())%></td>
-                                                <td><%=checkInput.checkValue(madriver.getPincode())%></td>
 
-<!--                                                <td><span class="label label-success"><%=madriver.getStatus()%></span></td>-->
+                                                <td><span class="label <%=madriver.getStatus().equals("Active")?"label-success":"label-danger" %>"><%=madriver.getStatus()%></span></td>
 
                                                 <td>
                                                     <div class="btn-group">
