@@ -87,7 +87,7 @@
                                 </div>
                             </div>
                             <h2 class="text-bold-700 mt-1"><%= request.getAttribute("job") %></h2>
-                            <p class="mb-0">Total job</p>
+                            <p class="mb-0">Total Job</p>
                         </div><br>
                     </div>
                 </div>

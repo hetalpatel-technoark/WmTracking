@@ -40,4 +40,8 @@ public class driverService {
     public Long count(String satus) {
         return dRepository.count(satus);
     }
+
+    public MaDriver checkEmail(String satus, String email) {
+        return dRepository.checkEmail(satus, email);
+    }
 }

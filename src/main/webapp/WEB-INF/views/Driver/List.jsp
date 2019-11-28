@@ -30,7 +30,7 @@
     </div>
     <div class="content-body">
         <!-- Zero configuration table -->
-        <section id="basic-datatable">
+        <section id="horizontal-vertical">
             <div class="row">
                 <div class="col-12">
 
@@ -68,8 +68,9 @@
                                 </div>
                                 <%}%>
                                 <%}%>
+
                                 <div class="table-responsive">
-                                    <table class="table zero-configuration">
+                                    <table class="table nowrap scroll-horizontal-vertical">
                                         <thead>
                                             <tr>
                                                 <th>First Name</th>
@@ -144,24 +145,6 @@
                                                     }
                                                 }%>
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>First Name</th>
-                                                <th>Middle Name</th>
-                                                <th>Last Name</th>
-                                                <th>licensenumber</th>
-                                                <th>Mobile</th>
-                                                <th>Email</th>
-                                                <th>Address1</th>
-                                                <th>Address2</th>
-                                                <th>Address3</th>
-                                                <th>City</th>
-                                                <th>State</th>
-                                                <th>Country</th>
-                                                <th>Pincode</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>

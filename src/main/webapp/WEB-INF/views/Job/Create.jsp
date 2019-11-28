@@ -70,7 +70,7 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Customer *</span>
+                                                        <span>Customers *</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <select class="form-control select-class" name="customer" id="advertisementType" required>
@@ -85,7 +85,7 @@
                                                 </div> 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Driver *</span>
+                                                        <span>Drivers *</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <select class="form-control select-class" name="driver" id="advertisementType" required>

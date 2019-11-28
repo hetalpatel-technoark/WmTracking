@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface jobRepository extends JpaRepository<MaJobs, Long> {
 
-    @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 ORDER BY u.id DESC")
+    @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 ORDER BY u.id desc")
     List<MaJobs> list(String satus);
 
     @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and u.id=?2")

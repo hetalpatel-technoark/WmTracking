@@ -32,7 +32,7 @@
     </div>
     <div class="content-body">
         <!-- Zero configuration table -->
-        <section id="basic-datatable">
+        <section id="horizontal-vertical">
             <div class="row">
                 <div class="col-12">
 
@@ -130,16 +130,7 @@
                                                     }
                                                 }%>
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                             <th>Job number</th>
-                                                <th>Customer Name</th>
-                                                <th>Driver Name</th>
-                                                <th>Job date</th>
-                                                <th>Select fill</th>                                          
-                                                <th>Actions</th>
-                                            </tr>
-                                        </tfoot>
+                                        
                                     </table>
                                 </div>
                             </div>

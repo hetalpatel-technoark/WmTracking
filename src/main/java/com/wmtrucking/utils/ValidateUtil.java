@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -31,6 +32,12 @@ public class ValidateUtil {
         }
         if (!isValidted) {
             jsonObject.addProperty(paramname, validateMessage);
+        }
+    }
+
+    public void checkNull(HttpServletRequest request, String fieldname, String displayfield, List<String> errors) {
+        if (request.getParameter(fieldname) == null || request.getParameter(fieldname).trim().equals("")) {
+            errors.add(displayfield + " is required.");
         }
     }
 

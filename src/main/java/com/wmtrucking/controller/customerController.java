@@ -14,6 +14,7 @@ import com.wmtrucking.utils.SessionUtils;
 import com.wmtrucking.utils.ValidateUtil;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,24 +63,20 @@ public class customerController {
 
     @RequestMapping(value = "/PostCreate", method = RequestMethod.POST)
     public String PostCreate(HttpServletRequest request, Model model) {
-        JsonObject errors = new JsonObject();
+        List<String> errors = new ArrayList<>();
         ValidateUtil validateUtil = new ValidateUtil();
-        validateUtil.checkNullAndLength(errors, request, "fname", 255, 1);
-        validateUtil.checkNullAndLength(errors, request, "mname", 255, 1);
-        validateUtil.checkNullAndLength(errors, request, "lname", 255, 1);
-        validateUtil.checkLength(errors, request, "cmpname", 255, 0);
-        validateUtil.checkLength(errors, request, "add1", 255, 0);
-        validateUtil.checkLength(errors, request, "add2", 255, 0);
-        validateUtil.checkLength(errors, request, "add3", 255, 0);
-        validateUtil.checkLength(errors, request, "city", 255, 0);
-        validateUtil.checkLength(errors, request, "pin", 255, 0);
-        validateUtil.checkLength(errors, request, "state", 255, 0);
-        validateUtil.checkLength(errors, request, "country", 255, 0);
-        validateUtil.checkLength(errors, request, "phone", 255, 0);
+        validateUtil.checkNull(request, "fname", "Name", errors);
+        validateUtil.checkNull(request, "phone", "Phone number", errors);
+        validateUtil.checkNull(request, "email", "Email", errors);
+        MaCustomer checkEmail = cusService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
+        if (checkEmail != null) {
+            errors.add("Email is already exist");
+        }
         if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Customer/Create";
         }
+
         MaCustomer maCustomer = new MaCustomer();
         maCustomer.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
         maCustomer.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
@@ -127,41 +124,26 @@ public class customerController {
         return "redirect:/customer/customerList";
     }
 
-    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
-    public String view(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
-
-        MaCustomer maCustomer = cusService.findone(Constant.ACTIVE.toString(), id);
-
-        if (maCustomer != null) {
-            model.addAttribute("maCustomer", maCustomer);
-            return "Customer/view";
-        }
-        model.addAttribute("message", "notFound");
-        return "redirect:/customer/customerList";
-    }
-
     @RequestMapping(value = "/postEdit", method = RequestMethod.POST)
     public String postEdit(HttpServletRequest request, Model model) {
         MaCustomer maCustomer = cusService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
-        JsonObject errors = new JsonObject();
+        List<String> errors = new ArrayList<>();
         ValidateUtil validateUtil = new ValidateUtil();
-        validateUtil.checkNullAndLength(errors, request, "fname", 255, 1);
-        validateUtil.checkNullAndLength(errors, request, "mname", 255, 1);
-        validateUtil.checkNullAndLength(errors, request, "lname", 255, 1);
-        validateUtil.checkLength(errors, request, "cmpname", 255, 0);
-        validateUtil.checkLength(errors, request, "add1", 255, 0);
-        validateUtil.checkLength(errors, request, "add2", 255, 0);
-        validateUtil.checkLength(errors, request, "add3", 255, 0);
-        validateUtil.checkLength(errors, request, "city", 255, 0);
-        validateUtil.checkLength(errors, request, "pin", 255, 0);
-        validateUtil.checkLength(errors, request, "state", 255, 0);
-        validateUtil.checkLength(errors, request, "country", 255, 0);
-        validateUtil.checkLength(errors, request, "phone", 255, 0);
+        validateUtil.checkNull(request, "fname", "Name", errors);
+        validateUtil.checkNull(request, "phone", "Phone number", errors);
+        validateUtil.checkNull(request, "email", "Email", errors);
+
+        MaCustomer checkEmail = cusService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
+        if (checkEmail != null && !maCustomer.getEmail().equals(checkEmail.getEmail())) {
+            errors.add("Email is already exist");
+        }
         if (errors.size() > 0) {
-            model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             model.addAttribute("maCustomer", maCustomer);
+
+            model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Customer/Edit";
         }
+       
         maCustomer.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
         maCustomer.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
         maCustomer.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
@@ -179,6 +161,19 @@ public class customerController {
 
         cusService.save(maCustomer);
         return "redirect:/customer/customerList?m=e";
+    }
+
+    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+    public String view(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
+
+        MaCustomer maCustomer = cusService.findone(Constant.ACTIVE.toString(), id);
+
+        if (maCustomer != null) {
+            model.addAttribute("maCustomer", maCustomer);
+            return "Customer/view";
+        }
+        model.addAttribute("message", "notFound");
+        return "redirect:/customer/customerList";
     }
 
     @ExceptionHandler(Exception.class)

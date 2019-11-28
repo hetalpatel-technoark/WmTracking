@@ -37,6 +37,10 @@ public class customerService {
         return cuRepository.findoneDelete(satus, id);
     }
 
+    public MaCustomer checkEmail(String satus, String email) {
+        return cuRepository.checkEmail(satus, email);
+    }
+
     public Long count(String satus) {
         return cuRepository.count(satus);
     }

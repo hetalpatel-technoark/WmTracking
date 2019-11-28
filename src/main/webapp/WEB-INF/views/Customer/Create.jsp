@@ -1,6 +1,5 @@
 <%@page import="java.util.Iterator"%>
 <%@page import="com.wmtrucking.utils.CheckInput"%>
-
 <%@page import="java.util.List"%>
 <jsp:include page="../Template/header.jsp"></jsp:include>
 
@@ -30,8 +29,8 @@
             <div class="row match-height">
                 <div class="col-md-12 col-12">
                     <%
-                        if (request.getAttribute("errors") != null) {
-                            List<String> errors = (List<String>) request.getAttribute("errors");
+                        if (request.getAttribute("error") != null) {
+                            List<String> errors = (List<String>) request.getAttribute("error");
                             if (!errors.isEmpty()) {
                     %>
                     <div class="alert alert-danger">

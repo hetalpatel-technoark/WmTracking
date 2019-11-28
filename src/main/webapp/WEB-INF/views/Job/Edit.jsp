@@ -87,8 +87,10 @@
                                                             List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
  for (MaCustomer maCustomer : maCustomers) {
                                                             %>
-                                                            <option <%= maCustomer.getId().equals(checkInput.checkValueEdit(majob.getCustId().getId(),request.getParameter("customer")))?"selected":"" %>  value="<%=maCustomer.getId() %>"><%= maCustomer.getFirstname()%></option>
-                                                            <%}%>
+                                                            <option <%= majob.getCustId().getId().toString().equals(checkInput.checkValueEdit(maCustomer.getId(),request.getParameter("customer")))?"selected":"" %>  value="<%=maCustomer.getId() %>"><%= maCustomer.getFirstname()%></option>
+                                                           
+                                                            <%
+                                                                }%>
                                                         </select>
                                                     </div>
                                                 </div> 
@@ -102,7 +104,7 @@
  List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
  for (MaDriver maDriver : maDrivers) {
                                                             %>
-                                                            <option <%= maDriver.getId().equals(checkInput.checkValueEdit(majob.getDriverId().getId(),request.getParameter("driver")))?"selected":"" %>  value="<%=maDriver.getId() %>"><%= maDriver.getFirstname()%></option>
+                                                            <option <%=majob.getDriverId().getId().toString().equals(checkInput.checkValueEdit(maDriver.getId(),request.getParameter("driver")))?"selected":"" %>  value="<%=maDriver.getId() %>"><%= maDriver.getFirstname()%></option>
                                                             <%}%>
                                                         </select>
                                                     </div>

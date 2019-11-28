@@ -12,6 +12,7 @@ import com.wmtrucking.services.driverService;
 import com.wmtrucking.utils.Constant;
 import com.wmtrucking.utils.SessionUtils;
 import com.wmtrucking.utils.ValidateUtil;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,24 +58,35 @@ public class driverController {
 
     @RequestMapping(value = "/PostCreate", method = RequestMethod.POST)
     public String PostCreate(HttpServletRequest request, Model model) {
-        JsonObject errors = new JsonObject();
+//        JsonObject errors = new JsonObject();
         ValidateUtil validateUtil = new ValidateUtil();
-        validateUtil.checkNullAndLength(errors, request, "fname", 255, 1);
-        validateUtil.checkNullAndLength(errors, request, "mname", 255, 1);
-        validateUtil.checkNullAndLength(errors, request, "lname", 255, 1);
-        validateUtil.checkLength(errors, request, "lno", 255, 0);
-        validateUtil.checkLength(errors, request, "add1", 255, 0);
-        validateUtil.checkLength(errors, request, "add2", 255, 0);
-        validateUtil.checkLength(errors, request, "add3", 255, 0);
-        validateUtil.checkLength(errors, request, "city", 255, 0);
-        validateUtil.checkLength(errors, request, "pin", 255, 0);
-        validateUtil.checkLength(errors, request, "state", 255, 0);
-        validateUtil.checkLength(errors, request, "country", 255, 0);
-        validateUtil.checkLength(errors, request, "mob", 255, 0);
+
+        List<String> errors = new ArrayList<>();
+        validateUtil.checkNull(request, "fname", "Name", errors);
+        validateUtil.checkNull(request, "mob", "Mobile number", errors);
+        validateUtil.checkNull(request, "email", "Email", errors);
+
+//        validateUtil.checkNullAndLength(errors, request, "fname", 255, 1);
+//        validateUtil.checkNullAndLength(errors, request, "mname", 255, 1);
+//        validateUtil.checkNullAndLength(errors, request, "lname", 255, 1);
+//        validateUtil.checkLength(errors, request, "lno", 255, 0);
+//        validateUtil.checkLength(errors, request, "add1", 255, 0);
+//        validateUtil.checkLength(errors, request, "add2", 255, 0);
+//        validateUtil.checkLength(errors, request, "add3", 255, 0);
+//        validateUtil.checkLength(errors, request, "city", 255, 0);
+//        validateUtil.checkLength(errors, request, "pin", 255, 0);
+//        validateUtil.checkLength(errors, request, "state", 255, 0);
+//        validateUtil.checkLength(errors, request, "country", 255, 0);
+//        validateUtil.checkLength(errors, request, "mob", 255, 0);
+        MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
+        if (checkEmail != null) {
+            errors.add("Email is already exist");
+        }
         if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Driver/Create";
         }
+
         MaDriver maDriver = new MaDriver();
         maDriver.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
         maDriver.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
@@ -135,24 +147,21 @@ public class driverController {
     @RequestMapping(value = "/postEdit", method = RequestMethod.POST)
     public String postEdit(HttpServletRequest request, Model model) {
         MaDriver maDriver = drService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
-        JsonObject errors = new JsonObject();
         ValidateUtil validateUtil = new ValidateUtil();
-        validateUtil.checkNullAndLength(errors, request, "fname", 255, 1);
-        validateUtil.checkNullAndLength(errors, request, "mname", 255, 1);
-        validateUtil.checkNullAndLength(errors, request, "lname", 255, 1);
-        validateUtil.checkLength(errors, request, "cmpname", 255, 0);
-        validateUtil.checkLength(errors, request, "add1", 255, 0);
-        validateUtil.checkLength(errors, request, "add2", 255, 0);
-        validateUtil.checkLength(errors, request, "add3", 255, 0);
-        validateUtil.checkLength(errors, request, "city", 255, 0);
-        validateUtil.checkLength(errors, request, "pin", 255, 0);
-        validateUtil.checkLength(errors, request, "state", 255, 0);
-        validateUtil.checkLength(errors, request, "country", 255, 0);
-        validateUtil.checkLength(errors, request, "phone", 255, 0);
+
+        List<String> errors = new ArrayList<>();
+        validateUtil.checkNull(request, "fname", "Name", errors);
+        validateUtil.checkNull(request, "mob", "Mobile number", errors);
+        validateUtil.checkNull(request, "email", "Email", errors);
+
+        MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
+        if (checkEmail != null && !maDriver.getEmail().equals(checkEmail.getEmail())) {
+            errors.add("Email is already exist");
+        }
         if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             model.addAttribute("maDriver", maDriver);
-            return "Customer/Edit";
+            return "Driver/Edit";
         }
         maDriver.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
         maDriver.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
