@@ -9,12 +9,15 @@ import com.google.gson.JsonObject;
 import com.wmtrucking.entities.MaCustomer;
 import com.wmtrucking.entities.MaDriver;
 import com.wmtrucking.entities.MaJobs;
+import com.wmtrucking.exception.UnAthorizedUserException;
 import com.wmtrucking.services.customerService;
 import com.wmtrucking.services.driverService;
 import com.wmtrucking.services.jobService;
 import com.wmtrucking.utils.Constant;
 import com.wmtrucking.utils.SessionUtils;
 import com.wmtrucking.utils.ValidateUtil;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +25,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 @RequestMapping(value = "/job")
 @Scope("request")
@@ -39,6 +45,13 @@ public class jobController {
     customerService cusService;
     @Autowired
     driverService drService;
+
+    @ModelAttribute(value = "job")
+    public void job(HttpServletRequest request, Model model) throws UnAthorizedUserException {
+        if (sessionUtils.getSessionValue(request, Constant.AUTHSESSION.toString()) == null) {
+            throw new UnAthorizedUserException("");
+        }
+    }
 
     @RequestMapping(value = "/List", method = RequestMethod.GET)
     public String createnote(HttpServletRequest request, Model model) {
@@ -220,4 +233,14 @@ public class jobController {
         return "redirect:/jov/List?m=n";
     }
 
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleError(HttpServletRequest req, Exception ex) {
+        StringWriter errors = new StringWriter();
+        ex.printStackTrace();
+        ex.printStackTrace(new PrintWriter(errors));
+        ModelAndView mav = new ModelAndView();
+        // mav.setViewName("redirect:/auth/authenticate");
+        mav.setViewName("redirect:/");
+        return mav;
+    }
 }

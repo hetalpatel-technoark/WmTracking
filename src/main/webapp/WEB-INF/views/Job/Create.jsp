@@ -78,7 +78,7 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Customers/Company*</span>
+                                                        <span>Customer/Company*</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <select onchange="searchAddress()" id="customer" class="form-control select-class" name="customer" required>
@@ -126,7 +126,7 @@
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
                                                                             <input type="checkbox" class="custom-control-input" value="selectfill"  name="selectfill" id="customCheck3">
-                                                                            <label class="custom-control-label" for="customCheck3">Select Fill</label>
+                                                                            <label class="custom-control-label" for="customCheck3">Fill</label>
                                                                         </div>
                                                                     </fieldset></li>
                                                                 <li class="d-inline-block mr-2">

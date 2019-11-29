@@ -84,7 +84,7 @@ for (MaDriver maDriver : maDrivers) {
                                             </div> 
                                             <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <span>Customer/Company *</span>
+                                                    <span>Customer/Company*</span>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <select disabled class="form-control select-class" name="customer" id="advertisementType" required>
@@ -187,7 +187,7 @@ for (MaCustomer maCustomer : maCustomers) {
                                                                 <fieldset>
                                                                     <div class="custom-control custom-checkbox">
                                                                         <input disabled type="checkbox" class="custom-control-input" <%= (majob.getSelectfill()!=null&&majob.getSelectfill().equals(checkInput.checkValueEdit(majob.getSelectfill(),request.getParameter("selectfill"))))?"checked":"" %>  value="selectfill" name="selectfill" id="customCheck3">
-                                                                        <label class="custom-control-label" for="customCheck3">Select Fill </label>
+                                                                        <label class="custom-control-label" for="customCheck3">Fill </label>
                                                                     </div>
                                                                 </fieldset>
                                                             </li>

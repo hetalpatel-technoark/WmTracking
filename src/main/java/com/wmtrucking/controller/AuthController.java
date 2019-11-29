@@ -9,7 +9,6 @@ import com.wmtrucking.entities.MaAuthobject;
 import com.wmtrucking.services.authService;
 import com.wmtrucking.utils.Constant;
 import com.wmtrucking.utils.SessionUtils;
-import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

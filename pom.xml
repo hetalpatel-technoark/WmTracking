@@ -11,7 +11,7 @@
     <groupId>com.wmtrucking</groupId>
     <artifactId>wmtrucking</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>WM Trucking</name>
     <description>WM-Trucking-Excavating</description>
     <properties>
@@ -62,7 +62,7 @@
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
-<!--            <scope>provided</scope>-->
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
