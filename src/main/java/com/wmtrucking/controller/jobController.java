@@ -81,6 +81,17 @@ public class jobController {
         validateUtil.checkNull(request, "driver", "Driver", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
 
+        validateUtil.checkLength(errors, request, "jno", "Job Number", 255, 0);
+
+        validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
+        validateUtil.checkLength(errors, request, "add2", "Address 2", 255, 0);
+        validateUtil.checkLength(errors, request, "add3", "Address 3", 255, 0);
+        validateUtil.checkLength(errors, request, "city", "City", 255, 0);
+        validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
+        validateUtil.checkLength(errors, request, "state", "State", 255, 0);
+        validateUtil.checkLength(errors, request, "others", "Others", 255, 0);
+        validateUtil.checkLength(errors, request, "state", "State", 255, 0);
+
         if (errors.size() > 0) {
             List<MaCustomer> maCustomer = cusService.activeList(Constant.ACTIVE.toString());
             model.addAttribute("maCustomer", maCustomer);
@@ -98,7 +109,6 @@ public class jobController {
         if (maDriver != null) {
             majob.setDriverId(maDriver);
         }
-        System.out.println("add1." + request.getParameter("add1"));
         majob.setHaulback(validateUtil.getStringValue(request.getParameter("haulBack")));
         majob.setHauloff(validateUtil.getStringValue(request.getParameter("haulOff")));
         majob.setJobdate(validateUtil.getDateValue(request.getParameter("jobdate")));
@@ -169,14 +179,26 @@ public class jobController {
 
     @RequestMapping(value = "/PostEdit", method = RequestMethod.POST)
     public String PostEdit(HttpServletRequest request, Model model) {
-        JsonObject errors = new JsonObject();
+        //  JsonObject errors = new JsonObject();
+        List<String> errors = new ArrayList<>();
         ValidateUtil validateUtil = new ValidateUtil();
-        validateUtil.checkNullAndLength(errors, request, "jno", 255, 1);
-        validateUtil.checkNullAndLength(errors, request, "customer", 255, 1);
-        validateUtil.checkNullAndLength(errors, request, "driver", 255, 1);
-        validateUtil.checkLength(errors, request, "jobdate", 255, 0);
-        validateUtil.checkLength(errors, request, "haulOff", 255, 0);
-        validateUtil.checkLength(errors, request, "haulBack", 255, 0);
+
+        validateUtil.checkNull(request, "jno", "Job Number", errors);
+        validateUtil.checkNull(request, "customer", "Customer", errors);
+        validateUtil.checkNull(request, "driver", "Driver", errors);
+        validateUtil.checkNull(request, "jobdate", "Job Date", errors);
+
+        validateUtil.checkLength(errors, request, "jno", "Job Number", 255, 0);
+
+        validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
+        validateUtil.checkLength(errors, request, "add2", "Address 2", 255, 0);
+        validateUtil.checkLength(errors, request, "add3", "Address 3", 255, 0);
+        validateUtil.checkLength(errors, request, "city", "City", 255, 0);
+        validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
+        validateUtil.checkLength(errors, request, "state", "State", 255, 0);
+        validateUtil.checkLength(errors, request, "others", "Others", 255, 0);
+        validateUtil.checkLength(errors, request, "state", "State", 255, 0);
+
         MaJobs majob = jobService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
 
         if (errors.size() > 0) {

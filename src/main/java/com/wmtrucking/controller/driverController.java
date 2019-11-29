@@ -69,18 +69,19 @@ public class driverController {
         validateUtil.checkNull(request, "mob", "Mobile number", errors);
         validateUtil.checkNull(request, "email", "Email", errors);
 
-//        validateUtil.checkNullAndLength(errors, request, "fname", 255, 1);
-//        validateUtil.checkNullAndLength(errors, request, "mname", 255, 1);
-//        validateUtil.checkNullAndLength(errors, request, "lname", 255, 1);
-//        validateUtil.checkLength(errors, request, "lno", 255, 0);
-//        validateUtil.checkLength(errors, request, "add1", 255, 0);
-//        validateUtil.checkLength(errors, request, "add2", 255, 0);
-//        validateUtil.checkLength(errors, request, "add3", 255, 0);
-//        validateUtil.checkLength(errors, request, "city", 255, 0);
-//        validateUtil.checkLength(errors, request, "pin", 255, 0);
-//        validateUtil.checkLength(errors, request, "state", 255, 0);
-//        validateUtil.checkLength(errors, request, "country", 255, 0);
-//        validateUtil.checkLength(errors, request, "mob", 255, 0);
+        validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
+        validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
+        validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
+        validateUtil.checkLength(errors, request, "lno", "Licence number", 255, 0);
+        validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
+        validateUtil.checkLength(errors, request, "add2", "Address 2", 255, 0);
+        validateUtil.checkLength(errors, request, "add3", "Address 3", 255, 0);
+        validateUtil.checkLength(errors, request, "city", "City", 255, 0);
+        validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
+        validateUtil.checkLength(errors, request, "state", "State", 255, 0);
+        validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
+        validateUtil.checkLength(errors, request, "mob", "Mobile", 255, 1);
+        validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
         MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
         if (checkEmail != null) {
             errors.add("Email is already exist");
@@ -157,6 +158,20 @@ public class driverController {
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "mob", "Mobile number", errors);
         validateUtil.checkNull(request, "email", "Email", errors);
+
+        validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
+        validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
+        validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
+        validateUtil.checkLength(errors, request, "lno", "Licence number", 255, 0);
+        validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
+        validateUtil.checkLength(errors, request, "add2", "Address 2", 255, 0);
+        validateUtil.checkLength(errors, request, "add3", "Address 3", 255, 0);
+        validateUtil.checkLength(errors, request, "city", "City", 255, 0);
+        validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
+        validateUtil.checkLength(errors, request, "state", "State", 255, 0);
+        validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
+        validateUtil.checkLength(errors, request, "mob", "Mobile", 255, 1);
+        validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
 
         MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
         if (checkEmail != null && !maDriver.getEmail().equals(checkEmail.getEmail())) {

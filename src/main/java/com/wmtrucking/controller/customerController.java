@@ -67,6 +67,20 @@ public class customerController {
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "phone", "Phone number", errors);
         validateUtil.checkNull(request, "email", "Email", errors);
+        validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
+        validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
+        validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
+        validateUtil.checkLength(errors, request, "cmpname", "Company Name", 255, 0);
+        validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
+        validateUtil.checkLength(errors, request, "add2", "Address 2", 255, 0);
+        validateUtil.checkLength(errors, request, "add3", "Address 3", 255, 0);
+        validateUtil.checkLength(errors, request, "city", "City", 255, 0);
+        validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
+        validateUtil.checkLength(errors, request, "state", "State", 255, 0);
+        validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
+        validateUtil.checkLength(errors, request, "phone", "Phone", 255, 1);
+        validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
+
         MaCustomer checkEmail = cusService.checkEmail(Constant.DETETED.toString(), request.getParameter("email"));
         if (checkEmail != null) {
             errors.add("Email is already exist");
@@ -132,7 +146,19 @@ public class customerController {
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "phone", "Phone number", errors);
         validateUtil.checkNull(request, "email", "Email", errors);
-
+        validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
+        validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
+        validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
+        validateUtil.checkLength(errors, request, "cmpname", "Company Name", 255, 0);
+        validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
+        validateUtil.checkLength(errors, request, "add2", "Address 2", 255, 0);
+        validateUtil.checkLength(errors, request, "add3", "Address 3", 255, 0);
+        validateUtil.checkLength(errors, request, "city", "City", 255, 0);
+        validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
+        validateUtil.checkLength(errors, request, "state", "State", 255, 0);
+        validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
+        validateUtil.checkLength(errors, request, "phone", "Phone", 255, 1);
+        validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
         MaCustomer checkEmail = cusService.checkEmail(Constant.DETETED.toString(), request.getParameter("email"));
         if (checkEmail != null && !maCustomer.getEmail().equals(checkEmail.getEmail())) {
             errors.add("Email is already exist");

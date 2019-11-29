@@ -2,12 +2,9 @@ package com.wmtrucking.utils;
 
 import com.google.gson.JsonObject;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class ValidateUtil {
 
@@ -41,7 +38,7 @@ public class ValidateUtil {
         }
     }
 
-    public void checkLength(JsonObject jsonObject, HttpServletRequest request, String paramname, int maxLength, int minLength) {
+    public void checkLength(List<String> errors, HttpServletRequest request, String paramname,String displayfield, int maxLength, int minLength) {
 
         if (!(request.getParameter(paramname) == null || request.getParameter(paramname).trim().equals(""))) {
             String validateMessage = "";
@@ -51,11 +48,12 @@ public class ValidateUtil {
                 isValidted = false;
             }
             if (maxLength > 1 && request.getParameter(paramname).length() > maxLength) {
-                validateMessage += isValidted == false ? "\n Maximum of " + maxLength + " characters" : "Maximum of " + maxLength + " characters";
+                validateMessage += isValidted == false ? "\n Allowed Maximum  " + maxLength + " characters" : " Allowed Maximum  " + maxLength + " characters";
                 isValidted = false;
             }
             if (!isValidted) {
-                jsonObject.addProperty(paramname, validateMessage);
+              //  jsonObject.addProperty(paramname, validateMessage);
+                errors.add(displayfield +" "+ validateMessage);
             }
         }
 
