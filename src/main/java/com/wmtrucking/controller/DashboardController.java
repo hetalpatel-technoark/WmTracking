@@ -51,6 +51,11 @@ public class DashboardController {
         if (!DriverWiseJob.isEmpty()) {
             model.addAttribute("DriverWiseJob", DriverWiseJob);
         }
+
+        List<Object[]> customerWiseJob = joService.findCustomerWiseJob();
+        if (!customerWiseJob.isEmpty()) {
+            model.addAttribute("customerWiseJob", customerWiseJob);
+        }
         return "Dashboard/Dashboard";
     }
 

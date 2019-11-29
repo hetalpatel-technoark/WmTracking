@@ -78,7 +78,7 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Customers *</span>
+                                                        <span>Customers/Company*</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <select onchange="searchAddress()" id="customer" class="form-control select-class" name="customer" required>

@@ -135,7 +135,7 @@ public class jobController {
             maJobs.setStatus(Constant.DETETED.toString());
             jobService.save(maJobs);
         }
-        return "redirect:/driver/List?m=d";
+        return "redirect:/job/List?m=d";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)

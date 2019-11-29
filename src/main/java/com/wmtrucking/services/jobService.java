@@ -44,4 +44,8 @@ public class jobService {
     public List<Object[]> findDriverWiseJob() {
         return jobRepository.findDriverWiseJob();
     }
+
+    public List<Object[]> findCustomerWiseJob() {
+        return jobRepository.findCustomerWiseJob();
+    }
 }

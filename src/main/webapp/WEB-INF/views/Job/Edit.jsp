@@ -69,7 +69,6 @@
                                         <div class="row">
                                             <div class="col-6">
 
-
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Assign Driver *</span>
@@ -87,7 +86,7 @@
                                                 </div> 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Customer *</span>
+                                                       <span>Customers/Company*</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <select onchange="searchAddress()" class="form-control select-class" name="customer" id="customer" required>
@@ -102,69 +101,8 @@
                                                         </select>
                                                     </div>
                                                 </div> 
-                                                <!--                                                <div id="dilivery_address" >
-                                                                                                    <div class="form-group row">
-                                                                                                        <div class="col-md-4">
-                                                                                                            <span>Address 1</span>
-                                                                                                        </div>
-                                                                                                        <div class="col-md-8">
-                                                                                                            <input type="text" id="first-name" class="form-control" name="add1" value="<%=checkInput.checkValueEdit(majob.getAddress1(),request.getParameter("add1"))%>" placeholder="Address 1">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="form-group row">
-                                                                                                        <div class="col-md-4">
-                                                                                                            <span>Address 2</span>
-                                                                                                        </div>
-                                                                                                        <div class="col-md-8">
-                                                                                                            <input type="text" id="first-name" class="form-control" name="add2" value="<%=checkInput.checkValueEdit (majob.getAddress2(),request.getParameter("add2"))%>" placeholder="Address 2">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="form-group row">
-                                                                                                        <div class="col-md-4">
-                                                                                                            <span>Address 3</span>
-                                                                                                        </div>
-                                                                                                        <div class="col-md-8">
-                                                                                                            <input type="text" id="first-name" class="form-control" name="add3" value="<%=checkInput.checkValueEdit (majob.getAddress3(),request.getParameter("add3"))%>" placeholder="Address 3">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                
-                                                
-                                                                                                    <div class="form-group row">
-                                                                                                        <div class="col-md-4">
-                                                                                                            <span>City</span>
-                                                                                                        </div>
-                                                                                                        <div class="col-md-8">
-                                                                                                            <input type="text"  id="first-name" class="form-control" name="city" value="<%=checkInput.checkValueEdit (majob.getCity(),request.getParameter("city"))%>" placeholder="City">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="form-group row">
-                                                                                                        <div class="col-md-4">
-                                                                                                            <span>State</span>
-                                                                                                        </div>
-                                                                                                        <div class="col-md-8">
-                                                                                                            <input type="text" id="state" class="form-control" name="state" value="<%=checkInput.checkValueEdit (majob.getState(),request.getParameter("state"))%>" placeholder="State">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="form-group row">
-                                                                                                        <div class="col-md-4">
-                                                                                                            <span>Country</span>
-                                                                                                        </div>
-                                                                                                        <div class="col-md-8">
-                                                                                                            <input type="text" id="country" class="form-control" name="country" value="<%=checkInput.checkValueEdit (majob.getCountry(),request.getParameter("country"))%>" placeholder="Country">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="form-group row">
-                                                                                                        <div class="col-md-4">
-                                                                                                            <span>Pincode</span>
-                                                                                                        </div>
-                                                                                                        <div class="col-md-8">
-                                                                                                            <input type="text"  id="pincode" class="form-control" name="pin" value="<%=checkInput.checkValueEdit (majob.getPincode(),request.getParameter("pin"))%>" placeholder="Pincode">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                -->
-                                                <div class="modal-body">
 
+                                                <div class="modal-body">
 
                                                 </div>
                                             </div>
@@ -174,7 +112,7 @@
                                                         <span>Job Number*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="first-name" class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber() ,request.getParameter("jno"))%>" placeholder="Job number">
+                                                        <input type="text"  class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber() ,request.getParameter("jno"))%>" placeholder="Job number">
                                                     </div>
                                                 </div>
 
@@ -188,15 +126,17 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Select Fill</span></div>
+                                                        <!--                                                        <span>Select Fill</span>-->
+                                                    </div>
                                                     <div class="col-sm-8">
                                                         <div class="col-sm-12">
                                                             <ul class="list-unstyled mb-0">
+                                                                
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
                                                                             <input type="checkbox" class="custom-control-input" <%= (majob.getSelectfill()!=null&&majob.getSelectfill().equals(checkInput.checkValueEdit(majob.getSelectfill(),request.getParameter("selectfill"))))?"checked":"" %>  value="selectfill" name="selectfill" id="customCheck3">
-                                                                            <label class="custom-control-label" for="customCheck3">Haul Off </label>
+                                                                            <label class="custom-control-label" for="customCheck3">Select Fill </label>
                                                                         </div>
                                                                     </fieldset></li>
                                                                 <li class="d-inline-block mr-2">

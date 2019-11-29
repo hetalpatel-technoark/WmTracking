@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                             <h2 class="text-bold-700 mt-1"><%= request.getAttribute("customer") %></h2>
-                            <p class="mb-0">Total Customer</p>
+                            <p class="mb-0">Total Customers</p>
                         </div><br>
                     </div>
                 </div> 
@@ -73,7 +73,7 @@
                                 </div>
                             </div>
                             <h2 class="text-bold-700 mt-1"><%= request.getAttribute("driver") %></h2>
-                            <p class="mb-0">Total Driver</p>
+                            <p class="mb-0">Total Drivers</p>
                         </div>
                         <br>
                     </div>
@@ -87,7 +87,7 @@
                                 </div>
                             </div>
                             <h2 class="text-bold-700 mt-1"><%= request.getAttribute("job") %></h2>
-                            <p class="mb-0">Total Job</p>
+                            <p class="mb-0">Total Jobs</p>
                         </div><br>
                     </div>
                 </div>
@@ -130,7 +130,24 @@
                 </div>
             </div>
         </section>
+        <section id="apexchart">
+            <div class="row">
+                <!-- Line Chart -->
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
 
+                        <div class="card-header">
+                            <h4 class="card-title">Job for Customer Base </h4>
+                        </div>  
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div id="line-chart_customer"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
 
@@ -204,13 +221,11 @@
             lineChartOptions
             );
     lineChart.render();
-//Driver wise job
 
+//Driver wise job
     <%  String cntD = "", monthD = "";
     if (request.getAttribute("DriverWiseJob") != null) {
     List < Object[] > DriverWiseJob = (List < Object[] > ) request.getAttribute("DriverWiseJob");
-    // int[] a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-
     for (int i = 0; i < DriverWiseJob.size(); i++) {
     if (i == DriverWiseJob.size()) {
     cntD += DriverWiseJob.get(i)[1];
@@ -260,6 +275,63 @@
     }
     var lineChart = new ApexCharts(
             document.querySelector("#line-chart_driver"),
+            lineChartOptions
+            );
+    lineChart.render();
+
+    //Customer wise job
+    <%  String cntC = "", monthC = "";
+    if (request.getAttribute("customerWiseJob") != null) {
+    List < Object[] > customerWiseJob = (List < Object[] > ) request.getAttribute("customerWiseJob");
+    for (int i = 0; i < customerWiseJob.size(); i++) {
+    if (i == customerWiseJob.size()) {
+    cntC += customerWiseJob.get(i)[1];
+    monthC += "\'" + customerWiseJob.get(i)[0] + "\'";
+    } else {
+    cntC += customerWiseJob.get(i)[1] + ",";
+    monthC += "\'" + customerWiseJob.get(i)[0] + "\'" + ",";
+    }
+    }
+    }
+    %>
+    var lineChartOptions = {
+        chart: {
+            height: 350,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
+        },
+        colors: ['#7367F0'],
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        series: [{
+                name: "Job",
+                data: [<%=cntC%>],
+            }],
+        title: {
+            // text: 'Product Trends by Month',
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                opacity: 0.5
+            },
+        },
+        xaxis: {
+            categories: [<%=monthC%>],
+        },
+        yaxis: {
+            tickAmount: 5,
+        }
+    }
+    var lineChart = new ApexCharts(
+            document.querySelector("#line-chart_customer"),
             lineChartOptions
             );
     lineChart.render();

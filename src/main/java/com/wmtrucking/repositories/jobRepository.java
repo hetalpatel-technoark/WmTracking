@@ -36,4 +36,8 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
     @Query(nativeQuery = true, value = "SELECT (select firstname from ma_driver where id=u.driver_id) as name , count(u.id) FROM ma_jobs u where u.status='Active' group by u.driver_id")
     public List<Object[]> findDriverWiseJob();
 
+    @Query(nativeQuery = true, value = "SELECT (select firstname from ma_customer where id=u.cust_id) as name , "
+            + "count(u.id) FROM ma_jobs u where u.status='Active' group by u.cust_id")
+    public List<Object[]> findCustomerWiseJob();
+
 }
