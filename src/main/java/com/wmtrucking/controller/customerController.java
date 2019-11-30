@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.wmtrucking.entities.MaCustomer;
 import com.wmtrucking.exception.UnAthorizedUserException;
 import com.wmtrucking.services.customerService;
+import com.wmtrucking.utils.CommonUtils;
 import com.wmtrucking.utils.Constant;
 import com.wmtrucking.utils.SessionUtils;
 import com.wmtrucking.utils.ValidateUtil;
@@ -81,6 +82,13 @@ public class customerController {
         validateUtil.checkLength(errors, request, "phone", "Phone", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
 
+        CommonUtils commonUtils = new CommonUtils();
+        if (!commonUtils.validatePhoneNumber(request.getParameter("phone"))) {
+            errors.add("Please enter proper Phone number ");
+        }
+        if (!commonUtils.checkLong(request.getParameter("pin"))) {
+            errors.add("Please enter proper Pincode ");
+        }
         MaCustomer checkEmail = cusService.checkEmail(Constant.DETETED.toString(), request.getParameter("email"));
         if (checkEmail != null) {
             errors.add("Email is already exist");
@@ -159,6 +167,13 @@ public class customerController {
         validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
         validateUtil.checkLength(errors, request, "phone", "Phone", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
+        CommonUtils commonUtils = new CommonUtils();
+        if (!commonUtils.validatePhoneNumber(request.getParameter("phone"))) {
+            errors.add("Please enter proper Phone number ");
+        }
+        if (!commonUtils.checkLong(request.getParameter("pin"))) {
+            errors.add("Please enter proper Pincode ");
+        }
         MaCustomer checkEmail = cusService.checkEmail(Constant.DETETED.toString(), request.getParameter("email"));
         if (checkEmail != null && !maCustomer.getEmail().equals(checkEmail.getEmail())) {
             errors.add("Email is already exist");

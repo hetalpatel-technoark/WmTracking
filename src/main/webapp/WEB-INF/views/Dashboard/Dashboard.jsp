@@ -59,7 +59,7 @@
                                     <i class="feather icon-users   text-primary font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700 mt-1"><%= request.getAttribute("customer") %></h2>
+                            <h2 class="text-bold-700 mt-1"><%= request.getAttribute("customer")%></h2>
                             <p class="mb-0">Total Customers</p>
                         </div><br>
                     </div>
@@ -72,7 +72,7 @@
                                     <i class="feather icon-user  text-primary font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700 mt-1"><%= request.getAttribute("driver") %></h2>
+                            <h2 class="text-bold-700 mt-1"><%= request.getAttribute("driver")%></h2>
                             <p class="mb-0">Total Drivers</p>
                         </div>
                         <br>
@@ -86,7 +86,7 @@
                                     <i class="feather icon-award  text-primary font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700 mt-1"><%= request.getAttribute("job") %></h2>
+                            <h2 class="text-bold-700 mt-1"><%= request.getAttribute("job")%></h2>
                             <p class="mb-0">Total Jobs</p>
                         </div><br>
                     </div>
@@ -167,7 +167,7 @@
         String cnt = "", month = "";
         if (request.getAttribute("monthWiseJob") != null) {
             List<Object[]> monthWiseJob = (List<Object[]>) request.getAttribute("monthWiseJob");
-           // int[] a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+            // int[] a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
 
             for (int i = 0; i < monthWiseJob.size(); i++) {
                 if (i == monthWiseJob.size()) {
@@ -180,7 +180,7 @@
             }
         }
     %>
-    var lineChartOptions = {
+    var lineChartOptionsA = {
         chart: {
             height: 350,
             type: 'line',
@@ -213,31 +213,31 @@
             categories: [<%=month%>],
         },
         yaxis: {
-            tickAmount: 5,
+            tickAmount: 1,
         }
     }
-    var lineChart = new ApexCharts(
+    var lineChartA = new ApexCharts(
             document.querySelector("#line-chart"),
-            lineChartOptions
+            lineChartOptionsA
             );
-    lineChart.render();
+    lineChartA.render();
 
 //Driver wise job
     <%  String cntD = "", monthD = "";
-    if (request.getAttribute("DriverWiseJob") != null) {
-    List < Object[] > DriverWiseJob = (List < Object[] > ) request.getAttribute("DriverWiseJob");
-    for (int i = 0; i < DriverWiseJob.size(); i++) {
-    if (i == DriverWiseJob.size()) {
-    cntD += DriverWiseJob.get(i)[1];
-    monthD += "\'" + DriverWiseJob.get(i)[0] + "\'";
-    } else {
-    cntD += DriverWiseJob.get(i)[1] + ",";
-    monthD += "\'" + DriverWiseJob.get(i)[0] + "\'" + ",";
-    }
-    }
-    }
+        if (request.getAttribute("DriverWiseJob") != null) {
+            List< Object[]> DriverWiseJob = (List< Object[]>) request.getAttribute("DriverWiseJob");
+            for (int i = 0; i < DriverWiseJob.size(); i++) {
+                if (i == DriverWiseJob.size()) {
+                    cntD += DriverWiseJob.get(i)[1];
+                    monthD += "\'" + DriverWiseJob.get(i)[0] + "\'";
+                } else {
+                    cntD += DriverWiseJob.get(i)[1] + ",";
+                    monthD += "\'" + DriverWiseJob.get(i)[0] + "\'" + ",";
+                }
+            }
+        }
     %>
-    var lineChartOptions = {
+    var lineChartOptionsB = {
         chart: {
             height: 350,
             type: 'line',
@@ -270,31 +270,31 @@
             categories: [<%=monthD%>],
         },
         yaxis: {
-            tickAmount: 5,
+            tickAmount: 1,
         }
     }
-    var lineChart = new ApexCharts(
+    var lineChartB = new ApexCharts(
             document.querySelector("#line-chart_driver"),
-            lineChartOptions
+            lineChartOptionsB
             );
-    lineChart.render();
+    lineChartB.render();
 
     //Customer wise job
     <%  String cntC = "", monthC = "";
-    if (request.getAttribute("customerWiseJob") != null) {
-    List < Object[] > customerWiseJob = (List < Object[] > ) request.getAttribute("customerWiseJob");
-    for (int i = 0; i < customerWiseJob.size(); i++) {
-    if (i == customerWiseJob.size()) {
-    cntC += customerWiseJob.get(i)[1];
-    monthC += "\'" + customerWiseJob.get(i)[0] + "\'";
-    } else {
-    cntC += customerWiseJob.get(i)[1] + ",";
-    monthC += "\'" + customerWiseJob.get(i)[0] + "\'" + ",";
-    }
-    }
-    }
+        if (request.getAttribute("customerWiseJob") != null) {
+            List< Object[]> customerWiseJob = (List< Object[]>) request.getAttribute("customerWiseJob");
+            for (int i = 0; i < customerWiseJob.size(); i++) {
+                if (i == customerWiseJob.size()) {
+                    cntC += customerWiseJob.get(i)[1];
+                    monthC += "\'" + customerWiseJob.get(i)[0] + "\'";
+                } else {
+                    cntC += customerWiseJob.get(i)[1] + ",";
+                    monthC += "\'" + customerWiseJob.get(i)[0] + "\'" + ",";
+                }
+            }
+        }
     %>
-    var lineChartOptions = {
+    var lineChartOptionsC = {
         chart: {
             height: 350,
             type: 'line',
@@ -327,13 +327,13 @@
             categories: [<%=monthC%>],
         },
         yaxis: {
-            tickAmount: 5,
+            tickAmount: 1,
         }
     }
-    var lineChart = new ApexCharts(
+    var lineChartC = new ApexCharts(
             document.querySelector("#line-chart_customer"),
-            lineChartOptions
+            lineChartOptionsC
             );
-    lineChart.render();
+    lineChartC.render();
 
 </script>

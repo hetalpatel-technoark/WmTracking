@@ -24,6 +24,10 @@ public interface customerRepository extends JpaRepository<MaCustomer, Long> {
     @Query(nativeQuery = true, value = "select u.* from ma_customer u where u.status=?1")
     List<MaCustomer> activeList(String satus);
 
+    @Query(nativeQuery = true, value = "select u.* from ma_customer u where (u.status=?1 or u.id in(select cust_id from ma_jobs where"
+            + " status='Active' and id=?2) )")
+    List<MaCustomer> activeListEdit(String satus, Long jobid);
+
     @Query(nativeQuery = true, value = "select u.* from ma_customer u where u.status!=?1 and u.id=?2")
     MaCustomer findone(String satus, Long id);
 

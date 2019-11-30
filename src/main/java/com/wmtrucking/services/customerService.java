@@ -48,4 +48,8 @@ public class customerService {
     public List<MaCustomer> activeList(String satus) {
         return cuRepository.activeList(satus);
     }
+
+    public List<MaCustomer> activeListEdit(String satus, Long jobid) {
+        return cuRepository.activeListEdit(satus, jobid);
+    }
 }

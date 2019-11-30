@@ -69,7 +69,7 @@ public class ValidateUtil {
     public Date getDateValue(String value) {
         if (value != null) {
             DateUtils dateUtils = new DateUtils();
-            return dateUtils.stringToDate(value, Constant.DATEFORMAT.toString());
+            return dateUtils.stringToDate(value, "dd/MM/yyyy");
         }
         return null;
     }

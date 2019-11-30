@@ -181,7 +181,7 @@
                                                         <span>Pincode</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text"  id="pincode" class="form-control" name="pin" value="<%=checkInput.checkValueEdit (madriver.getPincode(),request.getParameter("pin"))%>" placeholder="Pincode">
+                                                        <input type="number"  id="pincode" class="form-control" name="pin" value="<%=checkInput.checkValueEdit (madriver.getPincode(),request.getParameter("pin"))%>" placeholder="Pincode">
                                                     </div>
                                                 </div>
                                             </div>

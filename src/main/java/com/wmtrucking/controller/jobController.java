@@ -168,7 +168,7 @@ public class jobController {
 
         if (maJobs != null) {
             model.addAttribute("maJobs", maJobs);
-            List<MaCustomer> maCustomer = cusService.activeList(Constant.ACTIVE.toString());
+            List<MaCustomer> maCustomer = cusService.activeListEdit(Constant.ACTIVE.toString(), id);
             model.addAttribute("maCustomer", maCustomer);
             List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
             model.addAttribute("maDriver", maDriver);

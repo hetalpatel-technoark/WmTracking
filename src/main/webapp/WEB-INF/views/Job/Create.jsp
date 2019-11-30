@@ -67,10 +67,10 @@
                                                         <select class="form-control select-class" name="driver" required>
                                                             <option selected="" disabled="">Select Driver </option>
                                                             <%
- List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
- for (MaDriver maDriver : maDrivers) {
+                                                                List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
+                                                                for (MaDriver maDriver : maDrivers) {
                                                             %>
-                                                            <option  value="<%=maDriver.getId() %>"><%= maDriver.getFirstname()%></option>
+                                                            <option  value="<%=maDriver.getId()%>"><%= maDriver.getFirstname()%></option>
                                                             <%}%>
                                                         </select>
                                                     </div>
@@ -78,17 +78,17 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Customer/Company*</span>
+                                                        <span>Customer / Company *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <select onchange="searchAddress()" id="customer" class="form-control select-class" name="customer" required>
+                                                        <select  onchange="searchAddress()" id="customer" class="form-control select-class" name="customer" required>
                                                             <option selected="" disabled="">Select Customer </option>
 
                                                             <%
-                                                            List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
- for (MaCustomer maCustomer : maCustomers) {
+                                                                List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
+                                                                for (MaCustomer maCustomer : maCustomers) {
                                                             %>
-                                                            <option  value="<%=maCustomer.getId() %>"><%= maCustomer.getFirstname()%></option>
+                                                            <option <%=maCustomer.getId().toString().equals(checkInput.checkValue(request.getParameter("customer"))) ? "selected" : ""%>  value="<%=maCustomer.getId()%>"><%= maCustomer.getFirstname()%></option>
                                                             <%}%>
                                                         </select>
                                                     </div>
@@ -96,7 +96,68 @@
                                                 <div class="modal-body">
 
                                                 </div>
+                                                <%
+                                                    if (request.getAttribute("error") != null) {
+                                                %>
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Address 1</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text"  class="form-control" name="add1" value="<%=checkInput.checkValue(request.getParameter("add1"))%>"  placeholder="Address 1">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Address 2</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text"  class="form-control" name="add2" value="<%=checkInput.checkValue(request.getParameter("add2"))%>"  placeholder="Address 2">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Address 3</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text"  class="form-control" name="add3" value="<%=checkInput.checkValue(request.getParameter("add3"))%>"  placeholder="Address 3">
+                                                    </div>
+                                                </div>
 
+
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>City</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text"   class="form-control" name="city" value="<%=checkInput.checkValue(request.getParameter("city"))%>"  placeholder="City">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>State</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="state" class="form-control" name="state" value="<%=checkInput.checkValue(request.getParameter("state"))%>"  placeholder="State">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Country</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="country" class="form-control" name="country" value="<%=checkInput.checkValue(request.getParameter("country"))%>"  placeholder="Country">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Pincode</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text"  id="pincode" class="form-control" name="pin" value="<%=checkInput.checkValue(request.getParameter("pin"))%>"  placeholder="Pincode">
+                                                    </div>
+                                                </div>
+                                                <%}%>
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-group row">
@@ -104,7 +165,7 @@
                                                         <span>Job number*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" required="" id="first-name" class="form-control" name="jno" value="<%=checkInput.checkValue(request.getParameter("jno"))%>" placeholder="Job number">
+                                                        <input type="text" required=""  class="form-control" name="jno" value="<%=checkInput.checkValue(request.getParameter("jno"))%>" placeholder="Job number">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -194,8 +255,9 @@
     <script>
         $(document).ready(function () {
             $(".pickadate1").pickadate({
-                format: "mm-dd-yyyy"
+                format: "dd/mm/yyyy"
             });
+
         });
 
         function searchAddress() {

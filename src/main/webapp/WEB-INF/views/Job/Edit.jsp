@@ -52,8 +52,8 @@
                     </div>
                     <%                        }
                         CheckInput checkInput = new CheckInput();
-  DateUtils dateUtils = new DateUtils();
-        MaJobs majob = null;
+                        DateUtils dateUtils = new DateUtils();
+                        MaJobs majob = null;
                         if (request.getAttribute("maJobs") != null) {
                             majob = (MaJobs) request.getAttribute("maJobs");
                         }
@@ -76,25 +76,25 @@
                                                     <div class="col-md-8">
                                                         <select  class="form-control select-class" name="driver" id="advertisementType" required>
                                                             <%
- List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
- for (MaDriver maDriver : maDrivers) {
+                                                                List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
+                                                                for (MaDriver maDriver : maDrivers) {
                                                             %>
-                                                            <option <%=majob.getDriverId().getId().toString().equals(checkInput.checkValueEdit(maDriver.getId(),request.getParameter("driver")))?"selected":"" %>  value="<%=maDriver.getId() %>"><%= maDriver.getFirstname()%></option>
+                                                            <option <%=majob.getDriverId().getId().toString().equals(checkInput.checkValueEdit(maDriver.getId(), request.getParameter("driver"))) ? "selected" : ""%>  value="<%=maDriver.getId()%>"><%= maDriver.getFirstname()%></option>
                                                             <%}%>
                                                         </select>
                                                     </div>
                                                 </div> 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                       <span>Customer/Company*</span>
+                                                        <span>Customer /Company*</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <select onchange="searchAddress()" class="form-control select-class" name="customer" id="customer" required>
                                                             <%
-                                                            List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
- for (MaCustomer maCustomer : maCustomers) {
+                                                                List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
+                                                                for (MaCustomer maCustomer : maCustomers) {
                                                             %>
-                                                            <option <%= majob.getCustId().getId().toString().equals(checkInput.checkValueEdit(maCustomer.getId(),request.getParameter("customer")))?"selected":"" %>  value="<%=maCustomer.getId() %>"><%= maCustomer.getFirstname()%></option>
+                                                            <option <%= majob.getCustId().getId().toString().equals(checkInput.checkValueEdit(maCustomer.getId(), request.getParameter("customer"))) ? "selected" : ""%>  value="<%=maCustomer.getId()%>"><%= maCustomer.getFirstname()%></option>
 
                                                             <%
                                                                 }%>
@@ -112,7 +112,7 @@
                                                         <span>Job Number*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text"  class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber() ,request.getParameter("jno"))%>" placeholder="Job number">
+                                                        <input type="text"  class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber(), request.getParameter("jno"))%>" placeholder="Job number">
                                                     </div>
                                                 </div>
 
@@ -120,7 +120,7 @@
                                                     <div class="col-md-4">                                                    
                                                         <span>Job Date</span></div>
                                                     <div class="col-md-8">
-                                                        <input type="text" readonly id="expirydate" name="jobdate" value="<%=checkInput.checkValueEdit(dateUtils.dateWithFormat(majob.getJobdate(), "dd-MM-yyyy"),request.getParameter("jobdate"))%>" class="form-control pickadate1" placeholder="Job Date">
+                                                        <input type="text" readonly id="expirydate" name="jobdate" value="<%=checkInput.checkValueEdit(dateUtils.dateWithFormat(majob.getJobdate(), "dd/MM/yyyy"), request.getParameter("jobdate"))%>" class="form-control pickadate1" placeholder="Job Date">
                                                     </div>
                                                 </div>
 
@@ -131,18 +131,18 @@
                                                     <div class="col-sm-8">
                                                         <div class="col-sm-12">
                                                             <ul class="list-unstyled mb-0">
-                                                                
+
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" <%= (majob.getSelectfill()!=null&&majob.getSelectfill().equals(checkInput.checkValueEdit(majob.getSelectfill(),request.getParameter("selectfill"))))?"checked":"" %>  value="selectfill" name="selectfill" id="customCheck3">
+                                                                            <input type="checkbox" class="custom-control-input" <%= (majob.getSelectfill() != null && majob.getSelectfill().equals(checkInput.checkValueEdit(majob.getSelectfill(), request.getParameter("selectfill")))) ? "checked" : ""%>  value="selectfill" name="selectfill" id="customCheck3">
                                                                             <label class="custom-control-label" for="customCheck3">Fill </label>
                                                                         </div>
                                                                     </fieldset></li>
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" <%= (majob.getHauloff()!=null&&majob.getHauloff().equals(checkInput.checkValueEdit(majob.getHauloff(),request.getParameter("haulOff"))))?"checked":"" %>  value="haulOff" name="haulOff" id="customCheck1">
+                                                                            <input type="checkbox" class="custom-control-input" <%= (majob.getHauloff() != null && majob.getHauloff().equals(checkInput.checkValueEdit(majob.getHauloff(), request.getParameter("haulOff")))) ? "checked" : ""%>  value="haulOff" name="haulOff" id="customCheck1">
                                                                             <label class="custom-control-label" for="customCheck1">Haul Off </label>
                                                                         </div>
                                                                     </fieldset></li>
@@ -150,7 +150,7 @@
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" <%= majob.getHaulback()!=null&&majob.getHaulback().equals(checkInput.checkValueEdit(majob.getHaulback(),request.getParameter("haulBack")))?"checked":"" %> value="haulBack"  name="haulBack" id="customCheck2">
+                                                                            <input type="checkbox" class="custom-control-input" <%= majob.getHaulback() != null && majob.getHaulback().equals(checkInput.checkValueEdit(majob.getHaulback(), request.getParameter("haulBack"))) ? "checked" : ""%> value="haulBack"  name="haulBack" id="customCheck2">
                                                                             <label class="custom-control-label" for="customCheck2">Haul Back</label>
                                                                         </div>
                                                                     </fieldset></li>
@@ -163,7 +163,7 @@
                                                         <span>Others</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text"  id="pincode" class="form-control" name="others" value="<%=checkInput.checkValueEdit(majob.getOther(),request.getParameter("others"))%>" placeholder="Others">
+                                                        <input type="text"  id="pincode" class="form-control" name="others" value="<%=checkInput.checkValueEdit(majob.getOther(), request.getParameter("others"))%>" placeholder="Others">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -171,7 +171,7 @@
                                                         <span>Notes</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <textarea class="form-control" name="notes"><%=checkInput.checkValueEdit(majob.getNotes(),request.getParameter("notes"))%> </textarea>
+                                                        <textarea class="form-control" name="notes"><%=checkInput.checkValueEdit(majob.getNotes(), request.getParameter("notes"))%> </textarea>
                                                     </div>
                                                 </div>
 
@@ -204,7 +204,9 @@
     <script>
         $(document).ready(function () {
             $(".pickadate1").pickadate({
-                format: "mm-dd-yyyy"
+                //format: "dd-mm-yyyy"
+                format: "dd/mm/yyyy"
+
             });
             $.ajax({
                 method: "GET",
@@ -220,7 +222,7 @@
 
                         var id = $('#customer').val();
 
-                        var custid =<%= majob.getCustId().getId() %>;
+                        var custid =<%= majob.getCustId().getId()%>;
                         var url = "";
                         if (id == custid) {
                             url = "<%=request.getContextPath()%>/job/searchAddressDilivery/<%= majob.getId()%>";

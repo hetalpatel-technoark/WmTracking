@@ -128,8 +128,8 @@
                                                                 <a class="dropdown-item" href="<%=request.getContextPath()%>/customer/edit/<%=maCustomer.getId()%>">
                                                                     <i class="feather icon-edit"></i> <span>Edit</span>
                                                                 </a>
-                                                                <a class="dropdown-item" onclick="changeStatus('Disable', '<%=maCustomer.getId()%>')">
-                                                                    <i class="feather icon-slash"></i> <span>Disable</span>
+                                                                <a class="dropdown-item" onclick="changeStatus('Deleted', '<%=maCustomer.getId()%>')">
+                                                                    <i class="feather icon-trash "></i> <span>Delete</span>
                                                                 </a>
 
                                                             </div>

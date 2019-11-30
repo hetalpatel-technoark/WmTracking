@@ -84,7 +84,7 @@ for (MaDriver maDriver : maDrivers) {
                                             </div> 
                                             <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <span>Customer/Company*</span>
+                                                    <span>Customer/ Company*</span>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <select disabled class="form-control select-class" name="customer" id="advertisementType" required>

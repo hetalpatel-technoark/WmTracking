@@ -8,6 +8,7 @@ package com.wmtrucking.controller;
 import com.wmtrucking.entities.MaDriver;
 import com.wmtrucking.exception.UnAthorizedUserException;
 import com.wmtrucking.services.driverService;
+import com.wmtrucking.utils.CommonUtils;
 import com.wmtrucking.utils.Constant;
 import com.wmtrucking.utils.SessionUtils;
 import com.wmtrucking.utils.ValidateUtil;
@@ -82,6 +83,14 @@ public class driverController {
         validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
         validateUtil.checkLength(errors, request, "mob", "Mobile", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
+
+        CommonUtils commonUtils = new CommonUtils();
+        if (!commonUtils.validatePhoneNumber(request.getParameter("mob"))) {
+            errors.add("Please enter proper Phone number ");
+        }
+        if (!commonUtils.checkLong(request.getParameter("pin"))) {
+            errors.add("Please enter proper Pincode ");
+        }
         MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
         if (checkEmail != null) {
             errors.add("Email is already exist");
@@ -173,6 +182,13 @@ public class driverController {
         validateUtil.checkLength(errors, request, "mob", "Mobile", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
 
+        CommonUtils commonUtils = new CommonUtils();
+        if (!commonUtils.validatePhoneNumber(request.getParameter("mob"))) {
+            errors.add("Please enter proper Phone number ");
+        }
+        if (!commonUtils.checkLong(request.getParameter("pin"))) {
+            errors.add("Please enter proper Pincode ");
+        }
         MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
         if (checkEmail != null && !maDriver.getEmail().equals(checkEmail.getEmail())) {
             errors.add("Email is already exist");

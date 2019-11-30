@@ -117,8 +117,8 @@
                                                                 <a class="dropdown-item" href="<%=request.getContextPath()%>/job/edit/<%=majob.getId()%>">
                                                                     <i class="feather icon-edit"></i> <span>Edit</span>
                                                                 </a>
-                                                                <a class="dropdown-item" onclick="changeStatus('Disable', '<%=majob.getId()%>')">
-                                                                    <i class="feather icon-slash"></i> <span>Disable</span>
+                                                                <a class="dropdown-item" onclick="changeStatus('Deleted', '<%=majob.getId()%>')">
+                                                                    <i class="feather icon-trash"></i> <span>Deleted</span>
                                                                 </a>
 
                                                             </div>

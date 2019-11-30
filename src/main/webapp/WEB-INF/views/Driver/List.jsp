@@ -125,8 +125,8 @@
                                                                 <a class="dropdown-item" href="<%=request.getContextPath()%>/driver/edit/<%=madriver.getId()%>">
                                                                     <i class="feather icon-edit"></i> <span>Edit</span>
                                                                 </a>
-                                                                <a class="dropdown-item" onclick="changeStatus('Disable', '<%=madriver.getId()%>')">
-                                                                    <i class="feather icon-slash"></i> <span>Disable</span>
+                                                                <a class="dropdown-item" onclick="changeStatus('Deleted', '<%=madriver.getId()%>')">
+                                                                    <i class="feather icon-trash"></i> <span>Deleted</span>
                                                                 </a>
 
                                                             </div>

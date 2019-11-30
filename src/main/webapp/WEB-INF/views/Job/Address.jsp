@@ -13,7 +13,7 @@
         <span>Address 1</span>
     </div>
     <div class="col-md-8">
-        <input type="text" id="first-name" class="form-control" name="add1" value="<%=checkInput.checkValueEdit(maCustomer.getAddress1(),request.getParameter("add1"))%>" placeholder="Address 1">
+        <input type="text"  class="form-control" name="add1" value="<%=checkInput.checkValueEdit(maCustomer.getAddress1(),request.getParameter("add1"))%>" placeholder="Address 1">
     </div>
 </div>
 <div class="form-group row">
@@ -21,7 +21,7 @@
         <span>Address 2</span>
     </div>
     <div class="col-md-8">
-        <input type="text" id="first-name" class="form-control" name="add2" value="<%=checkInput.checkValueEdit (maCustomer.getAddress2(),request.getParameter("add2"))%>" placeholder="Address 2">
+        <input type="text"  class="form-control" name="add2" value="<%=checkInput.checkValueEdit (maCustomer.getAddress2(),request.getParameter("add2"))%>" placeholder="Address 2">
     </div>
 </div>
 <div class="form-group row">
@@ -29,7 +29,7 @@
         <span>Address 3</span>
     </div>
     <div class="col-md-8">
-        <input type="text" id="first-name" class="form-control" name="add3" value="<%=checkInput.checkValueEdit (maCustomer.getAddress3(),request.getParameter("add3"))%>" placeholder="Address 3">
+        <input type="text"  class="form-control" name="add3" value="<%=checkInput.checkValueEdit (maCustomer.getAddress3(),request.getParameter("add3"))%>" placeholder="Address 3">
     </div>
 </div>
 
@@ -39,7 +39,7 @@
         <span>City</span>
     </div>
     <div class="col-md-8">
-        <input type="text"  id="first-name" class="form-control" name="city" value="<%=checkInput.checkValueEdit (maCustomer.getCity(),request.getParameter("city"))%>" placeholder="City">
+        <input type="text"   class="form-control" name="city" value="<%=checkInput.checkValueEdit (maCustomer.getCity(),request.getParameter("city"))%>" placeholder="City">
     </div>
 </div>
 <div class="form-group row">
