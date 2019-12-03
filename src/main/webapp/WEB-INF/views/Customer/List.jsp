@@ -64,7 +64,7 @@
                                 <%}else if (request.getParameter("m").equals("n")) {%>
                                 <div class="alert alert-danger">
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
-                                    This customer is available in job, So, You can not disable it
+                                    This customer is assigned in job. For delete, please first remove customer from job.
                                 </div>
                                 <%}%>
                                 <%}%>
@@ -128,7 +128,7 @@
                                                                 <a class="dropdown-item" href="<%=request.getContextPath()%>/customer/edit/<%=maCustomer.getId()%>">
                                                                     <i class="feather icon-edit"></i> <span>Edit</span>
                                                                 </a>
-                                                                <a class="dropdown-item" onclick="changeStatus('Deleted', '<%=maCustomer.getId()%>')">
+                                                                <a class="dropdown-item" onclick="changeStatus('Delete', '<%=maCustomer.getId()%>')">
                                                                     <i class="feather icon-trash "></i> <span>Delete</span>
                                                                 </a>
 

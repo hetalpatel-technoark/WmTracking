@@ -64,7 +64,7 @@
                                 <%}else if (request.getParameter("m").equals("n")) {%>
                                 <div class="alert alert-danger">
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
-                                    This Driver is available in job, So, You can not disable it
+                                    This Driver is assigned in job. For delete, please first remove Driver from job.
                                 </div>
                                 <%}%>
                                 <%}%>
@@ -125,8 +125,8 @@
                                                                 <a class="dropdown-item" href="<%=request.getContextPath()%>/driver/edit/<%=madriver.getId()%>">
                                                                     <i class="feather icon-edit"></i> <span>Edit</span>
                                                                 </a>
-                                                                <a class="dropdown-item" onclick="changeStatus('Deleted', '<%=madriver.getId()%>')">
-                                                                    <i class="feather icon-trash"></i> <span>Deleted</span>
+                                                                <a class="dropdown-item" onclick="changeStatus('Delete', '<%=madriver.getId()%>')">
+                                                                    <i class="feather icon-trash"></i> <span>Delete</span>
                                                                 </a>
 
                                                             </div>

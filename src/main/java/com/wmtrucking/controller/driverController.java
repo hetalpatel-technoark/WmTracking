@@ -95,6 +95,12 @@ public class driverController {
         if (checkEmail != null) {
             errors.add("Email is already exist");
         }
+
+        MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("mob"));
+        if (checkMobile != null) {
+            errors.add("Mobile is already exist");
+        }
+
         if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Driver/Create";
@@ -192,6 +198,10 @@ public class driverController {
         MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
         if (checkEmail != null && !maDriver.getEmail().equals(checkEmail.getEmail())) {
             errors.add("Email is already exist");
+        }
+        MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("mob"));
+        if (checkMobile != null && !maDriver.getMobile().equals(checkMobile.getMobile())) {
+            errors.add("Mobile is already exist");
         }
         if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);

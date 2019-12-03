@@ -31,6 +31,9 @@ public interface driverRepository extends JpaRepository<MaDriver, Long> {
     @Query(nativeQuery = true, value = "select u.* from ma_driver u where (u.status=?1 or u.status='Inactive' ) and u.email=?2")
     MaDriver checkEmail(String satus, String email);
 
+    @Query(nativeQuery = true, value = "select u.* from ma_driver u where (u.status=?1 or u.status='Inactive' ) and u.mobile=?2")
+    MaDriver checkMobile(String satus, String mobile);
+
     @Query(nativeQuery = true, value = "select u.* from ma_driver u where (u.status=?1 or u.status='Inactive' ) and u.id=?2 and u.id not in (select driver_id from ma_jobs where status=?1) ")
     MaDriver findoneDelete(String satus, Long id);
 
