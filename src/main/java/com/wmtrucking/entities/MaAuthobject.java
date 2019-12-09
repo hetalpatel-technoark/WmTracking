@@ -28,12 +28,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "MaAuthobject.findAll", query = "SELECT m FROM MaAuthobject m")})
 public class MaAuthobject implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "authid")
-    private Long authid;
     @Size(max = 2147483647)
     @Column(name = "name")
     private String name;
@@ -44,6 +38,13 @@ public class MaAuthobject implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "password")
     private String password;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "authid")
+    private Long authid;
     @OneToMany(mappedBy = "createdby")
     private List<MaJobs> maJobsList;
 
@@ -70,29 +71,6 @@ public class MaAuthobject implements Serializable {
         this.authid = authid;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Override
     public int hashCode() {
@@ -117,6 +95,30 @@ public class MaAuthobject implements Serializable {
     @Override
     public String toString() {
         return "com.wmtrucking.entities.MaAuthobject[ authid=" + authid + " ]";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }

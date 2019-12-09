@@ -7,6 +7,7 @@
 
 <%@page import="java.util.List"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/pickers/pickadate/pickadate.css">  
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/forms/select/select2.min.css">
 
 <jsp:include page="../Template/header.jsp"></jsp:include>
 
@@ -74,12 +75,15 @@
                                                         <span>Assign Driver *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <select  class="form-control select-class" name="driver" id="advertisementType" required>
+                                                        <select class="select2 form-control"  name="driver" required multiple="multiple">
                                                             <%
+                                                                String selectedDriver = (String) request.getAttribute("maJobDrivers");
+
                                                                 List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
                                                                 for (MaDriver maDriver : maDrivers) {
                                                             %>
-                                                            <option <%=majob.getDriverId().getId().toString().equals(checkInput.checkValueEdit(maDriver.getId(), request.getParameter("driver"))) ? "selected" : ""%>  value="<%=maDriver.getId()%>"><%= maDriver.getFirstname()%></option>
+                                                            <option <%=selectedDriver != null && selectedDriver.contains(checkInput.checkValueEdit(maDriver.getId(), request.getParameter("driver"))) ? "selected" : ""%>
+                                                                value="<%=maDriver.getId()%>"><%= maDriver.getFirstname()%></option>
                                                             <%}%>
                                                         </select>
                                                     </div>
@@ -131,7 +135,7 @@
                                                         <input type="text" readonly  name="jobdate" value="<%=checkInput.checkValueEdit(dateUtils.dateWithFormat(majob.getJobdate(), "dd/MM/yyyy"), request.getParameter("jobdate"))%>" class="form-control pickadate1" placeholder="Job Date">
                                                     </div>
                                                 </div>
-                                                    
+
                                                 <div class="form-group row">
                                                     <div class="col-md-4">                                                    
                                                         <span>Job Assign  Date</span></div>
@@ -151,7 +155,7 @@
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" <%= (majob.getSand()!= null && majob.getSand().equals(checkInput.checkValueEdit(majob.getSelectfill(), request.getParameter("selectfill")))) ? "checked" : ""%>  value="selectfill" name="Sand" id="customCheck1">
+                                                                            <input type="checkbox" class="custom-control-input" <%= (majob.getSand() != null && majob.getSand().equals(checkInput.checkValueEdit(majob.getSelectfill(), request.getParameter("selectfill")))) ? "checked" : ""%>  value="selectfill" name="Sand" id="customCheck1">
                                                                             <label class="custom-control-label" for="customCheck1">Sand </label>
                                                                         </div>
                                                                     </fieldset></li>
@@ -180,7 +184,7 @@
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input"  <%= majob.getCommon_hourly()!= null && majob.getCommon_hourly().equals(checkInput.checkValueEdit(majob.getCommon_hourly(), request.getParameter("Common Hourly"))) ? "checked" : ""%> value="Common Hourly"  name="common_hourly" id="customCheck5">
+                                                                            <input type="checkbox" class="custom-control-input"  <%= majob.getCommon_hourly() != null && majob.getCommon_hourly().equals(checkInput.checkValueEdit(majob.getCommon_hourly(), request.getParameter("Common Hourly"))) ? "checked" : ""%> value="Common Hourly"  name="common_hourly" id="customCheck5">
                                                                             <label class="custom-control-label" for="customCheck5">Common Hourly</label>
                                                                         </div>
                                                                     </fieldset></li>
@@ -231,43 +235,45 @@
 <jsp:include page="../Template/pageEnd.jsp"></jsp:include>    
 
 <jsp:include page="../Template/footer.jsp"></jsp:include>
-    <script>
-        $(document).ready(function () {
-            $(".pickadate1").pickadate({
-                //format: "dd-mm-yyyy"
-                format: "dd/mm/yyyy"
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
 
-            });
-            $.ajax({
-                method: "GET",
-                url: "<%=request.getContextPath()%>/job/searchAddressDilivery/<%= majob.getId()%>",
-                            success: function (data) {
-                                console.log(data);
-                                $('.modal-body').html(data);
-                            }
-                        });
-                    });
+<script>
+                                                            $(document).ready(function () {
+                                                                $(".pickadate1").pickadate({
+                                                                    //format: "dd-mm-yyyy"
+                                                                    format: "dd/mm/yyyy"
 
-                    function searchAddress() {
+                                                                });
+                                                                $.ajax({
+                                                                    method: "GET",
+                                                                    url: "<%=request.getContextPath()%>/job/searchAddressDilivery/<%= majob.getId()%>",
+                                                                                success: function (data) {
+                                                                                    console.log(data);
+                                                                                    $('.modal-body').html(data);
+                                                                                }
+                                                                            });
+                                                                        });
 
-                        var id = $('#customer').val();
+                                                                        function searchAddress() {
 
-                        var custid =<%= majob.getCustId().getId()%>;
-                        var url = "";
-                        if (id == custid) {
-                            url = "<%=request.getContextPath()%>/job/searchAddressDilivery/<%= majob.getId()%>";
-                                    } else {
-                                        url = "<%=request.getContextPath()%>/job/searchAddress/" + id;
-                                    }
-                                    $.ajax({
-                                        method: "GET",
-                                        url: url,
-                                        success: function (data) {
-                                            console.log(data);
-                                            $('.modal-body').html(data);
-                                        }
-                                    });
-                                }
+                                                                            var id = $('#customer').val();
+
+                                                                            var custid =<%= majob.getCustId().getId()%>;
+                                                                            var url = "";
+                                                                            if (id == custid) {
+                                                                                url = "<%=request.getContextPath()%>/job/searchAddressDilivery/<%= majob.getId()%>";
+                                                                                        } else {
+                                                                                            url = "<%=request.getContextPath()%>/job/searchAddress/" + id;
+                                                                                        }
+                                                                                        $.ajax({
+                                                                                            method: "GET",
+                                                                                            url: url,
+                                                                                            success: function (data) {
+                                                                                                console.log(data);
+                                                                                                $('.modal-body').html(data);
+                                                                                            }
+                                                                                        });
+                                                                                    }
 
 </script>
 
@@ -277,3 +283,4 @@
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
 
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/forms/select/form-select2.js"></script>

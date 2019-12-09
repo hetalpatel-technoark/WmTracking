@@ -76,7 +76,6 @@
                                             <tr>
                                                 <th>Job number</th>
                                                 <th>Customer Name</th>
-                                                <th>Driver Name</th>
                                                 <th>Job date</th>
 <!--                                                <th>Haul Off </th>                                          
                                                 <th>Haul Back</th>                                          -->
@@ -97,7 +96,6 @@
                                             <tr >
                                                 <td><%=checkInput.checkValue(majob.getJobnumber())%></td>
                                                 <td><%=checkInput.checkValue(majob.getCustId().getFirstname())%></td>
-                                                <td><%=checkInput.checkValue(majob.getDriverId().getFirstname())%></td>
                                                 <td><%=checkInput.checkValue(dateUtils.dateWithFormat(majob.getJobdate(), "dd/MM/yyyy") ) %></td>
 <!--                                                <td><%=majob.getHauloff()!=null?"on":"" %></td>
                                                 <td><%=majob.getHaulback()!=null?"on":""%></td>-->

@@ -7,6 +7,7 @@
 
 <%@page import="java.util.List"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/pickers/pickadate/pickadate.css">  
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/forms/select/select2.min.css">
 
 <jsp:include page="../Template/header.jsp"></jsp:include>
 
@@ -72,12 +73,14 @@
                                                     <span>Assign Driver *</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <select disabled="" class="form-control select-class" name="driver" id="advertisementType" required>
+                                                    <select disabled="" class="select2 form-control"  name="driver" required multiple="multiple">
                                                         <%
+                                                            String selectedDriver = (String) request.getAttribute("maJobDrivers");
+
                                                             List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
                                                             for (MaDriver maDriver : maDrivers) {
                                                         %>
-                                                        <option <%= maDriver.getId().equals(checkInput.checkValueEdit(majob.getDriverId().getId(), request.getParameter("driver"))) ? "selected" : ""%>  value="<%=maDriver.getId()%>"><%= maDriver.getFirstname()%></option>
+                                                        <option <%=selectedDriver != null && selectedDriver.contains(checkInput.checkValueEdit(maDriver.getId(), request.getParameter("driver"))) ? "selected" : ""%> value="<%=maDriver.getId()%>"><%= maDriver.getFirstname()%></option>
                                                         <%}%>
                                                     </select>
                                                 </div>
@@ -216,7 +219,7 @@
                                                             <li class="d-inline-block mr-2">
                                                                 <fieldset>
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input disabled type="checkbox" class="custom-control-input" <%= (majob.getCommon_hourly()!= null && majob.getCommon_hourly().equals(checkInput.checkValueEdit(majob.getCommon_hourly(), request.getParameter("Common Hourly")))) ? "checked" : ""%>  value="Common Hourly" name="common_hourly" id="customCheck5">
+                                                                        <input disabled type="checkbox" class="custom-control-input" <%= (majob.getCommon_hourly() != null && majob.getCommon_hourly().equals(checkInput.checkValueEdit(majob.getCommon_hourly(), request.getParameter("Common Hourly")))) ? "checked" : ""%>  value="Common Hourly" name="common_hourly" id="customCheck5">
                                                                         <label class="custom-control-label" for="customCheck5">Common Hourly </label>
                                                                     </div>
                                                                 </fieldset></li>
@@ -265,20 +268,23 @@
 <jsp:include page="../Template/pageEnd.jsp"></jsp:include>    
 
 <jsp:include page="../Template/footer.jsp"></jsp:include>
-    <script>
-        $(document).ready(function () {
-            $(".pickadate1").pickadate({
-                format: "mm-dd-yyyy"
-            });
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
 
-
+<script>
+    $(document).ready(function () {
+        $(".pickadate1").pickadate({
+            format: "mm-dd-yyyy"
         });
 
-    </script>
 
-    <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/picker.js"></script>
+    });
+
+</script>
+
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/picker.js"></script>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
 
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/forms/select/form-select2.js"></script>

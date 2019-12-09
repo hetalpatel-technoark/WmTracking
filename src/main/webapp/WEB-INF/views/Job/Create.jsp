@@ -7,6 +7,7 @@
 
 <%@page import="java.util.List"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/pickers/pickadate/pickadate.css">  
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/forms/select/select2.min.css">
 
 <jsp:include page="../Template/header.jsp"></jsp:include>
 
@@ -61,19 +62,21 @@
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-6">
+                                                
+
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Assign Driver *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <select class="form-control select-class" name="driver" required>
-                                                            <option selected="" disabled="">Select Driver </option>
+                                                        <select class="select2 form-control"  name="driver" required multiple="multiple">
                                                             <%
                                                                 List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
                                                                 for (MaDriver maDriver : maDrivers) {
                                                             %>
                                                             <option  value="<%=maDriver.getId()%>"><%= maDriver.getFirstname()%></option>
                                                             <%}%>
+                                                       
                                                         </select>
                                                     </div>
                                                 </div> 
@@ -185,8 +188,8 @@
                                                         <input type="text" required readonly name="jobdate" value="<%=request.getParameter("jobdate") != null ? request.getParameter("jobdate") : new DateUtils().dateWithFormat(new Date(), "dd/MM/yyyy")%>"  class="form-control pickadate1" placeholder="Job Date">
                                                     </div>
                                                 </div>
-                                                    
-                                                     <div class="form-group row">
+
+                                                <div class="form-group row">
                                                     <div class="col-md-4">                                                    
                                                         <span>Job Assign date</span></div>
                                                     <div class="col-md-8">
@@ -285,25 +288,28 @@
 <jsp:include page="../Template/pageEnd.jsp"></jsp:include>    
 
 <jsp:include page="../Template/footer.jsp"></jsp:include>
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+
+
     <script>
-        $(document).ready(function () {
-            $(".pickadate1").pickadate({
-                format: "dd/mm/yyyy"
-            });
+                                                            $(document).ready(function () {
+                                                                $(".pickadate1").pickadate({
+                                                                    format: "dd/mm/yyyy"
+                                                                });
 
-        });
+                                                            });
 
-        function searchAddress() {
-            var id = $('#customer').val();
-            $.ajax({
-                method: "GET",
-                url: "<%=request.getContextPath()%>/job/searchAddress/" + id,
-                success: function (data) {
-                    console.log(data);
-                    $('.modal-body').html(data);
-                }
-            });
-        }
+                                                            function searchAddress() {
+                                                                var id = $('#customer').val();
+                                                                $.ajax({
+                                                                    method: "GET",
+                                                                    url: "<%=request.getContextPath()%>/job/searchAddress/" + id,
+                                                                    success: function (data) {
+                                                                        console.log(data);
+                                                                        $('.modal-body').html(data);
+                                                                    }
+                                                                });
+                                                            }
 
 </script>
 
@@ -313,3 +319,5 @@
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
 
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
+
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/forms/select/form-select2.js"></script>

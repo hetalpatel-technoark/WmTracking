@@ -3709,7 +3709,7 @@ input[type='date'].form-control, input[type='time'].form-control, input[type='da
   background-color : #7367F0 !important;
   border-color : #4839EB !important;
   color : #FFFFFF;
-  padding : 5px;
+  padding : 3px;
 }
 .select2-container--classic .select2-selection--multiple .select2-selection__rendered li .select2-search__field, .select2-container--default .select2-selection--multiple .select2-selection__rendered li .select2-search__field {
   margin-top : 10px;

@@ -7,6 +7,7 @@ package com.wmtrucking.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -36,6 +38,28 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "MaJobs.findAll", query = "SELECT m FROM MaJobs m")})
 public class MaJobs implements Serializable {
 
+    @Size(max = 2147483647)
+    @Column(name = "jobnumber")
+    private String jobnumber;
+    @Size(max = 4000)
+    @Column(name = "notes")
+    private String notes;
+    @Size(max = 2147483647)
+    @Column(name = "status")
+    private String status;
+    @Column(name = "job_status")
+    private String job_status;
+
+    @Size(max = 2147483647)
+    @Column(name = "hauloff")
+    private String hauloff;
+    @Size(max = 2147483647)
+    @Column(name = "haulback")
+    private String haulback;
+    @Size(max = 2147483647)
+    @Column(name = "request_status")
+    private String requestStatus;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -44,31 +68,15 @@ public class MaJobs implements Serializable {
 
     @Column(name = "id")
     private Long id;
-    @Size(max = 2147483647)
-    @Column(name = "jobnumber")
-    private String jobnumber;
     @Column(name = "jobname")
     private String jobname;
     @Column(name = "jobdate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date jobdate;
-    @Size(max = 2147483647)
-    @Column(name = "hauloff")
-    private String hauloff;
-    @Size(max = 2147483647)
-    @Column(name = "haulback")
-    private String haulback;
     @Column(name = "common_hourly")
     private String common_hourly;
     @Column(name = "sand")
     private String sand;
-
-    @Size(max = 4000)
-    @Column(name = "notes")
-    private String notes;
-    @Size(max = 2147483647)
-    @Column(name = "status")
-    private String status;
 
     @Column(name = "other")
     private String other;
@@ -102,6 +110,8 @@ public class MaJobs implements Serializable {
 
 //    @Column(name = "createdby")
 //    private Long createdby;
+    @OneToMany(mappedBy = "jobId")
+    private List<MaJobDriver> maJobDriverList;
     @JoinColumn(name = "createdby", referencedColumnName = "authid")
     @ManyToOne
     private MaAuthobject createdby;
@@ -126,6 +136,14 @@ public class MaJobs implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getJob_status() {
+        return job_status;
+    }
+
+    public void setJob_status(String job_status) {
+        this.job_status = job_status;
     }
 
     public String getJobname() {
@@ -158,14 +176,6 @@ public class MaJobs implements Serializable {
 
     public void setModifiedddate(Date modifiedddate) {
         this.modifiedddate = modifiedddate;
-    }
-
-    public String getJobnumber() {
-        return jobnumber;
-    }
-
-    public void setJobnumber(String jobnumber) {
-        this.jobnumber = jobnumber;
     }
 
     public String getSelectfill() {
@@ -272,38 +282,6 @@ public class MaJobs implements Serializable {
         this.jobdate = jobdate;
     }
 
-    public String getHauloff() {
-        return hauloff;
-    }
-
-    public void setHauloff(String hauloff) {
-        this.hauloff = hauloff;
-    }
-
-    public String getHaulback() {
-        return haulback;
-    }
-
-    public void setHaulback(String haulback) {
-        this.haulback = haulback;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public MaCustomer getCustId() {
         return custId;
     }
@@ -343,6 +321,62 @@ public class MaJobs implements Serializable {
     @Override
     public String toString() {
         return "com.wmtrucking.entities.MaJobs[ id=" + id + " ]";
+    }
+
+    public String getJobnumber() {
+        return jobnumber;
+    }
+
+    public void setJobnumber(String jobnumber) {
+        this.jobnumber = jobnumber;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getHauloff() {
+        return hauloff;
+    }
+
+    public void setHauloff(String hauloff) {
+        this.hauloff = hauloff;
+    }
+
+    public String getHaulback() {
+        return haulback;
+    }
+
+    public void setHaulback(String haulback) {
+        this.haulback = haulback;
+    }
+
+    public String getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(String requestStatus) {
+        this.requestStatus = requestStatus;
+    }
+
+    public List<MaJobDriver> getMaJobDriverList() {
+        return maJobDriverList;
+    }
+
+    public void setMaJobDriverList(List<MaJobDriver> maJobDriverList) {
+        this.maJobDriverList = maJobDriverList;
     }
 
 }

@@ -32,21 +32,13 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "MaCustomer.findAll", query = "SELECT m FROM MaCustomer m")})
 public class MaCustomer implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ma_customer_seq")
-
-    @Column(name = "id")
-    private Long id;
-
     @Size(max = 2147483647)
     @Column(name = "companyname")
     private String companyname;
     @Size(max = 2147483647)
     @Column(name = "firstname")
     private String firstname;
+
     @Size(max = 2147483647)
     @Column(name = "middlename")
     private String middlename;
@@ -82,9 +74,18 @@ public class MaCustomer implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "email")
     private String email;
+    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 2147483647)
     @Column(name = "status")
     private String status;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ma_customer_seq")
+    
+    @Column(name = "id")
+    private Long id;
     @OneToMany(mappedBy = "custId")
     private List<MaJobs> maJobsList;
 
@@ -101,6 +102,34 @@ public class MaCustomer implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    public List<MaJobs> getMaJobsList() {
+        return maJobsList;
+    }
+    public void setMaJobsList(List<MaJobs> maJobsList) {
+        this.maJobsList = maJobsList;
+    }
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof MaCustomer)) {
+            return false;
+        }
+        MaCustomer other = (MaCustomer) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public String toString() {
+        return "com.wmtrucking.entities.MaCustomer[ id=" + id + " ]";
     }
 
     public String getCompanyname() {
@@ -213,39 +242,6 @@ public class MaCustomer implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public List<MaJobs> getMaJobsList() {
-        return maJobsList;
-    }
-
-    public void setMaJobsList(List<MaJobs> maJobsList) {
-        this.maJobsList = maJobsList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MaCustomer)) {
-            return false;
-        }
-        MaCustomer other = (MaCustomer) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.wmtrucking.entities.MaCustomer[ id=" + id + " ]";
     }
 
 }

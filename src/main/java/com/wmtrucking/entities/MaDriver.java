@@ -6,6 +6,7 @@
 package com.wmtrucking.entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -36,12 +37,11 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "MaDriver.findAll", query = "SELECT m FROM MaDriver m")})
 public class MaDriver implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Size(max = 2147483647)
-
     @Column(name = "licensenumber")
     private String licensenumber;
     @Size(max = 2147483647)
+
     @Column(name = "firstname")
     private String firstname;
     @Size(max = 2147483647)
@@ -78,6 +78,18 @@ public class MaDriver implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "email")
     private String email;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 2147483647)
+    @Column(name = "status")
+    private String status;
+    @Column(name = "otp")
+    private BigInteger otp;
+    @Column(name = "otp_expire_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date otpExpireTime;
+    @OneToMany(mappedBy = "driverId")
+    private List<MaJobDriver> maJobDriverList;
+    private static final long serialVersionUID = 1L;
     @Column(name = "createddate")
     @Temporal(TemporalType.DATE)
     private Date createddate;
@@ -88,9 +100,6 @@ public class MaDriver implements Serializable {
 
     @Column(name = "id")
     private Long id;
-    @Size(max = 2147483647)
-    @Column(name = "status")
-    private String status;
     @OneToMany(mappedBy = "driverId")
     private List<MaJobs> maJobsList;
 
@@ -99,6 +108,40 @@ public class MaDriver implements Serializable {
 
     public MaDriver(Long id) {
         this.id = id;
+    }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public List<MaJobs> getMaJobsList() {
+        return maJobsList;
+    }
+    public void setMaJobsList(List<MaJobs> maJobsList) {
+        this.maJobsList = maJobsList;
+    }
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof MaDriver)) {
+            return false;
+        }
+        MaDriver other = (MaDriver) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public String toString() {
+        return "com.wmtrucking.entities.MaDriver[ id=" + id + " ]";
     }
 
     public String getLicensenumber() {
@@ -205,14 +248,6 @@ public class MaDriver implements Serializable {
         this.email = email;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -221,37 +256,28 @@ public class MaDriver implements Serializable {
         this.status = status;
     }
 
-    public List<MaJobs> getMaJobsList() {
-        return maJobsList;
+    public BigInteger getOtp() {
+        return otp;
     }
 
-    public void setMaJobsList(List<MaJobs> maJobsList) {
-        this.maJobsList = maJobsList;
+    public void setOtp(BigInteger otp) {
+        this.otp = otp;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public Date getOtpExpireTime() {
+        return otpExpireTime;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MaDriver)) {
-            return false;
-        }
-        MaDriver other = (MaDriver) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public void setOtpExpireTime(Date otpExpireTime) {
+        this.otpExpireTime = otpExpireTime;
     }
 
-    @Override
-    public String toString() {
-        return "com.wmtrucking.entities.MaDriver[ id=" + id + " ]";
+    public List<MaJobDriver> getMaJobDriverList() {
+        return maJobDriverList;
+    }
+
+    public void setMaJobDriverList(List<MaJobDriver> maJobDriverList) {
+        this.maJobDriverList = maJobDriverList;
     }
 
 }
