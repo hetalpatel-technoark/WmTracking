@@ -80,10 +80,10 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Last Name</span>
+                                                        <span>Last Name * </span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text"  class="form-control" name="lname" value="<%=checkInput.checkValueEdit (madriver.getLastname(),request.getParameter("lname"))%>" placeholder="Last Name">
+                                                        <input type="text" required="" class="form-control" name="lname" value="<%=checkInput.checkValueEdit (madriver.getLastname(),request.getParameter("lname"))%>" placeholder="Last Name">
                                                     </div>
                                                 </div>
 
@@ -178,10 +178,10 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Pincode</span>
+                                                        <span>Zipcode</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="number"  id="pincode" class="form-control" name="pin" value="<%=checkInput.checkValueEdit (madriver.getPincode(),request.getParameter("pin"))%>" placeholder="Pincode">
+                                                        <input type="number"  id="pincode" class="form-control" name="pin" value="<%=checkInput.checkValueEdit (madriver.getPincode(),request.getParameter("pin"))%>" placeholder="Zipcode">
                                                     </div>
                                                 </div>
                                             </div>

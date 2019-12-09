@@ -172,10 +172,10 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span> Pincode </span>
+                                                        <span> Zipcode </span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="number"  id="pincode" class="form-control" name="pin" value="<%=checkInput.checkValue(request.getParameter("pin"))%>" placeholder="Pincode">
+                                                        <input type="number"  id="pincode" class="form-control" name="pin" value="<%=checkInput.checkValue(request.getParameter("pin"))%>" placeholder="Zipcode">
                                                     </div>
                                                 </div>
                                             </div>

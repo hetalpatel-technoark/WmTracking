@@ -5,7 +5,7 @@
  */
 package com.wmtrucking.controller;
 
-import com.google.gson.JsonObject;
+import com.wmtrucking.entities.MaAuthobject;
 import com.wmtrucking.entities.MaCustomer;
 import com.wmtrucking.entities.MaDriver;
 import com.wmtrucking.entities.MaJobs;
@@ -19,6 +19,7 @@ import com.wmtrucking.utils.ValidateUtil;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,9 +81,9 @@ public class jobController {
         validateUtil.checkNull(request, "customer", "Customer", errors);
         validateUtil.checkNull(request, "driver", "Driver", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
-
+        validateUtil.checkLength(errors, request, "job_assigndate", "Job Assign date", 255, 0);
         validateUtil.checkLength(errors, request, "jno", "Job Number", 255, 0);
-
+        validateUtil.checkLength(errors, request, "jname", "Job Name", 255, 0);
         validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
         validateUtil.checkLength(errors, request, "add2", "Address 2", 255, 0);
         validateUtil.checkLength(errors, request, "add3", "Address 3", 255, 0);
@@ -105,16 +106,20 @@ public class jobController {
         if (maCustomer != null) {
             majob.setCustId(maCustomer);
         }
+        MaAuthobject maAuthobject = (MaAuthobject) sessionUtils.getSessionValue(request, Constant.AUTHSESSION.toString());
         MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("driver")));
         if (maDriver != null) {
             majob.setDriverId(maDriver);
         }
         majob.setHaulback(validateUtil.getStringValue(request.getParameter("haulBack")));
         majob.setHauloff(validateUtil.getStringValue(request.getParameter("haulOff")));
+        majob.setSand(validateUtil.getStringValue(request.getParameter("Sand")));
+        majob.setCommon_hourly(validateUtil.getStringValue(request.getParameter("common_hourly")));
         majob.setJobdate(validateUtil.getDateValue(request.getParameter("jobdate")));
+        majob.setJob_assignddate(validateUtil.getDateValue(request.getParameter("job_assigndate")));
         majob.setJobnumber(validateUtil.getStringValue(request.getParameter("jno")));
+        majob.setJobname(validateUtil.getStringValue(request.getParameter("jname")));
         majob.setStatus(Constant.ACTIVE.toString());
-
         majob.setSelectfill(validateUtil.getStringValue(request.getParameter("selectfill")));
         majob.setOther(validateUtil.getStringValue(request.getParameter("others")));
         majob.setNotes(validateUtil.getStringValue(request.getParameter("notes")));
@@ -125,6 +130,8 @@ public class jobController {
         majob.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
         majob.setState(validateUtil.getStringValue(request.getParameter("state")));
         majob.setCountry(validateUtil.getStringValue(request.getParameter("country")));
+        majob.setCreateddate(new Date());
+        majob.setCreatedby(maAuthobject);
         jobService.save(majob);
         return "redirect:/job/List?m=c";
     }
@@ -188,7 +195,9 @@ public class jobController {
         validateUtil.checkNull(request, "driver", "Driver", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
 
+        validateUtil.checkLength(errors, request, "job_assigndate", "Job Assign date", 255, 0);
         validateUtil.checkLength(errors, request, "jno", "Job Number", 255, 0);
+        validateUtil.checkLength(errors, request, "jname", "Job Name", 255, 0);
 
         validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
         validateUtil.checkLength(errors, request, "add2", "Address 2", 255, 0);
@@ -220,7 +229,13 @@ public class jobController {
         }
         majob.setHaulback(validateUtil.getStringValue(request.getParameter("haulBack")));
         majob.setHauloff(validateUtil.getStringValue(request.getParameter("haulOff")));
+        majob.setSand(validateUtil.getStringValue(request.getParameter("Sand")));
+        majob.setCommon_hourly(validateUtil.getStringValue(request.getParameter("common_hourly")));
         majob.setJobdate(validateUtil.getDateValue(request.getParameter("jobdate")));
+        majob.setJobname(validateUtil.getStringValue(request.getParameter("jname")));
+
+        majob.setJob_assignddate(validateUtil.getDateValue(request.getParameter("job_assigndate")));
+
         majob.setJobnumber(validateUtil.getStringValue(request.getParameter("jno")));
         majob.setStatus(Constant.ACTIVE.toString());
 

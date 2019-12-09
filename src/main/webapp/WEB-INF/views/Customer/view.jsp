@@ -159,10 +159,10 @@
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <span>Pincode</span>
+                                                    <span>Zipcode</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input readonly type="text" class="form-control" name="pin" value="<%=checkInput.checkValueEdit (maCustomer.getPincode(),request.getParameter("pin"))%>" placeholder="Pincode">
+                                                    <input readonly type="text" class="form-control" name="pin" value="<%=checkInput.checkValueEdit (maCustomer.getPincode(),request.getParameter("pin"))%>" placeholder="Zipcode">
                                                 </div>
                                             </div>
                                         </div>

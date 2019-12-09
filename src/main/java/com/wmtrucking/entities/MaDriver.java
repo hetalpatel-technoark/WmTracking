@@ -6,6 +6,7 @@
 package com.wmtrucking.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,6 +19,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -75,10 +78,13 @@ public class MaDriver implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "email")
     private String email;
+    @Column(name = "createddate")
+    @Temporal(TemporalType.DATE)
+    private Date createddate;
     @Id
     @Basic(optional = false)
     @NotNull
-        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ma_driver_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ma_driver_seq")
 
     @Column(name = "id")
     private Long id;

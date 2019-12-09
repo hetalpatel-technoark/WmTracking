@@ -1,3 +1,5 @@
+<%@page import="com.wmtrucking.utils.DateUtils"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="com.wmtrucking.utils.CheckInput"%>
 <%@page import="com.wmtrucking.entities.MaCustomer"%>
@@ -169,10 +171,26 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Job Name</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text"  class="form-control" name="jname" value="<%=checkInput.checkValue(request.getParameter("jname"))%>" placeholder="Job Name">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
                                                     <div class="col-md-4">                                                    
                                                         <span>Job date *</span></div>
                                                     <div class="col-md-8">
-                                                        <input type="text" required readonly id="expirydate" name="jobdate" value="<%=checkInput.checkValue(request.getParameter("jobdate"))%>" class="form-control pickadate1" placeholder="Job Date">
+                                                        <input type="text" required readonly name="jobdate" value="<%=request.getParameter("jobdate") != null ? request.getParameter("jobdate") : new DateUtils().dateWithFormat(new Date(), "dd/MM/yyyy")%>"  class="form-control pickadate1" placeholder="Job Date">
+                                                    </div>
+                                                </div>
+                                                    
+                                                     <div class="form-group row">
+                                                    <div class="col-md-4">                                                    
+                                                        <span>Job Assign date</span></div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" readonly name="job_assigndate" value="<%=request.getParameter("job_assigndate") != null ? request.getParameter("job_assigndate") : new DateUtils().dateWithFormat(new Date(), "dd/MM/yyyy")%>"  class="form-control pickadate1" placeholder="Job Assign date">
                                                     </div>
                                                 </div>
 
@@ -183,26 +201,41 @@
                                                     <div class="col-md-8">
                                                         <div class="col-sm-12">
                                                             <ul class="list-unstyled mb-0">
+
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" value="selectfill"  name="selectfill" id="customCheck3">
-                                                                            <label class="custom-control-label" for="customCheck3">Fill</label>
+                                                                            <input type="checkbox" class="custom-control-input" value="Sand"  name="Sand" id="customCheck1">
+                                                                            <label class="custom-control-label" for="customCheck1">Sand</label>
                                                                         </div>
                                                                     </fieldset></li>
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input"  value="haulOff" name="haulOff" id="customCheck1">
-                                                                            <label class="custom-control-label" for="customCheck1">Haul Off </label>
+                                                                            <input type="checkbox" class="custom-control-input" value="selectfill"  name="selectfill" id="customCheck2">
+                                                                            <label class="custom-control-label" for="customCheck2">Fill</label>
+                                                                        </div>
+                                                                    </fieldset></li>
+                                                                <li class="d-inline-block mr-2">
+                                                                    <fieldset>
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input"  value="haulOff" name="haulOff" id="customCheck3">
+                                                                            <label class="custom-control-label" for="customCheck3">Haul Off </label>
                                                                         </div>
                                                                     </fieldset></li>
 
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" value="haulBack"  name="haulBack" id="customCheck2">
-                                                                            <label class="custom-control-label" for="customCheck2">Haul Back</label>
+                                                                            <input type="checkbox" class="custom-control-input" value="haulBack"  name="haulBack" id="customCheck4">
+                                                                            <label class="custom-control-label" for="customCheck4">Haul Back</label>
+                                                                        </div>
+                                                                    </fieldset></li>
+                                                                <li class="d-inline-block mr-2">
+                                                                    <fieldset>
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" value="Common Hourly"  name="common_hourly" id="customCheck5">
+                                                                            <label class="custom-control-label" for="customCheck5">Common Hourly</label>
                                                                         </div>
                                                                     </fieldset></li>
                                                             </ul>
@@ -214,7 +247,7 @@
                                                         <span>Others</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text"  id="pincode" class="form-control" name="others" value="<%=checkInput.checkValue(request.getParameter("others"))%>" placeholder="Others">
+                                                        <input type="text" class="form-control" name="others" value="<%=checkInput.checkValue(request.getParameter("others"))%>" placeholder="Others">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">

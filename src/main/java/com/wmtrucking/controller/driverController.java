@@ -68,12 +68,15 @@ public class driverController {
         List<String> errors = new ArrayList<>();
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "mob", "Mobile number", errors);
-        validateUtil.checkNull(request, "email", "Email", errors);
-
+//        validateUtil.checkNull(request, "email", "Email", errors);
+        validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
-        validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
-        validateUtil.checkLength(errors, request, "lno", "Licence number", 255, 0);
+//        validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
+        validateUtil.checkNull(request, "lname", "Last Name", errors);
+
+        validateUtil.checkNull(request, "lno", "Licence number", errors);
+//        validateUtil.checkNull(errors, request, "lno", "Licence number", 255, 1);
         validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
         validateUtil.checkLength(errors, request, "add2", "Address 2", 255, 0);
         validateUtil.checkLength(errors, request, "add3", "Address 3", 255, 0);

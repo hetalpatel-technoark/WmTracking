@@ -1,6 +1,6 @@
 <%@page import="java.net.URL"%>
 
-<%     
+<%
     URL url = new URL(request.getRequestURL().toString());
 %>
 <!-- BEGIN: Main Menu-->
@@ -28,6 +28,8 @@
             <li class="<%=url.toString().contains("Driver") ? "active" : ""%> nav-item"><a href="<%=request.getContextPath()%>/driver/drivelist" title="Driver"><i class="feather icon-user"></i><span class="menu-title" data-i18n="Email">Driver</span></a>
             </li>
             <li class="<%=url.toString().contains("Job") ? "active" : ""%> nav-item"><a href="<%=request.getContextPath()%>/job/List" title="Job"><i class="feather icon-award "></i><span class="menu-title" data-i18n="Email">Job</span></a>
+            </li>
+            <li class=" nav-item"><a href="#" title="Report"><i class="feather icon-bar-chart "></i><span class="menu-title" data-i18n="Email">Report</span></a>
             </li>
         </ul>
     </div>

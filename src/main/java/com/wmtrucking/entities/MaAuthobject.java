@@ -6,12 +6,14 @@
 package com.wmtrucking.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -42,6 +44,8 @@ public class MaAuthobject implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "password")
     private String password;
+    @OneToMany(mappedBy = "createdby")
+    private List<MaJobs> maJobsList;
 
     public MaAuthobject() {
     }
@@ -52,6 +56,14 @@ public class MaAuthobject implements Serializable {
 
     public Long getAuthid() {
         return authid;
+    }
+
+    public List<MaJobs> getMaJobsList() {
+        return maJobsList;
+    }
+
+    public void setMaJobsList(List<MaJobs> maJobsList) {
+        this.maJobsList = maJobsList;
     }
 
     public void setAuthid(Long authid) {
@@ -106,5 +118,5 @@ public class MaAuthobject implements Serializable {
     public String toString() {
         return "com.wmtrucking.entities.MaAuthobject[ authid=" + authid + " ]";
     }
-    
+
 }

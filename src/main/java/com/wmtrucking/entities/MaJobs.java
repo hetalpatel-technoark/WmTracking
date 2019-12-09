@@ -47,6 +47,8 @@ public class MaJobs implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "jobnumber")
     private String jobnumber;
+    @Column(name = "jobname")
+    private String jobname;
     @Column(name = "jobdate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date jobdate;
@@ -56,6 +58,10 @@ public class MaJobs implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "haulback")
     private String haulback;
+    @Column(name = "common_hourly")
+    private String common_hourly;
+    @Column(name = "sand")
+    private String sand;
 
     @Size(max = 4000)
     @Column(name = "notes")
@@ -86,6 +92,20 @@ public class MaJobs implements Serializable {
     @Column(name = "createddate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createddate;
+    @Column(name = "modifiedddate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date modifiedddate;
+
+    @Column(name = "job_assignddate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date job_assignddate;
+
+//    @Column(name = "createdby")
+//    private Long createdby;
+    @JoinColumn(name = "createdby", referencedColumnName = "authid")
+    @ManyToOne
+    private MaAuthobject createdby;
+
     @JoinColumn(name = "cust_id", referencedColumnName = "id")
     @ManyToOne
     private MaCustomer custId;
@@ -108,6 +128,38 @@ public class MaJobs implements Serializable {
         this.id = id;
     }
 
+    public String getJobname() {
+        return jobname;
+    }
+
+    public void setJobname(String jobname) {
+        this.jobname = jobname;
+    }
+
+    public Date getJob_assignddate() {
+        return job_assignddate;
+    }
+
+    public void setJob_assignddate(Date job_assignddate) {
+        this.job_assignddate = job_assignddate;
+    }
+
+    public MaAuthobject getCreatedby() {
+        return createdby;
+    }
+
+    public void setCreatedby(MaAuthobject createdby) {
+        this.createdby = createdby;
+    }
+
+    public Date getModifiedddate() {
+        return modifiedddate;
+    }
+
+    public void setModifiedddate(Date modifiedddate) {
+        this.modifiedddate = modifiedddate;
+    }
+
     public String getJobnumber() {
         return jobnumber;
     }
@@ -122,6 +174,22 @@ public class MaJobs implements Serializable {
 
     public void setSelectfill(String selectfill) {
         this.selectfill = selectfill;
+    }
+
+    public String getCommon_hourly() {
+        return common_hourly;
+    }
+
+    public void setCommon_hourly(String common_hourly) {
+        this.common_hourly = common_hourly;
+    }
+
+    public String getSand() {
+        return sand;
+    }
+
+    public void setSand(String sand) {
+        this.sand = sand;
     }
 
     public String getOther() {

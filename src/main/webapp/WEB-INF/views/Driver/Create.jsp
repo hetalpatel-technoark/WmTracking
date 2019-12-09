@@ -73,20 +73,20 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Last Name</span>
+                                                        <span>Last Name *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text"  class="form-control" name="lname" value="<%=checkInput.checkValue(request.getParameter("lname"))%>" placeholder="Last Name">
+                                                        <input type="text" required="" class="form-control" name="lname" value="<%=checkInput.checkValue(request.getParameter("lname"))%>" placeholder="Last Name">
                                                     </div>
                                                 </div>
 
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>License Number</span>
+                                                        <span>License Plate Number* </span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text"  class="form-control" name="lno" value="<%=checkInput.checkValue(request.getParameter("lno"))%>" placeholder="License Number">
+                                                        <input type="text" required="" class="form-control" name="lno" value="<%=checkInput.checkValue(request.getParameter("lno"))%>" placeholder="License Plate Number">
                                                     </div>
                                                 </div>
 
@@ -100,10 +100,10 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Email*</span>
+                                                        <span>Email</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="email" required=""  class="form-control" name="email" value="<%=checkInput.checkValue(request.getParameter("email"))%>" placeholder="Email">
+                                                        <input type="email"  class="form-control" name="email" value="<%=checkInput.checkValue(request.getParameter("email"))%>" placeholder="Email">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -164,10 +164,10 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Pincode</span>
+                                                        <span>Zipcode</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="number"  id="pincode" class="form-control" name="pin" value="<%=checkInput.checkValue(request.getParameter("pin"))%>" placeholder="Pincode">
+                                                        <input type="number"  id="pincode" class="form-control" name="pin" value="<%=checkInput.checkValue(request.getParameter("pin"))%>" placeholder="Zipcode">
                                                     </div>
                                                 </div>
                                             </div>

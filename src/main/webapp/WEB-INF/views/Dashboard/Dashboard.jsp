@@ -112,9 +112,9 @@
                 </div>
             </div>
         </section>
-        <section id="apexchart">
+<!--        <section id="apexchart">
             <div class="row">
-                <!-- Line Chart -->
+                 Line Chart 
                 <div class="col-lg-12 col-md-12">
                     <div class="card">
 
@@ -132,7 +132,7 @@
         </section>
         <section id="apexchart">
             <div class="row">
-                <!-- Line Chart -->
+                 Line Chart 
                 <div class="col-lg-12 col-md-12">
                     <div class="card">
 
@@ -147,7 +147,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
     </div>
 </div>
 
