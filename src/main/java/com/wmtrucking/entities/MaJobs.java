@@ -6,6 +6,7 @@
 package com.wmtrucking.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -47,10 +48,10 @@ public class MaJobs implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "status")
     private String status;
-   
+
     @Column(name = "hauloff")
     private Boolean hauloff;
-    
+
     @Column(name = "haulback")
     private Boolean haulback;
     @Column(name = "common_hourly")
@@ -113,6 +114,16 @@ public class MaJobs implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date job_assignddate;
 
+    @Column(name = "fromlatitude")
+    private BigDecimal fromlatitude;
+    @Column(name = "tolatitude")
+    private BigDecimal tolatitude;
+
+    @Column(name = "fromlongitude")
+    private BigDecimal fromlongitude;
+    @Column(name = "tolongitude")
+    private BigDecimal tolongitude;
+
 //    @Column(name = "createdby")
 //    private Long createdby;
     @OneToMany(mappedBy = "jobId")
@@ -137,6 +148,38 @@ public class MaJobs implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public BigDecimal getFromlatitude() {
+        return fromlatitude;
+    }
+
+    public void setFromlatitude(BigDecimal fromlatitude) {
+        this.fromlatitude = fromlatitude;
+    }
+
+    public BigDecimal getTolatitude() {
+        return tolatitude;
+    }
+
+    public void setTolatitude(BigDecimal tolatitude) {
+        this.tolatitude = tolatitude;
+    }
+
+    public BigDecimal getFromlongitude() {
+        return fromlongitude;
+    }
+
+    public void setFromlongitude(BigDecimal fromlongitude) {
+        this.fromlongitude = fromlongitude;
+    }
+
+    public BigDecimal getTolongitude() {
+        return tolongitude;
+    }
+
+    public void setTolongitude(BigDecimal tolongitude) {
+        this.tolongitude = tolongitude;
     }
 
     public void setId(Long id) {

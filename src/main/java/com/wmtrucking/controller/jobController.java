@@ -9,6 +9,7 @@ import com.wmtrucking.entities.MaAuthobject;
 import com.wmtrucking.entities.MaCustomer;
 import com.wmtrucking.entities.MaDriver;
 import com.wmtrucking.entities.MaJobDriver;
+import com.wmtrucking.entities.MaJobTracking;
 import com.wmtrucking.entities.MaJobs;
 import com.wmtrucking.exception.UnAthorizedUserException;
 import com.wmtrucking.services.customerService;
@@ -20,6 +21,7 @@ import com.wmtrucking.utils.SessionUtils;
 import com.wmtrucking.utils.ValidateUtil;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -138,7 +140,13 @@ public class jobController {
         majob.setCreateddate(new Date());
         majob.setCreatedby(maAuthobject);
         majob.setJob_status(Constant.PENDING.toString());
+        majob.setFromlatitude(new BigDecimal("000.0"));
+        majob.setTolatitude(new BigDecimal("000.0"));
+        majob.setFromlongitude(new BigDecimal("000.0"));
+        majob.setTolongitude(new BigDecimal("000.0"));
         jobService.save(majob);
+
+        //Job request for driver
         if (request.getParameterValues("driver") != null) {
             for (String driver : request.getParameterValues("driver")) {
                 MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(driver));
