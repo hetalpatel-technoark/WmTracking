@@ -7,6 +7,7 @@ package com.wmtrucking.repositories;
 
 import com.wmtrucking.entities.MaJobDriver;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -21,7 +22,8 @@ public interface jobDriverRepository extends JpaRepository<MaJobDriver, Long> {
             + "u.job_id in(select id from ma_jobs where status=?1 ) ")
     String list(String satus, Long jobId);
 
+    @Modifying
     @Query(nativeQuery = true, value = "delete from ma_job_driver  where job_id=?2 and job_id in(select id from ma_jobs where status=?1 ) ")
-    String deleteOldDriverJob(String satus, Long jobId);
+    void deleteOldDriverJob(String satus, Long jobId);
 
 }

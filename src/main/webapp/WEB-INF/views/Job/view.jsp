@@ -189,14 +189,14 @@
                                                             <li class="d-inline-block mr-2">
                                                                 <fieldset>
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input disabled type="checkbox" class="custom-control-input" <%= (majob.getSand() != null && majob.getSand().equals(checkInput.checkValueEdit(majob.getSand(), request.getParameter("Sand")))) ? "checked" : ""%>  value="Sand" name="Sand" id="customCheck1">
+                                                                        <input disabled type="checkbox" class="custom-control-input" <% if(majob.getSand()){%>checked<% } %>   value="Sand" name="Sand" id="customCheck1">
                                                                         <label class="custom-control-label" for="customCheck1">Sand </label>
                                                                     </div>
                                                                 </fieldset></li>
                                                             <li class="d-inline-block mr-2">
                                                                 <fieldset>
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input disabled type="checkbox" class="custom-control-input" <%= (majob.getSelectfill() != null && majob.getSelectfill().equals(checkInput.checkValueEdit(majob.getSelectfill(), request.getParameter("selectfill")))) ? "checked" : ""%>  value="selectfill" name="selectfill" id="customCheck2">
+                                                                        <input disabled type="checkbox" class="custom-control-input" <% if(majob.getSelectfill()){%>checked<% } %>   value="selectfill" name="selectfill" id="customCheck2">
                                                                         <label class="custom-control-label" for="customCheck2">Fill </label>
                                                                     </div>
                                                                 </fieldset>
@@ -204,7 +204,7 @@
                                                             <li class="d-inline-block mr-2">
                                                                 <fieldset>
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input disabled readonly type="checkbox" class="custom-control-input" <%= (majob.getHauloff() != null && majob.getHauloff().equals(checkInput.checkValueEdit(majob.getHauloff(), request.getParameter("haulOff")))) ? "checked" : ""%>  value="haulOff" name="haulOff" id="customCheck3">
+                                                                        <input disabled readonly type="checkbox" class="custom-control-input" <% if(majob.getHauloff()){%>checked<% } %>  value="haulOff" name="haulOff" id="customCheck3">
                                                                         <label class="custom-control-label" for="customCheck3">Haul Off </label>
                                                                     </div>
                                                                 </fieldset></li>
@@ -212,14 +212,14 @@
                                                             <li class="d-inline-block mr-2">
                                                                 <fieldset>
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input disabled readonly type="checkbox" class="custom-control-input" <%= majob.getHaulback() != null && majob.getHaulback().equals(checkInput.checkValueEdit(majob.getHaulback(), request.getParameter("haulBack"))) ? "checked" : ""%> value="haulBack"  name="haulBack" id="customCheck4">
+                                                                        <input disabled readonly type="checkbox" class="custom-control-input" <% if(majob.getHaulback()){%>checked<% } %>  value="haulBack"  name="haulBack" id="customCheck4">
                                                                         <label class="custom-control-label" for="customCheck4">Haul Back</label>
                                                                     </div>
                                                                 </fieldset></li>
                                                             <li class="d-inline-block mr-2">
                                                                 <fieldset>
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input disabled type="checkbox" class="custom-control-input" <%= (majob.getCommon_hourly() != null && majob.getCommon_hourly().equals(checkInput.checkValueEdit(majob.getCommon_hourly(), request.getParameter("Common Hourly")))) ? "checked" : ""%>  value="Common Hourly" name="common_hourly" id="customCheck5">
+                                                                        <input disabled type="checkbox" class="custom-control-input" <% if(majob.getCommon_hourly()){%>checked<% } %>  value="Common Hourly" name="common_hourly" id="customCheck5">
                                                                         <label class="custom-control-label" for="customCheck5">Common Hourly </label>
                                                                     </div>
                                                                 </fieldset></li>

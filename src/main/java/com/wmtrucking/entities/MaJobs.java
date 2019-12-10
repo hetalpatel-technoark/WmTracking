@@ -47,18 +47,28 @@ public class MaJobs implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "status")
     private String status;
+   
+    @Column(name = "hauloff")
+    private Boolean hauloff;
+    
+    @Column(name = "haulback")
+    private Boolean haulback;
+    @Column(name = "common_hourly")
+    private Boolean common_hourly;
+    @Column(name = "sand")
+    private Boolean sand;
+    @Column(name = "selectfill")
+    private Boolean selectfill;
+//    @Size(max = 2147483647)
+//    @Column(name = "request_status")
+//    private String requestStatus;
+    @JoinColumn(name = "driverid", referencedColumnName = "id")
+    @ManyToOne()
+    private MaDriver driverid;
+    @OneToMany(mappedBy = "jobId")
+    private List<MaJobTracking> maJobTrackingList;
     @Column(name = "job_status")
     private String job_status;
-
-    @Size(max = 2147483647)
-    @Column(name = "hauloff")
-    private String hauloff;
-    @Size(max = 2147483647)
-    @Column(name = "haulback")
-    private String haulback;
-    @Size(max = 2147483647)
-    @Column(name = "request_status")
-    private String requestStatus;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -73,10 +83,6 @@ public class MaJobs implements Serializable {
     @Column(name = "jobdate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date jobdate;
-    @Column(name = "common_hourly")
-    private String common_hourly;
-    @Column(name = "sand")
-    private String sand;
 
     @Column(name = "other")
     private String other;
@@ -95,8 +101,7 @@ public class MaJobs implements Serializable {
     private String city;
     @Column(name = "country")
     private String country;
-    @Column(name = "selectfill")
-    private String selectfill;
+
     @Column(name = "createddate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createddate;
@@ -178,27 +183,27 @@ public class MaJobs implements Serializable {
         this.modifiedddate = modifiedddate;
     }
 
-    public String getSelectfill() {
+    public Boolean getSelectfill() {
         return selectfill;
     }
 
-    public void setSelectfill(String selectfill) {
+    public void setSelectfill(Boolean selectfill) {
         this.selectfill = selectfill;
     }
 
-    public String getCommon_hourly() {
+    public Boolean getCommon_hourly() {
         return common_hourly;
     }
 
-    public void setCommon_hourly(String common_hourly) {
+    public void setCommon_hourly(Boolean common_hourly) {
         this.common_hourly = common_hourly;
     }
 
-    public String getSand() {
+    public Boolean getSand() {
         return sand;
     }
 
-    public void setSand(String sand) {
+    public void setSand(Boolean sand) {
         this.sand = sand;
     }
 
@@ -323,6 +328,21 @@ public class MaJobs implements Serializable {
         return "com.wmtrucking.entities.MaJobs[ id=" + id + " ]";
     }
 
+//    public String getRequestStatus() {
+//        return requestStatus;
+//    }
+//
+//    public void setRequestStatus(String requestStatus) {
+//        this.requestStatus = requestStatus;
+//    }
+    public List<MaJobDriver> getMaJobDriverList() {
+        return maJobDriverList;
+    }
+
+    public void setMaJobDriverList(List<MaJobDriver> maJobDriverList) {
+        this.maJobDriverList = maJobDriverList;
+    }
+
     public String getJobnumber() {
         return jobnumber;
     }
@@ -347,36 +367,43 @@ public class MaJobs implements Serializable {
         this.status = status;
     }
 
-    public String getHauloff() {
+    public Boolean getHauloff() {
         return hauloff;
     }
 
-    public void setHauloff(String hauloff) {
+    public void setHauloff(Boolean hauloff) {
         this.hauloff = hauloff;
     }
 
-    public String getHaulback() {
+    public Boolean getHaulback() {
         return haulback;
     }
 
-    public void setHaulback(String haulback) {
+    public void setHaulback(Boolean haulback) {
         this.haulback = haulback;
     }
 
-    public String getRequestStatus() {
-        return requestStatus;
+//    public String getRequestStatus() {
+//        return requestStatus;
+//    }
+//
+//    public void setRequestStatus(String requestStatus) {
+//        this.requestStatus = requestStatus;
+//    }
+    public MaDriver getDriverid() {
+        return driverid;
     }
 
-    public void setRequestStatus(String requestStatus) {
-        this.requestStatus = requestStatus;
+    public void setDriverid(MaDriver driverid) {
+        this.driverid = driverid;
     }
 
-    public List<MaJobDriver> getMaJobDriverList() {
-        return maJobDriverList;
+    public List<MaJobTracking> getMaJobTrackingList() {
+        return maJobTrackingList;
     }
 
-    public void setMaJobDriverList(List<MaJobDriver> maJobDriverList) {
-        this.maJobDriverList = maJobDriverList;
+    public void setMaJobTrackingList(List<MaJobTracking> maJobTrackingList) {
+        this.maJobTrackingList = maJobTrackingList;
     }
 
 }

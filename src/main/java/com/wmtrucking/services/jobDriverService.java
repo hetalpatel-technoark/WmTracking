@@ -9,6 +9,7 @@ import com.wmtrucking.entities.MaJobDriver;
 import com.wmtrucking.repositories.jobDriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -28,7 +29,8 @@ public class jobDriverService {
         return jobDriverRepository.list(satus, jobId);
     }
 
-    public String deleteOldDriverJob(String satus, Long jobId) {
-        return jobDriverRepository.deleteOldDriverJob(satus, jobId);
+    @Transactional
+    public void deleteOldDriverJob(String satus, Long jobId) {
+        jobDriverRepository.deleteOldDriverJob(satus, jobId);
     }
 }

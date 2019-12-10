@@ -75,6 +75,7 @@ public class MaDriver implements Serializable {
     @Column(name = "mobile")
     private String mobile;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 2147483647)
     @Column(name = "email")
     private String email;
@@ -82,6 +83,8 @@ public class MaDriver implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "status")
     private String status;
+    @OneToMany(mappedBy = "driverId")
+    private List<MaJobTracking> maJobTrackingList;
     @Column(name = "otp")
     private BigInteger otp;
     @Column(name = "otp_expire_time")
@@ -142,6 +145,24 @@ public class MaDriver implements Serializable {
     @Override
     public String toString() {
         return "com.wmtrucking.entities.MaDriver[ id=" + id + " ]";
+    }
+    public BigInteger getOtp() {
+        return otp;
+    }
+    public void setOtp(BigInteger otp) {
+        this.otp = otp;
+    }
+    public Date getOtpExpireTime() {
+        return otpExpireTime;
+    }
+    public void setOtpExpireTime(Date otpExpireTime) {
+        this.otpExpireTime = otpExpireTime;
+    }
+    public List<MaJobDriver> getMaJobDriverList() {
+        return maJobDriverList;
+    }
+    public void setMaJobDriverList(List<MaJobDriver> maJobDriverList) {
+        this.maJobDriverList = maJobDriverList;
     }
 
     public String getLicensenumber() {
@@ -256,28 +277,12 @@ public class MaDriver implements Serializable {
         this.status = status;
     }
 
-    public BigInteger getOtp() {
-        return otp;
+    public List<MaJobTracking> getMaJobTrackingList() {
+        return maJobTrackingList;
     }
 
-    public void setOtp(BigInteger otp) {
-        this.otp = otp;
-    }
-
-    public Date getOtpExpireTime() {
-        return otpExpireTime;
-    }
-
-    public void setOtpExpireTime(Date otpExpireTime) {
-        this.otpExpireTime = otpExpireTime;
-    }
-
-    public List<MaJobDriver> getMaJobDriverList() {
-        return maJobDriverList;
-    }
-
-    public void setMaJobDriverList(List<MaJobDriver> maJobDriverList) {
-        this.maJobDriverList = maJobDriverList;
+    public void setMaJobTrackingList(List<MaJobTracking> maJobTrackingList) {
+        this.maJobTrackingList = maJobTrackingList;
     }
 
 }

@@ -208,21 +208,21 @@
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" value="Sand"  name="Sand" id="customCheck1">
+                                                                            <input type="checkbox" class="custom-control-input" value="true"  name="Sand" id="customCheck1">
                                                                             <label class="custom-control-label" for="customCheck1">Sand</label>
                                                                         </div>
                                                                     </fieldset></li>
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" value="selectfill"  name="selectfill" id="customCheck2">
+                                                                            <input type="checkbox" class="custom-control-input" value="true"  name="selectfill" id="customCheck2">
                                                                             <label class="custom-control-label" for="customCheck2">Fill</label>
                                                                         </div>
                                                                     </fieldset></li>
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input"  value="haulOff" name="haulOff" id="customCheck3">
+                                                                            <input type="checkbox" class="custom-control-input"  value="true" name="haulOff" id="customCheck3">
                                                                             <label class="custom-control-label" for="customCheck3">Haul Off </label>
                                                                         </div>
                                                                     </fieldset></li>
@@ -230,14 +230,14 @@
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" value="haulBack"  name="haulBack" id="customCheck4">
+                                                                            <input type="checkbox" class="custom-control-input" value="true"  name="haulBack" id="customCheck4">
                                                                             <label class="custom-control-label" for="customCheck4">Haul Back</label>
                                                                         </div>
                                                                     </fieldset></li>
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" value="Common Hourly"  name="common_hourly" id="customCheck5">
+                                                                            <input type="checkbox" class="custom-control-input" value="true"  name="common_hourly" id="customCheck5">
                                                                             <label class="custom-control-label" for="customCheck5">Common Hourly</label>
                                                                         </div>
                                                                     </fieldset></li>
