@@ -1,323 +1,119 @@
-<%@page import="com.wmtrucking.utils.DateUtils"%>
-<%@page import="java.util.Date"%>
-<%@page import="java.util.Iterator"%>
-<%@page import="com.wmtrucking.utils.CheckInput"%>
-<%@page import="com.wmtrucking.entities.MaCustomer"%>
-<%@page import="com.wmtrucking.entities.MaDriver"%>
+<html>
+    <head>
 
-<%@page import="java.util.List"%>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/pickers/pickadate/pickadate.css">  
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/forms/select/select2.min.css">
 
-<jsp:include page="../Template/header.jsp"></jsp:include>
-
-    <div class="content-wrapper">
-        <div class="content-header row">
-            <div class="content-header-left col-md-9 col-12 mb-2">
-                <div class="row breadcrumbs-top">
-                    <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">Job</h2>
-                        <div class="breadcrumb-wrapper col-12">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/Dashboard/Dashboard">Home</a>
-                            </li>
-                            <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/job/List">Job</a>
-                            </li>
-                            <li class="breadcrumb-item"><a href="#">Create</a>
-                            </li>
-                        </ol>
-                    </div>
+    </head>
+    <body >
+        <div class="container">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Add your Address</h2>
                 </div>
-            </div>
-        </div>        
-    </div>
-    <div class="content-body">
-        <!-- Basic Horizontal form layout section start -->
-        <section id="basic-horizontal-layouts">
-            <div class="row match-height">
-                <div class="col-md-12 col-12">
-                    <%
-                        if (request.getAttribute("error") != null) {
-                            List<String> errors = (List<String>) request.getAttribute("error");
-                            if (!errors.isEmpty()) {
-                    %>
-                    <div class="alert alert-danger">
-                        <button class="close" data-dismiss="alert"><span>x</span></button>
-                        <%
-                                Iterator<String> iterator = errors.iterator();
-                                while (iterator.hasNext()) {
-                                    out.println("<i class='fa fa-arrow-circle-right'></i> " + iterator.next() + "<br/>");
-                                }
-                            }
-                        %>
-                    </div>
-                    <%                        }
-                        CheckInput checkInput = new CheckInput();
-                    %>
-
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="card-body">
-                                <form method="post"  class="form-horizontal bordered-row" id="user-form" action="<%=request.getContextPath()%>/job/PostCreate">
-                                    <div class="form-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                
-
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Assign Driver *</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <select class="select2 form-control"  name="driver" required multiple="multiple">
-                                                            <%
-                                                                List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
-                                                                for (MaDriver maDriver : maDrivers) {
-                                                            %>
-                                                            <option  value="<%=maDriver.getId()%>"><%= maDriver.getFirstname()%></option>
-                                                            <%}%>
-                                                       
-                                                        </select>
-                                                    </div>
-                                                </div> 
-
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Customer / Company *</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <select  onchange="searchAddress()" id="customer" class="form-control select-class" name="customer" required>
-                                                            <option selected="" disabled="">Select Customer </option>
-
-                                                            <%
-                                                                List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
-                                                                for (MaCustomer maCustomer : maCustomers) {
-                                                            %>
-                                                            <option <%=maCustomer.getId().toString().equals(checkInput.checkValue(request.getParameter("customer"))) ? "selected" : ""%>  value="<%=maCustomer.getId()%>"><%= maCustomer.getFirstname()%></option>
-                                                            <%}%>
-                                                        </select>
-                                                    </div>
-                                                </div> 
-                                                <div class="modal-body">
-
-                                                </div>
-                                                <%
-                                                    if (request.getAttribute("error") != null) {
-                                                %>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Address 1</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text"  class="form-control" name="add1" value="<%=checkInput.checkValue(request.getParameter("add1"))%>"  placeholder="Address 1">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Address 2</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text"  class="form-control" name="add2" value="<%=checkInput.checkValue(request.getParameter("add2"))%>"  placeholder="Address 2">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Address 3</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text"  class="form-control" name="add3" value="<%=checkInput.checkValue(request.getParameter("add3"))%>"  placeholder="Address 3">
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>City</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text"   class="form-control" name="city" value="<%=checkInput.checkValue(request.getParameter("city"))%>"  placeholder="City">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>State</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text" id="state" class="form-control" name="state" value="<%=checkInput.checkValue(request.getParameter("state"))%>"  placeholder="State">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Country</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text" id="country" class="form-control" name="country" value="<%=checkInput.checkValue(request.getParameter("country"))%>"  placeholder="Country">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Pincode</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text"  id="pincode" class="form-control" name="pin" value="<%=checkInput.checkValue(request.getParameter("pin"))%>"  placeholder="Pincode">
-                                                    </div>
-                                                </div>
-                                                <%}%>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Job number*</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text" required=""  class="form-control" name="jno" value="<%=checkInput.checkValue(request.getParameter("jno"))%>" placeholder="Job number">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Job Name</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text"  class="form-control" name="jname" value="<%=checkInput.checkValue(request.getParameter("jname"))%>" placeholder="Job Name">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">                                                    
-                                                        <span>Job date *</span></div>
-                                                    <div class="col-md-8">
-                                                        <input type="text" required readonly name="jobdate" value="<%=request.getParameter("jobdate") != null ? request.getParameter("jobdate") : new DateUtils().dateWithFormat(new Date(), "dd/MM/yyyy")%>"  class="form-control pickadate1" placeholder="Job Date">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">                                                    
-                                                        <span>Job Assign date</span></div>
-                                                    <div class="col-md-8">
-                                                        <input type="text" readonly name="job_assigndate" value="<%=request.getParameter("job_assigndate") != null ? request.getParameter("job_assigndate") : new DateUtils().dateWithFormat(new Date(), "dd/MM/yyyy")%>"  class="form-control pickadate1" placeholder="Job Assign date">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <!--                                                        <span>Select fill</span>-->
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <div class="col-sm-12">
-                                                            <ul class="list-unstyled mb-0">
-
-                                                                <li class="d-inline-block mr-2">
-                                                                    <fieldset>
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" value="true"  name="Sand" id="customCheck1">
-                                                                            <label class="custom-control-label" for="customCheck1">Sand</label>
-                                                                        </div>
-                                                                    </fieldset></li>
-                                                                <li class="d-inline-block mr-2">
-                                                                    <fieldset>
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" value="true"  name="selectfill" id="customCheck2">
-                                                                            <label class="custom-control-label" for="customCheck2">Fill</label>
-                                                                        </div>
-                                                                    </fieldset></li>
-                                                                <li class="d-inline-block mr-2">
-                                                                    <fieldset>
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input"  value="true" name="haulOff" id="customCheck3">
-                                                                            <label class="custom-control-label" for="customCheck3">Haul Off </label>
-                                                                        </div>
-                                                                    </fieldset></li>
-
-                                                                <li class="d-inline-block mr-2">
-                                                                    <fieldset>
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" value="true"  name="haulBack" id="customCheck4">
-                                                                            <label class="custom-control-label" for="customCheck4">Haul Back</label>
-                                                                        </div>
-                                                                    </fieldset></li>
-                                                                <li class="d-inline-block mr-2">
-                                                                    <fieldset>
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" value="true"  name="common_hourly" id="customCheck5">
-                                                                            <label class="custom-control-label" for="customCheck5">Common Hourly</label>
-                                                                        </div>
-                                                                    </fieldset></li>
-                                                            </ul>
-                                                        </div> 
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Others</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text" class="form-control" name="others" value="<%=checkInput.checkValue(request.getParameter("others"))%>" placeholder="Others">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Notes</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <textarea class="form-control" name="notes"><%=checkInput.checkValue(request.getParameter("notes"))%> </textarea>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                            <div class="col-md-8 offset-md-4">
-                                                <button type="submit" class="btn btn-primary mr-1 mb-1">Save Information</button>
-                                                <a href="<%= request.getContextPath()%>/job/List" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                <div class="panel-body">
+                    <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text" class="form-control">
+                    <div id="address">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label">Street address</label>
+                                <input class="form-control" id="street_number" disabled="true">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label">Route</label>
+                                <input class="form-control" id="route" disabled="true">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label">City</label>
+                                <input class="form-control field" id="locality" disabled="true">
+                            </div>
+                            <div class="col-md-6"> 
+                                <label class="control-label">State</label>
+                                <input class="form-control" id="administrative_area_level_1" disabled="true">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label">Zip code</label>
+                                <input class="form-control" id="postal_code" disabled="true">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label">Country</label>
+                                <input class="form-control" id="country" disabled="true">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- // Basic Horizontal form layout section end -->
+        </div>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkQy1kMhjd_g3kDrGoMSh7VMl4QKkzFQY&libraries=places&callback=initAutocomplete" async defer></script>
+        <script>
+          var placeSearch, autocomplete;
+          var componentForm = {
+              street_number: 'short_name',
+              route: 'long_name',
+              locality: 'long_name',
+              administrative_area_level_1: 'short_name',
+              country: 'long_name',
+              postal_code: 'short_name'
+          };
+
+          function initAutocomplete() {
+              // Create the autocomplete object, restricting the search to geographical
+              // location types.
+              autocomplete = new google.maps.places.Autocomplete(
+                      /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+                      {types: ['geocode']});
+
+              // When the user selects an address from the dropdown, populate the address
+              // fields in the form.
+              autocomplete.addListener('place_changed', fillInAddress);
+          }
+
+          function fillInAddress() {
+              // Get the place details from the autocomplete object.
+              var place = autocomplete.getPlace();
+
+              for (var component in componentForm) {
+                  document.getElementById(component).value = '';
+                  document.getElementById(component).disabled = false;
+              }
+
+              // Get each component of the address from the place details
+              // and fill the corresponding field on the form.
+              for (var i = 0; i < place.address_components.length; i++) {
+                  var addressType = place.address_components[i].types[0];
+                  if (componentForm[addressType]) {
+                      var val = place.address_components[i][componentForm[addressType]];
+                      document.getElementById(addressType).value = val;
+                  }
+              }
+          }
+
+// Bias the autocomplete object to the user's geographical location,
+// as supplied by the browser's 'navigator.geolocation' object.
+          function geolocate() {
+              if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(function (position) {
+                      var geolocation = {
+                          lat: position.coords.latitude,
+                          lng: position.coords.longitude
+                      };
+                      var circle = new google.maps.Circle({
+                          center: geolocation,
+                          radius: position.coords.accuracy
+                      });
+                      autocomplete.setBounds(circle.getBounds());
+                  });
+              }
+          }
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <script src="auto-complete.js"></script>
 
 
-
-    </div>
-</div>
-
-<!-- END: Content-->
-<jsp:include page="../Template/pageEnd.jsp"></jsp:include>    
-
-<jsp:include page="../Template/footer.jsp"></jsp:include>
-<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
-
-
-    <script>
-                                                            $(document).ready(function () {
-                                                                $(".pickadate1").pickadate({
-                                                                    format: "dd/mm/yyyy"
-                                                                });
-
-                                                            });
-
-                                                            function searchAddress() {
-                                                                var id = $('#customer').val();
-                                                                $.ajax({
-                                                                    method: "GET",
-                                                                    url: "<%=request.getContextPath()%>/job/searchAddress/" + id,
-                                                                    success: function (data) {
-                                                                        console.log(data);
-                                                                        $('.modal-body').html(data);
-                                                                    }
-                                                                });
-                                                            }
-
-</script>
-
-<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/picker.js"></script>
-<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
-<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
-<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
-
-<script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
-
-<script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/forms/select/form-select2.js"></script>
+    </body>
+</html>

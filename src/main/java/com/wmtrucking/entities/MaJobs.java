@@ -7,6 +7,7 @@ package com.wmtrucking.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -48,6 +49,19 @@ public class MaJobs implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "status")
     private String status;
+    @Size(max = 2147483647)
+    @Column(name = "request_status")
+    private String requestStatus;
+    @Column(name = "fromlatitude")
+    private BigDecimal fromlatitude;
+    @Column(name = "tolatitude")
+    private BigDecimal tolatitude;
+    @Column(name = "fromlongitude")
+    private BigDecimal fromlongitude;
+    @Column(name = "tolongitude")
+    private BigDecimal tolongitude;
+    @OneToMany(mappedBy = "jobId")
+    private List<MaJobCustomer> maJobCustomerList;
 
     @Column(name = "hauloff")
     private Boolean hauloff;
@@ -103,6 +117,9 @@ public class MaJobs implements Serializable {
     @Column(name = "country")
     private String country;
 
+    @Column(name = "totaljobcount")
+    private Long totaljobcount;
+
     @Column(name = "createddate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createddate;
@@ -113,16 +130,6 @@ public class MaJobs implements Serializable {
     @Column(name = "job_assignddate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date job_assignddate;
-
-    @Column(name = "fromlatitude")
-    private BigDecimal fromlatitude;
-    @Column(name = "tolatitude")
-    private BigDecimal tolatitude;
-
-    @Column(name = "fromlongitude")
-    private BigDecimal fromlongitude;
-    @Column(name = "tolongitude")
-    private BigDecimal tolongitude;
 
 //    @Column(name = "createdby")
 //    private Long createdby;
@@ -150,36 +157,12 @@ public class MaJobs implements Serializable {
         return id;
     }
 
-    public BigDecimal getFromlatitude() {
-        return fromlatitude;
+    public Long getTotaljobcount() {
+        return totaljobcount;
     }
 
-    public void setFromlatitude(BigDecimal fromlatitude) {
-        this.fromlatitude = fromlatitude;
-    }
-
-    public BigDecimal getTolatitude() {
-        return tolatitude;
-    }
-
-    public void setTolatitude(BigDecimal tolatitude) {
-        this.tolatitude = tolatitude;
-    }
-
-    public BigDecimal getFromlongitude() {
-        return fromlongitude;
-    }
-
-    public void setFromlongitude(BigDecimal fromlongitude) {
-        this.fromlongitude = fromlongitude;
-    }
-
-    public BigDecimal getTolongitude() {
-        return tolongitude;
-    }
-
-    public void setTolongitude(BigDecimal tolongitude) {
-        this.tolongitude = tolongitude;
+    public void setTotaljobcount(Long totaljobcount) {
+        this.totaljobcount = totaljobcount;
     }
 
     public void setId(Long id) {
@@ -386,30 +369,6 @@ public class MaJobs implements Serializable {
         this.maJobDriverList = maJobDriverList;
     }
 
-    public String getJobnumber() {
-        return jobnumber;
-    }
-
-    public void setJobnumber(String jobnumber) {
-        this.jobnumber = jobnumber;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public Boolean getHauloff() {
         return hauloff;
     }
@@ -447,6 +406,78 @@ public class MaJobs implements Serializable {
 
     public void setMaJobTrackingList(List<MaJobTracking> maJobTrackingList) {
         this.maJobTrackingList = maJobTrackingList;
+    }
+
+    public String getJobnumber() {
+        return jobnumber;
+    }
+
+    public void setJobnumber(String jobnumber) {
+        this.jobnumber = jobnumber;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(String requestStatus) {
+        this.requestStatus = requestStatus;
+    }
+
+    public BigDecimal getFromlatitude() {
+        return fromlatitude;
+    }
+
+    public void setFromlatitude(BigDecimal fromlatitude) {
+        this.fromlatitude = fromlatitude;
+    }
+
+    public BigDecimal getTolatitude() {
+        return tolatitude;
+    }
+
+    public void setTolatitude(BigDecimal tolatitude) {
+        this.tolatitude = tolatitude;
+    }
+
+    public BigDecimal getFromlongitude() {
+        return fromlongitude;
+    }
+
+    public void setFromlongitude(BigDecimal fromlongitude) {
+        this.fromlongitude = fromlongitude;
+    }
+
+    public BigDecimal getTolongitude() {
+        return tolongitude;
+    }
+
+    public void setTolongitude(BigDecimal tolongitude) {
+        this.tolongitude = tolongitude;
+    }
+
+    public List<MaJobCustomer> getMaJobCustomerList() {
+        return maJobCustomerList;
+    }
+
+    public void setMaJobCustomerList(List<MaJobCustomer> maJobCustomerList) {
+        this.maJobCustomerList = maJobCustomerList;
     }
 
 }

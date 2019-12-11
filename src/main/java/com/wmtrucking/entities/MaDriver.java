@@ -76,6 +76,7 @@ public class MaDriver implements Serializable {
     private String mobile;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 2147483647)
     @Column(name = "email")
     private String email;
@@ -163,6 +164,12 @@ public class MaDriver implements Serializable {
     }
     public void setMaJobDriverList(List<MaJobDriver> maJobDriverList) {
         this.maJobDriverList = maJobDriverList;
+    }
+    public List<MaJobTracking> getMaJobTrackingList() {
+        return maJobTrackingList;
+    }
+    public void setMaJobTrackingList(List<MaJobTracking> maJobTrackingList) {
+        this.maJobTrackingList = maJobTrackingList;
     }
 
     public String getLicensenumber() {
@@ -275,14 +282,6 @@ public class MaDriver implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public List<MaJobTracking> getMaJobTrackingList() {
-        return maJobTrackingList;
-    }
-
-    public void setMaJobTrackingList(List<MaJobTracking> maJobTrackingList) {
-        this.maJobTrackingList = maJobTrackingList;
     }
 
 }

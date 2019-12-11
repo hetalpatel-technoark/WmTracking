@@ -52,6 +52,8 @@ public class MaJobTracking implements Serializable {
     @Column(name = "createddate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createddate;
+    @Column(name = "status")
+    private String status;
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
     @ManyToOne
     private MaDriver driverId;
@@ -68,6 +70,14 @@ public class MaJobTracking implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setId(Long id) {

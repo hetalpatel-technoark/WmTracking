@@ -8,12 +8,13 @@ package com.wmtrucking.controller;
 import com.wmtrucking.entities.MaAuthobject;
 import com.wmtrucking.entities.MaCustomer;
 import com.wmtrucking.entities.MaDriver;
+import com.wmtrucking.entities.MaJobCustomer;
 import com.wmtrucking.entities.MaJobDriver;
-import com.wmtrucking.entities.MaJobTracking;
 import com.wmtrucking.entities.MaJobs;
 import com.wmtrucking.exception.UnAthorizedUserException;
 import com.wmtrucking.services.customerService;
 import com.wmtrucking.services.driverService;
+import com.wmtrucking.services.jobCustomerService;
 import com.wmtrucking.services.jobDriverService;
 import com.wmtrucking.services.jobService;
 import com.wmtrucking.utils.Constant;
@@ -52,6 +53,8 @@ public class jobController {
     driverService drService;
     @Autowired
     jobDriverService jobDriverService;
+    @Autowired
+    jobCustomerService jobcustomerService;
 
     @ModelAttribute(value = "job")
     public void job(HttpServletRequest request, Model model) throws UnAthorizedUserException {
@@ -87,7 +90,7 @@ public class jobController {
         validateUtil.checkNull(request, "customer", "Customer", errors);
         validateUtil.checkNull(request, "driver", "Driver", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
-        validateUtil.checkLength(errors, request, "job_assigndate", "Job Assign date", 255, 0);
+//        validateUtil.checkLength(errors, request, "job_assigndate", "Job Assign date", 255, 0);
         validateUtil.checkLength(errors, request, "jno", "Job Number", 255, 0);
         validateUtil.checkLength(errors, request, "jname", "Job Name", 255, 0);
         validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
@@ -108,10 +111,10 @@ public class jobController {
             return "Job/Create";
         }
         MaJobs majob = new MaJobs();
-        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("customer")));
-        if (maCustomer != null) {
-            majob.setCustId(maCustomer);
-        }
+//        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("customer")));
+//        if (maCustomer != null) {
+//            majob.setCustId(maCustomer);
+//        }
         MaAuthobject maAuthobject = (MaAuthobject) sessionUtils.getSessionValue(request, Constant.AUTHSESSION.toString());
 //        MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("driver")));
 //        if (maDriver != null) {
@@ -124,7 +127,7 @@ public class jobController {
         majob.setCommon_hourly(Boolean.parseBoolean(request.getParameter("common_hourly")));
         majob.setSelectfill(Boolean.parseBoolean(request.getParameter("selectfill")));
         majob.setJobdate(validateUtil.getDateValue(request.getParameter("jobdate")));
-        majob.setJob_assignddate(validateUtil.getDateValue(request.getParameter("job_assigndate")));
+//        majob.setJob_assignddate(validateUtil.getDateValue(request.getParameter("job_assigndate")));
         majob.setJobnumber(validateUtil.getStringValue(request.getParameter("jno")));
         majob.setJobname(validateUtil.getStringValue(request.getParameter("jname")));
         majob.setStatus(Constant.ACTIVE.toString());
@@ -144,9 +147,11 @@ public class jobController {
         majob.setTolatitude(new BigDecimal("000.0"));
         majob.setFromlongitude(new BigDecimal("000.0"));
         majob.setTolongitude(new BigDecimal("000.0"));
+
+        majob.setTotaljobcount(validateUtil.getLongValue(request.getParameter("count")));
         jobService.save(majob);
 
-        //Job request for driver
+        //Job assign for driver
         if (request.getParameterValues("driver") != null) {
             for (String driver : request.getParameterValues("driver")) {
                 MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(driver));
@@ -154,6 +159,17 @@ public class jobController {
                 maJobDriver.setJobId(majob);
                 maJobDriver.setDriverId(maDriver);
                 jobDriverService.save(maJobDriver);
+            }
+        }
+
+        //Job assign for customer
+        if (request.getParameterValues("customer") != null) {
+            for (String customer : request.getParameterValues("customer")) {
+                MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(customer));
+                MaJobCustomer maJobCustomer = new MaJobCustomer();
+                maJobCustomer.setJobId(majob);
+                maJobCustomer.setCustomerId(maCustomer);
+                jobcustomerService.save(maJobCustomer);
             }
         }
 
@@ -221,7 +237,7 @@ public class jobController {
         validateUtil.checkNull(request, "driver", "Driver", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
 
-        validateUtil.checkLength(errors, request, "job_assigndate", "Job Assign date", 255, 0);
+//        validateUtil.checkLength(errors, request, "job_assigndate", "Job Assign date", 255, 0);
         validateUtil.checkLength(errors, request, "jno", "Job Number", 255, 0);
         validateUtil.checkLength(errors, request, "jname", "Job Name", 255, 0);
 
@@ -265,8 +281,7 @@ public class jobController {
         majob.setJobdate(validateUtil.getDateValue(request.getParameter("jobdate")));
         majob.setJobname(validateUtil.getStringValue(request.getParameter("jname")));
 
-        majob.setJob_assignddate(validateUtil.getDateValue(request.getParameter("job_assigndate")));
-
+//        majob.setJob_assignddate(validateUtil.getDateValue(request.getParameter("job_assigndate")));
         majob.setJobnumber(validateUtil.getStringValue(request.getParameter("jno")));
         majob.setStatus(Constant.ACTIVE.toString());
 

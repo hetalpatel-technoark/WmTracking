@@ -9,6 +9,8 @@
 <!DOCTYPE html>
 <jsp:include page="../Template/header.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/charts/apexcharts.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 <style>
     .avatar1 {
         white-space: nowrap;
@@ -112,57 +114,89 @@
                 </div>
             </div>
         </section>
-<!--        <section id="apexchart">
-            <div class="row">
-                 Line Chart 
-                <div class="col-lg-12 col-md-12">
-                    <div class="card">
-
-                        <div class="card-header">
-                            <h4 class="card-title">Job for Driver Base </h4>
-                        </div>  
-                        <div class="card-content">
-                            <div class="card-body">
-                                <div id="line-chart_driver"></div>
+        <!--        <section id="apexchart">
+                    <div class="row">
+                         Line Chart 
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card">
+        
+                                <div class="card-header">
+                                    <h4 class="card-title">Job for Driver Base </h4>
+                                </div>  
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div id="line-chart_driver"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                </section>
+                <section id="apexchart">
+                    <div class="row">
+                         Line Chart 
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card">
+        
+                                <div class="card-header">
+                                    <h4 class="card-title">Job for Customer Base </h4>
+                                </div>  
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div id="line-chart_customer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>-->
+
+        <section id="">
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="row">
+
+                            <div class="col-lg-6">
+                                <div class="card-header">
+                                    <h4 class="card-title">Dump Site </h4>
+                                </div>  
+                                <div class="card-content">
+
+                                    <div id="gmaps-basic-maps"> 
+                                        <div id="basic-map" class="height-400"></div>
+                                    </div>
+                                </div></div> 
+                            <div class="col-lg-6">
+                                <div class="card-header">
+                                    <h4 class="card-title">Pickup  Site </h4>
+                                </div>  
+                                <div class="card-content">
+                                    <div id="gmaps-basic-maps"> 
+                                        <div id="info-window" class="height-400"></div>
+                                    </div> 
+                                </div></div></div>
                     </div>
                 </div>
             </div>
         </section>
-        <section id="apexchart">
-            <div class="row">
-                 Line Chart 
-                <div class="col-lg-12 col-md-12">
-                    <div class="card">
-
-                        <div class="card-header">
-                            <h4 class="card-title">Job for Customer Base </h4>
-                        </div>  
-                        <div class="card-content">
-                            <div class="card-body">
-                                <div id="line-chart_customer"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>-->
     </div>
 </div>
 
 <jsp:include page="../Template/pageEnd.jsp"></jsp:include>    
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBgjNW0WA93qphgZW-joXVR6VC3IiYFjfo"></script>
+    <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/charts/gmaps.min.js"></script>
 
-    <!-- BEGIN Vendor JS-->
 <jsp:include page="../Template/footer.jsp"></jsp:include>
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/charts/gmaps/maps.js"></script>
+
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/charts/apexcharts.min.js"></script>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/extensions/tether.min.js"></script>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/extensions/shepherd.min.js"></script>
 
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/cards/card-statistics.js"></script>
-
 <script>
-
     <%
         String cnt = "", month = "";
         if (request.getAttribute("monthWiseJob") != null) {
