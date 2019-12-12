@@ -18,12 +18,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface jobCustomerRepository extends JpaRepository<MaJobCustomer, Long> {
 
-  //  @Query(nativeQuery = true, value = "select string_agg(CAST(u.driver_id as varchar), ',') from ma_job_driver u where u.job_id=?2 and "
-//            + "u.job_id in(select id from ma_jobs where status=?1 ) ")
-//    String list(String satus, Long jobId);
-//
-//    @Modifying
-//    @Query(nativeQuery = true, value = "delete from ma_job_driver  where job_id=?2 and job_id in(select id from ma_jobs where status=?1 ) ")
-//    void deleteOldDriverJob(String satus, Long jobId);
+    @Query(nativeQuery = true, value = "select string_agg(CAST(u.customer_id as varchar), ',') from ma_job_customer u where u.job_id=?2 and "
+            + "u.job_id in(select id from ma_jobs where status=?1 ) ")
+    String list(String satus, Long jobId);
+
+    @Modifying
+    @Query(nativeQuery = true, value = "delete from ma_job_customer  where job_id=?2 and job_id in(select id from ma_jobs where status=?1 ) ")
+    void deleteOldCustomerJob(String satus, Long jobId);
 
 }

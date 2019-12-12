@@ -3,7 +3,6 @@
     Created on : Nov 25, 2019, 6:26:06 PM
     Author     : Admin
 --%>
-<%@page import="com.wmtrucking.entities.MaJobs"%>
 <%@page import="java.util.List"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -130,7 +129,7 @@
                                 <div class="card-content">
 
                                     <div id="gmaps-basic-maps"> 
-                                        <div id="pickupMap" class="height-400"></div>
+                                        <div id="basic-map" class="height-400"></div>
                                     </div>
                                 </div></div> 
                             <div class="col-lg-6">
@@ -139,7 +138,7 @@
                                 </div>  
                                 <div class="card-content">
                                     <div id="gmaps-basic-maps"> 
-                                        <div id="dumpMap" class="height-400"></div>
+                                        <div id="info-window" class="height-400"></div>
                                     </div> 
                                 </div></div></div>
                     </div>
@@ -150,18 +149,20 @@
 </div>
 
 <jsp:include page="../Template/pageEnd.jsp"></jsp:include>    
-
     <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBgjNW0WA93qphgZW-joXVR6VC3IiYFjfo"></script>
     <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/charts/gmaps.min.js"></script>
 
 <jsp:include page="../Template/footer.jsp"></jsp:include>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/charts/gmaps/maps.js"></script>
+
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/charts/apexcharts.min.js"></script>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/extensions/tether.min.js"></script>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/extensions/shepherd.min.js"></script>
+
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/cards/card-statistics.js"></script>
 <script>
-    <% String cnt = "", month = "";
+    <%
+        String cnt = "", month = "";
         if (request.getAttribute("monthWiseJob") != null) {
             List<Object[]> monthWiseJob = (List<Object[]>) request.getAttribute("monthWiseJob");
             // int[] a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
@@ -219,82 +220,118 @@
             );
     lineChartA.render();
 
-    $(document).ready(function () {
-
-    <% List<MaJobs> maJobses = (List<MaJobs>) request.getAttribute("maJobsesList");%>
-        //Pickup Site Map
-        map = new GMaps({
-            div: '#pickupMap',
-            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "23.0267556"%>,
-            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "72.6008286"%>,
-            zoom: 15
-        });
-    <% for (MaJobs maJobs : maJobses) {%>
-        map.addMarker({
-            lat: <%= maJobs.getFromlatitude()%>,
-            lng: <%= maJobs.getFromlongitude()%>,
-            title: '<%= maJobs.getJobname()%>',
-            infoWindow: {
-                content: '<p><%= maJobs.getJobname()%></p>'
+//Driver wise job
+    <%  String cntD = "", monthD = "";
+        if (request.getAttribute("DriverWiseJob") != null) {
+            List< Object[]> DriverWiseJob = (List< Object[]>) request.getAttribute("DriverWiseJob");
+            for (int i = 0; i < DriverWiseJob.size(); i++) {
+                if (i == DriverWiseJob.size()) {
+                    cntD += DriverWiseJob.get(i)[1];
+                    monthD += "\'" + DriverWiseJob.get(i)[0] + "\'";
+                } else {
+                    cntD += DriverWiseJob.get(i)[1] + ",";
+                    monthD += "\'" + DriverWiseJob.get(i)[0] + "\'" + ",";
+                }
             }
-        });
-    <%}%>
-
-        map = new GMaps({
-        div: "#pickupMap",
-                lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "23.0267556"%>,
-                lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "72.6008286"%>,
-                zoom: 15
-        })<%= maJobses.size() > 0 ? "," : ""%>
-    <%
-        for (MaJobs maJobs2 : maJobses) {%>
-        map.addMarker({
-            lat: <%= maJobs2.getFromlatitude()%>,
-            lng: <%= maJobs2.getFromlongitude()%>,
-            title: '<%= maJobs2.getJobname()%>',
-            infoWindow: {
-                content: "<p>Job name: <%= maJobs2.getJobname()%></p>"
+        }
+    %>
+    var lineChartOptionsB = {
+        chart: {
+            height: 350,
+            type: 'line',
+            zoom: {
+                enabled: false
             }
-        });
-    <%}%>
+        },
+        colors: ['#7367F0'],
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        series: [{
+                name: "Job",
+                data: [<%=cntD%>],
+            }],
+        title: {
+            // text: 'Product Trends by Month',
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                opacity: 0.5
+            },
+        },
+        xaxis: {
+            categories: [<%=monthD%>],
+        },
+        yaxis: {
+            tickAmount: 1,
+        }
+    }
+    var lineChartB = new ApexCharts(
+            document.querySelector("#line-chart_driver"),
+            lineChartOptionsB
+            );
+    lineChartB.render();
 
-//Dumping map
-        map = new GMaps({
-            div: '#dumpMap',
-            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getTolatitude() : "23.0267556"%>,
-            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getTolongitude() : "72.6008286"%>,
-            zoom: 15
-        });
-    <% for (MaJobs maJobs : maJobses) {%>
-        map.addMarker({
-            lat: <%= maJobs.getTolatitude()%>,
-            lng: <%= maJobs.getTolongitude()%>,
-            title: '<%= maJobs.getJobname()%>',
-            infoWindow: {
-                content: '<p><%= maJobs.getJobname()%></p>'
+    //Customer wise job
+    <%  String cntC = "", monthC = "";
+        if (request.getAttribute("customerWiseJob") != null) {
+            List< Object[]> customerWiseJob = (List< Object[]>) request.getAttribute("customerWiseJob");
+            for (int i = 0; i < customerWiseJob.size(); i++) {
+                if (i == customerWiseJob.size()) {
+                    cntC += customerWiseJob.get(i)[1];
+                    monthC += "\'" + customerWiseJob.get(i)[0] + "\'";
+                } else {
+                    cntC += customerWiseJob.get(i)[1] + ",";
+                    monthC += "\'" + customerWiseJob.get(i)[0] + "\'" + ",";
+                }
             }
-        });
-    <%}%>
-
-        map = new GMaps({
-          div: '#dumpMap',
-            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getTolatitude() : "23.0267556"%>,
-            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getTolongitude() : "72.6008286"%>,
-            zoom: 15
-        })<%= maJobses.size() > 0 ? "," : ""%>
-    <%
-        for (MaJobs maJobs2 : maJobses) {%>
-        map.addMarker({
-            lat: <%= maJobs2.getTolatitude()%>,
-            lng: <%= maJobs2.getTolongitude()%>,
-            title: '<%= maJobs2.getJobname()%>',
-            infoWindow: {
-                content: "<p>Job name: <%= maJobs2.getJobname()%></p>"
+        }
+    %>
+    var lineChartOptionsC = {
+        chart: {
+            height: 350,
+            type: 'line',
+            zoom: {
+                enabled: false
             }
-        });
-    <%}%>
-
-
-    });
+        },
+        colors: ['#7367F0'],
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        series: [{
+                name: "Job",
+                data: [<%=cntC%>],
+            }],
+        title: {
+            // text: 'Product Trends by Month',
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                opacity: 0.5
+            },
+        },
+        xaxis: {
+            categories: [<%=monthC%>],
+        },
+        yaxis: {
+            tickAmount: 1,
+        }
+    }
+    var lineChartC = new ApexCharts(
+            document.querySelector("#line-chart_customer"),
+            lineChartOptionsC
+            );
+    lineChartC.render();
 
 </script>

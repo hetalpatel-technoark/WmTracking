@@ -7,6 +7,7 @@ package com.wmtrucking.services;
 
 import com.wmtrucking.entities.MaJobs;
 import com.wmtrucking.repositories.jobRepository;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,5 +48,9 @@ public class jobService {
 
     public List<Object[]> findCustomerWiseJob() {
         return jobRepository.findCustomerWiseJob();
+    }
+
+    public List<MaJobs> listOfJob(String satus) {
+        return jobRepository.listOfJob(satus);
     }
 }

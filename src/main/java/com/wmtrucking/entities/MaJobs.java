@@ -116,6 +116,10 @@ public class MaJobs implements Serializable {
     private String city;
     @Column(name = "country")
     private String country;
+    @Column(name = "lodingaddress")
+    private String lodingaddress;
+    @Column(name = "dumpingaddress")
+    private String dumpingaddress;
 
     @Column(name = "totaljobcount")
     private Long totaljobcount;
@@ -126,10 +130,6 @@ public class MaJobs implements Serializable {
     @Column(name = "modifiedddate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedddate;
-
-    @Column(name = "job_assignddate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date job_assignddate;
 
 //    @Column(name = "createdby")
 //    private Long createdby;
@@ -185,20 +185,28 @@ public class MaJobs implements Serializable {
         this.jobname = jobname;
     }
 
-    public Date getJob_assignddate() {
-        return job_assignddate;
-    }
-
-    public void setJob_assignddate(Date job_assignddate) {
-        this.job_assignddate = job_assignddate;
-    }
-
     public MaAuthobject getCreatedby() {
         return createdby;
     }
 
     public void setCreatedby(MaAuthobject createdby) {
         this.createdby = createdby;
+    }
+
+    public String getLodingaddress() {
+        return lodingaddress;
+    }
+
+    public void setLodingaddress(String lodingaddress) {
+        this.lodingaddress = lodingaddress;
+    }
+
+    public String getDumpingaddress() {
+        return dumpingaddress;
+    }
+
+    public void setDumpingaddress(String dumpingaddress) {
+        this.dumpingaddress = dumpingaddress;
     }
 
     public Date getModifiedddate() {

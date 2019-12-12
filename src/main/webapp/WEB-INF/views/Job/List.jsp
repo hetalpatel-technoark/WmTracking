@@ -75,10 +75,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Job number</th>
-                                                <th>Customer Name</th>
-                                                <th>Job date</th>
-<!--                                                <th>Haul Off </th>                                          
-                                                <th>Haul Back</th>                                          -->
+                                             
+                                                <th>Job date</th>  
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -95,10 +93,7 @@
                                             %>
                                             <tr >
                                                 <td><%=checkInput.checkValue(majob.getJobnumber())%></td>
-                                                <td><%=checkInput.checkValue(majob.getCustId().getFirstname())%></td>
                                                 <td><%=checkInput.checkValue(dateUtils.dateWithFormat(majob.getJobdate(), "dd/MM/yyyy") ) %></td>
-<!--                                                <td><%=majob.getHauloff()!=null?"on":"" %></td>
-                                                <td><%=majob.getHaulback()!=null?"on":""%></td>-->
                                                 <td>
                                                     <div class="btn-group">
                                                         <div class="dropdown">

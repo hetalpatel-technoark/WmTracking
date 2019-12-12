@@ -90,6 +90,13 @@ public class jobController {
         validateUtil.checkNull(request, "customer", "Customer", errors);
         validateUtil.checkNull(request, "driver", "Driver", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
+        validateUtil.checkNull(request, "DumpingAddress", "Dumping Address", errors);
+        validateUtil.checkNull(request, "lodingAddress", "Loding Address", errors);
+
+        validateUtil.checkNull(request, "loding_lat_txt", "loding latitude", errors);
+        validateUtil.checkNull(request, "loding_log_txt", "Loding logitude", errors);
+        validateUtil.checkNull(request, "dumping_lat_txt", "Dumping latitude", errors);
+        validateUtil.checkNull(request, "dumping_log_txt", "Dumping logitude", errors);
 //        validateUtil.checkLength(errors, request, "job_assigndate", "Job Assign date", 255, 0);
         validateUtil.checkLength(errors, request, "jno", "Job Number", 255, 0);
         validateUtil.checkLength(errors, request, "jname", "Job Name", 255, 0);
@@ -111,6 +118,7 @@ public class jobController {
             return "Job/Create";
         }
         MaJobs majob = new MaJobs();
+
 //        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("customer")));
 //        if (maCustomer != null) {
 //            majob.setCustId(maCustomer);
@@ -143,12 +151,15 @@ public class jobController {
         majob.setCreateddate(new Date());
         majob.setCreatedby(maAuthobject);
         majob.setJob_status(Constant.PENDING.toString());
-        majob.setFromlatitude(new BigDecimal("000.0"));
-        majob.setTolatitude(new BigDecimal("000.0"));
-        majob.setFromlongitude(new BigDecimal("000.0"));
-        majob.setTolongitude(new BigDecimal("000.0"));
-
         majob.setTotaljobcount(validateUtil.getLongValue(request.getParameter("count")));
+
+        majob.setFromlatitude(new BigDecimal(request.getParameter("loding_lat_txt")));
+        majob.setFromlongitude(new BigDecimal(request.getParameter("loding_log_txt")));
+        majob.setTolatitude(new BigDecimal(request.getParameter("dumping_lat_txt")));
+        majob.setTolongitude(new BigDecimal(request.getParameter("dumping_log_txt")));
+        majob.setDumpingaddress(validateUtil.getStringValue(request.getParameter("DumpingAddress")));
+        majob.setLodingaddress(validateUtil.getStringValue(request.getParameter("lodingAddress")));
+
         jobService.save(majob);
 
         //Job assign for driver
@@ -219,8 +230,13 @@ public class jobController {
             model.addAttribute("maCustomer", maCustomer);
             List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
             model.addAttribute("maDriver", maDriver);
+
             String maJobDrivers = jobDriverService.list(Constant.ACTIVE.toString(), id);
             model.addAttribute("maJobDrivers", maJobDrivers);
+
+            String majobcustomer = jobcustomerService.list(Constant.ACTIVE.toString(), id);
+            model.addAttribute("majobcustomer", majobcustomer);
+
             return "Job/Edit";
         }
         return "redirect:/job/List?m=n";
@@ -255,16 +271,20 @@ public class jobController {
         if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             model.addAttribute("maJobs", majob);
-            List<MaCustomer> maCustomer = cusService.activeList(Constant.ACTIVE.toString());
+            List<MaCustomer> maCustomer = cusService.activeListEdit(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
             model.addAttribute("maCustomer", maCustomer);
             List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
             model.addAttribute("maDriver", maDriver);
+            String maJobDrivers = jobDriverService.list(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
+            model.addAttribute("maJobDrivers", maJobDrivers);
+            String majobcustomer = jobcustomerService.list(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
+            model.addAttribute("majobcustomer", majobcustomer);
             return "Job/Edit";
         }
-        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("customer")));
-        if (maCustomer != null) {
-            majob.setCustId(maCustomer);
-        }
+//        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("customer")));
+//        if (maCustomer != null) {
+//            majob.setCustId(maCustomer);
+//        }
 //        MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("driver")));
 //        if (maDriver != null) {
 //            majob.setDriverId(maDriver);
@@ -296,6 +316,14 @@ public class jobController {
         majob.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
         majob.setState(validateUtil.getStringValue(request.getParameter("state")));
         majob.setCountry(validateUtil.getStringValue(request.getParameter("country")));
+
+        majob.setFromlatitude(new BigDecimal(request.getParameter("loding_lat_txt")));
+        majob.setFromlongitude(new BigDecimal(request.getParameter("loding_log_txt")));
+        majob.setTolatitude(new BigDecimal(request.getParameter("dumping_lat_txt")));
+        majob.setTolongitude(new BigDecimal(request.getParameter("dumping_log_txt")));
+        majob.setDumpingaddress(validateUtil.getStringValue(request.getParameter("DumpingAddress")));
+        majob.setLodingaddress(validateUtil.getStringValue(request.getParameter("lodingAddress")));
+
         jobService.save(majob);
 
         jobDriverService.deleteOldDriverJob(Constant.ACTIVE.toString(), majob.getId());
@@ -307,6 +335,18 @@ public class jobController {
                 maJobDriver.setJobId(majob);
                 maJobDriver.setDriverId(maDriver);
                 jobDriverService.save(maJobDriver);
+            }
+        }
+
+        jobcustomerService.deleteOldCustomerJob(Constant.ACTIVE.toString(), majob.getId());
+        //Job assign for customer
+        if (request.getParameterValues("customer") != null) {
+            for (String customer : request.getParameterValues("customer")) {
+                MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(customer));
+                MaJobCustomer maJobCustomer = new MaJobCustomer();
+                maJobCustomer.setJobId(majob);
+                maJobCustomer.setCustomerId(maCustomer);
+                jobcustomerService.save(maJobCustomer);
             }
         }
         return "redirect:/job/List?m=e";
@@ -325,6 +365,9 @@ public class jobController {
             model.addAttribute("maDriver", maDriver);
             String maJobDrivers = jobDriverService.list(Constant.ACTIVE.toString(), id);
             model.addAttribute("maJobDrivers", maJobDrivers);
+            String majobcustomer = jobcustomerService.list(Constant.ACTIVE.toString(), id);
+            model.addAttribute("majobcustomer", majobcustomer);
+
             return "Job/view";
         }
         return "redirect:/jov/List?m=n";

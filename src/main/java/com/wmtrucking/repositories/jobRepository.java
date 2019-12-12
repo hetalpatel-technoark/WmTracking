@@ -5,8 +5,8 @@
  */
 package com.wmtrucking.repositories;
 
-import com.wmtrucking.entities.MaCustomer;
 import com.wmtrucking.entities.MaJobs;
+import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -39,5 +39,8 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
     @Query(nativeQuery = true, value = "SELECT (select firstname from ma_customer where id=u.cust_id) as name , "
             + "count(u.id) FROM ma_jobs u where u.status='Active' group by u.cust_id")
     public List<Object[]> findCustomerWiseJob();
+
+    @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1  ORDER BY u.id desc")
+    public List<MaJobs> listOfJob(String satus);
 
 }

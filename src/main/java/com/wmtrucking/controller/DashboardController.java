@@ -5,6 +5,7 @@
  */
 package com.wmtrucking.controller;
 
+import com.wmtrucking.entities.MaJobs;
 import com.wmtrucking.exception.UnAthorizedUserException;
 import com.wmtrucking.services.customerService;
 import com.wmtrucking.services.driverService;
@@ -13,6 +14,7 @@ import com.wmtrucking.utils.Constant;
 import com.wmtrucking.utils.SessionUtils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,20 +60,22 @@ public class DashboardController {
         model.addAttribute("driver", drService.count(Constant.ACTIVE.toString()));
         model.addAttribute("job", joService.count(Constant.ACTIVE.toString()));
 
-        List<Object[]> monthWiseJob = joService.findMonthWiseJob();
-        if (!monthWiseJob.isEmpty()) {
-            model.addAttribute("monthWiseJob", monthWiseJob);
-        }
+//        List<Object[]> monthWiseJob = joService.findMonthWiseJob();
+//        if (!monthWiseJob.isEmpty()) {
+//            model.addAttribute("monthWiseJob", monthWiseJob);
+//        }
+//        List<Object[]> DriverWiseJob = joService.findDriverWiseJob();
+//        if (!DriverWiseJob.isEmpty()) {
+//            model.addAttribute("DriverWiseJob", DriverWiseJob);
+//        }
+//        List<Object[]> customerWiseJob = joService.findCustomerWiseJob();
+//        if (!customerWiseJob.isEmpty()) {
+//            model.addAttribute("customerWiseJob", customerWiseJob);
+//        }
+        // contains only date information without time
+        List<MaJobs> maJobsesList = joService.listOfJob(Constant.ACTIVE.toString());
 
-        List<Object[]> DriverWiseJob = joService.findDriverWiseJob();
-        if (!DriverWiseJob.isEmpty()) {
-            model.addAttribute("DriverWiseJob", DriverWiseJob);
-        }
-
-        List<Object[]> customerWiseJob = joService.findCustomerWiseJob();
-        if (!customerWiseJob.isEmpty()) {
-            model.addAttribute("customerWiseJob", customerWiseJob);
-        }
+        model.addAttribute("maJobsesList", maJobsesList);
         return "Dashboard/Dashboard";
     }
 

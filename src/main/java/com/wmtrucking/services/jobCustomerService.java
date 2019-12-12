@@ -9,6 +9,7 @@ import com.wmtrucking.entities.MaJobCustomer;
 import com.wmtrucking.repositories.jobCustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -24,4 +25,12 @@ public class jobCustomerService {
         jobcustomerRepository.save(maJobCustomer);
     }
 
+    public String list(String satus, Long jobId) {
+        return jobcustomerRepository.list(satus, jobId);
+    }
+
+    @Transactional
+    public void deleteOldCustomerJob(String satus, Long jobId) {
+        jobcustomerRepository.deleteOldCustomerJob(satus, jobId);
+    }
 }
