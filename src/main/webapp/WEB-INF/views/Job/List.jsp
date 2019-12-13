@@ -53,6 +53,12 @@
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
                                     Job has been successfully created.
                                 </div>
+                                <%}
+                                    if (request.getParameter("m").equals("a")) {%>
+                                <div class="alert alert-success">
+                                    <button class="close" data-dismiss="alert"><span>x</span></button>
+                                    Driver has been successfully Assign.
+                                </div>
                                 <%} else if (request.getParameter("m").equals("e")) {%>
                                 <div class="alert alert-success">
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
@@ -63,7 +69,7 @@
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
                                     Job has been successfully deleted.
                                 </div>
-                                <%}else if (request.getParameter("m").equals("n")) {%>
+                                <%} else if (request.getParameter("m").equals("n")) {%>
                                 <div class="alert alert-success">
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
                                     Record not found
@@ -71,29 +77,40 @@
                                 <%}%>
                                 <%}%>
                                 <div class="table-responsive">
-                                <table class="table zero-configuration">
+                                    <table class="table zero-configuration">
                                         <thead>
                                             <tr>
-                                                <th>Job number</th>
-                                             
-                                                <th>Job date</th>  
+                                                <th>Job Name</th>                                             
+                                                <th>Job Number</th>                                             
+                                                <th>Job Date</th>  
+                                                <th>Total Count of Job</th>  
+                                                <th>Total Driver</th>
+                                                <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <%  
-                                                DateUtils dateUtils = new DateUtils();
-                                                 CheckInput checkInput = new CheckInput();
-                                                if (request.getAttribute("maJobs") != null) {
-                                                   
-                                                    List<MaJobs> majobs = (List<MaJobs>) request.getAttribute("maJobs");
-                                                    if (!majobs.isEmpty()) {
-                                                        for (MaJobs majob : majobs) {
-
+                                            <%
+                                                CheckInput checkInput = new CheckInput();
+                                                List<Object[]> majobs = (List<Object[]>) request.getAttribute("maJobs");
+                                                if (!majobs.isEmpty()) {
+                                                    for (Object[] majob : majobs) {
                                             %>
                                             <tr >
-                                                <td><%=checkInput.checkValue(majob.getJobnumber())%></td>
-                                                <td><%=checkInput.checkValue(dateUtils.dateWithFormat(majob.getJobdate(), "dd/MM/yyyy") ) %></td>
+                                                <td><%=checkInput.checkValue(majob[1].toString())%></td>
+                                                <td><%=checkInput.checkValue(majob[2].toString())%></td>
+                                                <td><%=checkInput.checkValue(majob[3].toString())%></td>
+                                                <td><%=majob[5] + "/" + majob[4]%></td>
+                                                <td><%=checkInput.checkValue(majob[6].toString())%></td>
+
+                                                <%
+                                                    if (majob[7].toString().equals("0")) {%>
+                                                <td><span class="label label-success" >Completed</span></td>
+                                                <%} else if (majob[7].toString().equals("1")) {%>
+                                                <td><span class="label label-info " >Open</span></td>
+                                                <%} else if (majob[7].toString().equals("3")) {%>
+                                                <td><span class="label label-danger " >Pending</span></td>
+                                                <%}%>
                                                 <td>
                                                     <div class="btn-group">
                                                         <div class="dropdown">
@@ -102,26 +119,26 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton100">
 
-                                                                <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/view/<%=majob.getId()%>">
+                                                                <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/view/<%=majob[0]%>">
                                                                     <i class="feather icon-eye"></i><span>View</span>
                                                                 </a>
-
-
-                                                                <a class="dropdown-item" href="<%=request.getContextPath()%>/job/edit/<%=majob.getId()%>">
+                                                                <a class="dropdown-item" href="<%=request.getContextPath()%>/job/edit/<%=majob[0]%>">
                                                                     <i class="feather icon-edit"></i> <span>Edit</span>
                                                                 </a>
-                                                                <a class="dropdown-item" onclick="changeStatus('Delete', '<%=majob.getId()%>')">
+                                                                <a class="dropdown-item" onclick="changeStatus('Delete', '<%=majob[0]%>')">
                                                                     <i class="feather icon-trash"></i> <span>Delete</span>
                                                                 </a>
+                                                                <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/assignJobDr/<%=majob[0]%>">
+                                                                    <i class="feather icon-user "></i><span>Assign Driver</span>
+                                                                </a> 
+
 
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </td>
                                             </tr>
-                                            <%}
-                                                    }
+                                            <%   }
                                                 }%>
                                         </tbody>
 

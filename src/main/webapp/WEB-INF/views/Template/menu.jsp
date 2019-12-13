@@ -2,6 +2,7 @@
 
 <%
     URL url = new URL(request.getRequestURL().toString());
+    System.out.println("url.."+ url);
 %>
 <!-- BEGIN: Main Menu-->
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">

@@ -16,7 +16,7 @@
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">Driver</h2>
+                        <h2 class="content-header-title float-left mb-0">Job</h2>
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/Dashboard/Dashboard">Home</a>
@@ -68,7 +68,8 @@
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-6">
-                                            <div class="form-group row">
+                                           
+<!--                                            <div class="form-group row">
                                                 <div class="col-md-4">
                                                     <span>Assign Driver *</span>
                                                 </div>
@@ -84,7 +85,7 @@
                                                         <%}%>
                                                     </select>
                                                 </div>
-                                            </div> 
+                                            </div> -->
 
                                             <div class="form-group row">
                                                 <div class="col-md-4">

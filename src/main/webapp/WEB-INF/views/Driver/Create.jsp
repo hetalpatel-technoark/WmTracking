@@ -121,20 +121,20 @@
                                             <div class="col-6">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Address 1</span>
+                                                        <span>Address </span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text"  class="form-control" name="add1" value="<%=checkInput.checkValue(request.getParameter("add1"))%>" placeholder="Address 1">
                                                     </div>
                                                 </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Address 2</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text"  class="form-control" name="add2" value="<%=checkInput.checkValue(request.getParameter("add2"))%>" placeholder="Address 2">
-                                                    </div>
-                                                </div>
+                                                <!--                                                <div class="form-group row">
+                                                                                                    <div class="col-md-4">
+                                                                                                        <span>Address 2</span>
+                                                                                                    </div>
+                                                                                                    <div class="col-md-8">
+                                                                                                        <input type="text"  class="form-control" name="add2" value="<%=checkInput.checkValue(request.getParameter("add2"))%>" placeholder="Address 2">
+                                                                                                    </div>
+                                                                                                </div>-->
 
 
 
@@ -154,14 +154,14 @@
                                                         <input type="text" id="state" class="form-control" name="state" value="<%=checkInput.checkValue(request.getParameter("state"))%>" placeholder="State">
                                                     </div>
                                                 </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Country</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text" id="country" class="form-control" name="country" value="<%=checkInput.checkValue(request.getParameter("country"))%>" placeholder="Country">
-                                                    </div>
-                                                </div>
+                                                <!--                                                <div class="form-group row">
+                                                                                                    <div class="col-md-4">
+                                                                                                        <span>Country</span>
+                                                                                                    </div>
+                                                                                                    <div class="col-md-8">
+                                                                                                        <input type="text" id="country" class="form-control" name="country" value="<%=checkInput.checkValue(request.getParameter("country"))%>" placeholder="Country">
+                                                                                                    </div>
+                                                                                                </div>-->
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Zipcode</span>

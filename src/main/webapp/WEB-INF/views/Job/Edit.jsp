@@ -15,7 +15,7 @@
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">Driver</h2>
+                        <h2 class="content-header-title float-left mb-0">Job</h2>
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/Dashboard/Dashboard">Home</a>
@@ -73,25 +73,6 @@
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-6">
-
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Assign Driver *</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <select class="select2 form-control"  name="driver" required multiple="multiple">
-                                                            <%
-                                                                String selectedDriver = (String) request.getAttribute("maJobDrivers");
-
-                                                                List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
-                                                                for (MaDriver maDriver : maDrivers) {
-                                                            %>
-                                                            <option <%=selectedDriver != null && selectedDriver.contains(checkInput.checkValueEdit(maDriver.getId(), request.getParameter("driver"))) ? "selected" : ""%>
-                                                                value="<%=maDriver.getId()%>"><%= maDriver.getFirstname()%></option>
-                                                            <%}%>
-                                                        </select>
-                                                    </div>
-                                                </div> 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Customer /Company*</span>
@@ -109,13 +90,19 @@
                                                         </select>
                                                     </div>
                                                 </div> 
-                                               
+
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Total count </span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="number" max="1000"  class="form-control" name="count" value="<%=checkInput.checkValueEdit(majob.getTotaljobcount(), request.getParameter("count"))%>"  placeholder="Total Job count">
+<!--                                                        <input type="number" max="1000"  class="form-control" name="count" value="<%=checkInput.checkValueEdit(majob.getTotaljobcount(), request.getParameter("count"))%>"  placeholder="Total Job count">-->
+                                                        <select name="count" class="form-control" >                                                          
+                                                            <% for (int i = 1; i <= 1000; i++) {
+                                                            %>
+                                                            <option <%= ((Integer.compare(majob.getTotaljobcount().intValue(), i)) == 0) ? "selected" : ""%> value="<%= i%>" > <%= i%> </option>
+                                                            <%}%>   
+                                                        </select>
                                                     </div>
                                                 </div>
 
@@ -124,7 +111,7 @@
                                                         <span>Loading Site Address *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" required="" id="loding" onFocus="geolocate('load')"  class="form-control" name="lodingAddress" value="<%=checkInput.checkValueEdit(majob.getLodingaddress(),request.getParameter("lodingAddress"))%>"  placeholder="Loading Site Address">
+                                                        <input type="text" required="" id="loding" onFocus="geolocate('load')"  class="form-control" name="lodingAddress" value="<%=checkInput.checkValueEdit(majob.getLodingaddress(), request.getParameter("lodingAddress"))%>"  placeholder="Loading Site Address">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -132,7 +119,7 @@
                                                         <span>Dumping Site Address *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" required id="dumping" onFocus="geolocate('dump')"  class="form-control" name="DumpingAddress" value="<%=checkInput.checkValueEdit(majob.getDumpingaddress(),request.getParameter("DumpingAddress"))%>"  placeholder="Dumping Site Address">
+                                                        <input type="text" required id="dumping" onFocus="geolocate('dump')"  class="form-control" name="DumpingAddress" value="<%=checkInput.checkValueEdit(majob.getDumpingaddress(), request.getParameter("DumpingAddress"))%>"  placeholder="Dumping Site Address">
                                                     </div>
                                                 </div>
 
@@ -294,7 +281,7 @@
                                                                 $('#loding_lat_txt').val(lat);
                                                                 $('#loding_log_txt').val(lng);
                                                                 console.log("loding.latitude." + lat);
-                                                                        console.log("loding.logitude."+lng);
+                                                                console.log("loding.logitude." + lng);
 
                                                             }
                                                             function fill_dumping() {
@@ -303,7 +290,7 @@
                                                                 $('#dumping_lat_txt').val(autocomplete2.getPlace().geometry.location.lat());
                                                                 $('#dumping_log_txt').val(autocomplete2.getPlace().geometry.location.lng());
                                                                 console.log("dumping.latitude." + lat);
-                                                                        console.log("dumping.logitude."+lng);
+                                                                console.log("dumping.logitude." + lng);
                                                             }
                                                             function geolocate(status) {
                                                                 if (navigator.geolocation) {

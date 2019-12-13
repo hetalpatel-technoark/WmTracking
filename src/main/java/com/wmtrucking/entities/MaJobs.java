@@ -7,7 +7,6 @@ package com.wmtrucking.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -60,6 +59,10 @@ public class MaJobs implements Serializable {
     private BigDecimal fromlongitude;
     @Column(name = "tolongitude")
     private BigDecimal tolongitude;
+    @Column(name = "totaljobcount")
+    private Long totaljobcount;
+    @OneToMany(mappedBy = "jobId")
+    private List<MaJobTransaction> maJobTransactionList;
     @OneToMany(mappedBy = "jobId")
     private List<MaJobCustomer> maJobCustomerList;
 
@@ -121,9 +124,6 @@ public class MaJobs implements Serializable {
     @Column(name = "dumpingaddress")
     private String dumpingaddress;
 
-    @Column(name = "totaljobcount")
-    private Long totaljobcount;
-
     @Column(name = "createddate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createddate;
@@ -155,14 +155,6 @@ public class MaJobs implements Serializable {
 
     public Long getId() {
         return id;
-    }
-
-    public Long getTotaljobcount() {
-        return totaljobcount;
-    }
-
-    public void setTotaljobcount(Long totaljobcount) {
-        this.totaljobcount = totaljobcount;
     }
 
     public void setId(Long id) {
@@ -416,6 +408,22 @@ public class MaJobs implements Serializable {
         this.maJobTrackingList = maJobTrackingList;
     }
 
+    public String getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(String requestStatus) {
+        this.requestStatus = requestStatus;
+    }
+
+    public List<MaJobCustomer> getMaJobCustomerList() {
+        return maJobCustomerList;
+    }
+
+    public void setMaJobCustomerList(List<MaJobCustomer> maJobCustomerList) {
+        this.maJobCustomerList = maJobCustomerList;
+    }
+
     public String getJobnumber() {
         return jobnumber;
     }
@@ -438,14 +446,6 @@ public class MaJobs implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getRequestStatus() {
-        return requestStatus;
-    }
-
-    public void setRequestStatus(String requestStatus) {
-        this.requestStatus = requestStatus;
     }
 
     public BigDecimal getFromlatitude() {
@@ -480,12 +480,20 @@ public class MaJobs implements Serializable {
         this.tolongitude = tolongitude;
     }
 
-    public List<MaJobCustomer> getMaJobCustomerList() {
-        return maJobCustomerList;
+    public Long getTotaljobcount() {
+        return totaljobcount;
     }
 
-    public void setMaJobCustomerList(List<MaJobCustomer> maJobCustomerList) {
-        this.maJobCustomerList = maJobCustomerList;
+    public void setTotaljobcount(Long totaljobcount) {
+        this.totaljobcount = totaljobcount;
+    }
+
+    public List<MaJobTransaction> getMaJobTransactionList() {
+        return maJobTransactionList;
+    }
+
+    public void setMaJobTransactionList(List<MaJobTransaction> maJobTransactionList) {
+        this.maJobTransactionList = maJobTransactionList;
     }
 
 }

@@ -53,4 +53,17 @@ public class jobService {
     public List<MaJobs> listOfJob(String satus) {
         return jobRepository.listOfJob(satus);
     }
+
+    public Long countDumpingPickup(String satus, String transectionStatus, Date starttime) {
+        return jobRepository.countDumpingPickup(satus, transectionStatus, starttime);
+    }
+
+    public Long countDumpingDone(String satus, String transectionStatus, Date endtime) {
+        return jobRepository.countDumpingDone(satus, transectionStatus, endtime);
+    }
+
+    public List<Object[]> list(String status, String transectionstatus) {
+        return jobRepository.list(status, transectionstatus);
+    }
+
 }

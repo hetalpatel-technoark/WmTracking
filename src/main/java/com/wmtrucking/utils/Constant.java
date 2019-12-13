@@ -34,7 +34,21 @@ public enum Constant {
             return "Pending";
         }
 
-    }, ERRORPARAM {
+    }, STARTED {
+        @Override
+        public String toString() {
+            return "Started";
+        }
+
+    },
+     ENDED {
+        @Override
+        public String toString() {
+            return "Ended";
+        }
+
+    },
+    ERRORPARAM {
         @Override
         public String toString() {
             return "error";

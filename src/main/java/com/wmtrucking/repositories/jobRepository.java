@@ -22,6 +22,16 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
     @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 ORDER BY u.id desc")
     List<MaJobs> list(String satus);
 
+    @Query(nativeQuery = true, value = "select j.id, j.jobname,j.jobnumber,(SELECT TO_CHAR(j.jobdate, 'dd/mm/yyyy') as jobdate), j.totaljobcount, "
+            + "(select count(id) from ma_job_transaction where job_id=j.id and status=?2)as transactioncount,"
+            + "(select count(id) from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivercount,"
+            + " ( case when ((select count(id) from ma_job_transaction where job_id=j.id and status=?2) = j.totaljobcount) then 0 "
+            + "    else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status=?2) =0) then 1 "
+            + "  else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status=?2) < j.totaljobcount) then 3 "
+            + "  else 2 end end end) as Transectionstatus "
+            + "from ma_jobs j where status=?1")
+    public List<Object[]> list(String status, String transectionstatus);
+
     @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and u.id=?2")
     MaJobs findone(String satus, Long id);
 
@@ -42,5 +52,13 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
 
     @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1  ORDER BY u.id desc")
     public List<MaJobs> listOfJob(String satus);
+
+    @Query(nativeQuery = true, value = "SELECT SUM(totaljobcount) FROM ma_jobs where status=?1 and id in(select job_id from ma_job_transaction "
+            + "where status=?2 and starttime=?3 )")
+    Long countDumpingPickup(String satus, String transectionStatus, Date starttime);
+
+    @Query(nativeQuery = true, value = "SELECT SUM(totaljobcount) FROM ma_jobs where status=?1 and id in(select job_id from ma_job_transaction "
+            + "where status=?2 and endtime=?3 )")
+    Long countDumpingDone(String satus, String transectionStatus, Date endtime);
 
 }

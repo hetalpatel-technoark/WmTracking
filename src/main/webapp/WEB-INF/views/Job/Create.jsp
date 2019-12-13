@@ -65,7 +65,7 @@
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="form-group row">
+<!--                                                <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Assign Driver *</span>
                                                     </div>
@@ -79,7 +79,7 @@
                                                             <%}%>
                                                         </select>
                                                     </div>
-                                                </div> 
+                                                </div> -->
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
@@ -103,7 +103,14 @@
                                                         <span>Total count </span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="number" max="1000"  class="form-control" name="count" value="<%=checkInput.checkValue(request.getParameter("count"))%>"  placeholder="Total Job count">
+<!--                                                        <input type="number" max="1000"  class="form-control" name="count" value="<%=checkInput.checkValue(request.getParameter("count"))%>"  placeholder="Total Job count">-->
+
+                                                        <select name="count" class="form-control" value="<%=checkInput.checkValue(request.getParameter("count"))%>">                                                          
+                                                            <option selected="" disabled="">Select total count </option>
+                                                            <% for (int i = 1; i <= 1000; i++) {%>
+                                                            <option><%= i%> </option>
+                                                            <%}%>   
+                                                        </select>
                                                     </div>
                                                 </div>
 
@@ -281,7 +288,7 @@
                                                                 $('#loding_lat_txt').val(lat);
                                                                 $('#loding_log_txt').val(lng);
                                                                 console.log("loding.latitude." + lat);
-                                                                        console.log("loding.logitude."+lng);
+                                                                console.log("loding.logitude." + lng);
 
                                                             }
                                                             function fill_dumping() {
@@ -290,7 +297,7 @@
                                                                 $('#dumping_lat_txt').val(autocomplete2.getPlace().geometry.location.lat());
                                                                 $('#dumping_log_txt').val(autocomplete2.getPlace().geometry.location.lng());
                                                                 console.log("dumping.latitude." + lat);
-                                                                        console.log("dumping.logitude."+lng);
+                                                                console.log("dumping.logitude." + lng);
                                                             }
                                                             function geolocate(status) {
                                                                 if (navigator.geolocation) {

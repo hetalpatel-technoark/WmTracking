@@ -69,7 +69,7 @@ public class driverController {
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "mob", "Mobile number", errors);
 //        validateUtil.checkNull(request, "email", "Email", errors);
-        validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
+        //  validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
 //        validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
@@ -83,7 +83,7 @@ public class driverController {
         validateUtil.checkLength(errors, request, "city", "City", 255, 0);
         validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
         validateUtil.checkLength(errors, request, "state", "State", 255, 0);
-        validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
+        validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "mob", "Mobile", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
 
@@ -94,9 +94,11 @@ public class driverController {
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
             errors.add("Please enter proper Pincode ");
         }
-        MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
-        if (checkEmail != null) {
-            errors.add("Email is already exist");
+        if (request.getParameter("email") != null && request.getParameter("email").equals("")) {
+            MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
+            if (checkEmail != null) {
+                errors.add("Email is already exist");
+            }
         }
 
         MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("mob"));
@@ -175,7 +177,7 @@ public class driverController {
         List<String> errors = new ArrayList<>();
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "mob", "Mobile number", errors);
-        validateUtil.checkNull(request, "email", "Email", errors);
+        //  validateUtil.checkNull(request, "email", "Email", errors);
 
         validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
@@ -187,7 +189,7 @@ public class driverController {
         validateUtil.checkLength(errors, request, "city", "City", 255, 0);
         validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
         validateUtil.checkLength(errors, request, "state", "State", 255, 0);
-        validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
+        validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "mob", "Mobile", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
 
@@ -198,19 +200,28 @@ public class driverController {
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
             errors.add("Please enter proper Pincode ");
         }
-        MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
-        if (checkEmail != null && !maDriver.getEmail().equals(checkEmail.getEmail())) {
-            errors.add("Email is already exist");
+        if (request.getParameter("email") != null && request.getParameter("email").equals("")) {
+            MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
+            if (checkEmail != null && !maDriver.getEmail().equals(checkEmail.getEmail())) {
+                errors.add("Email is already exist");
+            }
         }
         MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("mob"));
         if (checkMobile != null && !maDriver.getMobile().equals(checkMobile.getMobile())) {
             errors.add("Mobile is already exist");
+        }
+        MaDriver maDriver1 = drService.findoneEdit(Constant.ACTIVE.toString(), maDriver.getId());
+        if (maDriver1 == null) {
+            errors.add(" This Driver is assigned in job. For Inactive, please first remove Driver from job.");
         }
         if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             model.addAttribute("maDriver", maDriver);
             return "Driver/Edit";
         }
+
+        maDriver.setStatus(validateUtil.getStringValue(request.getParameter("status")));
+
         maDriver.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
         maDriver.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
         maDriver.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
@@ -225,7 +236,6 @@ public class driverController {
         maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maDriver.setMobile(validateUtil.getStringValue(request.getParameter("mob")));
         //maDriver.setStatus(Constant.ACTIVE.toString());
-        maDriver.setStatus(validateUtil.getStringValue(request.getParameter("status")));
 
         drService.save(maDriver);
         return "redirect:/driver/drivelist?m=e";

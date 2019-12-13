@@ -54,7 +54,7 @@
         <section id="apexchart">
             <div class="row">
 
-                <div class="col-lg-4 col-md-12">
+                <div class="col-lg-3 col-md-12">
                     <div class="card">
                         <div class="card-header d-flex flex-column align-items-start pb-0">
                             <div class="avatar bg-rgba-primary p-50 m-0">
@@ -62,12 +62,16 @@
                                     <i class="feather icon-users   text-primary font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700 mt-1"><%= request.getAttribute("customer")%></h2>
-                            <p class="mb-0">Total Customers</p>
+                            <h2 class="text-bold-700 mt-1">
+                                <%= request.getAttribute("countDumpingPickup") != null ? request.getAttribute("countDumpingPickup") : "0"%>
+
+                            </h2>
+                            <!--                            <p class="mb-0">Total Customers</p>-->
+                            <p class="mb-0">Total Dumps Pickup (Today)</p>
                         </div><br>
                     </div>
                 </div> 
-                <div class="col-lg-4 col-md-12">
+                <div class="col-lg-3 col-md-12">
                     <div class="card">
                         <div class="card-header d-flex flex-column align-items-start pb-0">
                             <div class="avatar bg-rgba-primary p-50 m-0">
@@ -75,13 +79,17 @@
                                     <i class="feather icon-user  text-primary font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700 mt-1"><%= request.getAttribute("driver")%></h2>
-                            <p class="mb-0">Total Drivers</p>
+                            <h2 class="text-bold-700 mt-1">
+                                <%= request.getAttribute("countDumpingPickup") != null ? request.getAttribute("countDumpingPickup") : "0"%>
+                            </h2>
+
+                            <!--                            <p class="mb-0">Total Drivers</p>-->
+                            <p class="mb-0">Total Dumps Done (Today)</p>
                         </div>
                         <br>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-12">
+                <div class="col-lg-3 col-md-12">
                     <div class="card">
                         <div class="card-header d-flex flex-column align-items-start pb-0">
                             <div class="avatar bg-rgba-primary p-50 m-0">
@@ -89,17 +97,35 @@
                                     <i class="feather icon-award  text-primary font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700 mt-1"><%= request.getAttribute("job")%></h2>
-                            <p class="mb-0">Total Jobs</p>
+                            <h2 class="text-bold-700 mt-1">
+                                <%= request.getAttribute("driver")%>
+                            </h2>
+                            <!--                            <p class="mb-0">Total Jobs</p>-->
+                            <p class="mb-0">Total Driver Assigned (Today)</p>
+                        </div><br>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-12">
+                    <div class="card">
+                        <div class="card-header d-flex flex-column align-items-start pb-0">
+                            <div class="avatar bg-rgba-primary p-50 m-0">
+                                <div class="avatar-content">
+                                    <i class="feather icon-award  text-primary font-medium-5"></i>
+                                </div>
+                            </div>
+                            <h2 class="text-bold-700 mt-1">
+                                <%= request.getAttribute("customer")%>
+                            </h2>
+                            <p class="mb-0">Total Companies (Today)</p>
                         </div><br>
                     </div>
                 </div>
 
             </div>
         </section>
-        <section id="apexchart">
+<!--        <section id="apexchart">
             <div class="row">
-                <!-- Line Chart -->
+                 Line Chart 
                 <div class="col-lg-12 col-md-12">
                     <div class="card">
 
@@ -114,7 +140,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
 
         <section id="">
             <div class="row">
@@ -123,25 +149,29 @@
                     <div class="card">
                         <div class="row">
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="card-header">
-                                    <h4 class="card-title">Pickup Site </h4>
+                                    <h4 class="card-title">Daily Report  </h4>
                                 </div>  
                                 <div class="card-content">
 
                                     <div id="gmaps-basic-maps"> 
+                                        <!--                                        <div id="pickupMap" class="height-400"></div>-->
+
                                         <div id="pickupMap" class="height-400"></div>
                                     </div>
                                 </div></div> 
-                            <div class="col-lg-6">
-                                <div class="card-header">
-                                    <h4 class="card-title"> Dump Site </h4>
-                                </div>  
-                                <div class="card-content">
-                                    <div id="gmaps-basic-maps"> 
-                                        <div id="dumpMap" class="height-400"></div>
-                                    </div> 
-                                </div></div></div>
+                            <!--                            <div class="col-lg-6">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title"> Dump Site </h4>
+                                                            </div>  
+                                                            <div class="card-content">
+                                                                <div id="gmaps-basic-maps"> 
+                                                                    <div id="dumpMap" class="height-400"></div>
+                                                                </div> 
+                                                            </div></div>-->
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -155,12 +185,121 @@
     <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/charts/gmaps.min.js"></script>
 
 <jsp:include page="../Template/footer.jsp"></jsp:include>
-<script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/charts/gmaps/maps.js"></script>
+<!--<script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/charts/gmaps/maps.js"></script>-->
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/charts/apexcharts.min.js"></script>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/extensions/tether.min.js"></script>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/extensions/shepherd.min.js"></script>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/cards/card-statistics.js"></script>
+<!--<script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/charts/gmaps/maps.min.js"></script>-->
+
 <script>
+    $(document).ready(function () {
+
+    <% List<MaJobs> maJobses = (List<MaJobs>) request.getAttribute("maJobsesList");%>
+        //Pickup Site Map
+        map = new GMaps({
+            div: '#pickupMap',
+            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "23.0267556"%>,
+            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "72.6008286"%>,
+            zoom: 11
+        });
+        //Loding address
+    <% for (MaJobs maJobs : maJobses) {%>
+        map.addMarker({
+            lat: <%= maJobs.getFromlatitude()%>,
+            lng: <%= maJobs.getFromlongitude()%>,
+            title: '<%= maJobs.getJobname()%>',
+            infoWindow: {
+                content: '<p><%= maJobs.getJobname()%></p>'
+            }
+        });
+    <%}%>
+    <% for (MaJobs maJobs : maJobses) {%>
+        map.addMarker({
+            lat: <%= maJobs.getTolatitude()%>,
+            lng: <%= maJobs.getTolongitude()%>,
+            title: '<%= maJobs.getJobname()%>',
+            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            infoWindow: {
+                content: '<p><%= maJobs.getJobname()%></p>'
+            }
+        });
+    <%}%>
+        map = new GMaps({
+            div: "#pickupMap",
+            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "23.0267556"%>,
+            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "72.6008286"%>,
+            zoom: 11
+        })<%= maJobses.size() > 0 ? "," : ""%>
+
+//Loding address
+    <%  for (MaJobs maJobs2 : maJobses) {%>
+        map.addMarker({
+            lat: <%= maJobs2.getFromlatitude()%>,
+            lng: <%= maJobs2.getFromlongitude()%>,
+            title: '<%= maJobs2.getJobname()%>',
+            infoWindow: {
+                content: "<p>Job name: <%= maJobs2.getJobname()%> </br> Total Driver: <%= request.getAttribute("driver")%> </br>Jab Number: <%= maJobs2.getJobnumber()%></p>"
+            }
+        });
+    <%}%>
+//Dumping address
+    <% for (MaJobs maJobs : maJobses) {%>
+        map.addMarker({
+            lat: <%= maJobs.getTolatitude()%>,
+            lng: <%= maJobs.getTolongitude()%>,
+            title: '<%= maJobs.getJobname()%>',
+            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            infoWindow: {
+                content: '<p>Job name:<%= maJobs.getJobname()%></br> Total Driver: <%= request.getAttribute("driver")%> </br>Jab Number: <%= maJobs.getJobnumber()%></p>'
+            }
+        });
+    <%}%>
+           var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
+    var map;
+function calcRoute() {
+        var start = new google.maps.LatLng(21.2038557,72.83976690000009);
+        var end = new google.maps.LatLng(23.0267556,72.6008286);
+
+        var bounds = new google.maps.LatLngBounds();
+        bounds.extend(start);
+        bounds.extend(end);
+        map.fitBounds(bounds);
+        var request = {
+            origin: start,
+            destination: end,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+        directionsService.route(request, function (response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+            console.log(response);
+                directionsDisplay.setDirections(response);
+                directionsDisplay.setMap(map);
+            } else {
+                alert("Directions Request from " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed: " + status);
+            }
+        });
+    }
+    function initialize() {
+        directionsDisplay = new google.maps.DirectionsRenderer();
+        var chicago = new google.maps.LatLng(21.2038557,72.83976690000009);
+        var mapOptions = {
+            zoom: 7,
+            center: chicago
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        directionsDisplay.setMap(map);
+        google.maps.event.addDomListener(window, 'load',  calcRoute);
+    }
+    
+initialize();
+
+    });
+
+
+
+//    ---------- chart
     <% String cnt = "", month = "";
         if (request.getAttribute("monthWiseJob") != null) {
             List<Object[]> monthWiseJob = (List<Object[]>) request.getAttribute("monthWiseJob");
@@ -218,83 +357,5 @@
             lineChartOptionsA
             );
     lineChartA.render();
-
-    $(document).ready(function () {
-
-    <% List<MaJobs> maJobses = (List<MaJobs>) request.getAttribute("maJobsesList");%>
-        //Pickup Site Map
-        map = new GMaps({
-            div: '#pickupMap',
-            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "23.0267556"%>,
-            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "72.6008286"%>,
-            zoom: 15
-        });
-    <% for (MaJobs maJobs : maJobses) {%>
-        map.addMarker({
-            lat: <%= maJobs.getFromlatitude()%>,
-            lng: <%= maJobs.getFromlongitude()%>,
-            title: '<%= maJobs.getJobname()%>',
-            infoWindow: {
-                content: '<p><%= maJobs.getJobname()%></p>'
-            }
-        });
-    <%}%>
-
-        map = new GMaps({
-        div: "#pickupMap",
-                lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "23.0267556"%>,
-                lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "72.6008286"%>,
-                zoom: 15
-        })<%= maJobses.size() > 0 ? "," : ""%>
-    <%
-        for (MaJobs maJobs2 : maJobses) {%>
-        map.addMarker({
-            lat: <%= maJobs2.getFromlatitude()%>,
-            lng: <%= maJobs2.getFromlongitude()%>,
-            title: '<%= maJobs2.getJobname()%>',
-            infoWindow: {
-                content: "<p>Job name: <%= maJobs2.getJobname()%></p>"
-            }
-        });
-    <%}%>
-
-//Dumping map
-        map = new GMaps({
-            div: '#dumpMap',
-            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getTolatitude() : "23.0267556"%>,
-            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getTolongitude() : "72.6008286"%>,
-            zoom: 15
-        });
-    <% for (MaJobs maJobs : maJobses) {%>
-        map.addMarker({
-            lat: <%= maJobs.getTolatitude()%>,
-            lng: <%= maJobs.getTolongitude()%>,
-            title: '<%= maJobs.getJobname()%>',
-            infoWindow: {
-                content: '<p><%= maJobs.getJobname()%></p>'
-            }
-        });
-    <%}%>
-
-        map = new GMaps({
-          div: '#dumpMap',
-            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getTolatitude() : "23.0267556"%>,
-            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getTolongitude() : "72.6008286"%>,
-            zoom: 15
-        })<%= maJobses.size() > 0 ? "," : ""%>
-    <%
-        for (MaJobs maJobs2 : maJobses) {%>
-        map.addMarker({
-            lat: <%= maJobs2.getTolatitude()%>,
-            lng: <%= maJobs2.getTolongitude()%>,
-            title: '<%= maJobs2.getJobname()%>',
-            infoWindow: {
-                content: "<p>Job name: <%= maJobs2.getJobname()%></p>"
-            }
-        });
-    <%}%>
-
-
-    });
 
 </script>

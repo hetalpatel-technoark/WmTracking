@@ -7,6 +7,7 @@ package com.wmtrucking.services;
 
 import com.wmtrucking.entities.MaDriver;
 import com.wmtrucking.repositories.driverRepository;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,8 +38,8 @@ public class driverService {
         return dRepository.findoneDelete(satus, id);
     }
 
-    public Long count(String satus) {
-        return dRepository.count(satus);
+    public Long count(String satus, Date createddate) {
+        return dRepository.count(satus,createddate);
     }
 
     public MaDriver checkEmail(String satus, String email) {
@@ -51,5 +52,9 @@ public class driverService {
 
     public List<MaDriver> activeList(String satus) {
         return dRepository.activeList(satus);
+    }
+    
+    public  MaDriver findoneEdit(String satus, Long id){
+    return dRepository.findoneEdit(satus, id);
     }
 }

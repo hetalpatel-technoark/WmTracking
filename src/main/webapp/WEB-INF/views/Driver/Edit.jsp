@@ -9,12 +9,12 @@
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">Customers</h2>
+                        <h2 class="content-header-title float-left mb-0">Driver</h2>
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/Dashboard/Dashboard">Home</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/customer/List">Customers</a>
+                            <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/customer/List">Driver</a>
                             </li>
                             <li class="breadcrumb-item"><a href="#">Edit</a>
                             </li>
@@ -90,10 +90,10 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>License number</span>
+                                                        <span>License Plate Number *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text"  class="form-control" name="lno" value="<%=checkInput.checkValueEdit (madriver.getLicensenumber(),request.getParameter("lno"))%>" placeholder="License number">
+                                                        <input type="text" required="" class="form-control" name="lno" value="<%=checkInput.checkValueEdit (madriver.getLicensenumber(),request.getParameter("lno"))%>" placeholder="License number">
                                                     </div>
                                                 </div>
 
@@ -107,10 +107,10 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Email*</span>
+                                                        <span>Email</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="email" required=""  class="form-control" name="email" value="<%=checkInput.checkValueEdit (madriver.getEmail(),request.getParameter("email"))%>" placeholder="Email">
+                                                        <input type="email"  class="form-control" name="email" value="<%=checkInput.checkValueEdit (madriver.getEmail(),request.getParameter("email"))%>" placeholder="Email">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -128,13 +128,13 @@
                                             <div class="col-6">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Address 1</span>
+                                                        <span>Address </span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text"  class="form-control" name="add1" value="<%=checkInput.checkValueEdit (madriver.getAddress1(),request.getParameter("add1"))%>" placeholder="Address 1">
                                                     </div>
                                                 </div>
-                                                <div class="form-group row">
+<!--                                                <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Address 2</span>
                                                     </div>
@@ -149,7 +149,7 @@
                                                     <div class="col-md-8">
                                                         <input type="text"  class="form-control" name="add3" value="<%=checkInput.checkValueEdit (madriver.getAddress3(),request.getParameter("add3"))%>" placeholder="Address 3">
                                                     </div>
-                                                </div>
+                                                </div>-->
 
 
                                                 <div class="form-group row">
@@ -168,14 +168,14 @@
                                                         <input type="text" id="state" class="form-control" name="state" value="<%=checkInput.checkValueEdit (madriver.getState(),request.getParameter("state"))%>" placeholder="State">
                                                     </div>
                                                 </div>
-                                                <div class="form-group row">
+<!--                                                <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Country</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" id="country" class="form-control" name="country" value="<%=checkInput.checkValueEdit (madriver.getCountry(),request.getParameter("country"))%>" placeholder="Country">
                                                     </div>
-                                                </div>
+                                                </div>-->
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Zipcode</span>

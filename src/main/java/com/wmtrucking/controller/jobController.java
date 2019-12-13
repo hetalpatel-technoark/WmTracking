@@ -65,7 +65,8 @@ public class jobController {
 
     @RequestMapping(value = "/List", method = RequestMethod.GET)
     public String createnote(HttpServletRequest request, Model model) {
-        List<MaJobs> maJobs = jobService.list(Constant.ACTIVE.toString());
+        //  List<MaJobs> maJobs = jobService.list(Constant.ACTIVE.toString());
+        List<Object[]> maJobs = jobService.list(Constant.ACTIVE.toString(), Constant.ENDED.toString());
         model.addAttribute("maJobs", maJobs);
 
         return "Job/List";
@@ -88,7 +89,7 @@ public class jobController {
 
         validateUtil.checkNull(request, "jno", "Job Number", errors);
         validateUtil.checkNull(request, "customer", "Customer", errors);
-        validateUtil.checkNull(request, "driver", "Driver", errors);
+        //validateUtil.checkNull(request, "driver", "Driver", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
         validateUtil.checkNull(request, "DumpingAddress", "Dumping Address", errors);
         validateUtil.checkNull(request, "lodingAddress", "Loding Address", errors);
@@ -99,6 +100,7 @@ public class jobController {
         validateUtil.checkNull(request, "dumping_log_txt", "Dumping logitude", errors);
 //        validateUtil.checkLength(errors, request, "job_assigndate", "Job Assign date", 255, 0);
         validateUtil.checkLength(errors, request, "jno", "Job Number", 255, 0);
+        validateUtil.checkLength(errors, request, "count", "Total Count", 255, 1);
         validateUtil.checkLength(errors, request, "jname", "Job Name", 255, 0);
         validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
         validateUtil.checkLength(errors, request, "add2", "Address 2", 255, 0);
@@ -109,6 +111,9 @@ public class jobController {
         validateUtil.checkLength(errors, request, "others", "Others", 255, 0);
         validateUtil.checkLength(errors, request, "state", "State", 255, 0);
 
+        if (request.getParameter("count") != null & request.getParameter("count").equals("0")) {
+            errors.add("count" + " " + "Allow More then 0");
+        }
         if (errors.size() > 0) {
             List<MaCustomer> maCustomer = cusService.activeList(Constant.ACTIVE.toString());
             model.addAttribute("maCustomer", maCustomer);
@@ -119,15 +124,7 @@ public class jobController {
         }
         MaJobs majob = new MaJobs();
 
-//        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("customer")));
-//        if (maCustomer != null) {
-//            majob.setCustId(maCustomer);
-//        }
         MaAuthobject maAuthobject = (MaAuthobject) sessionUtils.getSessionValue(request, Constant.AUTHSESSION.toString());
-//        MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("driver")));
-//        if (maDriver != null) {
-//            majob.setDriverId(maDriver);
-//        }
 
         majob.setHaulback(Boolean.parseBoolean((request.getParameter("haulBack"))));
         majob.setHauloff(Boolean.parseBoolean(request.getParameter("haulOff")));
@@ -152,7 +149,6 @@ public class jobController {
         majob.setCreatedby(maAuthobject);
         majob.setJob_status(Constant.PENDING.toString());
         majob.setTotaljobcount(validateUtil.getLongValue(request.getParameter("count")));
-
         majob.setFromlatitude(new BigDecimal(request.getParameter("loding_lat_txt")));
         majob.setFromlongitude(new BigDecimal(request.getParameter("loding_log_txt")));
         majob.setTolatitude(new BigDecimal(request.getParameter("dumping_lat_txt")));
@@ -162,17 +158,16 @@ public class jobController {
 
         jobService.save(majob);
 
-        //Job assign for driver
-        if (request.getParameterValues("driver") != null) {
-            for (String driver : request.getParameterValues("driver")) {
-                MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(driver));
-                MaJobDriver maJobDriver = new MaJobDriver();
-                maJobDriver.setJobId(majob);
-                maJobDriver.setDriverId(maDriver);
-                jobDriverService.save(maJobDriver);
-            }
-        }
-
+//        //Job assign for driver
+//        if (request.getParameterValues("driver") != null) {
+//            for (String driver : request.getParameterValues("driver")) {
+//                MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(driver));
+//                MaJobDriver maJobDriver = new MaJobDriver();
+//                maJobDriver.setJobId(majob);
+//                maJobDriver.setDriverId(maDriver);
+//                jobDriverService.save(maJobDriver);
+//            }
+//        }
         //Job assign for customer
         if (request.getParameterValues("customer") != null) {
             for (String customer : request.getParameterValues("customer")) {
@@ -187,16 +182,61 @@ public class jobController {
         return "redirect:/job/List?m=c";
     }
 
-    @RequestMapping(value = "/searchAddress/{id}", method = RequestMethod.GET)
-    public String searchAddress(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
+    @RequestMapping(value = "/assignJobDr/{jobid}", method = RequestMethod.GET)
+    public String assignDriver(HttpServletRequest request, Model model, @PathVariable("jobid") Long jobid) {
 
-        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), id);
-        if (maCustomer != null) {
-            model.addAttribute("maCustomer", maCustomer);
-        }
-        return "Job/Address";
+        MaJobs majob = jobService.findone(Constant.ACTIVE.toString(), jobid);
+
+        String maJobDrivers = jobDriverService.list(Constant.ACTIVE.toString(), jobid);
+        model.addAttribute("maJobDrivers", maJobDrivers);
+
+        List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
+        model.addAttribute("maDriver", maDriver);
+        model.addAttribute("maJob", majob);
+        return "Job/AssignJobDr";
     }
 
+    @RequestMapping(value = "/PostCreateAssignDrive", method = RequestMethod.POST)
+    public String PostCreateAssignDrive(HttpServletRequest request, Model model) {
+        ValidateUtil validateUtil = new ValidateUtil();
+        List<String> errors = new ArrayList<>();
+        validateUtil.checkNull(request, "driver", "Driver", errors);
+        if (errors.size() > 0) {
+            MaJobs majob = jobService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("jobid")));
+            String maJobDrivers = jobDriverService.list(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("jobid")));
+            model.addAttribute("maJobDrivers", maJobDrivers);
+            List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
+            model.addAttribute("maDriver", maDriver);
+            model.addAttribute("maJob", majob);
+            return "Job/AssignJobDr";
+        }
+        MaJobs majob = jobService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("jobid")));
+
+        jobDriverService.deleteOldDriverJob(Constant.ACTIVE.toString(), majob.getId());
+
+        //Job assign for driver
+        if (request.getParameterValues("driver") != null) {
+            for (String driver : request.getParameterValues("driver")) {
+                MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(driver));
+                MaJobDriver maJobDriver = new MaJobDriver();
+                maJobDriver.setJobId(majob);
+                maJobDriver.setDriverId(maDriver);
+                jobDriverService.save(maJobDriver);
+            }
+        }
+
+        return "redirect:/job/List?m=a";
+    }
+
+//    @RequestMapping(value = "/searchAddress/{id}", method = RequestMethod.GET)
+//    public String searchAddress(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
+//        
+//        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), id);
+//        if (maCustomer != null) {
+//            model.addAttribute("maCustomer", maCustomer);
+//        }
+//        return "Job/Address";
+//    }
     @RequestMapping(value = "/searchAddressDilivery/{id}", method = RequestMethod.GET)
     public String searchAddressDilivery(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
 
@@ -250,7 +290,7 @@ public class jobController {
 
         validateUtil.checkNull(request, "jno", "Job Number", errors);
         validateUtil.checkNull(request, "customer", "Customer", errors);
-        validateUtil.checkNull(request, "driver", "Driver", errors);
+        // validateUtil.checkNull(request, "driver", "Driver", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
 
 //        validateUtil.checkLength(errors, request, "job_assigndate", "Job Assign date", 255, 0);
@@ -281,18 +321,7 @@ public class jobController {
             model.addAttribute("majobcustomer", majobcustomer);
             return "Job/Edit";
         }
-//        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("customer")));
-//        if (maCustomer != null) {
-//            majob.setCustId(maCustomer);
-//        }
-//        MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("driver")));
-//        if (maDriver != null) {
-//            majob.setDriverId(maDriver);
-//        }
-//        majob.setHaulback(validateUtil.getStringValue(request.getParameter("haulBack")));
-//        majob.setHauloff(validateUtil.getStringValue(request.getParameter("haulOff")));
-//        majob.setSand(validateUtil.getStringValue(request.getParameter("Sand")));
-//        majob.setCommon_hourly(validateUtil.getStringValue(request.getParameter("common_hourly")));
+
         majob.setHaulback(Boolean.parseBoolean(request.getParameter("haulBack")));
         majob.setHauloff(Boolean.parseBoolean(request.getParameter("haulOff")));
         majob.setSand(Boolean.parseBoolean(request.getParameter("Sand")));
@@ -316,28 +345,31 @@ public class jobController {
         majob.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
         majob.setState(validateUtil.getStringValue(request.getParameter("state")));
         majob.setCountry(validateUtil.getStringValue(request.getParameter("country")));
+        majob.setTotaljobcount(validateUtil.getLongValue(request.getParameter("count")));
 
-        majob.setFromlatitude(new BigDecimal(request.getParameter("loding_lat_txt")));
-        majob.setFromlongitude(new BigDecimal(request.getParameter("loding_log_txt")));
-        majob.setTolatitude(new BigDecimal(request.getParameter("dumping_lat_txt")));
-        majob.setTolongitude(new BigDecimal(request.getParameter("dumping_log_txt")));
+        if ((request.getParameter("loding_lat_txt") != null && !request.getParameter("loding_lat_txt").equals("")) && (request.getParameter("loding_log_txt") != null && !request.getParameter("loding_log_txt").equals(""))) {
+            majob.setFromlatitude(new BigDecimal(request.getParameter("loding_lat_txt")));
+            majob.setFromlongitude(new BigDecimal(request.getParameter("loding_log_txt")));
+        }
+        if ((request.getParameter("dumping_lat_txt") != null && !request.getParameter("dumping_lat_txt").equals("")) && (request.getParameter("dumping_log_txt") != null && !request.getParameter("dumping_log_txt").equals(""))) {
+            majob.setTolatitude(new BigDecimal(request.getParameter("dumping_lat_txt")));
+            majob.setTolongitude(new BigDecimal(request.getParameter("dumping_log_txt")));
+        }
         majob.setDumpingaddress(validateUtil.getStringValue(request.getParameter("DumpingAddress")));
         majob.setLodingaddress(validateUtil.getStringValue(request.getParameter("lodingAddress")));
 
         jobService.save(majob);
 
-        jobDriverService.deleteOldDriverJob(Constant.ACTIVE.toString(), majob.getId());
-
-        if (request.getParameterValues("driver") != null) {
-            for (String driver : request.getParameterValues("driver")) {
-                MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(driver));
-                MaJobDriver maJobDriver = new MaJobDriver();
-                maJobDriver.setJobId(majob);
-                maJobDriver.setDriverId(maDriver);
-                jobDriverService.save(maJobDriver);
-            }
-        }
-
+//        jobDriverService.deleteOldDriverJob(Constant.ACTIVE.toString(), majob.getId());
+//        if (request.getParameterValues("driver") != null) {
+//            for (String driver : request.getParameterValues("driver")) {
+//                MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(driver));
+//                MaJobDriver maJobDriver = new MaJobDriver();
+//                maJobDriver.setJobId(majob);
+//                maJobDriver.setDriverId(maDriver);
+//                jobDriverService.save(maJobDriver);
+//            }
+//        }
         jobcustomerService.deleteOldCustomerJob(Constant.ACTIVE.toString(), majob.getId());
         //Job assign for customer
         if (request.getParameterValues("customer") != null) {

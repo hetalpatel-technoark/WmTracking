@@ -115,7 +115,7 @@
                                                     <input readonly type="text" class="form-control" name="add1" value="<%=checkInput.checkValueEdit (maCustomer.getAddress1(),request.getParameter("add1"))%>" placeholder="Address 1">
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
+<!--                                            <div class="form-group row">
                                                 <div class="col-md-4">
                                                     <span>Address 2</span>
                                                 </div>
@@ -130,7 +130,7 @@
                                                 <div class="col-md-8">
                                                     <input readonly type="text" class="form-control" name="add3" value="<%=checkInput.checkValueEdit (maCustomer.getAddress3(),request.getParameter("add3"))%>" placeholder="Address 3">
                                                 </div>
-                                            </div>
+                                            </div>-->
 
 
                                             <div class="form-group row">
@@ -149,14 +149,14 @@
                                                     <input readonly type="text" class="form-control" name="state" value="<%=checkInput.checkValueEdit (maCustomer.getState(),request.getParameter("state"))%>" placeholder="State">
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
+<!--                                            <div class="form-group row">
                                                 <div class="col-md-4">
                                                     <span>Country</span>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input readonly type="text" class="form-control" name="country" value="<%=checkInput.checkValueEdit (maCustomer.getCountry(),request.getParameter("country"))%>" placeholder="Country">
                                                 </div>
-                                            </div>
+                                            </div>-->
                                             <div class="form-group row">
                                                 <div class="col-md-4">
                                                     <span>Zipcode</span>
