@@ -88,7 +88,7 @@ public class jobController {
         List<String> errors = new ArrayList<>();
 
         validateUtil.checkNull(request, "jno", "Job Number", errors);
-        validateUtil.checkNull(request, "customer", "Customer", errors);
+       // validateUtil.checkNull(request, "customer", "Customer", errors);
         //validateUtil.checkNull(request, "driver", "Driver", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
         validateUtil.checkNull(request, "DumpingAddress", "Dumping Address", errors);
@@ -289,7 +289,7 @@ public class jobController {
         ValidateUtil validateUtil = new ValidateUtil();
 
         validateUtil.checkNull(request, "jno", "Job Number", errors);
-        validateUtil.checkNull(request, "customer", "Customer", errors);
+       // validateUtil.checkNull(request, "customer", "Customer", errors);
         // validateUtil.checkNull(request, "driver", "Driver", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
 

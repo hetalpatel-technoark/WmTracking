@@ -87,7 +87,7 @@
                                                     </div>
                                                     <div class="col-md-8">
                                                         <!--                                                        <select  onchange="searchAddress()" id="customer" class="form-control select-class" name="customer" required>-->
-                                                        <select class="select2 form-control"  name="customer" required multiple="multiple">
+                                                        <select class="select2 form-control"  name="customer"  multiple="multiple">
 
                                                             <%
                                                                 List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");

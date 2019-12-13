@@ -78,7 +78,7 @@
                                                         <span>Customer /Company*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <select class="select2 form-control"  name="customer" required multiple="multiple">
+                                                        <select class="select2 form-control"  name="customer"  multiple="multiple">
                                                             <%
                                                                 String selectedCustomer = (String) request.getAttribute("majobcustomer");
                                                                 List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
