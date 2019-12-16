@@ -7,6 +7,7 @@ package com.wmtrucking.services;
 
 import com.wmtrucking.entities.MaCustomer;
 import com.wmtrucking.repositories.customerRepository;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,8 @@ public class customerService {
         return cuRepository.checkEmail(satus, email);
     }
 
-    public Long count(String satus) {
-        return cuRepository.count(satus);
+    public  Long count(String satus, Date jobdate) {
+        return cuRepository.count(satus,jobdate);
     }
 
     public List<MaCustomer> activeList(String satus) {

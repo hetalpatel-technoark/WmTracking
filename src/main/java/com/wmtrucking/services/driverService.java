@@ -54,7 +54,7 @@ public class driverService {
         return dRepository.activeList(satus);
     }
     
-    public  MaDriver findoneEdit(String satus, Long id){
-    return dRepository.findoneEdit(satus, id);
+    public  MaDriver findoneEdit(Long id){
+    return dRepository.findoneEdit( id);
     }
 }

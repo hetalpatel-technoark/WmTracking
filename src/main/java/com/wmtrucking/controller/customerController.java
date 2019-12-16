@@ -67,7 +67,7 @@ public class customerController {
         ValidateUtil validateUtil = new ValidateUtil();
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "phone", "Phone number", errors);
-        validateUtil.checkNull(request, "email", "Email", errors);
+        // validateUtil.checkNull(request, "email", "Email", errors);
         validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
         validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
@@ -78,7 +78,7 @@ public class customerController {
         validateUtil.checkLength(errors, request, "city", "City", 255, 0);
         validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
         validateUtil.checkLength(errors, request, "state", "State", 255, 0);
-        validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
+        validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "phone", "Phone", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
 
@@ -89,10 +89,12 @@ public class customerController {
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
             errors.add("Please enter proper Pincode ");
         }
-        MaCustomer checkEmail = cusService.checkEmail(Constant.DETETED.toString(), request.getParameter("email"));
-        if (checkEmail != null) {
-            errors.add("Email is already exist");
-        }
+//        if (request.getParameter("email") != null && !request.getParameter("email").equals("")) {
+//            MaCustomer checkEmail = cusService.checkEmail(Constant.DETETED.toString(), request.getParameter("email"));
+//            if (checkEmail != null) {
+//                errors.add("Email is already exist");
+//            }
+//        }
         if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Customer/Create";
@@ -153,7 +155,7 @@ public class customerController {
         ValidateUtil validateUtil = new ValidateUtil();
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "phone", "Phone number", errors);
-        validateUtil.checkNull(request, "email", "Email", errors);
+        //validateUtil.checkNull(request, "email", "Email", errors);
         validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
         validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
@@ -164,7 +166,7 @@ public class customerController {
         validateUtil.checkLength(errors, request, "city", "City", 255, 0);
         validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
         validateUtil.checkLength(errors, request, "state", "State", 255, 0);
-        validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
+        validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "phone", "Phone", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
         CommonUtils commonUtils = new CommonUtils();
@@ -174,13 +176,14 @@ public class customerController {
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
             errors.add("Please enter proper Pincode ");
         }
-        MaCustomer checkEmail = cusService.checkEmail(Constant.DETETED.toString(), request.getParameter("email"));
-        if (checkEmail != null && !maCustomer.getEmail().equals(checkEmail.getEmail())) {
-            errors.add("Email is already exist");
-        }
+//        if (request.getParameter("email") != null && !request.getParameter("email").equals("")) {
+//            MaCustomer checkEmail = cusService.checkEmail(Constant.DETETED.toString(), request.getParameter("email"));
+//            if (checkEmail != null && !maCustomer.getEmail().equals(checkEmail.getEmail())) {
+//                errors.add("Email is already exist");
+//            }
+//        }
         if (errors.size() > 0) {
             model.addAttribute("maCustomer", maCustomer);
-
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Customer/Edit";
         }

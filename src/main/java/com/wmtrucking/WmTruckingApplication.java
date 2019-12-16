@@ -11,5 +11,6 @@ public class WmTruckingApplication extends SpringBootServletInitializer {
         SpringApplication.run(WmTruckingApplication.class, args);
     }
 
-    
+   
+
 }

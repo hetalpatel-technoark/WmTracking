@@ -7,6 +7,7 @@ package com.wmtrucking.controller;
 
 import com.wmtrucking.entities.MaJobs;
 import com.wmtrucking.exception.UnAthorizedUserException;
+import com.wmtrucking.pojo.JobPojo;
 import com.wmtrucking.services.customerService;
 import com.wmtrucking.services.driverService;
 import com.wmtrucking.services.jobService;
@@ -56,7 +57,7 @@ public class DashboardController {
     @RequestMapping(value = "/Dashboard", method = RequestMethod.GET)
     public String dashboard(Model model, HttpServletRequest request, HttpServletResponse response) {
 
-        model.addAttribute("customer", cuService.count(Constant.DETETED.toString()));
+        model.addAttribute("customer", cuService.count(Constant.ACTIVE.toString(), new Date()));
         model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), new Date()));
         model.addAttribute("job", joService.count(Constant.ACTIVE.toString()));
         model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(), Constant.STARTED.toString(), new Date()));
@@ -75,7 +76,7 @@ public class DashboardController {
 //            model.addAttribute("customerWiseJob", customerWiseJob);
 //        }
         // contains only date information without time
-        List<MaJobs> maJobsesList = joService.listOfJob(Constant.ACTIVE.toString());
+        List<JobPojo> maJobsesList = joService.getJobList(Constant.ACTIVE.toString(), new Date());
 
         model.addAttribute("maJobsesList", maJobsesList);
         return "Dashboard/Dashboard";

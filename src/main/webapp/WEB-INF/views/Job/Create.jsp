@@ -65,22 +65,6 @@
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-6">
-<!--                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Assign Driver *</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <select class="select2 form-control"  name="driver" required multiple="multiple">
-                                                            <%
-                                                                List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
-                                                                for (MaDriver maDriver : maDrivers) {
-                                                            %>
-                                                            <option  value="<%=maDriver.getId()%>"><%= maDriver.getFirstname()%></option>
-                                                            <%}%>
-                                                        </select>
-                                                    </div>
-                                                </div> -->
-
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Customer / Company </span>
@@ -105,7 +89,7 @@
                                                     <div class="col-md-8">
 <!--                                                        <input type="number" max="1000"  class="form-control" name="count" value="<%=checkInput.checkValue(request.getParameter("count"))%>"  placeholder="Total Job count">-->
 
-                                                        <select name="count" class="form-control" value="<%=checkInput.checkValue(request.getParameter("count"))%>">                                                          
+                                                        <select name="count" class="select2 form-control" value="<%=checkInput.checkValue(request.getParameter("count"))%>">                                                          
                                                             <option selected="" disabled="">Select total count </option>
                                                             <% for (int i = 1; i <= 1000; i++) {%>
                                                             <option><%= i%> </option>
@@ -113,7 +97,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-
+                                               
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Loading Site Address *</span>
@@ -137,7 +121,7 @@
                                             <div class="col-6">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Job number*</span>
+                                                        <span>Job Number*</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" required=""  class="form-control" name="jno" value="<%=checkInput.checkValue(request.getParameter("jno"))%>" placeholder="Job number">
@@ -153,18 +137,18 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">                                                    
-                                                        <span>Job date *</span></div>
+                                                        <span>Job Date *</span></div>
                                                     <div class="col-md-8">
                                                         <input type="text" required readonly name="jobdate" value="<%=request.getParameter("jobdate") != null ? request.getParameter("jobdate") : new DateUtils().dateWithFormat(new Date(), "dd/MM/yyyy")%>"  class="form-control pickadate1" placeholder="Job Date">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-3">
                                                         <!--                                                        <span>Select fill</span>-->
                                                     </div>
-                                                    <div class="col-md-8">
-                                                        <div class="col-sm-12">
+                                                    <div class="col-md-9">
+                                                        <div class="col-sm-12" style="margin-left:30px">
                                                             <ul class="list-unstyled mb-0">
 
                                                                 <li class="d-inline-block mr-2">
@@ -199,8 +183,15 @@
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" value="true"  name="common_hourly" id="customCheck5">
-                                                                            <label class="custom-control-label" for="customCheck5">Common Hourly</label>
+                                                                            <input type="checkbox" class="custom-control-input" value="true"  name="common" id="customCheck5">
+                                                                            <label class="custom-control-label" for="customCheck5">Common</label>
+                                                                        </div>
+                                                                    </fieldset></li>
+                                                                <li class="d-inline-block mr-2">
+                                                                    <fieldset>
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" value="true"  name="hourly" id="customCheck6">
+                                                                            <label class="custom-control-label" for="customCheck6">Hourly</label>
                                                                         </div>
                                                                     </fieldset></li>
                                                             </ul>

@@ -3,6 +3,7 @@
     Created on : Nov 25, 2019, 6:26:06 PM
     Author     : Admin
 --%>
+<%@page import="com.wmtrucking.pojo.JobPojo"%>
 <%@page import="com.wmtrucking.entities.MaJobs"%>
 <%@page import="java.util.List"%>
 
@@ -72,7 +73,7 @@
                     </div>
                 </div> 
                 <div class="col-lg-3 col-md-12">
-                    <div class="card">
+                    <div class="card" style="height: 177px;" >
                         <div class="card-header d-flex flex-column align-items-start pb-0">
                             <div class="avatar bg-rgba-primary p-50 m-0">
                                 <div class="avatar-content">
@@ -106,7 +107,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-12">
-                    <div class="card">
+                    <div class="card" style="height: 177px;">
                         <div class="card-header d-flex flex-column align-items-start pb-0">
                             <div class="avatar bg-rgba-primary p-50 m-0">
                                 <div class="avatar-content">
@@ -123,24 +124,24 @@
 
             </div>
         </section>
-<!--        <section id="apexchart">
-            <div class="row">
-                 Line Chart 
-                <div class="col-lg-12 col-md-12">
-                    <div class="card">
-
-                        <div class="card-header">
-                            <h4 class="card-title">Job for Month Base </h4>
-                        </div>  
-                        <div class="card-content">
-                            <div class="card-body">
-                                <div id="line-chart"></div>
+        <!--        <section id="apexchart">
+                    <div class="row">
+                         Line Chart 
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card">
+        
+                                <div class="card-header">
+                                    <h4 class="card-title">Job for Month Base </h4>
+                                </div>  
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div id="line-chart"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>-->
+                </section>-->
 
         <section id="">
             <div class="row">
@@ -161,15 +162,6 @@
                                         <div id="pickupMap" class="height-400"></div>
                                     </div>
                                 </div></div> 
-                            <!--                            <div class="col-lg-6">
-                                                            <div class="card-header">
-                                                                <h4 class="card-title"> Dump Site </h4>
-                                                            </div>  
-                                                            <div class="card-content">
-                                                                <div id="gmaps-basic-maps"> 
-                                                                    <div id="dumpMap" class="height-400"></div>
-                                                                </div> 
-                                                            </div></div>-->
 
                         </div>
                     </div>
@@ -195,16 +187,16 @@
 <script>
     $(document).ready(function () {
 
-    <% List<MaJobs> maJobses = (List<MaJobs>) request.getAttribute("maJobsesList");%>
+    <% List<JobPojo> maJobses = (List<JobPojo>) request.getAttribute("maJobsesList");%>
         //Pickup Site Map
         map = new GMaps({
             div: '#pickupMap',
-            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "23.0267556"%>,
-            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "72.6008286"%>,
+            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "29.974490"%>,
+            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "-95.817450"%>,
             zoom: 11
         });
         //Loding address
-    <% for (MaJobs maJobs : maJobses) {%>
+    <% for (JobPojo maJobs : maJobses) {%>
         map.addMarker({
             lat: <%= maJobs.getFromlatitude()%>,
             lng: <%= maJobs.getFromlongitude()%>,
@@ -214,7 +206,7 @@
             }
         });
     <%}%>
-    <% for (MaJobs maJobs : maJobses) {%>
+    <% for (JobPojo maJobs : maJobses) {%>
         map.addMarker({
             lat: <%= maJobs.getTolatitude()%>,
             lng: <%= maJobs.getTolongitude()%>,
@@ -227,73 +219,73 @@
     <%}%>
         map = new GMaps({
             div: "#pickupMap",
-            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "23.0267556"%>,
-            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "72.6008286"%>,
+            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "29.974490"%>,
+            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "-95.817450"%>,
             zoom: 11
         })<%= maJobses.size() > 0 ? "," : ""%>
 
 //Loding address
-    <%  for (MaJobs maJobs2 : maJobses) {%>
+    <%  for (JobPojo maJobs2 : maJobses) {%>
         map.addMarker({
             lat: <%= maJobs2.getFromlatitude()%>,
             lng: <%= maJobs2.getFromlongitude()%>,
             title: '<%= maJobs2.getJobname()%>',
             infoWindow: {
-                content: "<p>Job name: <%= maJobs2.getJobname()%> </br> Total Driver: <%= request.getAttribute("driver")%> </br>Jab Number: <%= maJobs2.getJobnumber()%></p>"
+                content: "<p>Job Name: <%= maJobs2.getJobname()%> </br> Total Driver: <%= request.getAttribute("driver")%> </br>Job Number: <%= maJobs2.getJobnumber()%></p>"
             }
         });
     <%}%>
 //Dumping address
-    <% for (MaJobs maJobs : maJobses) {%>
+    <% for (JobPojo maJobs : maJobses) {%>
         map.addMarker({
             lat: <%= maJobs.getTolatitude()%>,
             lng: <%= maJobs.getTolongitude()%>,
             title: '<%= maJobs.getJobname()%>',
             icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
             infoWindow: {
-                content: '<p>Job name:<%= maJobs.getJobname()%></br> Total Driver: <%= request.getAttribute("driver")%> </br>Jab Number: <%= maJobs.getJobnumber()%></p>'
+                content: '<p>Job Name:<%= maJobs.getJobname()%></br> Total Driver: <%= request.getAttribute("driver")%> </br>Job Number: <%= maJobs.getJobnumber()%></p>'
             }
         });
     <%}%>
-           var directionsDisplay;
-    var directionsService = new google.maps.DirectionsService();
-    var map;
-function calcRoute() {
-        var start = new google.maps.LatLng(21.2038557,72.83976690000009);
-        var end = new google.maps.LatLng(23.0267556,72.6008286);
+        var directionsDisplay;
+        var directionsService = new google.maps.DirectionsService();
+        var map;
+        function calcRoute() {
+            var start = new google.maps.LatLng(21.2038557, 72.83976690000009);
+            var end = new google.maps.LatLng(23.0267556, 72.6008286);
 
-        var bounds = new google.maps.LatLngBounds();
-        bounds.extend(start);
-        bounds.extend(end);
-        map.fitBounds(bounds);
-        var request = {
-            origin: start,
-            destination: end,
-            travelMode: google.maps.TravelMode.DRIVING
-        };
-        directionsService.route(request, function (response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-            console.log(response);
-                directionsDisplay.setDirections(response);
-                directionsDisplay.setMap(map);
-            } else {
-                alert("Directions Request from " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed: " + status);
-            }
-        });
-    }
-    function initialize() {
-        directionsDisplay = new google.maps.DirectionsRenderer();
-        var chicago = new google.maps.LatLng(21.2038557,72.83976690000009);
-        var mapOptions = {
-            zoom: 7,
-            center: chicago
-        };
-        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        directionsDisplay.setMap(map);
-        google.maps.event.addDomListener(window, 'load',  calcRoute);
-    }
-    
-initialize();
+            var bounds = new google.maps.LatLngBounds();
+            bounds.extend(start);
+            bounds.extend(end);
+            map.fitBounds(bounds);
+            var request = {
+                origin: start,
+                destination: end,
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+            directionsService.route(request, function (response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    console.log(response);
+                    directionsDisplay.setDirections(response);
+                    directionsDisplay.setMap(map);
+                } else {
+                    alert("Directions Request from " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed: " + status);
+                }
+            });
+        }
+        function initialize() {
+            directionsDisplay = new google.maps.DirectionsRenderer();
+            var chicago = new google.maps.LatLng(21.2038557, 72.83976690000009);
+            var mapOptions = {
+                zoom: 7,
+                center: chicago
+            };
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            directionsDisplay.setMap(map);
+            google.maps.event.addDomListener(window, 'load', calcRoute);
+        }
+
+        initialize();
 
     });
 

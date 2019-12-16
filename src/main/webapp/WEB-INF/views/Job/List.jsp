@@ -85,6 +85,7 @@
                                                 <th>Job Date</th>  
                                                 <th>Total Count of Job</th>  
                                                 <th>Total Driver</th>
+                                                <th>Driver Name</th>
                                                 <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -102,6 +103,7 @@
                                                 <td><%=checkInput.checkValue(majob[3].toString())%></td>
                                                 <td><%=majob[5] + "/" + majob[4]%></td>
                                                 <td><%=checkInput.checkValue(majob[6].toString())%></td>
+                                                <td><%=majob[8]!=null ? majob[8].toString():" "%></td>
 
                                                 <%
                                                     if (majob[7].toString().equals("0")) {%>
@@ -118,7 +120,9 @@
                                                                 <i class="feather icon-menu"></i>
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton100">
-
+                                                                <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/assignJobDr/<%=majob[0]%>">
+                                                                    <i class="feather icon-user "></i><span>Assign Driver</span>
+                                                                </a> 
                                                                 <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/view/<%=majob[0]%>">
                                                                     <i class="feather icon-eye"></i><span>View</span>
                                                                 </a>
@@ -128,10 +132,6 @@
                                                                 <a class="dropdown-item" onclick="changeStatus('Delete', '<%=majob[0]%>')">
                                                                     <i class="feather icon-trash"></i> <span>Delete</span>
                                                                 </a>
-                                                                <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/assignJobDr/<%=majob[0]%>">
-                                                                    <i class="feather icon-user "></i><span>Assign Driver</span>
-                                                                </a> 
-
 
                                                             </div>
                                                         </div>

@@ -94,12 +94,12 @@ public class driverController {
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
             errors.add("Please enter proper Pincode ");
         }
-        if (request.getParameter("email") != null && request.getParameter("email").equals("")) {
-            MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
-            if (checkEmail != null) {
-                errors.add("Email is already exist");
-            }
-        }
+//        if (request.getParameter("email") != null && !request.getParameter("email").equals("")) {
+//            MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
+//            if (checkEmail != null) {
+//                errors.add("Email is already exist");
+//            }
+//        }
 
         MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("mob"));
         if (checkMobile != null) {
@@ -200,19 +200,21 @@ public class driverController {
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
             errors.add("Please enter proper Pincode ");
         }
-        if (request.getParameter("email") != null && request.getParameter("email").equals("")) {
-            MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
-            if (checkEmail != null && !maDriver.getEmail().equals(checkEmail.getEmail())) {
-                errors.add("Email is already exist");
-            }
-        }
+//        if (request.getParameter("email") != null && !request.getParameter("email").equals("")) {
+//            MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
+//            if (checkEmail != null && !maDriver.getEmail().equals(checkEmail.getEmail())) {
+//                errors.add("Email is already exist");
+//            }
+//        }
         MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("mob"));
         if (checkMobile != null && !maDriver.getMobile().equals(checkMobile.getMobile())) {
             errors.add("Mobile is already exist");
         }
-        MaDriver maDriver1 = drService.findoneEdit(Constant.ACTIVE.toString(), maDriver.getId());
-        if (maDriver1 == null) {
-            errors.add(" This Driver is assigned in job. For Inactive, please first remove Driver from job.");
+        if (!maDriver.getStatus().equals(request.getParameter("status"))) {
+            MaDriver maDriver1 = drService.findoneEdit( maDriver.getId());
+            if (maDriver1 == null) {
+                errors.add(" This Driver is assigned in job. For Inactive, please first remove Driver from job.");
+            }
         }
         if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);

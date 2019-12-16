@@ -75,7 +75,7 @@
                                             <div class="col-6">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Customer /Company*</span>
+                                                        <span>Customer /Company</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <select class="select2 form-control"  name="customer"  multiple="multiple">
@@ -93,7 +93,7 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Total count </span>
+                                                        <span>Total Count </span>
                                                     </div>
                                                     <div class="col-md-8">
 <!--                                                        <input type="number" max="1000"  class="form-control" name="count" value="<%=checkInput.checkValueEdit(majob.getTotaljobcount(), request.getParameter("count"))%>"  placeholder="Total Job count">-->
@@ -151,11 +151,11 @@
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-3">
                                                         <!--                                                        <span>Select Fill</span>-->
                                                     </div>
-                                                    <div class="col-sm-8">
-                                                        <div class="col-sm-12">
+                                                    <div class="col-sm-9">
+                                                        <div class="col-sm-12" style="margin-left:30px">
                                                             <ul class="list-unstyled mb-0">
 
                                                                 <li class="d-inline-block mr-2">
@@ -190,8 +190,15 @@
                                                                 <li class="d-inline-block mr-2">
                                                                     <fieldset>
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" <% if (majob.getCommon_hourly()) {%>checked<% }%>  value="true"  name="common_hourly" id="customCheck5">
-                                                                            <label class="custom-control-label" for="customCheck5">Common Hourly</label>
+                                                                            <input type="checkbox" class="custom-control-input" <% if (majob.getCommon()) {%>checked<% }%>  value="true"  name="common" id="customCheck5">
+                                                                            <label class="custom-control-label" for="customCheck5">Common</label>
+                                                                        </div>
+                                                                    </fieldset></li>
+                                                                <li class="d-inline-block mr-2">
+                                                                    <fieldset>
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" <% if (majob.getHourly()!=null && majob.getHourly()) {%>checked<% }%>  value="true"  name="hourly" id="customCheck6">
+                                                                            <label class="custom-control-label" for="customCheck6"> Hourly</label>
                                                                         </div>
                                                                     </fieldset></li>
                                                             </ul>

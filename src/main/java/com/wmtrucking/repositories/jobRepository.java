@@ -28,7 +28,8 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
             + " ( case when ((select count(id) from ma_job_transaction where job_id=j.id and status=?2) = j.totaljobcount) then 0 "
             + "    else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status=?2) =0) then 1 "
             + "  else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status=?2) < j.totaljobcount) then 3 "
-            + "  else 2 end end end) as Transectionstatus "
+            + "  else 2 end end end) as Transectionstatus,"
+            + "(select string_agg(firstname, ', ') from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivername "
             + "from ma_jobs j where status=?1")
     public List<Object[]> list(String status, String transectionstatus);
 
@@ -50,8 +51,8 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
             + "count(u.id) FROM ma_jobs u where u.status='Active' group by u.cust_id")
     public List<Object[]> findCustomerWiseJob();
 
-    @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1  ORDER BY u.id desc")
-    public List<MaJobs> listOfJob(String satus);
+    @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and cast(u.jobdate as date)=?2 ORDER BY u.id desc")
+    public List<MaJobs> listOfJob(String satus, Date jobdate);
 
     @Query(nativeQuery = true, value = "SELECT SUM(totaljobcount) FROM ma_jobs where status=?1 and id in(select job_id from ma_job_transaction "
             + "where status=?2 and starttime=?3 )")

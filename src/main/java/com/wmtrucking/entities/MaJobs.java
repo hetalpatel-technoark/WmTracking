@@ -71,8 +71,10 @@ public class MaJobs implements Serializable {
 
     @Column(name = "haulback")
     private Boolean haulback;
-    @Column(name = "common_hourly")
-    private Boolean common_hourly;
+    @Column(name = "common")
+    private Boolean common;
+    @Column(name = "hourly")
+    private Boolean hourly;
     @Column(name = "sand")
     private Boolean sand;
     @Column(name = "selectfill")
@@ -217,12 +219,20 @@ public class MaJobs implements Serializable {
         this.selectfill = selectfill;
     }
 
-    public Boolean getCommon_hourly() {
-        return common_hourly;
+    public Boolean getCommon() {
+        return common;
     }
 
-    public void setCommon_hourly(Boolean common_hourly) {
-        this.common_hourly = common_hourly;
+    public void setCommon(Boolean common) {
+        this.common = common;
+    }
+
+    public Boolean getHourly() {
+        return hourly;
+    }
+
+    public void setHourly(Boolean hourly) {
+        this.hourly = hourly;
     }
 
     public Boolean getSand() {

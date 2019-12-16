@@ -107,10 +107,10 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Email*</span>
+                                                        <span>Email</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="email" required="" id="first-name" class="form-control" name="email" value="<%=checkInput.checkValueEdit (maCustomer.getEmail(),request.getParameter("email"))%>" placeholder="Email">
+                                                        <input type="email" id="first-name" class="form-control" name="email" value="<%=checkInput.checkValueEdit (maCustomer.getEmail(),request.getParameter("email"))%>" placeholder="Email">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">

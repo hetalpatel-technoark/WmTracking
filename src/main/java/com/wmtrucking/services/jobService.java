@@ -6,10 +6,14 @@
 package com.wmtrucking.services;
 
 import com.wmtrucking.entities.MaJobs;
+import com.wmtrucking.pojo.JobPojo;
 import com.wmtrucking.repositories.jobRepository;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,6 +25,8 @@ public class jobService {
 
     @Autowired
     jobRepository jobRepository;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public void save(MaJobs maJobs) {
         jobRepository.save(maJobs);
@@ -50,8 +56,25 @@ public class jobService {
         return jobRepository.findCustomerWiseJob();
     }
 
-    public List<MaJobs> listOfJob(String satus) {
-        return jobRepository.listOfJob(satus);
+    public List<MaJobs> listOfJob(String satus, Date jobdate) {
+        return jobRepository.listOfJob(satus, jobdate);
+    }
+
+    public List<JobPojo> getJobList(String satus, Date jobdate) {
+        String query = "select j.id, j.jobname,j.jobnumber,  j.jobdate, j.totaljobcount, "
+                + "           (select count(id) from ma_job_transaction where job_id=j.id and status='Ended')as transactioncount,"
+                + "           (select count(id) from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivercount,"
+                + "            ( case when ((select count(id) from ma_job_transaction where job_id=j.id and status='Ended') = j.totaljobcount) then 0 "
+                + "               else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status='Ended') =0) then 1 "
+                + "             else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status='Ended') < j.totaljobcount) then 3 "
+                + "             else 2 end end end) as Transectionstatus ,"
+                + "		(select string_agg(firstname, ', ')"
+                + "  from ma_driver where id in (select driver_id from ma_job_driver"
+                + "			where job_id=j.id))as drivername , fromlatitude, fromlongitude,tolatitude,tolongitude"
+                + "			from ma_jobs j where status=? and cast(j.jobdate as date)=? ORDER BY j.id desc";
+        List<JobPojo> jobPojo = jdbcTemplate.query(query, new Object[]{satus, jobdate}, new BeanPropertyRowMapper<JobPojo>(JobPojo.class));
+
+        return jobPojo;
     }
 
     public Long countDumpingPickup(String satus, String transectionStatus, Date starttime) {

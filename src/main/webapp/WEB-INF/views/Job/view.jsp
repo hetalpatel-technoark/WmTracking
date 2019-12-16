@@ -68,25 +68,6 @@
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-6">
-                                           
-<!--                                            <div class="form-group row">
-                                                <div class="col-md-4">
-                                                    <span>Assign Driver *</span>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <select disabled="" class="select2 form-control"  name="driver" required multiple="multiple">
-                                                        <%
-                                                            String selectedDriver = (String) request.getAttribute("maJobDrivers");
-
-                                                            List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
-                                                            for (MaDriver maDriver : maDrivers) {
-                                                        %>
-                                                        <option <%=selectedDriver != null && selectedDriver.contains(checkInput.checkValueEdit(maDriver.getId(), request.getParameter("driver"))) ? "selected" : ""%> value="<%=maDriver.getId()%>"><%= maDriver.getFirstname()%></option>
-                                                        <%}%>
-                                                    </select>
-                                                </div>
-                                            </div> -->
-
                                             <div class="form-group row">
                                                 <div class="col-md-4">
                                                     <span>Customer /Company*</span>
@@ -107,7 +88,7 @@
 
                                             <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <span>Total count </span>
+                                                    <span>Total Count </span>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input disabled="" type="number" max="1000"  class="form-control" name="count" value="<%=checkInput.checkValueEdit(majob.getTotaljobcount(), request.getParameter("count"))%>"  placeholder="Total Job count">
@@ -135,7 +116,7 @@
                                         <div class="col-6">
                                             <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <span>Job number*</span>
+                                                    <span>Job Number*</span>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input readonly  type="text" class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber(), request.getParameter("jno"))%>" placeholder="Job number">
@@ -151,18 +132,18 @@
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-4">                                                    
-                                                    <span>Job date *</span></div>
+                                                    <span>Job Date *</span></div>
                                                 <div class="col-md-8">
                                                     <input readonly type="text" disabled="" id="expirydate" name="jobdate" value="<%=checkInput.checkValueEdit(dateUtils.dateWithFormat(majob.getJobdate(), "dd-MM-yyyy"), request.getParameter("jobdate"))%>" style="background-color: #F5F5F1" class="form-control pickadate1" placeholder="Job Date">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <!--                                                    <span>Select fill</span>-->
                                                 </div>
-                                                <div class="col-sm-8">
-                                                    <div class="col-sm-12">
+                                                <div class="col-sm-9">
+                                                    <div class="col-sm-12" style="margin-left:30px">
                                                         <ul class="list-unstyled mb-0">
                                                             <li class="d-inline-block mr-2">
                                                                 <fieldset>
@@ -182,7 +163,7 @@
                                                             <li class="d-inline-block mr-2">
                                                                 <fieldset>
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input disabled readonly type="checkbox" class="custom-control-input" <% if (majob.getHauloff()) {%>checked<% } %>  value="haulOff" name="haulOff" id="customCheck3">
+                                                                        <input disabled readonly type="checkbox" class="custom-control-input" <% if (majob.getHauloff()) {%>checked<% } %> id="customCheck3">
                                                                         <label class="custom-control-label" for="customCheck3">Haul Off </label>
                                                                     </div>
                                                                 </fieldset></li>
@@ -190,15 +171,22 @@
                                                             <li class="d-inline-block mr-2">
                                                                 <fieldset>
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input disabled readonly type="checkbox" class="custom-control-input" <% if (majob.getHaulback()) {%>checked<% } %>  value="haulBack"  name="haulBack" id="customCheck4">
+                                                                        <input disabled readonly type="checkbox" class="custom-control-input" <% if (majob.getHaulback()) {%>checked<% } %>   id="customCheck4">
                                                                         <label class="custom-control-label" for="customCheck4">Haul Back</label>
                                                                     </div>
                                                                 </fieldset></li>
                                                             <li class="d-inline-block mr-2">
                                                                 <fieldset>
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input disabled type="checkbox" class="custom-control-input" <% if (majob.getCommon_hourly()) {%>checked<% }%>  value="Common Hourly" name="common_hourly" id="customCheck5">
-                                                                        <label class="custom-control-label" for="customCheck5">Common Hourly </label>
+                                                                        <input disabled type="checkbox" class="custom-control-input" <% if (majob.getCommon()) {%>checked<% }%>   id="customCheck5">
+                                                                        <label class="custom-control-label" for="customCheck5">Common </label>
+                                                                    </div>
+                                                                </fieldset></li>
+                                                            <li class="d-inline-block mr-2">
+                                                                <fieldset>
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input disabled type="checkbox" class="custom-control-input" <% if (majob.getHourly()!=null&& majob.getHourly()) {%>checked<% }%>   id="customCheck6">
+                                                                        <label class="custom-control-label" for="customCheck6">Hourly </label>
                                                                     </div>
                                                                 </fieldset></li>
                                                         </ul>

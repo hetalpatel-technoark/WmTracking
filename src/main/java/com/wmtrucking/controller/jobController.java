@@ -88,7 +88,7 @@ public class jobController {
         List<String> errors = new ArrayList<>();
 
         validateUtil.checkNull(request, "jno", "Job Number", errors);
-       // validateUtil.checkNull(request, "customer", "Customer", errors);
+        // validateUtil.checkNull(request, "customer", "Customer", errors);
         //validateUtil.checkNull(request, "driver", "Driver", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
         validateUtil.checkNull(request, "DumpingAddress", "Dumping Address", errors);
@@ -129,7 +129,8 @@ public class jobController {
         majob.setHaulback(Boolean.parseBoolean((request.getParameter("haulBack"))));
         majob.setHauloff(Boolean.parseBoolean(request.getParameter("haulOff")));
         majob.setSand(Boolean.parseBoolean(request.getParameter("Sand")));
-        majob.setCommon_hourly(Boolean.parseBoolean(request.getParameter("common_hourly")));
+        majob.setCommon(Boolean.parseBoolean(request.getParameter("common")));
+        majob.setHourly(Boolean.parseBoolean(request.getParameter("hourly")));
         majob.setSelectfill(Boolean.parseBoolean(request.getParameter("selectfill")));
         majob.setJobdate(validateUtil.getDateValue(request.getParameter("jobdate")));
 //        majob.setJob_assignddate(validateUtil.getDateValue(request.getParameter("job_assigndate")));
@@ -253,6 +254,7 @@ public class jobController {
         MaJobs maJobs = jobService.findone(Constant.ACTIVE.toString(), Long.parseLong(id));
 
         if (maJobs != null) {
+            jobDriverService.deleteOldDriverJob(Constant.ACTIVE.toString(), maJobs.getId());
             maJobs.setStatus(Constant.DETETED.toString());
             jobService.save(maJobs);
         }
@@ -289,7 +291,7 @@ public class jobController {
         ValidateUtil validateUtil = new ValidateUtil();
 
         validateUtil.checkNull(request, "jno", "Job Number", errors);
-       // validateUtil.checkNull(request, "customer", "Customer", errors);
+        // validateUtil.checkNull(request, "customer", "Customer", errors);
         // validateUtil.checkNull(request, "driver", "Driver", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
 
@@ -325,8 +327,10 @@ public class jobController {
         majob.setHaulback(Boolean.parseBoolean(request.getParameter("haulBack")));
         majob.setHauloff(Boolean.parseBoolean(request.getParameter("haulOff")));
         majob.setSand(Boolean.parseBoolean(request.getParameter("Sand")));
-        majob.setCommon_hourly(Boolean.parseBoolean(request.getParameter("common_hourly")));
-        majob.setSelectfill(Boolean.parseBoolean(request.getParameter("selectfill")));
+//        majob.setSelectfill(Boolean.parseBoolean(request.getParameter("selectfill")));
+
+        majob.setCommon(Boolean.parseBoolean(request.getParameter("common")));
+        majob.setHourly(Boolean.parseBoolean(request.getParameter("hourly")));
         majob.setJobdate(validateUtil.getDateValue(request.getParameter("jobdate")));
         majob.setJobname(validateUtil.getStringValue(request.getParameter("jname")));
 
