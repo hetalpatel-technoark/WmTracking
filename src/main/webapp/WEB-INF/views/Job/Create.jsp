@@ -84,20 +84,18 @@
                                                 </div> 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Total count </span>
+                                                        <span>Total Dumps * </span>
                                                     </div>
                                                     <div class="col-md-8">
-<!--                                                        <input type="number" max="1000"  class="form-control" name="count" value="<%=checkInput.checkValue(request.getParameter("count"))%>"  placeholder="Total Job count">-->
-
-                                                        <select name="count" class="select2 form-control" value="<%=checkInput.checkValue(request.getParameter("count"))%>">                                                          
-                                                            <option selected="" disabled="">Select total count </option>
+                                                        <select name="count" required="" class="select2 form-control" value="<%=checkInput.checkValue(request.getParameter("count"))%>">                                                          
+                                                            <option disabled="">Select Total Dumps </option>
                                                             <% for (int i = 1; i <= 1000; i++) {%>
                                                             <option><%= i%> </option>
                                                             <%}%>   
                                                         </select>
                                                     </div>
                                                 </div>
-                                               
+
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Loading Site Address *</span>
@@ -115,40 +113,11 @@
                                                     </div>
                                                 </div>
 
-
-
-                                            </div>
-                                            <div class="col-6">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Job Number*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" required=""  class="form-control" name="jno" value="<%=checkInput.checkValue(request.getParameter("jno"))%>" placeholder="Job number">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Job Name</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text"  class="form-control" name="jname" value="<%=checkInput.checkValue(request.getParameter("jname"))%>" placeholder="Job Name">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">                                                    
-                                                        <span>Job Date *</span></div>
-                                                    <div class="col-md-8">
-                                                        <input type="text" required readonly name="jobdate" value="<%=request.getParameter("jobdate") != null ? request.getParameter("jobdate") : new DateUtils().dateWithFormat(new Date(), "dd/MM/yyyy")%>"  class="form-control pickadate1" placeholder="Job Date">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row">
-                                                    <div class="col-md-3">
-                                                        <!--                                                        <span>Select fill</span>-->
-                                                    </div>
-                                                    <div class="col-md-9">
-                                                        <div class="col-sm-12" style="margin-left:30px">
+                                                        <div class="col-sm-12" >
                                                             <ul class="list-unstyled mb-0">
 
                                                                 <li class="d-inline-block mr-2">
@@ -199,6 +168,34 @@
                                                     </div>
                                                 </div>
 
+
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Job Number *</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" required  class="form-control" name="jno" value="<%=checkInput.checkValue(request.getParameter("jno"))%>" placeholder="Job Number">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Job Name *</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" required="" class="form-control" name="jname" value="<%=checkInput.checkValue(request.getParameter("jname"))%>" placeholder="Job Name">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">                                                    
+                                                        <span>Job Date *</span></div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" required readonly name="jobdate" value="<%=request.getParameter("jobdate") != null ? request.getParameter("jobdate") : new DateUtils().dateWithFormat(new Date(), "MMMM dd, yyyy")%>"  class="form-control pickadate1" placeholder="Job Date">
+                                                    </div>
+                                                </div>
+
+
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Others</span>
@@ -213,6 +210,13 @@
                                                     </div>
                                                     <div class="col-md-8">
                                                         <textarea class="form-control" name="notes"><%=checkInput.checkValue(request.getParameter("notes"))%> </textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">                                                    
+                                                        <span>Job Created Date </span></div>
+                                                    <div class="col-md-8">
+                                                        <input type="text"  disabled=""  value="<%= new DateUtils().dateWithFormat(new Date(), "MMMM dd, yyyy")%>"  class="form-control " placeholder="Job Date">
                                                     </div>
                                                 </div>
                                             </div>
@@ -244,7 +248,7 @@
 
                                                             $(document).ready(function () {
                                                                 $(".pickadate1").pickadate({
-                                                                    format: "dd/mm/yyyy"
+                                                                    format: "mmmm dd, yyyy"
                                                                 });
                                                             });
 

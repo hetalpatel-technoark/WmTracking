@@ -15,6 +15,7 @@ import com.wmtrucking.utils.ValidateUtil;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,15 +118,13 @@ public class driverController {
         maDriver.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
         maDriver.setLicensenumber(validateUtil.getStringValue(request.getParameter("lno")));
         maDriver.setAddress1(validateUtil.getStringValue(request.getParameter("add1")));
-        maDriver.setAddress2(validateUtil.getStringValue(request.getParameter("add2")));
-        maDriver.setAddress3(validateUtil.getStringValue(request.getParameter("add3")));
         maDriver.setCity(validateUtil.getStringValue(request.getParameter("city")));
         maDriver.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
         maDriver.setState(validateUtil.getStringValue(request.getParameter("state")));
-        maDriver.setCountry(validateUtil.getStringValue(request.getParameter("country")));
         maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maDriver.setMobile(validateUtil.getStringValue(request.getParameter("mob")));
         //maDriver.setStatus(Constant.ACTIVE.toString());
+        maDriver.setCreateddate(new Date());
         maDriver.setStatus(validateUtil.getStringValue(request.getParameter("status")));
 
         drService.save(maDriver);
@@ -211,7 +210,7 @@ public class driverController {
             errors.add("Mobile is already exist");
         }
         if (!maDriver.getStatus().equals(request.getParameter("status"))) {
-            MaDriver maDriver1 = drService.findoneEdit( maDriver.getId());
+            MaDriver maDriver1 = drService.findoneEdit(maDriver.getId());
             if (maDriver1 == null) {
                 errors.add(" This Driver is assigned in job. For Inactive, please first remove Driver from job.");
             }
@@ -229,16 +228,14 @@ public class driverController {
         maDriver.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
         maDriver.setLicensenumber(validateUtil.getStringValue(request.getParameter("lno")));
         maDriver.setAddress1(validateUtil.getStringValue(request.getParameter("add1")));
-        maDriver.setAddress2(validateUtil.getStringValue(request.getParameter("add2")));
-        maDriver.setAddress3(validateUtil.getStringValue(request.getParameter("add3")));
+
         maDriver.setCity(validateUtil.getStringValue(request.getParameter("city")));
         maDriver.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
         maDriver.setState(validateUtil.getStringValue(request.getParameter("state")));
-        maDriver.setCountry(validateUtil.getStringValue(request.getParameter("country")));
         maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maDriver.setMobile(validateUtil.getStringValue(request.getParameter("mob")));
-        //maDriver.setStatus(Constant.ACTIVE.toString());
 
+        //maDriver.setStatus(Constant.ACTIVE.toString());
         drService.save(maDriver);
         return "redirect:/driver/drivelist?m=e";
     }

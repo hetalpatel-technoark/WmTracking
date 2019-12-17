@@ -1,3 +1,4 @@
+<%@page import="com.wmtrucking.pojo.JobPojo"%>
 <%@page import="com.wmtrucking.entities.MaJobs"%>
 <%@page import="com.wmtrucking.utils.CheckInput"%>
 <%@page import="java.util.ArrayList"%>
@@ -80,39 +81,50 @@
                                     <table class="table zero-configuration">
                                         <thead>
                                             <tr>
+                                                <!--                                                <th>Job Name</th>                                             
+                                                                                                <th>Job Number</th>                                             
+                                                                                                <th>Job Date</th>  
+                                                                                                <th>Total Count of Job</th>  
+                                                                                                <th>Total Driver</th>
+                                                                                                <th>Driver Name</th>
+                                                                                                <th>Status</th>
+                                                                                                <th>Actions</th>-->
+
+                                                <th>Company Name</th>                                             
                                                 <th>Job Name</th>                                             
-                                                <th>Job Number</th>                                             
                                                 <th>Job Date</th>  
-                                                <th>Total Count of Job</th>  
-                                                <th>Total Driver</th>
-                                                <th>Driver Name</th>
-                                                <th>Status</th>
+                                                <th>Job Status</th>  
+                                                <th> Total Dumps</th>
+                                                <th>Completed Dumps</th>
+                                                <th> Total Driver </th>
+                                                <th> Driver Names </th>
+                                                <th>Status </th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <%
                                                 CheckInput checkInput = new CheckInput();
-                                                List<Object[]> majobs = (List<Object[]>) request.getAttribute("maJobs");
+                                                List<JobPojo> majobs = (List<JobPojo>) request.getAttribute("maJobs");
                                                 if (!majobs.isEmpty()) {
-                                                    for (Object[] majob : majobs) {
+                                                    for (JobPojo majob : majobs) {
                                             %>
-                                            <tr >
-                                                <td><%=checkInput.checkValue(majob[1].toString())%></td>
-                                                <td><%=checkInput.checkValue(majob[2].toString())%></td>
-                                                <td><%=checkInput.checkValue(majob[3].toString())%></td>
-                                                <td><%=majob[5] + "/" + majob[4]%></td>
-                                                <td><%=checkInput.checkValue(majob[6].toString())%></td>
-                                                <td><%=majob[8]!=null ? majob[8].toString():" "%></td>
-
-                                                <%
-                                                    if (majob[7].toString().equals("0")) {%>
+                                            <tr>
+                                                <td><%=checkInput.checkValue(majob.getCustomername())%></td>
+                                                <td><%=checkInput.checkValue(majob.getJobname())%></td>
+                                                <td><%=checkInput.checkValue(majob.getJobdate())%></td>                                               
+                                                <% if (majob.getTransectionstatus().equals("0")) {%>
                                                 <td><span class="label label-success" >Completed</span></td>
-                                                <%} else if (majob[7].toString().equals("1")) {%>
+                                                <%} else if (majob.getTransectionstatus().equals("1")) {%>
                                                 <td><span class="label label-info " >Open</span></td>
-                                                <%} else if (majob[7].toString().equals("3")) {%>
+                                                <%} else if (majob.getTransectionstatus().equals("3")) {%>
                                                 <td><span class="label label-danger " >Pending</span></td>
                                                 <%}%>
+                                                <td><%=checkInput.checkValue(majob.getTotaldumps())%></td>
+                                                <td><%=checkInput.checkValue(majob.getCompleteddumps())%></td>
+                                                <td><%=checkInput.checkValue(majob.getDrivercount())%></td>
+                                                <td><%=checkInput.checkValue(majob.getDrivername())%></td>
+                                                <td><%=checkInput.checkValue(majob.getStatus())%></td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <div class="dropdown">
@@ -120,16 +132,16 @@
                                                                 <i class="feather icon-menu"></i>
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton100">
-                                                                <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/assignJobDr/<%=majob[0]%>">
+                                                                <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/assignJobDr/<%=majob.getId()%>">
                                                                     <i class="feather icon-user "></i><span>Assign Driver</span>
                                                                 </a> 
-                                                                <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/view/<%=majob[0]%>">
+                                                                <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/view/<%=majob.getId()%>">
                                                                     <i class="feather icon-eye"></i><span>View</span>
                                                                 </a>
-                                                                <a class="dropdown-item" href="<%=request.getContextPath()%>/job/edit/<%=majob[0]%>">
+                                                                <a class="dropdown-item" href="<%=request.getContextPath()%>/job/edit/<%=majob.getId()%>">
                                                                     <i class="feather icon-edit"></i> <span>Edit</span>
                                                                 </a>
-                                                                <a class="dropdown-item" onclick="changeStatus('Delete', '<%=majob[0]%>')">
+                                                                <a class="dropdown-item" onclick="changeStatus('Delete', '<%=majob.getId()%>')">
                                                                     <i class="feather icon-trash"></i> <span>Delete</span>
                                                                 </a>
 

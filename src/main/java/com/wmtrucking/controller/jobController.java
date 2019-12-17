@@ -12,6 +12,7 @@ import com.wmtrucking.entities.MaJobCustomer;
 import com.wmtrucking.entities.MaJobDriver;
 import com.wmtrucking.entities.MaJobs;
 import com.wmtrucking.exception.UnAthorizedUserException;
+import com.wmtrucking.pojo.JobPojo;
 import com.wmtrucking.services.customerService;
 import com.wmtrucking.services.driverService;
 import com.wmtrucking.services.jobCustomerService;
@@ -23,6 +24,7 @@ import com.wmtrucking.utils.ValidateUtil;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,7 +68,7 @@ public class jobController {
     @RequestMapping(value = "/List", method = RequestMethod.GET)
     public String createnote(HttpServletRequest request, Model model) {
         //  List<MaJobs> maJobs = jobService.list(Constant.ACTIVE.toString());
-        List<Object[]> maJobs = jobService.list(Constant.ACTIVE.toString(), Constant.ENDED.toString());
+        List<JobPojo> maJobs = jobService.getJobList(Constant.ACTIVE.toString());
         model.addAttribute("maJobs", maJobs);
 
         return "Job/List";
@@ -82,7 +84,7 @@ public class jobController {
     }
 
     @RequestMapping(value = "/PostCreate", method = RequestMethod.POST)
-    public String PostCreate(HttpServletRequest request, Model model) {
+    public String PostCreate(HttpServletRequest request, Model model) throws ParseException {
         //JsonObject errors = new JsonObject();
         ValidateUtil validateUtil = new ValidateUtil();
         List<String> errors = new ArrayList<>();
@@ -91,6 +93,7 @@ public class jobController {
         // validateUtil.checkNull(request, "customer", "Customer", errors);
         //validateUtil.checkNull(request, "driver", "Driver", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
+        validateUtil.checkNull(request, "jname", "Job Name", errors);
         validateUtil.checkNull(request, "DumpingAddress", "Dumping Address", errors);
         validateUtil.checkNull(request, "lodingAddress", "Loding Address", errors);
 
@@ -101,7 +104,7 @@ public class jobController {
 //        validateUtil.checkLength(errors, request, "job_assigndate", "Job Assign date", 255, 0);
         validateUtil.checkLength(errors, request, "jno", "Job Number", 255, 0);
         validateUtil.checkLength(errors, request, "count", "Total Count", 255, 1);
-        validateUtil.checkLength(errors, request, "jname", "Job Name", 255, 0);
+        validateUtil.checkLength(errors, request, "jname", "Job Name", 255, 1);
         validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
         validateUtil.checkLength(errors, request, "add2", "Address 2", 255, 0);
         validateUtil.checkLength(errors, request, "add3", "Address 3", 255, 0);
@@ -289,15 +292,11 @@ public class jobController {
         //  JsonObject errors = new JsonObject();
         List<String> errors = new ArrayList<>();
         ValidateUtil validateUtil = new ValidateUtil();
-
         validateUtil.checkNull(request, "jno", "Job Number", errors);
         // validateUtil.checkNull(request, "customer", "Customer", errors);
-        // validateUtil.checkNull(request, "driver", "Driver", errors);
+        //validateUtil.checkNull(request, "driver", "Driver", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
-
-//        validateUtil.checkLength(errors, request, "job_assigndate", "Job Assign date", 255, 0);
-        validateUtil.checkLength(errors, request, "jno", "Job Number", 255, 0);
-        validateUtil.checkLength(errors, request, "jname", "Job Name", 255, 0);
+        validateUtil.checkNull(request, "jname", "Job Name", errors);
 
         validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
         validateUtil.checkLength(errors, request, "add2", "Address 2", 255, 0);

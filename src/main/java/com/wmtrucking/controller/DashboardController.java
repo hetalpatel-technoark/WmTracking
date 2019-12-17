@@ -5,7 +5,6 @@
  */
 package com.wmtrucking.controller;
 
-import com.wmtrucking.entities.MaJobs;
 import com.wmtrucking.exception.UnAthorizedUserException;
 import com.wmtrucking.pojo.JobPojo;
 import com.wmtrucking.services.customerService;

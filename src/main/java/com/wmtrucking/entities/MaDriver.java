@@ -53,21 +53,21 @@ public class MaDriver implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "address1")
     private String address1;
-    @Size(max = 2147483647)
-    @Column(name = "address2")
-    private String address2;
-    @Size(max = 2147483647)
-    @Column(name = "address3")
-    private String address3;
+//    @Size(max = 2147483647)
+//    @Column(name = "address2")
+//    private String address2;
+//    @Size(max = 2147483647)
+//    @Column(name = "address3")
+//    private String address3;
     @Size(max = 2147483647)
     @Column(name = "city")
     private String city;
     @Size(max = 2147483647)
     @Column(name = "state")
     private String state;
-    @Size(max = 2147483647)
-    @Column(name = "country")
-    private String country;
+//    @Size(max = 2147483647)
+//    @Column(name = "country")
+//    private String country;
     @Size(max = 2147483647)
     @Column(name = "pincode")
     private String pincode;
@@ -146,6 +146,14 @@ public class MaDriver implements Serializable {
         }
         return true;
     }
+
+    public Date getCreateddate() {
+        return createddate;
+    }
+
+    public void setCreateddate(Date createddate) {
+        this.createddate = createddate;
+    }
     @Override
     public String toString() {
         return "com.wmtrucking.entities.MaDriver[ id=" + id + " ]";
@@ -214,23 +222,7 @@ public class MaDriver implements Serializable {
     public void setAddress1(String address1) {
         this.address1 = address1;
     }
-
-    public String getAddress2() {
-        return address2;
-    }
-
-    public void setAddress2(String address2) {
-        this.address2 = address2;
-    }
-
-    public String getAddress3() {
-        return address3;
-    }
-
-    public void setAddress3(String address3) {
-        this.address3 = address3;
-    }
-
+    
     public String getCity() {
         return city;
     }
@@ -247,14 +239,7 @@ public class MaDriver implements Serializable {
         this.state = state;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
+   
     public String getPincode() {
         return pincode;
     }

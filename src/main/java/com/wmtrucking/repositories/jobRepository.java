@@ -22,7 +22,7 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
     @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 ORDER BY u.id desc")
     List<MaJobs> list(String satus);
 
-    @Query(nativeQuery = true, value = "select j.id, j.jobname,j.jobnumber,(SELECT TO_CHAR(j.jobdate, 'dd/mm/yyyy') as jobdate), j.totaljobcount, "
+    @Query(nativeQuery = true, value = "select j.id, j.jobname,j.jobnumber,(SELECT TO_CHAR(j.jobdate, 'Month DD, YYYY') as jobdate), j.totaljobcount, "
             + "(select count(id) from ma_job_transaction where job_id=j.id and status=?2)as transactioncount,"
             + "(select count(id) from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivercount,"
             + " ( case when ((select count(id) from ma_job_transaction where job_id=j.id and status=?2) = j.totaljobcount) then 0 "

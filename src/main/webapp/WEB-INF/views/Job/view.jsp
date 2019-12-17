@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="com.wmtrucking.utils.CheckInput"%>
 <%@page import="com.wmtrucking.entities.MaCustomer"%>
@@ -70,7 +71,7 @@
                                         <div class="col-6">
                                             <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <span>Customer /Company*</span>
+                                                    <span>Customer /Company</span>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <select disabled class="select2 form-control"  name="customer" required multiple="multiple">
@@ -88,10 +89,10 @@
 
                                             <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <span>Total Count </span>
+                                                    <span>Total Dumps* </span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input disabled="" type="number" max="1000"  class="form-control" name="count" value="<%=checkInput.checkValueEdit(majob.getTotaljobcount(), request.getParameter("count"))%>"  placeholder="Total Job count">
+                                                    <input disabled="" type="number" max="1000"  class="form-control" name="count" value="<%=checkInput.checkValueEdit(majob.getTotaljobcount(), request.getParameter("count"))%>"  placeholder="Total Job Dump">
                                                 </div>
                                             </div>
 
@@ -111,39 +112,12 @@
                                                     <input type="text" required id="dumping" disabled  class="form-control" name="DumpingAddress" value="<%=checkInput.checkValueEdit(majob.getDumpingaddress(), request.getParameter("DumpingAddress"))%>"  placeholder="Dumping Site Address">
                                                 </div>
                                             </div>
-
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group row">
+        <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <span>Job Number*</span>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input readonly  type="text" class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber(), request.getParameter("jno"))%>" placeholder="Job number">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-4">
-                                                    <span>Job Name</span>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input type="text" disabled="" class="form-control" name="jname" value="<%=checkInput.checkValueEdit(majob.getJobname(), request.getParameter("jname"))%>" placeholder="Job Name">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-4">                                                    
-                                                    <span>Job Date *</span></div>
-                                                <div class="col-md-8">
-                                                    <input readonly type="text" disabled="" id="expirydate" name="jobdate" value="<%=checkInput.checkValueEdit(dateUtils.dateWithFormat(majob.getJobdate(), "dd-MM-yyyy"), request.getParameter("jobdate"))%>" style="background-color: #F5F5F1" class="form-control pickadate1" placeholder="Job Date">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <div class="col-md-3">
                                                     <!--                                                    <span>Select fill</span>-->
                                                 </div>
-                                                <div class="col-sm-9">
-                                                    <div class="col-sm-12" style="margin-left:30px">
+                                                <div class="col-sm-8">
+                                                    <div class="col-sm-12" >
                                                         <ul class="list-unstyled mb-0">
                                                             <li class="d-inline-block mr-2">
                                                                 <fieldset>
@@ -185,7 +159,7 @@
                                                             <li class="d-inline-block mr-2">
                                                                 <fieldset>
                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input disabled type="checkbox" class="custom-control-input" <% if (majob.getHourly()!=null&& majob.getHourly()) {%>checked<% }%>   id="customCheck6">
+                                                                        <input disabled type="checkbox" class="custom-control-input" <% if (majob.getHourly() != null && majob.getHourly()) {%>checked<% }%>   id="customCheck6">
                                                                         <label class="custom-control-label" for="customCheck6">Hourly </label>
                                                                     </div>
                                                                 </fieldset></li>
@@ -194,6 +168,33 @@
                                                 </div>
                                             </div>
 
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
+                                                    <span>Job Number*</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input readonly  type="text" class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber(), request.getParameter("jno"))%>" placeholder="Job number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
+                                                    <span>Job Name*</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" disabled="" class="form-control" name="jname" value="<%=checkInput.checkValueEdit(majob.getJobname(), request.getParameter("jname"))%>" placeholder="Job Name">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-4">                                                    
+                                                    <span>Job Date *</span></div>
+                                                <div class="col-md-8">
+                                                    <input readonly type="text" disabled="" id="expirydate" name="jobdate" value="<%=checkInput.checkValueEdit(dateUtils.dateWithFormat(majob.getJobdate(), "MMMM dd, yyyy"), request.getParameter("jobdate"))%>" style="background-color: #F5F5F1" class="form-control pickadate1" placeholder="Job Date">
+                                                </div>
+                                            </div>
+
+                                    
                                             <div class="form-group row">
                                                 <div class="col-md-4">
                                                     <span>Others</span>
@@ -210,7 +211,13 @@
                                                     <textarea class="form-control" readonly name="notes"><%=checkInput.checkValueEdit(majob.getNotes(), request.getParameter("notes"))%> </textarea>
                                                 </div>
                                             </div>
-
+                                            <div class="form-group row">
+                                                <div class="col-md-4">                                                    
+                                                    <span>Job Created Date </span></div>
+                                                <div class="col-md-8">
+                                                    <input type="text"  disabled=""  value="<%= new DateUtils().dateWithFormat(new Date(), "MMMM dd, yyyy")%>"  class="form-control " placeholder="Job Date">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-md-8 offset-md-4">
                                             <a href="<%= request.getContextPath()%>/job/List" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a>

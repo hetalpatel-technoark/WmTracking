@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package com.wmtrucking.pojo;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -14,10 +13,21 @@ import java.util.Date;
  */
 public class JobPojo {
 
-    String jobname, jobnumber, transectionstatus, drivername;
-    Long id, totaljobcount, transactioncount, drivercount;
-    Date jobdate;
+    String customername, jobname, jobnumber, status, transectionstatus, drivername,jobdate;
+   
+    Long id, totaldumps, completeddumps, drivercount;
+
+//    String jobname, jobnumber, transectionstatus, drivername;
+//    Long id, totaljobcount, transactioncount, drivercount;
+//    Date jobdate;
     BigDecimal fromlatitude, fromlongitude, tolatitude, tolongitude;
+    public String getCustomername() {
+        return customername;
+    }
+
+    public void setCustomername(String customername) {
+        this.customername = customername;
+    }
 
     public String getJobname() {
         return jobname;
@@ -35,6 +45,14 @@ public class JobPojo {
         this.jobnumber = jobnumber;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getTransectionstatus() {
         return transectionstatus;
     }
@@ -49,46 +67,6 @@ public class JobPojo {
 
     public void setDrivername(String drivername) {
         this.drivername = drivername;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getTotaljobcount() {
-        return totaljobcount;
-    }
-
-    public void setTotaljobcount(Long totaljobcount) {
-        this.totaljobcount = totaljobcount;
-    }
-
-    public Long getTransactioncount() {
-        return transactioncount;
-    }
-
-    public void setTransactioncount(Long transactioncount) {
-        this.transactioncount = transactioncount;
-    }
-
-    public Long getDrivercount() {
-        return drivercount;
-    }
-
-    public void setDrivercount(Long drivercount) {
-        this.drivercount = drivercount;
-    }
-
-    public Date getJobdate() {
-        return jobdate;
-    }
-
-    public void setJobdate(Date jobdate) {
-        this.jobdate = jobdate;
     }
 
     public BigDecimal getFromlatitude() {
@@ -122,6 +100,45 @@ public class JobPojo {
     public void setTolongitude(BigDecimal tolongitude) {
         this.tolongitude = tolongitude;
     }
-    
-    
+
+    public String getJobdate() {
+        return jobdate;
+    }
+
+    public void setJobdate(String jobdate) {
+        this.jobdate = jobdate;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getTotaldumps() {
+        return totaldumps;
+    }
+
+    public void setTotaldumps(Long totaldumps) {
+        this.totaldumps = totaldumps;
+    }
+
+    public Long getCompleteddumps() {
+        return completeddumps;
+    }
+
+    public void setCompleteddumps(Long completeddumps) {
+        this.completeddumps = completeddumps;
+    }
+
+    public Long getDrivercount() {
+        return drivercount;
+    }
+
+    public void setDrivercount(Long drivercount) {
+        this.drivercount = drivercount;
+    }
+
 }
