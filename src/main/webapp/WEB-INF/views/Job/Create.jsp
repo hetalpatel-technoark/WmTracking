@@ -281,20 +281,14 @@
                                                                 var lat = autocomplete.getPlace().geometry.location.lat();
                                                                 var lng = autocomplete.getPlace().geometry.location.lng();
                                                                 $('#loding_lat_txt').val(lat);
-                                                                $('#loding_log_txt').val(lng);
-                                                                console.log("loding.latitude." + lat);
-                                                                console.log("loding.logitude." + lng);
+                                                                $('#loding_log_txt').val(lng);                                                              
 
                                                             }
                                                             function fill_dumping() {
-                                                                var lat = autocomplete2.getPlace().geometry.location.lat();
-                                                                var lng = autocomplete2.getPlace().geometry.location.lng();
                                                                 $('#dumping_lat_txt').val(autocomplete2.getPlace().geometry.location.lat());
-                                                                $('#dumping_log_txt').val(autocomplete2.getPlace().geometry.location.lng());
-                                                                console.log("dumping.latitude." + lat);
-                                                                console.log("dumping.logitude." + lng);
+                                                                $('#dumping_log_txt').val(autocomplete2.getPlace().geometry.location.lng());                                                              
                                                             }
-                                                            function geolocate(status) {
+                                                            function geolocate() {
                                                                 if (navigator.geolocation) {
                                                                     navigator.geolocation.getCurrentPosition(function (position) {
                                                                         var geolocation = {
@@ -306,9 +300,6 @@
                                                                             radius: position.coords.accuracy
                                                                         });
 
-                                                                        //autocomplete.setBounds(geolocation.getCurrentPosition());
-                                                                        // autocomplete.setBounds(circle.getBounds());
-                                                                        // autocomplete2.setBounds(circle.getBounds());
                                                                     });
                                                                 }
                                                             }

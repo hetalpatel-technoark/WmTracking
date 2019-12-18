@@ -60,7 +60,7 @@ public class DashboardController {
         model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), new Date()));
         model.addAttribute("job", joService.count(Constant.ACTIVE.toString()));
         model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(), Constant.STARTED.toString(), new Date()));
-        model.addAttribute("countDumpingPickup", joService.countDumpingDone(Constant.ACTIVE.toString(), Constant.ENDED.toString(), new Date()));
+        model.addAttribute("countDumpingDone", joService.countDumpingDone(Constant.ACTIVE.toString(), Constant.ENDED.toString(), new Date()));
 
 //        List<Object[]> monthWiseJob = joService.findMonthWiseJob();
 //        if (!monthWiseJob.isEmpty()) {

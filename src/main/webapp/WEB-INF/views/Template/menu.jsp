@@ -22,12 +22,12 @@
                 <a href="<%=request.getContextPath()%>/Dashboard/Dashboard"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span></a>
             </li>
             <li  class=" <%=url.toString().contains("Customer") ? "active" : ""%> nav-item">
-                <a href="<%=request.getContextPath()%>/customer/customerList"><i class="feather icon-users "></i><span class="menu-title" data-i18n="Customer">Customer</span></a>
+                <a href="<%=request.getContextPath()%>/customer/customerList"><i class="feather icon-users "></i><span class="menu-title" data-i18n="Customer">Customers</span></a>
             </li>
 
-            <li class="<%=url.toString().contains("Driver") ? "active" : ""%> nav-item"><a href="<%=request.getContextPath()%>/driver/drivelist" title="Driver"><i class="feather icon-user"></i><span class="menu-title" data-i18n="Email">Driver</span></a>
+            <li class="<%=url.toString().contains("Driver") ? "active" : ""%> nav-item"><a href="<%=request.getContextPath()%>/driver/drivelist" title="Driver"><i class="feather icon-user"></i><span class="menu-title" data-i18n="Email">Drivers</span></a>
             </li>
-            <li class="<%=url.toString().contains("Job") ? "active" : ""%> nav-item"><a href="<%=request.getContextPath()%>/job/List" title="Job"><i class="feather icon-award "></i><span class="menu-title" data-i18n="Email">Job</span></a>
+            <li class="<%=url.toString().contains("Job") ? "active" : ""%> nav-item"><a href="<%=request.getContextPath()%>/job/List" title="Job"><i class="feather icon-award "></i><span class="menu-title" data-i18n="Email">Jobs</span></a>
             </li>
 <!--            <li class=" nav-item"><a href="#" title="Report"><i class="feather icon-bar-chart "></i><span class="menu-title" data-i18n="Email">Report</span></a>
             </li>-->

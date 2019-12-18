@@ -6,6 +6,7 @@
 package com.wmtrucking.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -40,6 +43,9 @@ public class MaJobDriver implements Serializable {
 
     @Column(name = "id")
     private Long id;
+    @Column(name = "createddate")
+    @Temporal(TemporalType.DATE)
+    private Date createddate;
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
     @ManyToOne
     private MaDriver driverId;
@@ -52,6 +58,14 @@ public class MaJobDriver implements Serializable {
 
     public MaJobDriver(Long id) {
         this.id = id;
+    }
+
+    public Date getCreateddate() {
+        return createddate;
+    }
+
+    public void setCreateddate(Date createddate) {
+        this.createddate = createddate;
     }
 
     public Long getId() {

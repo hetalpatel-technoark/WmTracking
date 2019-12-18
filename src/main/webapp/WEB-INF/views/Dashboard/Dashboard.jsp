@@ -17,6 +17,9 @@
 <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 <style>
+     .label {
+        border-radius: 6px !important ;
+    }
     .avatar1 {
         white-space: nowrap;
         background-color: #C3C3C3;
@@ -88,7 +91,7 @@
                                 </div>
                             </div>
                             <h2 class="text-bold-700 mt-1">
-                                <%= request.getAttribute("countDumpingPickup") != null ? request.getAttribute("countDumpingPickup") : "0"%>
+                                <%= request.getAttribute("countDumpingDone") != null ? request.getAttribute("countDumpingDone") : "0"%>
                             </h2>
 
                             <!--                            <p class="mb-0">Total Drivers</p>-->
@@ -203,7 +206,7 @@
                                                         <th> Total Driver </th>
                                                         <th> Driver Names </th>
                                                         <th>Status </th>
-                                                        <th>Actions</th>
+                                                       
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -229,30 +232,7 @@
                                                         <td><%=checkInput.checkValue(majob.getDrivercount())%></td>
                                                         <td><%=checkInput.checkValue(majob.getDrivername())%></td>
                                                         <td><%=checkInput.checkValue(majob.getStatus())%></td>
-                                                        <td>
-                                                            <div class="btn-group">
-                                                                <div class="dropdown">
-                                                                    <button class="btn btn-flat-primary dropdown-toggle mr-1 mb-1" type="button" id="dropdownMenuButton100" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="feather icon-menu"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton100">
-                                                                        <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/assignJobDr/<%=majob.getId()%>">
-                                                                            <i class="feather icon-user "></i><span>Assign Driver</span>
-                                                                        </a> 
-                                                                        <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/view/<%=majob.getId()%>">
-                                                                            <i class="feather icon-eye"></i><span>View</span>
-                                                                        </a>
-                                                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/job/edit/<%=majob.getId()%>">
-                                                                            <i class="feather icon-edit"></i> <span>Edit</span>
-                                                                        </a>
-                                                                        <a class="dropdown-item" onclick="changeStatus('Delete', '<%=majob.getId()%>')">
-                                                                            <i class="feather icon-trash"></i> <span>Delete</span>
-                                                                        </a>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
+                                                
                                                     </tr>
                                                     <%   }
                                                 }%>

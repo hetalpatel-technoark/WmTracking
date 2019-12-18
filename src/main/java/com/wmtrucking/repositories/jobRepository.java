@@ -55,11 +55,11 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
     public List<MaJobs> listOfJob(String satus, Date jobdate);
 
     @Query(nativeQuery = true, value = "SELECT SUM(totaljobcount) FROM ma_jobs where status=?1 and id in(select job_id from ma_job_transaction "
-            + "where status=?2 and starttime=?3 )")
+            + "where status=?2 and cast(starttime as date)=?3)")
     Long countDumpingPickup(String satus, String transectionStatus, Date starttime);
 
     @Query(nativeQuery = true, value = "SELECT SUM(totaljobcount) FROM ma_jobs where status=?1 and id in(select job_id from ma_job_transaction "
-            + "where status=?2 and endtime=?3 )")
+            + "where status=?2 and cast(endtime as date)=?3 )")
     Long countDumpingDone(String satus, String transectionStatus, Date endtime);
 
 }

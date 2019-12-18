@@ -8,7 +8,17 @@
 
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/vendors.min.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/tables/datatable/datatables.min.css">
-
+<style>
+    .label {
+        border-radius: 6px !important ;
+    }
+    .label-orange {
+        background-color: #637a91;
+    }
+    .label-pur {
+        background-color: #f092b0;
+    }
+</style>
 <jsp:include page="../Template/header.jsp"></jsp:include>
     <!-- Page container -->
     <div class="content-wrapper">
@@ -81,15 +91,6 @@
                                     <table class="table zero-configuration">
                                         <thead>
                                             <tr>
-                                                <!--                                                <th>Job Name</th>                                             
-                                                                                                <th>Job Number</th>                                             
-                                                                                                <th>Job Date</th>  
-                                                                                                <th>Total Count of Job</th>  
-                                                                                                <th>Total Driver</th>
-                                                                                                <th>Driver Name</th>
-                                                                                                <th>Status</th>
-                                                                                                <th>Actions</th>-->
-
                                                 <th>Company Name</th>                                             
                                                 <th>Job Name</th>                                             
                                                 <th>Job Date</th>  
@@ -97,8 +98,7 @@
                                                 <th> Total Dumps</th>
                                                 <th>Completed Dumps</th>
                                                 <th> Total Driver </th>
-                                                <th> Driver Names </th>
-                                                <th>Status </th>
+                                                <th style="width: 207px;" >Driver Names </th>                                               
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -123,8 +123,18 @@
                                                 <td><%=checkInput.checkValue(majob.getTotaldumps())%></td>
                                                 <td><%=checkInput.checkValue(majob.getCompleteddumps())%></td>
                                                 <td><%=checkInput.checkValue(majob.getDrivercount())%></td>
-                                                <td><%=checkInput.checkValue(majob.getDrivername())%></td>
-                                                <td><%=checkInput.checkValue(majob.getStatus())%></td>
+                                                <td>
+
+                                                    <% if (majob.getDrivername() != null) {
+                                                            String[] driver = majob.getDrivername().split(",");
+                                                            for (int i = 0; i < driver.length; i++) {
+                                                    %>
+
+                                                    <span class="label <%= i % 2 == 0 ? "label-orange" : "label-pur"%>  " ><%= driver[i]%></span>
+
+                                                    <%}
+                                                        }%>
+                                                </td>                                            
                                                 <td>
                                                     <div class="btn-group">
                                                         <div class="dropdown">
@@ -144,7 +154,6 @@
                                                                 <a class="dropdown-item" onclick="changeStatus('Delete', '<%=majob.getId()%>')">
                                                                     <i class="feather icon-trash"></i> <span>Delete</span>
                                                                 </a>
-
                                                             </div>
                                                         </div>
                                                     </div>

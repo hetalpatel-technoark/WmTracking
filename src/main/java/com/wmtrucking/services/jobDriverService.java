@@ -7,6 +7,7 @@ package com.wmtrucking.services;
 
 import com.wmtrucking.entities.MaJobDriver;
 import com.wmtrucking.repositories.jobDriverRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,5 +33,23 @@ public class jobDriverService {
     @Transactional
     public void deleteOldDriverJob(String satus, Long jobId) {
         jobDriverRepository.deleteOldDriverJob(satus, jobId);
+    }
+
+    @Transactional
+    public void delete(MaJobDriver maJobDriver){
+    jobDriverRepository.delete(maJobDriver);
+    }
+    
+     @Transactional
+    public void deleteOldDriversJob(String satus, Long jobId, Long Driverid) {
+        jobDriverRepository.deleteOldDriversJob(satus, jobId, Driverid);
+    }
+
+    public MaJobDriver findDriver(String satus, Long jobId, Long Driverid) {
+        return jobDriverRepository.findDriver(satus, jobId, Driverid);
+    }
+
+    public List<MaJobDriver> listOfDriver(String satus, Long jobId) {
+        return jobDriverRepository.listOfDriver(satus, jobId);
     }
 }

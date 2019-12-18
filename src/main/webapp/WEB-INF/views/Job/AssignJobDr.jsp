@@ -1,3 +1,4 @@
+<%@page import="com.wmtrucking.entities.MaJobDriver"%>
 <%@page import="com.wmtrucking.entities.MaJobs"%>
 <%@page import="com.wmtrucking.utils.DateUtils"%>
 <%@page import="java.util.Date"%>
@@ -9,6 +10,7 @@
 <%@page import="java.util.List"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/pickers/pickadate/pickadate.css">  
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/forms/select/select2.min.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/tables/datatable/datatables.min.css">
 
 <jsp:include page="../Template/header.jsp"></jsp:include>
     <div class="content-wrapper">
@@ -62,7 +64,7 @@
                         <div class="card-content">
                             <div class="card-body">
                                 <form method="post"  class="form-horizontal bordered-row" id="user-form" action="<%=request.getContextPath()%>/job/PostCreateAssignDrive">
-                                    <input type="hidden" name="jobid" value="<%= majob.getId() %>">
+                                    <input type="hidden" name="jobid" value="<%= majob.getId()%>">
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-12">
@@ -72,10 +74,10 @@
                                                     </div>
                                                     <div class="col-md-8">
                                                         <select class="select2 form-control"  name="driver" required multiple="multiple">
-                                                           <%
-                                                                String selectedDriver = (String) request.getAttribute("maJobDrivers");
+                                                            <%
+                                                                String selectedDriver = (String) request.getAttribute("selectedDriver");
 
-                                                                List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("maDriver");
+                                                                List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("TotalDriver");
                                                                 for (MaDriver maDriver : maDrivers) {
                                                             %>
                                                             <option <%=selectedDriver != null && selectedDriver.contains(checkInput.checkValueEdit(maDriver.getId(), request.getParameter("driver"))) ? "selected" : ""%>
@@ -110,14 +112,58 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                </form>
+                                </form>                      
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>  
+
+        <%
+            List<MaJobDriver> maJobDrivers = (List<MaJobDriver>) request.getAttribute("maJobDrivers");
+            if(maJobDrivers.size()>0){
+        %>
+        <section id="basic-horizontal-layouts">
+            <div class="row match-height">
+                <div class="col-md-12 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="form-body">
+                                    <div class="row">   <div class="col-1"></div>
+                                        <div class="col-10">
+
+                                            <div class="table-responsive">
+                                                <table class="table zero-configuration">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Driver Name</th>                                             
+                                                            <th>Assigned Date</th> 
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%
+                                                            for (MaJobDriver maJobDriver : maJobDrivers) {
+                                                        %>
+                                                        <tr>
+                                                            <td><%= maJobDriver.getDriverId().getFirstname()%></td>
+                                                            <td><%= maJobDriver.getCreateddate() != null ? new DateUtils().dateWithFormat(maJobDriver.getCreateddate(), "MMMM dd, yyyy") : ""%></td>
+                                                        </tr>
+                                                        <%}%>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>  
+                                                    <%}%>
 
     </div>
 </div>
@@ -126,6 +172,15 @@
 <jsp:include page="../Template/pageEnd.jsp"></jsp:include>    
 
 <jsp:include page="../Template/footer.jsp"></jsp:include>
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/tables/datatable/buttons.html5.min.js"></script>
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/tables/datatable/buttons.print.min.js"></script>
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js"></script>
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
+<script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/datatables/datatable.js"></script>
+
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
 
 
