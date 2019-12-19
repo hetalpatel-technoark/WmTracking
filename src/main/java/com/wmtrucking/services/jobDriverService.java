@@ -39,6 +39,10 @@ public class jobDriverService {
     public void delete(MaJobDriver maJobDriver){
     jobDriverRepository.delete(maJobDriver);
     }
+    @Transactional
+    public void delete(List<MaJobDriver> maJobDriver){
+    jobDriverRepository.deleteInBatch(maJobDriver);
+    }
     
      @Transactional
     public void deleteOldDriversJob(String satus, Long jobId, Long Driverid) {

@@ -17,8 +17,15 @@
 <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 <style>
-     .label {
+   .label {
         border-radius: 6px !important ;
+            margin-bottom: 3px;
+    }
+    .label-orange {
+        background-color: #637a91;
+    }
+    .label-pur {
+        background-color: #f092b0;
     }
     .avatar1 {
         white-space: nowrap;
@@ -42,18 +49,33 @@
     <div class="content-header row">
         <div class="content-header-left col-md-12 col-12 mb-2">
             <div class="row breadcrumbs-top">
-                <div class="col-12">
+                <div class="col-6">
                     <h2 class="content-header-title float-left mb-0">Dashboard</h2>
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/Dashboard/Dashboard">Home</a>
                             </li>
 
-
-                            <li style="margin-left:59%;" ><b>Report Date :  <%= new DateUtils().dateWithFormat(new Date(), "MMMM dd, yyyy")%></b>
-                            </li>
                         </ol>
 
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="breadcrumb-wrapper col-12">
+                        <h5 class="content-header-title float-left mb-0" style="vertical-align: middle;margin-top: 0.4em; margin-right: 0;">
+                            Report Date :</h5>
+                        <ul class="pagination justify-content-center mt-2" style="margin-top: 0px !important;">
+
+                            <li class="page-item"><a class="page-link" href="#">
+                                    <i class="feather icon-chevrons-left"></i> Prev
+                                </a></li>
+
+                            <li class="page-item active"><a class="page-link" href="#"><%= new DateUtils().dateWithFormat(new Date(), "MMMM dd, yyyy")%></a></li>
+
+                            <li class="page-item"><a class="page-link" href="#">
+                                    Next <i class="feather icon-chevrons-right"></i>
+                                </a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -205,8 +227,7 @@
                                                         <th>Completed Dumps</th>
                                                         <th> Total Driver </th>
                                                         <th> Driver Names </th>
-                                                        <th>Status </th>
-                                                       
+                                                      
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -230,12 +251,20 @@
                                                         <td><%=checkInput.checkValue(majob.getTotaldumps())%></td>
                                                         <td><%=checkInput.checkValue(majob.getCompleteddumps())%></td>
                                                         <td><%=checkInput.checkValue(majob.getDrivercount())%></td>
-                                                        <td><%=checkInput.checkValue(majob.getDrivername())%></td>
-                                                        <td><%=checkInput.checkValue(majob.getStatus())%></td>
-                                                
+                                                        <td>
+
+                                                            <% if (majob.getDrivername() != null) {
+                                                                    String[] driver = majob.getDrivername().split(",");
+                                                                    for (int i = 0; i < driver.length; i++) {
+                                                            %>
+                                                            <span class="label <%= i % 2 == 0 ? "label-orange" : "label-pur"%>  " ><%= driver[i]%></span>
+                                                            <%}
+                                                        }%>
+                                                        </td> 
+                                                   
                                                     </tr>
                                                     <%   }
-                                                }%>
+                                                        }%>
                                                 </tbody>
 
                                             </table>
@@ -266,109 +295,65 @@
 <!--<script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/charts/gmaps/maps.min.js"></script>-->
 
 <script>
-                                                                            $(document).ready(function () {
+    $(document).ready(function () {
 
     <% List<JobPojo> maJobses = (List<JobPojo>) request.getAttribute("maJobsesList");%>
-                                                                                //Pickup Site Map
-                                                                                map = new GMaps({
-                                                                                    div: '#pickupMap',
-                                                                                    lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "29.974490"%>,
-                                                                                    lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "-95.817450"%>,
-                                                                                    zoom: 11
-                                                                                });
-                                                                                //Loding address
+        //Pickup Site Map
+        map = new GMaps({
+            div: '#pickupMap',
+            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "29.974490"%>,
+            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "-95.817450"%>,
+            zoom: 11
+        });
+        //Loding address
     <% for (JobPojo maJobs : maJobses) {%>
-                                                                                map.addMarker({
-                                                                                    lat: <%= maJobs.getFromlatitude()%>,
-                                                                                    lng: <%= maJobs.getFromlongitude()%>,
-                                                                                    title: '<%= maJobs.getJobname()%>',
-                                                                                    infoWindow: {
-                                                                                        content: '<p><%= maJobs.getJobname()%></p>'
-                                                                                    }
-                                                                                });
+        map.addMarker({
+            lat: <%= maJobs.getFromlatitude()%>,
+            lng: <%= maJobs.getFromlongitude()%>,
+            title: '<%= maJobs.getJobname()%>',
+            infoWindow: {
+                content: '<p><%= maJobs.getJobname()%></p>'
+            }
+        });
     <%}%>
     <% for (JobPojo maJobs : maJobses) {%>
-                                                                                map.addMarker({
-                                                                                    lat: <%= maJobs.getTolatitude()%>,
-                                                                                    lng: <%= maJobs.getTolongitude()%>,
-                                                                                    title: '<%= maJobs.getJobname()%>',
-                                                                                    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                                                                                    infoWindow: {
-                                                                                        content: '<p><%= maJobs.getJobname()%></p>'
-                                                                                    }
-                                                                                });
+        map.addMarker({
+            lat: <%= maJobs.getTolatitude()%>,
+            lng: <%= maJobs.getTolongitude()%>,
+            title: '<%= maJobs.getJobname()%>',
+            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            infoWindow: {
+                content: '<p><%= maJobs.getJobname()%></p>'
+            }
+        });
     <%}%>
-                                                                                map = new GMaps({
-                                                                                    div: "#pickupMap",
-                                                                                    lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "29.974490"%>,
-                                                                                    lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "-95.817450"%>,
-                                                                                    zoom: 11
-                                                                                })<%= maJobses.size() > 0 ? "," : ""%>
-
+  
 //Loding address
     <%  for (JobPojo maJobs2 : maJobses) {%>
-                                                                                map.addMarker({
-                                                                                    lat: <%= maJobs2.getFromlatitude()%>,
-                                                                                    lng: <%= maJobs2.getFromlongitude()%>,
-                                                                                    title: '<%= maJobs2.getJobname()%>',
-                                                                                    infoWindow: {
-                                                                                        content: "<p>Job Name: <%= maJobs2.getJobname()%> </br> Total Driver: <%= maJobs2.getDrivercount() %> </br>Job Number: <%= maJobs2.getJobnumber()%></p>"
-                                                                                    }
-                                                                                });
+        map.addMarker({
+            lat: <%= maJobs2.getFromlatitude()%>,
+            lng: <%= maJobs2.getFromlongitude()%>,
+            title: '<%= maJobs2.getJobname()%>',
+            infoWindow: {
+                content: "<p>Job Name: <%= maJobs2.getJobname()%> </br> Total Driver: <%= maJobs2.getDrivercount()%> </br>Job Number: <%= maJobs2.getJobnumber()%></p>"
+            }
+        });
     <%}%>
 //Dumping address
     <% for (JobPojo maJobs : maJobses) {%>
-                                                                                map.addMarker({
-                                                                                    lat: <%= maJobs.getTolatitude()%>,
-                                                                                    lng: <%= maJobs.getTolongitude()%>,
-                                                                                    title: '<%= maJobs.getJobname()%>',
-                                                                                    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                                                                                    infoWindow: {
-                                                                                        content: '<p>Job Name:<%= maJobs.getJobname()%></br> Total Driver: <%= maJobs.getDrivercount()%> </br>Job Number: <%= maJobs.getJobnumber()%></p>'
-                                                                                    }
-                                                                                });
+        map.addMarker({
+            lat: <%= maJobs.getTolatitude()%>,
+            lng: <%= maJobs.getTolongitude()%>,
+            title: '<%= maJobs.getJobname()%>',
+            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            infoWindow: {
+                content: '<p>Job Name:<%= maJobs.getJobname()%></br> Total Driver: <%= maJobs.getDrivercount()%> </br>Job Number: <%= maJobs.getJobnumber()%></p>'
+            }
+        });
     <%}%>
-                                                                                var directionsDisplay;
-                                                                                var directionsService = new google.maps.DirectionsService();
-                                                                                var map;
-                                                                                function calcRoute() {
-                                                                                    var start = new google.maps.LatLng(21.2038557, 72.83976690000009);
-                                                                                    var end = new google.maps.LatLng(23.0267556, 72.6008286);
+              
 
-                                                                                    var bounds = new google.maps.LatLngBounds();
-                                                                                    bounds.extend(start);
-                                                                                    bounds.extend(end);
-                                                                                    map.fitBounds(bounds);
-                                                                                    var request = {
-                                                                                        origin: start,
-                                                                                        destination: end,
-                                                                                        travelMode: google.maps.TravelMode.DRIVING
-                                                                                    };
-                                                                                    directionsService.route(request, function (response, status) {
-                                                                                        if (status == google.maps.DirectionsStatus.OK) {
-                                                                                            console.log(response);
-                                                                                            directionsDisplay.setDirections(response);
-                                                                                            directionsDisplay.setMap(map);
-                                                                                        } else {
-                                                                                            alert("Directions Request from " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed: " + status);
-                                                                                        }
-                                                                                    });
-                                                                                }
-                                                                                function initialize() {
-                                                                                    directionsDisplay = new google.maps.DirectionsRenderer();
-                                                                                    var chicago = new google.maps.LatLng(21.2038557, 72.83976690000009);
-                                                                                    var mapOptions = {
-                                                                                        zoom: 7,
-                                                                                        center: chicago
-                                                                                    };
-                                                                                    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-                                                                                    directionsDisplay.setMap(map);
-                                                                                    google.maps.event.addDomListener(window, 'load', calcRoute);
-                                                                                }
-
-                                                                                initialize();
-
-                                                                            });
+    });
 
 
 
@@ -389,46 +374,46 @@
             }
         }
     %>
-                                                                            var lineChartOptionsA = {
-                                                                                chart: {
-                                                                                    height: 350,
-                                                                                    type: 'line',
-                                                                                    zoom: {
-                                                                                        enabled: false
-                                                                                    }
-                                                                                },
-                                                                                colors: ['#7367F0'],
-                                                                                dataLabels: {
-                                                                                    enabled: false
-                                                                                },
-                                                                                stroke: {
-                                                                                    curve: 'straight'
-                                                                                },
-                                                                                series: [{
-                                                                                        name: "Job",
-                                                                                        data: [<%=cnt%>],
-                                                                                    }],
-                                                                                title: {
-                                                                                    // text: 'Product Trends by Month',
-                                                                                    align: 'left'
-                                                                                },
-                                                                                grid: {
-                                                                                    row: {
-                                                                                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                                                                                        opacity: 0.5
-                                                                                    },
-                                                                                },
-                                                                                xaxis: {
-                                                                                    categories: [<%=month%>],
-                                                                                },
-                                                                                yaxis: {
-                                                                                    tickAmount: 1,
-                                                                                }
-                                                                            }
-                                                                            var lineChartA = new ApexCharts(
-                                                                                    document.querySelector("#line-chart"),
-                                                                                    lineChartOptionsA
-                                                                                    );
-                                                                            lineChartA.render();
+    var lineChartOptionsA = {
+        chart: {
+            height: 350,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
+        },
+        colors: ['#7367F0'],
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        series: [{
+                name: "Job",
+                data: [<%=cnt%>],
+            }],
+        title: {
+            // text: 'Product Trends by Month',
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                opacity: 0.5
+            },
+        },
+        xaxis: {
+            categories: [<%=month%>],
+        },
+        yaxis: {
+            tickAmount: 1,
+        }
+    }
+    var lineChartA = new ApexCharts(
+            document.querySelector("#line-chart"),
+            lineChartOptionsA
+            );
+    lineChartA.render();
 
 </script>

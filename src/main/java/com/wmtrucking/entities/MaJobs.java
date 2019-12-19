@@ -90,6 +90,8 @@ public class MaJobs implements Serializable {
     @Column(name = "job_status")
     private String job_status;
 
+    @Column(name = "price")
+    private String Price;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -149,6 +151,14 @@ public class MaJobs implements Serializable {
     private MaDriver driverId;
 
     public MaJobs() {
+    }
+
+    public String getPrice() {
+        return Price;
+    }
+
+    public void setPrice(String Price) {
+        this.Price = Price;
     }
 
     public MaJobs(Long id) {

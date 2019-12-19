@@ -11,6 +11,7 @@
 <style>
     .label {
         border-radius: 6px !important ;
+        margin-bottom: 3px;
     }
     .label-orange {
         background-color: #637a91;
@@ -65,25 +66,35 @@
                                     Job has been successfully created.
                                 </div>
                                 <%}
-                                    if (request.getParameter("m").equals("a")) {%>
+                                    if (request.getParameter("m").equals("assign")) {%>
                                 <div class="alert alert-success">
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
                                     Driver has been successfully Assign.
                                 </div>
-                                <%} else if (request.getParameter("m").equals("e")) {%>
+                                <%} else if (request.getParameter("m").equals("edit")) {%>
                                 <div class="alert alert-success">
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
                                     Job has been successfully updated.
                                 </div>
-                                <%} else if (request.getParameter("m").equals("d")) {%>
+                                <%} else if (request.getParameter("m").equals("delete")) {%>
                                 <div class="alert alert-success">
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
                                     Job has been successfully deleted.
+                                </div>
+                                <%}else if (request.getParameter("m").equals("notDelete")) {%>
+                                <div class="alert alert-danger">
+                                    <button class="close" data-dismiss="alert"><span>x</span></button>
+                                    This job is already started. You can not delete.
                                 </div>
                                 <%} else if (request.getParameter("m").equals("n")) {%>
                                 <div class="alert alert-success">
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
                                     Record not found
+                                </div>
+                                <%} else if (request.getParameter("m").equals("notAssign")) {%>
+                                <div class="alert alert-danger">
+                                    <button class="close" data-dismiss="alert"><span>x</span></button>
+                                  This Job is already started 
                                 </div>
                                 <%}%>
                                 <%}%>
@@ -92,14 +103,14 @@
                                         <thead>
                                             <tr>
                                                 <th>Company Name</th>                                             
-                                                <th>Job Name</th>                                             
-                                                <th>Job Date</th>  
-                                                <th>Job Status</th>  
-                                                <th> Total Dumps</th>
-                                                <th>Completed Dumps</th>
-                                                <th> Total Driver </th>
-                                                <th style="width: 207px;" >Driver Names </th>                                               
-                                                <th>Actions</th>
+                                                <th >Job Name</th>                                             
+                                                <th >Job Date</th>  
+                                                <th >Job Status</th>  
+                                                <th > Total Dumps</th>
+                                                <th >Completed Dumps</th>
+                                                <th > Total Driver </th>
+                                                <th >Driver Names </th>                                               
+                                                <th >Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -129,9 +140,7 @@
                                                             String[] driver = majob.getDrivername().split(",");
                                                             for (int i = 0; i < driver.length; i++) {
                                                     %>
-
                                                     <span class="label <%= i % 2 == 0 ? "label-orange" : "label-pur"%>  " ><%= driver[i]%></span>
-
                                                     <%}
                                                         }%>
                                                 </td>                                            

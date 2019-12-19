@@ -92,16 +92,23 @@
                                                     <span>Total Dumps* </span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input disabled="" type="number" max="1000"  class="form-control" name="count" value="<%=checkInput.checkValueEdit(majob.getTotaljobcount(), request.getParameter("count"))%>"  placeholder="Total Job Dump">
+                                                    <input disabled="" type="number" max="1000"  class="form-control" name="count" value="<%=checkInput.checkValueEdit(majob.getTotaljobcount(), request.getParameter("count"))%>" >
                                                 </div>
                                             </div>
-
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
+                                                    <span>Price *</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" disabled="" required="" class="form-control" name="price" value="<%=checkInput.checkValue(request.getParameter("price"))%>"  >
+                                                </div>
+                                            </div>
                                             <div class="form-group row">
                                                 <div class="col-md-4">
                                                     <span>Loading Site Address *</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input type="text" required="" id="loding" disabled=""  class="form-control" name="lodingAddress" value="<%=checkInput.checkValueEdit(majob.getLodingaddress(), request.getParameter("lodingAddress"))%>"  placeholder="Loading Site Address">
+                                                    <input type="text" required="" id="loding" disabled=""  class="form-control" name="lodingAddress" value="<%=checkInput.checkValueEdit(majob.getLodingaddress(), request.getParameter("lodingAddress"))%>"  >
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -109,12 +116,37 @@
                                                     <span>Dumping Site Address *</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input type="text" required id="dumping" disabled  class="form-control" name="DumpingAddress" value="<%=checkInput.checkValueEdit(majob.getDumpingaddress(), request.getParameter("DumpingAddress"))%>"  placeholder="Dumping Site Address">
+                                                    <input type="text" required id="dumping" disabled  class="form-control" name="DumpingAddress" value="<%=checkInput.checkValueEdit(majob.getDumpingaddress(), request.getParameter("DumpingAddress"))%>"  >
                                                 </div>
                                             </div>
-        <div class="form-group row">
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <!--                                                    <span>Select fill</span>-->
+                                                    <span>Job Number*</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input readonly  type="text" class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber(), request.getParameter("jno"))%>" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
+                                                    <span>Job Name*</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" disabled="" class="form-control" name="jname" value="<%=checkInput.checkValueEdit(majob.getJobname(), request.getParameter("jname"))%>" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-4">                                                    
+                                                    <span>Job Date *</span></div>
+                                                <div class="col-md-8">
+                                                    <input readonly type="text" disabled="" id="expirydate" name="jobdate" value="<%=checkInput.checkValueEdit(dateUtils.dateWithFormat(majob.getJobdate(), "MMMM dd, yyyy"), request.getParameter("jobdate"))%>" style="background-color: #F5F5F1" class="form-control pickadate1" >
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
                                                 </div>
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-12" >
@@ -168,39 +200,13 @@
                                                 </div>
                                             </div>
 
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group row">
-                                                <div class="col-md-4">
-                                                    <span>Job Number*</span>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input readonly  type="text" class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber(), request.getParameter("jno"))%>" placeholder="Job number">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-4">
-                                                    <span>Job Name*</span>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input type="text" disabled="" class="form-control" name="jname" value="<%=checkInput.checkValueEdit(majob.getJobname(), request.getParameter("jname"))%>" placeholder="Job Name">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-4">                                                    
-                                                    <span>Job Date *</span></div>
-                                                <div class="col-md-8">
-                                                    <input readonly type="text" disabled="" id="expirydate" name="jobdate" value="<%=checkInput.checkValueEdit(dateUtils.dateWithFormat(majob.getJobdate(), "MMMM dd, yyyy"), request.getParameter("jobdate"))%>" style="background-color: #F5F5F1" class="form-control pickadate1" placeholder="Job Date">
-                                                </div>
-                                            </div>
 
-                                    
                                             <div class="form-group row">
                                                 <div class="col-md-4">
                                                     <span>Others</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input type="text" readonly="" id="pincode" class="form-control" name="others" value="<%=checkInput.checkValueEdit(majob.getOther(), request.getParameter("others"))%>" placeholder="Others">
+                                                    <input type="text" readonly="" id="pincode" class="form-control" name="others" value="<%=checkInput.checkValueEdit(majob.getOther(), request.getParameter("others"))%>" >
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -215,7 +221,7 @@
                                                 <div class="col-md-4">                                                    
                                                     <span>Job Created Date </span></div>
                                                 <div class="col-md-8">
-                                                    <input type="text"  disabled=""  value="<%= new DateUtils().dateWithFormat(new Date(), "MMMM dd, yyyy")%>"  class="form-control " placeholder="Job Date">
+                                                    <input type="text"  disabled=""  value="<%= new DateUtils().dateWithFormat(new Date(), "MMMM dd, yyyy")%>"  class="form-control " >
                                                 </div>
                                             </div>
                                         </div>

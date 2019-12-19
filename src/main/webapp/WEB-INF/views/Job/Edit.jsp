@@ -97,15 +97,25 @@
                                                         <span>Total Dumps * </span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <select name="count" required="" class="form-control" >                                                          
-                                                            <% for (int i = 1; i <= 1000; i++) {
-                                                            %>
-                                                            <option <%= ((Integer.compare(majob.getTotaljobcount().intValue(), i)) == 0) ? "selected" : ""%> value="<%= i%>" > <%= i%> </option>
-                                                            <%}%>   
-                                                        </select>
+                                                        <!--                                                        <select name="count" required="" class="form-control" >                                                          
+                                                        <% for (int i = 1; i <= 1000; i++) {
+                                                        %>
+                                                        <option <%= ((Integer.compare(majob.getTotaljobcount().intValue(), i)) == 0) ? "selected" : ""%> value="<%= i%>" > <%= i%> </option>
+                                                        <%}%>   
+                                                    </select>-->
+                                                        <input type="number" max="1000" required=""  class="form-control" name="count" value="<%=checkInput.checkValueEdit(majob.getTotaljobcount(), request.getParameter("count"))%>"  placeholder="Total Dumps Count">
+
                                                     </div>
                                                 </div>
 
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Price *</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" required="" class="form-control" name="price" value="<%=checkInput.checkValueEdit(majob.getPrice(), request.getParameter("price"))%>"  placeholder="Price">
+                                                    </div>
+                                                </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Loading Site Address *</span>
@@ -120,6 +130,90 @@
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" required id="dumping" onFocus="geolocate('dump')"  class="form-control" name="DumpingAddress" value="<%=checkInput.checkValueEdit(majob.getDumpingaddress(), request.getParameter("DumpingAddress"))%>"  placeholder="Dumping Site Address">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">  
+                                                        <span>Add Latitude/longitude</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="col-sm-12" >
+                                                            <ul class="list-unstyled mb-0">
+                                                                <li class="d-inline-block mr-2">
+                                                                    <div class="custom-control custom-switch">
+                                                                        <input type="checkbox" name="lat_log" class="custom-control-input latlog" id="customSwitch9">
+                                                                        <label class="custom-control-label" for="customSwitch9">
+                                                                            <span class="switch-text-left">On</span>
+                                                                            <span class="switch-text-right">Off</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                                <div id="LatLog" style="display: none">
+                                                    <div class="form-group row" >
+                                                        <div class="col-md-4">
+                                                            <span> Loading latitude*</span>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input type="number" id="loding_lat"   class="form-control" name="loding_lat" value="<%=checkInput.checkValue(request.getParameter("loding_lat"))%>"  placeholder="Loading Latitude ">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row" >
+                                                        <div class="col-md-4">
+                                                            <span> Loading longitude*</span>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input type="number" id="loding_log"   class="form-control" name="loding_log" value="<%=checkInput.checkValue(request.getParameter("loding_log"))%>"  placeholder="Loading Longitude ">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row" >
+                                                        <div class="col-md-4">
+                                                            <span> Dumping latitude*</span>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input type="number" id="dumping_lat"   class="form-control" name="dumping_lat" value="<%=checkInput.checkValue(request.getParameter("dumping_lat"))%>"  placeholder="Dumping latitude ">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row" >
+                                                        <div class="col-md-4">
+                                                            <span> Dumping longitude*</span>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input type="number" id="dumping_log"   class="form-control" name="dumping_log" value="<%=checkInput.checkValue(request.getParameter("dumping_log"))%>"  placeholder="Dumping Longitude ">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Job Number*</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" required="" class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber(), request.getParameter("jno"))%>" placeholder="Job Number">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Job Name*</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" required class="form-control" name="jname" value="<%=checkInput.checkValueEdit(majob.getJobname(), request.getParameter("jname"))%>" placeholder="Job Name">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">                                                    
+                                                        <span>Job Date *</span></div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" required="" readonly  name="jobdate" value="<%=checkInput.checkValueEdit(dateUtils.dateWithFormat(majob.getJobdate(), "MMMM dd, yyyy"), request.getParameter("jobdate"))%>" class="form-control pickadate1" placeholder="Job Date">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -178,33 +272,6 @@
                                                     </div>
                                                 </div>
 
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Job Number*</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text" required="" class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber(), request.getParameter("jno"))%>" placeholder="Job Number">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Job Name*</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text" required class="form-control" name="jname" value="<%=checkInput.checkValueEdit(majob.getJobname(), request.getParameter("jname"))%>" placeholder="Job Name">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">                                                    
-                                                        <span>Job Date *</span></div>
-                                                    <div class="col-md-8">
-                                                        <input type="text" required="" readonly  name="jobdate" value="<%=checkInput.checkValueEdit(dateUtils.dateWithFormat(majob.getJobdate(), "MMMM dd, yyyy"), request.getParameter("jobdate"))%>" class="form-control pickadate1" placeholder="Job Date">
-                                                    </div>
-                                                </div>
-
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Others</span>
@@ -260,6 +327,22 @@
                                                             $(document).ready(function () {
                                                                 $(".pickadate1").pickadate({
                                                                     format: "mmmm dd, yyyy"
+                                                                });
+                                                                $('.latlog').click(function () {
+                                                                    if ($(this).prop("checked") == true) {
+                                                                        $("#LatLog").show();
+                                                                        $("#LatLog").show();
+                                                                        $("#loding_lat").attr("required", "true");
+                                                                        $("#loding_log").attr("required", "true");
+                                                                        $("#dumping_lat").attr("required", "true");
+                                                                        $("#dumping_log").attr("required", "true");
+                                                                    } else if ($(this).prop("checked") == false) {
+                                                                        $("#LatLog").hide();
+                                                                        $("#loding_lat").removeAttr("required");
+                                                                        $("#loding_log").removeAttr("required");
+                                                                        $("#dumping_lat").removeAttr("required");
+                                                                        $("#dumping_log").removeAttr("required");
+                                                                    }
                                                                 });
                                                             });
 

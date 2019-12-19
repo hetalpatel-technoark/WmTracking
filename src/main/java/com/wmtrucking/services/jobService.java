@@ -60,6 +60,10 @@ public class jobService {
         return jobRepository.listOfJob(satus, jobdate);
     }
 
+    public MaJobs findPendingJob(String satus, Long id) {
+        return jobRepository.findPendingJob(satus, id);
+    }
+
 //    public List<JobPojo> getJobList(String satus, Date jobdate) {
 //        String query = "select j.id, j.jobname,j.jobnumber,  j.jobdate, j.totaljobcount, "
 //                + "           (select count(id) from ma_job_transaction where job_id=j.id and status='Ended')as transactioncount,"
