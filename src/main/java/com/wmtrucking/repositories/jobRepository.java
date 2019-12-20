@@ -65,4 +65,7 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
             + "where status=?2 and cast(endtime as date)=?3 )")
     Long countDumpingDone(String satus, String transectionStatus, Date endtime);
 
+    @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and u.jobnumber=?2")
+    MaJobs checkJobNumber(String satus, String jobnumber);
+
 }

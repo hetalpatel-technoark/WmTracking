@@ -8,7 +8,6 @@ package com.wmtrucking.services;
 import com.wmtrucking.entities.MaJobs;
 import com.wmtrucking.pojo.JobPojo;
 import com.wmtrucking.repositories.jobRepository;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +120,10 @@ public class jobService {
 
     public List<Object[]> list(String status, String transectionstatus) {
         return jobRepository.list(status, transectionstatus);
+    }
+
+    public MaJobs checkJobNumber(String satus, String jobnumber) {
+        return jobRepository.checkJobNumber(satus, jobnumber);
     }
 
 }

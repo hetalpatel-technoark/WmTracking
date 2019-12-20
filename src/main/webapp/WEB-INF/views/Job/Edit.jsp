@@ -37,8 +37,8 @@
             <div class="row match-height">
                 <div class="col-md-12 col-12">
                     <%
-                        if (request.getAttribute("errors") != null) {
-                            List<String> errors = (List<String>) request.getAttribute("errors");
+                        if (request.getAttribute("error") != null) {
+                            List<String> errors = (List<String>) request.getAttribute("error");
                             if (!errors.isEmpty()) {
                     %>
                     <div class="alert alert-danger">
@@ -326,7 +326,8 @@
 
                                                             $(document).ready(function () {
                                                                 $(".pickadate1").pickadate({
-                                                                    format: "mmmm dd, yyyy"
+                                                                    format: "mmmm dd, yyyy",
+                                                                       min: new Date(),
                                                                 });
                                                                 $('.latlog').click(function () {
                                                                     if ($(this).prop("checked") == true) {

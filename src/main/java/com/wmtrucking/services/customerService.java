@@ -42,8 +42,8 @@ public class customerService {
         return cuRepository.checkEmail(satus, email);
     }
 
-    public  Long count(String satus, Date jobdate) {
-        return cuRepository.count(satus,jobdate);
+    public Long count(String satus, Date jobdate) {
+        return cuRepository.count(satus, jobdate);
     }
 
     public List<MaCustomer> activeList(String satus) {
@@ -52,5 +52,13 @@ public class customerService {
 
     public List<MaCustomer> activeListEdit(String satus, Long jobid) {
         return cuRepository.activeListEdit(satus, jobid);
+    }
+
+    public MaCustomer findoneEdit(Long id) {
+        return cuRepository.findoneEdit(id);
+    }
+
+    public MaCustomer checkMobile(String satus, String mobile) {
+        return cuRepository.checkMobile(satus, mobile);
     }
 }

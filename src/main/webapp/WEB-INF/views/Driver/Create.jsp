@@ -95,7 +95,7 @@
                                                         <span>Mobile Number*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" required=""  class="form-control" name="mob" value="<%=checkInput.checkValue(request.getParameter("mob"))%>" placeholder="Mobile Number">
+                                                        <input type="text"   required=""  class="form-control" name="mob" value="<%=checkInput.checkValue(request.getParameter("mob"))%>" placeholder="Mobile Number">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">

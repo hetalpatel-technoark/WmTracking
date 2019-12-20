@@ -303,7 +303,9 @@
 
                                                             $(document).ready(function () {
                                                                 $(".pickadate1").pickadate({
-                                                                    format: "mmmm dd, yyyy"
+                                                                    format: "mmmm dd, yyyy",
+                                                                    min: new Date(),
+                                                                   // max: new Date(2019, 7, 14, 18, 30)
                                                                 });
                                                                 $('.latlog').click(function () {
                                                                     if ($(this).prop("checked") == true) {

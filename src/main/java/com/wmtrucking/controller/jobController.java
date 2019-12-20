@@ -122,6 +122,12 @@ public class jobController {
         if (request.getParameter("count") != null & request.getParameter("count").equals("0")) {
             errors.add("Total Dumps Allow More then 0");
         }
+
+        MaJobs checkjob = jobService.checkJobNumber(Constant.ACTIVE.toString(), request.getParameter("jno"));
+        if (checkjob != null) {
+            errors.add("This Job Number is already exist");
+        }
+
         if (errors.size() > 0) {
             List<MaCustomer> maCustomer = cusService.activeList(Constant.ACTIVE.toString());
             model.addAttribute("maCustomer", maCustomer);
@@ -336,10 +342,10 @@ public class jobController {
             errors.add("Total Dumps Allow More then 0");
         }
         if (request.getParameter("lat_log") != null && !request.getParameter("lat_log").equals("") && request.getParameter("lat_log").equals("on")) {
-            validateUtil.checkNull(request, "loding_lat", "loding latitude", errors);
-            validateUtil.checkNull(request, "loding_log", "Loding logitude", errors);
-            validateUtil.checkNull(request, "dumping_lat", "Dumping latitude", errors);
-            validateUtil.checkNull(request, "dumping_log", "Dumping logitude", errors);
+            validateUtil.checkNull(request, "loding_lat", "Loding Latitude", errors);
+            validateUtil.checkNull(request, "loding_log", "Loding Logitude", errors);
+            validateUtil.checkNull(request, "dumping_lat", "Dumping Latitude", errors);
+            validateUtil.checkNull(request, "dumping_log", "Dumping Logitude", errors);
         }
         MaJobs majob = jobService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
         Long jobTransaction = jobTransactionService.totalJobTransactionCount(majob.getId());
@@ -347,6 +353,11 @@ public class jobController {
             majob.setJob_status(Constant.PENDING.toString());
         } else if (jobTransaction >= Long.parseLong(request.getParameter("count"))) {
             errors.add("Your Transaction is already completed. So, You can't able to decrease Total Dumps");
+        }
+
+        MaJobs checkjob = jobService.checkJobNumber(Constant.ACTIVE.toString(), request.getParameter("jno"));
+        if (checkjob != null && !majob.getJobnumber().equals(checkjob.getJobnumber())) {
+            errors.add("This Job Number is already exist");
         }
         if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
@@ -369,7 +380,7 @@ public class jobController {
         majob.setHourly(Boolean.parseBoolean(request.getParameter("hourly")));
         majob.setJobdate(validateUtil.getDateValue(request.getParameter("jobdate")));
         majob.setJobname(validateUtil.getStringValue(request.getParameter("jname")));
-
+        majob.setPrice(validateUtil.getStringValue(request.getParameter("price")));
         majob.setJobnumber(validateUtil.getStringValue(request.getParameter("jno")));
         majob.setOther(validateUtil.getStringValue(request.getParameter("others")));
         majob.setNotes(validateUtil.getStringValue(request.getParameter("notes")));
