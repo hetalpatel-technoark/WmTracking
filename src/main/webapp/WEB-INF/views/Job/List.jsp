@@ -103,7 +103,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Company Name</th>                                             
-                                                <th >Job Name</th>                                             
+                                                <th >Job Number</th>                                             
                                                 <th >Job Date</th>  
                                                 <th >Job Status</th>  
                                                 <th > Total Dumps</th>
@@ -122,7 +122,7 @@
                                             %>
                                             <tr>
                                                 <td><%=checkInput.checkValue(majob.getCustomername())%></td>
-                                                <td><%=checkInput.checkValue(majob.getJobname())%></td>
+                                                <td><%=checkInput.checkValue(majob.getJobnumber())%></td>
                                                 <td><%=checkInput.checkValue(majob.getJobdate())%></td>                                               
                                                 <% if (majob.getTransectionstatus().equals("0")) {%>
                                                 <td><span class="label label-success" >Completed</span></td>
