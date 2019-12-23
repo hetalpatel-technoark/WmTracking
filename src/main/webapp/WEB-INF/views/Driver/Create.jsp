@@ -96,7 +96,7 @@
                                                     </div>
                                                     <div class="col-md-2">
                                                              <select name="countryCode" class="form-control" id="">
-                                                            <option data-countryCode="GB" <%=checkInput.checkValue( request.getParameter("countryCode")).equals("+44") ? "Selected" : ""%>  value="+" >UK (+44)</option>
+                                                            <option data-countryCode="GB" <%=checkInput.checkValue( request.getParameter("countryCode")).equals("+44") ? "Selected" : ""%>  value="+44" >UK (+44)</option>
                                                             <option data-countryCode="US" <%=checkInput.checkValue( request.getParameter("countryCode")).equals("+1") ? "Selected" : ""%>  value="+1">USA (+1)</option>
                                                             <optgroup label="Other countries">
                                                                 <option data-countryCode="DZ" <%=checkInput.checkValue( request.getParameter("countryCode")).equals("+213") ? "Selected" : ""%> value="+213">Algeria (+213)</option>

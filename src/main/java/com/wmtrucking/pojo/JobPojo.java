@@ -5,7 +5,6 @@
  */
 package com.wmtrucking.pojo;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  *
@@ -13,7 +12,7 @@ import java.util.Date;
  */
 public class JobPojo {
 
-    String customername, jobname, jobnumber, status, transectionstatus, drivername,jobdate;
+    String customername, jobname, jobnumber, status, transectionstatus, drivername,jobdate,starttime;
    
     Long id, totaldumps, completeddumps, drivercount;
 
@@ -35,6 +34,14 @@ public class JobPojo {
 
     public void setJobname(String jobname) {
         this.jobname = jobname;
+    }
+
+    public String getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(String starttime) {
+        this.starttime = starttime;
     }
 
     public String getJobnumber() {

@@ -126,6 +126,24 @@ public class DashboardController {
     @RequestMapping(value = "/DumpsList/{flag}", method = RequestMethod.GET)
     public String DumpsList(Model model, HttpServletRequest request, HttpServletResponse response, @PathVariable("flag") String flag) throws ParseException {
 
+        if (flag != null) {
+            Date jobDate = new DateUtils().stringToDate(request.getParameter("jobDate"), "MMMM dd, yyyy");
+            List<JobPojo> jobPojo = null;
+            if (flag.equals("start")) {
+                jobPojo = joService.getStartJob(Constant.ACTIVE.toString(), jobDate);
+                if (jobPojo.size() > 0) {
+                    model.addAttribute("jobPojo", jobPojo);
+                    model.addAttribute("start", "start");
+                    
+                }
+            } else if (flag.equals("end")) {
+                jobPojo = joService.getEndJob(Constant.ACTIVE.toString(), jobDate);
+                if (jobPojo.size() > 0) {
+                    model.addAttribute("jobPojo", jobPojo);
+                    model.addAttribute("jobPojo", jobPojo);
+                }
+            }
+        }
 
         return "Dashboard/DumpsList";
     }

@@ -90,7 +90,7 @@
 
                 <div class="col-lg-3 col-md-12">
                     <div class="card">
-<!--                        <a href="<%= request.getContextPath()%>/Dashboard/DumpsList?flag=pickup" >-->
+                        <a href="<%= request.getContextPath()%>/Dashboard/DumpsList?flag=pickup" >
                             <div class="card-header d-flex flex-column align-items-start pb-0">
                                 <div class="avatar bg-rgba-primary p-50 m-0">
                                     <div class="avatar-content">
@@ -102,7 +102,7 @@
                                 </h2>
                                 <p class="mb-0" style="color: black" >Total Dumps Pickup </p>
                             </div><br>
-<!--                        </a>-->
+                        </a>
                     </div>
                 </div> 
                 <div class="col-lg-3 col-md-12">
