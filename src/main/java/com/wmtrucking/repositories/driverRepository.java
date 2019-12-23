@@ -32,20 +32,23 @@ public interface driverRepository extends JpaRepository<MaDriver, Long> {
     @Query(nativeQuery = true, value = "select u.* from ma_driver u where (u.status=?1 or u.status='Inactive' ) and u.email=?2")
     MaDriver checkEmail(String satus, String email);
 
-    @Query(nativeQuery = true, value = "select u.* from ma_driver u where (u.status=?1 or u.status='Inactive' ) and u.mobile=?2")
-    MaDriver checkMobile(String satus, String mobile);
+//    @Query(nativeQuery = true, value = "select u.* from ma_driver u where (u.status=?1 or u.status='Inactive' ) and u.mobile=?2")
+//    MaDriver checkMobile(String satus, String mobile);
+    @Query(nativeQuery = true, value = "select u.* from ma_driver u where (u.status=?1 or u.status='Inactive' ) and u.mobile=?2 and u.countrycode=?3")
+    MaDriver checkMobile(String satus, String mobile, String countrycode);
 
     @Query(nativeQuery = true, value = "select u.* from ma_driver u where (u.status=?1 or u.status='Inactive' ) and u.id=?2 and "
             + "u.id not in (select driver_id from ma_job_driver ) ")
     MaDriver findoneDelete(String satus, Long id);
 
     @Query(nativeQuery = true, value = "select u.* from ma_driver u where u.id=?1 and u.id not in (select driver_id from ma_job_driver ) ")
-    MaDriver findoneEdit( Long id);
+    MaDriver findoneEdit(Long id);
 
-//    @Query(nativeQuery = true, value = "select count(u.id) from ma_driver u where (u.status=?1 or u.status='Inactive' )")
-//    Long count(String satus);
-    @Query(nativeQuery = true, value = "select count(u.id) from ma_driver u where (u.status=?1 or u.status='Inactive' ) and u.id in(select driver_id from "
-            + "ma_job_driver where job_id in (select id from ma_jobs where status=?1 and cast(jobdate as date)=?2 )) ")
+//    @Query(nativeQuery = true, value = "select count(u.id) from ma_driver u where (u.status=?1 or u.status='Inactive' ) and "
+//            + "u.id in(select driver_id from ma_job_driver where job_id in (select id from ma_jobs where status=?1 and cast(jobdate as date)=?2 )) ")
+//    Long count(String satus, Date createddate);
+    @Query(nativeQuery = true, value = " select count(u.id) from ma_driver u where (u.status=?1 or u.status='Inactive' ) and "
+            + " u.id in(select driver_id from ma_job_driver where cast(createddate as date)=?2 and job_id in (select id from ma_jobs where status=?1)) ")
     Long count(String satus, Date createddate);
 
 }

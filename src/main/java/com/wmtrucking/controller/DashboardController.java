@@ -11,9 +11,11 @@ import com.wmtrucking.services.customerService;
 import com.wmtrucking.services.driverService;
 import com.wmtrucking.services.jobService;
 import com.wmtrucking.utils.Constant;
+import com.wmtrucking.utils.DateUtils;
 import com.wmtrucking.utils.SessionUtils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -77,8 +80,54 @@ public class DashboardController {
         // contains only date information without time
         List<JobPojo> maJobsesList = joService.getJobList(Constant.ACTIVE.toString(), new Date());
 
+        model.addAttribute("jobDate", new DateUtils().dateWithFormat(new Date(), "MMMM dd, yyyy"));
         model.addAttribute("maJobsesList", maJobsesList);
         return "Dashboard/Dashboard";
+    }
+
+    @RequestMapping(value = "/NextJobDate/{jobDate}", method = RequestMethod.GET)
+    public String NextJobDate(Model model, HttpServletRequest request, HttpServletResponse response, @PathVariable("jobDate") String jobDate) throws ParseException {
+
+        DateUtils dateutil = new DateUtils();
+        Date sourceDate = dateutil.stringToDate(jobDate, "MMMM dd, yyyy");
+        Date myDate = dateutil.IncreaseDays(sourceDate, 1);
+        model.addAttribute("customer", cuService.count(Constant.ACTIVE.toString(), myDate));
+        model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), myDate));
+        model.addAttribute("job", joService.count(Constant.ACTIVE.toString()));
+        model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(), Constant.STARTED.toString(), myDate));
+        model.addAttribute("countDumpingDone", joService.countDumpingDone(Constant.ACTIVE.toString(), Constant.ENDED.toString(), myDate));
+
+        List<JobPojo> maJobsesList = joService.getJobList(Constant.ACTIVE.toString(), myDate);
+
+        model.addAttribute("jobDate", new DateUtils().dateWithFormat(myDate, "MMMM dd, yyyy"));
+        model.addAttribute("maJobsesList", maJobsesList);
+        return "Dashboard/Dashboard";
+    }
+
+    @RequestMapping(value = "/PrevJobDate/{jobDate}", method = RequestMethod.GET)
+    public String PrevJobDate(Model model, HttpServletRequest request, HttpServletResponse response, @PathVariable("jobDate") String jobDate) throws ParseException {
+
+        DateUtils dateutil = new DateUtils();
+        Date sourceDate = dateutil.stringToDate(jobDate, "MMMM dd, yyyy");
+        Date myDate = dateutil.DecreaseDays(sourceDate, 1);
+        model.addAttribute("customer", cuService.count(Constant.ACTIVE.toString(), myDate));
+        model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), myDate));
+        model.addAttribute("job", joService.count(Constant.ACTIVE.toString()));
+        model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(), Constant.STARTED.toString(), myDate));
+        model.addAttribute("countDumpingDone", joService.countDumpingDone(Constant.ACTIVE.toString(), Constant.ENDED.toString(), myDate));
+
+        List<JobPojo> maJobsesList = joService.getJobList(Constant.ACTIVE.toString(), myDate);
+
+        model.addAttribute("jobDate", new DateUtils().dateWithFormat(myDate, "MMMM dd, yyyy"));
+        model.addAttribute("maJobsesList", maJobsesList);
+        return "Dashboard/Dashboard";
+    }
+
+    @RequestMapping(value = "/DumpsList/{flag}", method = RequestMethod.GET)
+    public String DumpsList(Model model, HttpServletRequest request, HttpServletResponse response, @PathVariable("flag") String flag) throws ParseException {
+
+
+        return "Dashboard/DumpsList";
     }
 
     @ExceptionHandler(Exception.class)

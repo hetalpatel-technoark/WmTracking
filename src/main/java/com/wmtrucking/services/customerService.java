@@ -58,7 +58,7 @@ public class customerService {
         return cuRepository.findoneEdit(id);
     }
 
-    public MaCustomer checkMobile(String satus, String mobile) {
-        return cuRepository.checkMobile(satus, mobile);
+    public MaCustomer checkMobile(String satus, String mobile,String countryCode) {
+        return cuRepository.checkMobile(satus, mobile,countryCode);
     }
 }

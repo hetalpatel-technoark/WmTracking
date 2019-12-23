@@ -197,7 +197,7 @@
                                                         <span>Job Number*</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" required="" class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber(), request.getParameter("jno"))%>" placeholder="Job Number">
+                                                        <input type="number" required="" class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber(), request.getParameter("jno"))%>" placeholder="Job Number">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -292,7 +292,7 @@
                                                     <div class="col-md-4">                                                    
                                                         <span>Job Created Date </span></div>
                                                     <div class="col-md-8">
-                                                        <input type="text"  disabled=""  value="<%= new DateUtils().dateWithFormat(new Date(), "MMMM dd, yyyy")%>"  class="form-control " placeholder="Job Date">
+                                                        <input type="text"  disabled=""  value="<%= new DateUtils().dateWithFormat(majob.getCreateddate(), "MMMM dd, yyyy")%>"  class="form-control " placeholder="Job Date">
                                                     </div>
                                                 </div>
 

@@ -79,9 +79,10 @@
 
                                                                 List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("TotalDriver");
                                                                 for (MaDriver maDriver : maDrivers) {
+                                                                    String Name=maDriver.getFirstname() +" "+ (maDriver.getMiddlename()!=null ? maDriver.getMiddlename()+" "  :"")+""+(maDriver.getLastname()!=null ? maDriver.getLastname():"") ;
                                                             %>
                                                             <option <%=selectedDriver != null && selectedDriver.contains(checkInput.checkValueEdit(maDriver.getId(), request.getParameter("driver"))) ? "selected" : ""%>
-                                                                value="<%=maDriver.getId()%>"><%= maDriver.getFirstname()%></option>
+                                                                value="<%=maDriver.getId()%>"><%= Name%></option>
                                                             <%}%>
                                                         </select>
                                                     </div>

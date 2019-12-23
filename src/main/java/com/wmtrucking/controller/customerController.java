@@ -5,9 +5,7 @@
  */
 package com.wmtrucking.controller;
 
-import com.google.gson.JsonObject;
 import com.wmtrucking.entities.MaCustomer;
-import com.wmtrucking.entities.MaDriver;
 import com.wmtrucking.exception.UnAthorizedUserException;
 import com.wmtrucking.services.customerService;
 import com.wmtrucking.utils.CommonUtils;
@@ -82,6 +80,7 @@ public class customerController {
         validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "phone", "Phone", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
+        validateUtil.checkNull(request, "countryCode", "Country Code", errors);
 
         CommonUtils commonUtils = new CommonUtils();
         if (!commonUtils.validatePhoneNumber(request.getParameter("phone"))) {
@@ -96,13 +95,13 @@ public class customerController {
 //                errors.add("Email is already exist");
 //            }
 //        }
-
-        MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"));
+        if (errors.size() > 0) {
+            model.addAttribute(Constant.ERRORPARAM.toString(), errors);
+            return "Customer/Create";
+        }
+        MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"), request.getParameter("countryCode"));
         if (checkMobile != null) {
             errors.add("Mobile is already exist");
-        }
-
-        if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Customer/Create";
         }
@@ -121,6 +120,7 @@ public class customerController {
 //        maCustomer.setCountry(validateUtil.getStringValue(request.getParameter("country")));
         maCustomer.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maCustomer.setPhone(validateUtil.getStringValue(request.getParameter("phone")));
+        maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
         maCustomer.setStatus(validateUtil.getStringValue(request.getParameter("status")));
         //maCustomer.setStatus(Constant.ACTIVE.toString());
 
@@ -176,6 +176,12 @@ public class customerController {
         validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "phone", "Phone", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
+
+        if (errors.size() > 0) {
+            model.addAttribute("maCustomer", maCustomer);
+            model.addAttribute(Constant.ERRORPARAM.toString(), errors);
+            return "Customer/Edit";
+        }
         CommonUtils commonUtils = new CommonUtils();
         if (!commonUtils.validatePhoneNumber(request.getParameter("phone"))) {
             errors.add("Please enter proper Phone number ");
@@ -183,14 +189,14 @@ public class customerController {
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
             errors.add("Please enter proper Pincode ");
         }
-//        if (request.getParameter("email") != null && !request.getParameter("email").equals("")) {
-//            MaCustomer checkEmail = cusService.checkEmail(Constant.DETETED.toString(), request.getParameter("email"));
-//            if (checkEmail != null && !maCustomer.getEmail().equals(checkEmail.getEmail())) {
-//                errors.add("Email is already exist");
-//            }
-//        }
+        if (!maCustomer.getStatus().equals(request.getParameter("status"))) {
+            MaCustomer maCustomers = cusService.findoneEdit(maCustomer.getId());
+            if (maCustomers == null) {
+                errors.add(" This Customer is assigned in job. For Inactive, please first remove Customer from job.");
+            }
+        }
 
-        MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"));
+        MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"), request.getParameter("countryCode"));
         if (checkMobile != null && !maCustomer.getPhone().equals(checkMobile.getPhone())) {
             errors.add("Mobile is already exist");
         }
@@ -199,14 +205,7 @@ public class customerController {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Customer/Edit";
         }
-        if (!maCustomer.getStatus().equals(request.getParameter("status"))) {
-            MaCustomer maCustomers = cusService.findoneEdit(maCustomer.getId());
-            if (maCustomers == null) {
-                errors.add(" This Driver is assigned in job. For Inactive, please first remove Driver from job.");
-            }
-        }
 //        maCustomer.setStatus(validateUtil.getStringValue(request.getParameter("status")));
-
         maCustomer.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
         maCustomer.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
         maCustomer.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
@@ -220,6 +219,7 @@ public class customerController {
 //        maCustomer.setCountry(validateUtil.getStringValue(request.getParameter("country")));
         maCustomer.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maCustomer.setPhone(validateUtil.getStringValue(request.getParameter("phone")));
+        maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
 //        maCustomer.setStatus(Constant.ACTIVE.toString());
 
         cusService.save(maCustomer);

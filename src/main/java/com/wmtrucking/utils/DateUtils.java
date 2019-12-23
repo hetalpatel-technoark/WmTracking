@@ -86,4 +86,18 @@ public class DateUtils {
         }
         return diffHours + " Hours " + diffMinutes + " Minutes ago";
     }
+
+    public Date IncreaseDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
+    }
+
+    public Date DecreaseDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -days); //minus number would decrement the days
+        return cal.getTime();
+    }
 }

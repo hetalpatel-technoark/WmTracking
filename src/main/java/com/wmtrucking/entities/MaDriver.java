@@ -74,6 +74,8 @@ public class MaDriver implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "mobile")
     private String mobile;
+    @Column(name = "countrycode")
+    private String countrycode;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
@@ -116,24 +118,38 @@ public class MaDriver implements Serializable {
     public MaDriver(Long id) {
         this.id = id;
     }
+
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public List<MaJobs> getMaJobsList() {
         return maJobsList;
     }
+
+    public String getCountrycode() {
+        return countrycode;
+    }
+
+    public void setCountrycode(String countrycode) {
+        this.countrycode = countrycode;
+    }
+
     public void setMaJobsList(List<MaJobs> maJobsList) {
         this.maJobsList = maJobsList;
     }
+
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
+
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -154,31 +170,40 @@ public class MaDriver implements Serializable {
     public void setCreateddate(Date createddate) {
         this.createddate = createddate;
     }
+
     @Override
     public String toString() {
         return "com.wmtrucking.entities.MaDriver[ id=" + id + " ]";
     }
+
     public BigInteger getOtp() {
         return otp;
     }
+
     public void setOtp(BigInteger otp) {
         this.otp = otp;
     }
+
     public Date getOtpExpireTime() {
         return otpExpireTime;
     }
+
     public void setOtpExpireTime(Date otpExpireTime) {
         this.otpExpireTime = otpExpireTime;
     }
+
     public List<MaJobDriver> getMaJobDriverList() {
         return maJobDriverList;
     }
+
     public void setMaJobDriverList(List<MaJobDriver> maJobDriverList) {
         this.maJobDriverList = maJobDriverList;
     }
+
     public List<MaJobTracking> getMaJobTrackingList() {
         return maJobTrackingList;
     }
+
     public void setMaJobTrackingList(List<MaJobTracking> maJobTrackingList) {
         this.maJobTrackingList = maJobTrackingList;
     }
@@ -222,7 +247,7 @@ public class MaDriver implements Serializable {
     public void setAddress1(String address1) {
         this.address1 = address1;
     }
-    
+
     public String getCity() {
         return city;
     }
@@ -239,7 +264,6 @@ public class MaDriver implements Serializable {
         this.state = state;
     }
 
-   
     public String getPincode() {
         return pincode;
     }

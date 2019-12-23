@@ -58,10 +58,10 @@
                         <div class="card-content">
                             <div class="card-body">
                                 <form method="post"  class="form-horizontal bordered-row" id="user-form" action="<%=request.getContextPath()%>/job/PostCreate">
-                                    <input type="hidden" name="loding_lat_txt" id="loding_lat_txt">
-                                    <input type="hidden" name="loding_log_txt" id="loding_log_txt">
-                                    <input type="hidden" name="dumping_lat_txt" id="dumping_lat_txt">
-                                    <input type="hidden" name="dumping_log_txt" id="dumping_log_txt">
+                                    <input type="hidden" name="loding_lat_txt" value="<%=checkInput.checkValue(request.getParameter("loding_lat_txt"))%>" id="loding_lat_txt">
+                                    <input type="hidden" name="loding_log_txt" value="<%=checkInput.checkValue(request.getParameter("loding_log_txt"))%>" id="loding_log_txt">
+                                    <input type="hidden" name="dumping_lat_txt" value="<%=checkInput.checkValue(request.getParameter("dumping_lat_txt"))%>" id="dumping_lat_txt">
+                                    <input type="hidden" name="dumping_log_txt"  value="<%=checkInput.checkValue(request.getParameter("dumping_log_txt"))%>" id="dumping_log_txt">
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-6">
@@ -178,7 +178,7 @@
                                                         <span>Job Number *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" required  class="form-control" name="jno" value="<%=checkInput.checkValue(request.getParameter("jno"))%>" placeholder="Job Number">
+                                                        <input type="number" required  class="form-control" name="jno" value="<%=checkInput.checkValue(request.getParameter("jno"))%>" placeholder="Job Number">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">

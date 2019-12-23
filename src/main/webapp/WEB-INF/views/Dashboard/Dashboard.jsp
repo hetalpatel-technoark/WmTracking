@@ -17,9 +17,9 @@
 <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 <style>
-   .label {
+    .label {
         border-radius: 6px !important ;
-            margin-bottom: 3px;
+        margin-bottom: 3px;
     }
     .label-orange {
         background-color: #637a91;
@@ -66,14 +66,15 @@
                             Report Date :</h5>
                         <ul class="pagination justify-content-center mt-2" style="margin-top: 0px !important;">
 
-                            <li class="page-item"><a class="page-link" href="#">
-                                    <i class="feather icon-chevrons-left"></i> Prev
+                            <li class="page-item">
+                                <a class="page-link" href="<%= request.getContextPath()%>/Dashboard/PrevJobDate/<%= request.getAttribute("jobDate")%>">
+                                    <i class="feather icon-chevrons-left"></i> Prev 
                                 </a></li>
 
-                            <li class="page-item active"><a class="page-link" href="#"><%= new DateUtils().dateWithFormat(new Date(), "MMMM dd, yyyy")%></a></li>
+                            <li class="page-item active"><a class="page-link" href="#"><%= request.getAttribute("jobDate")%></a></li>
 
-                            <li class="page-item"><a class="page-link" href="#">
-                                    Next <i class="feather icon-chevrons-right"></i>
+                            <li class="page-item">
+                                <a class="page-link" href="<%= request.getContextPath()%>/Dashboard/NextJobDate/<%= request.getAttribute("jobDate")%>"> Next <i class="feather icon-chevrons-right"></i> 
                                 </a></li>
                         </ul>
                     </div>
@@ -89,19 +90,19 @@
 
                 <div class="col-lg-3 col-md-12">
                     <div class="card">
-                        <div class="card-header d-flex flex-column align-items-start pb-0">
-                            <div class="avatar bg-rgba-primary p-50 m-0">
-                                <div class="avatar-content">
-                                    <i class="feather icon-users   text-primary font-medium-5"></i>
+<!--                        <a href="<%= request.getContextPath()%>/Dashboard/DumpsList?flag=pickup" >-->
+                            <div class="card-header d-flex flex-column align-items-start pb-0">
+                                <div class="avatar bg-rgba-primary p-50 m-0">
+                                    <div class="avatar-content">
+                                        <i class="feather icon-users   text-primary font-medium-5"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <h2 class="text-bold-700 mt-1">
-                                <%= request.getAttribute("countDumpingPickup") != null ? request.getAttribute("countDumpingPickup") : "0"%>
-
-                            </h2>
-                            <!--                            <p class="mb-0">Total Customers</p>-->
-                            <p class="mb-0">Total Dumps Pickup </p>
-                        </div><br>
+                                <h2 class="text-bold-700 mt-1">
+                                    <%= request.getAttribute("countDumpingPickup") != null ? request.getAttribute("countDumpingPickup") : "0"%>
+                                </h2>
+                                <p class="mb-0" style="color: black" >Total Dumps Pickup </p>
+                            </div><br>
+<!--                        </a>-->
                     </div>
                 </div> 
                 <div class="col-lg-3 col-md-12">
@@ -227,7 +228,6 @@
                                                         <th>Completed Dumps</th>
                                                         <th> Total Driver </th>
                                                         <th> Driver Names </th>
-                                                      
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -259,12 +259,15 @@
                                                             %>
                                                             <span class="label <%= i % 2 == 0 ? "label-orange" : "label-pur"%>  " ><%= driver[i]%></span>
                                                             <%}
-                                                        }%>
+                                                                }%>
                                                         </td> 
-                                                   
+
                                                     </tr>
                                                     <%   }
-                                                        }%>
+                                                        }else{%>
+                                                        <tr><td colspan="8"><center><b>No records found</b></center></td>
+</tr>
+<%}%>
                                                 </tbody>
 
                                             </table>
@@ -327,7 +330,7 @@
             }
         });
     <%}%>
-  
+
 //Loding address
     <%  for (JobPojo maJobs2 : maJobses) {%>
         map.addMarker({
@@ -351,7 +354,7 @@
             }
         });
     <%}%>
-              
+
 
     });
 

@@ -73,6 +73,9 @@ public class MaCustomer implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "countrycode")
+    private String countrycode;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
@@ -91,7 +94,7 @@ public class MaCustomer implements Serializable {
     @Basic(optional = false)
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ma_customer_seq")
-    
+
     @Column(name = "id")
     private Long id;
     @OneToMany(mappedBy = "custId")
@@ -111,18 +114,22 @@ public class MaCustomer implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public List<MaJobs> getMaJobsList() {
         return maJobsList;
     }
+
     public void setMaJobsList(List<MaJobs> maJobsList) {
         this.maJobsList = maJobsList;
     }
+
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
+
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -135,13 +142,16 @@ public class MaCustomer implements Serializable {
         }
         return true;
     }
+
     @Override
     public String toString() {
         return "com.wmtrucking.entities.MaCustomer[ id=" + id + " ]";
     }
+
     public List<MaJobCustomer> getMaJobCustomerList() {
         return maJobCustomerList;
     }
+
     public void setMaJobCustomerList(List<MaJobCustomer> maJobCustomerList) {
         this.maJobCustomerList = maJobCustomerList;
     }
@@ -172,6 +182,14 @@ public class MaCustomer implements Serializable {
 
     public String getLastname() {
         return lastname;
+    }
+
+    public String getCountrycode() {
+        return countrycode;
+    }
+
+    public void setCountrycode(String countrycode) {
+        this.countrycode = countrycode;
     }
 
     public void setLastname(String lastname) {

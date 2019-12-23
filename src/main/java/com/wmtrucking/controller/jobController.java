@@ -98,7 +98,6 @@ public class jobController {
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
         validateUtil.checkNull(request, "jname", "Job Name", errors);
         validateUtil.checkNull(request, "price", "Price", errors);
-        validateUtil.checkLength(errors, request, "jno", "Job Number", 255, 0);
         validateUtil.checkLength(errors, request, "count", "Total Dumps", 255, 1);
         validateUtil.checkLength(errors, request, "jname", "Job Name", 255, 1);
 
@@ -119,8 +118,8 @@ public class jobController {
             validateUtil.checkNull(request, "dumping_log_txt", "Dumping logitude", errors);
         }
 
-        if (request.getParameter("count") != null & request.getParameter("count").equals("0")) {
-            errors.add("Total Dumps Allow More then 0");
+        if (request.getParameter("count") != null & (Long.parseLong(request.getParameter("count")) <= 0)) {
+            errors.add("Total Dumps Allow Only More then 0");
         }
 
         MaJobs checkjob = jobService.checkJobNumber(Constant.ACTIVE.toString(), request.getParameter("jno"));
@@ -128,6 +127,14 @@ public class jobController {
             errors.add("This Job Number is already exist");
         }
 
+        CommonUtils commonUtils = new CommonUtils();
+        if (request.getParameter("jno") != null && !commonUtils.isBigInteger(request.getParameter("jno"))) {
+            errors.add("Please Enter Proper Job number");
+        }
+        if (request.getParameter("lodingAddress") != null && request.getParameter("DumpingAddress") != null
+                && request.getParameter("lodingAddress").equals(request.getParameter("DumpingAddress"))) {
+            errors.add("Loading and Dumping  Site Address should not be same");
+        }
         if (errors.size() > 0) {
             List<MaCustomer> maCustomer = cusService.activeList(Constant.ACTIVE.toString());
             model.addAttribute("maCustomer", maCustomer);
@@ -138,8 +145,6 @@ public class jobController {
         }
         MaJobs majob = new MaJobs();
         if (request.getParameter("lat_log") != null && !request.getParameter("lat_log").equals("") && request.getParameter("lat_log").equals("on")) {
-
-            CommonUtils commonUtils = new CommonUtils();
 
             if (!commonUtils.isBigDecimal(request.getParameter("loding_lat")) && !commonUtils.isBigDecimal(request.getParameter("loding_log"))
                     && !commonUtils.isBigDecimal(request.getParameter("dumping_lat")) && !commonUtils.isBigDecimal(request.getParameter("dumping_log"))) {
@@ -199,6 +204,137 @@ public class jobController {
         }
 
         return "redirect:/job/List?m=c";
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String edit(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
+
+        MaJobs maJobs = jobService.findone(Constant.ACTIVE.toString(), id);
+
+        if (maJobs != null) {
+            model.addAttribute("maJobs", maJobs);
+            List<MaCustomer> maCustomer = cusService.activeListEdit(Constant.ACTIVE.toString(), id);
+            model.addAttribute("maCustomer", maCustomer);
+            List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
+            model.addAttribute("maDriver", maDriver);
+
+            String maJobDrivers = jobDriverService.list(Constant.ACTIVE.toString(), id);
+            model.addAttribute("maJobDrivers", maJobDrivers);
+
+            String majobcustomer = jobcustomerService.list(Constant.ACTIVE.toString(), id);
+            model.addAttribute("majobcustomer", majobcustomer);
+
+            return "Job/Edit";
+        }
+        return "redirect:/job/List?m=n";
+    }
+
+    @RequestMapping(value = "/PostEdit", method = RequestMethod.POST)
+    public String PostEdit(HttpServletRequest request, Model model) {
+        //  JsonObject errors = new JsonObject();
+        List<String> errors = new ArrayList<>();
+        ValidateUtil validateUtil = new ValidateUtil();
+        validateUtil.checkNull(request, "jno", "Job Number", errors);
+        validateUtil.checkNull(request, "count", "Total Dumps", errors);
+        validateUtil.checkNull(request, "jobdate", "Job Date", errors);
+        validateUtil.checkNull(request, "jname", "Job Name", errors);
+        validateUtil.checkNull(request, "price", "Price", errors);
+        validateUtil.checkLength(errors, request, "jno", "Job Number", 255, 0);
+        validateUtil.checkLength(errors, request, "count", "Total Dumps", 255, 1);
+        validateUtil.checkLength(errors, request, "jname", "Job Name", 255, 1);
+        validateUtil.checkLength(errors, request, "others", "Others", 255, 0);
+        validateUtil.checkNull(request, "DumpingAddress", "Dumping Address", errors);
+        validateUtil.checkNull(request, "lodingAddress", "Loding Address", errors);
+        if (request.getParameter("count") != null & (Long.parseLong(request.getParameter("count")) <= 0)) {
+            errors.add("Total Dumps Allow More then 0");
+        }
+        if (request.getParameter("lat_log") != null && !request.getParameter("lat_log").equals("") && request.getParameter("lat_log").equals("on")) {
+            validateUtil.checkNull(request, "loding_lat", "Loding Latitude", errors);
+            validateUtil.checkNull(request, "loding_log", "Loding Logitude", errors);
+            validateUtil.checkNull(request, "dumping_lat", "Dumping Latitude", errors);
+            validateUtil.checkNull(request, "dumping_log", "Dumping Logitude", errors);
+        }
+        MaJobs majob = jobService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
+        Long jobTransaction = jobTransactionService.totalJobTransactionCount(majob.getId());
+        if (jobTransaction <= Long.parseLong(request.getParameter("count"))) {
+            majob.setJob_status(Constant.PENDING.toString());
+        } else if (jobTransaction >= Long.parseLong(request.getParameter("count"))) {
+            errors.add("Your Transaction is already completed. So, You can't able to decrease Total Dumps");
+        }
+
+        MaJobs checkjob = jobService.checkJobNumber(Constant.ACTIVE.toString(), request.getParameter("jno"));
+        if (checkjob != null && !majob.getJobnumber().equals(checkjob.getJobnumber())) {
+            errors.add("This Job Number is already exist");
+        }
+        CommonUtils commonUtils = new CommonUtils();
+        if (request.getParameter("jno") != null && !commonUtils.isBigInteger(request.getParameter("jno"))) {
+            errors.add("Please Enter Proper Job number");
+        }
+        if (request.getParameter("lodingAddress") != null && request.getParameter("DumpingAddress") != null
+                && request.getParameter("lodingAddress").equals(request.getParameter("DumpingAddress"))) {
+            errors.add("Loading and Dumping  Site Address should not be same");
+        }
+
+        if (errors.size() > 0) {
+            model.addAttribute(Constant.ERRORPARAM.toString(), errors);
+            model.addAttribute("maJobs", majob);
+            List<MaCustomer> maCustomer = cusService.activeListEdit(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
+            model.addAttribute("maCustomer", maCustomer);
+            List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
+            model.addAttribute("maDriver", maDriver);
+            String maJobDrivers = jobDriverService.list(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
+            model.addAttribute("maJobDrivers", maJobDrivers);
+            String majobcustomer = jobcustomerService.list(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
+            model.addAttribute("majobcustomer", majobcustomer);
+            return "Job/Edit";
+        }
+
+        majob.setHaulback(Boolean.parseBoolean(request.getParameter("haulBack")));
+        majob.setHauloff(Boolean.parseBoolean(request.getParameter("haulOff")));
+        majob.setSand(Boolean.parseBoolean(request.getParameter("Sand")));
+        majob.setCommon(Boolean.parseBoolean(request.getParameter("common")));
+        majob.setHourly(Boolean.parseBoolean(request.getParameter("hourly")));
+        majob.setJobdate(validateUtil.getDateValue(request.getParameter("jobdate")));
+        majob.setJobname(validateUtil.getStringValue(request.getParameter("jname")));
+        majob.setPrice(validateUtil.getStringValue(request.getParameter("price")));
+        majob.setJobnumber(validateUtil.getStringValue(request.getParameter("jno")));
+        majob.setOther(validateUtil.getStringValue(request.getParameter("others")));
+        majob.setNotes(validateUtil.getStringValue(request.getParameter("notes")));
+        majob.setTotaljobcount(validateUtil.getLongValue(request.getParameter("count")));
+
+        if (request.getParameter("lat_log") != null && !request.getParameter("lat_log").equals("") && request.getParameter("lat_log").equals("on")) {
+            majob.setFromlatitude(new BigDecimal(request.getParameter("loding_lat")));
+            majob.setFromlongitude(new BigDecimal(request.getParameter("loding_log")));
+            majob.setTolatitude(new BigDecimal(request.getParameter("dumping_lat")));
+            majob.setTolongitude(new BigDecimal(request.getParameter("dumping_log")));
+        } else {
+            if ((request.getParameter("loding_lat_txt") != null && !request.getParameter("loding_lat_txt").equals("")) && (request.getParameter("loding_log_txt") != null && !request.getParameter("loding_log_txt").equals(""))) {
+                majob.setFromlatitude(new BigDecimal(request.getParameter("loding_lat_txt")));
+                majob.setFromlongitude(new BigDecimal(request.getParameter("loding_log_txt")));
+            }
+            if ((request.getParameter("dumping_lat_txt") != null && !request.getParameter("dumping_lat_txt").equals("")) && (request.getParameter("dumping_log_txt") != null && !request.getParameter("dumping_log_txt").equals(""))) {
+                majob.setTolatitude(new BigDecimal(request.getParameter("dumping_lat_txt")));
+                majob.setTolongitude(new BigDecimal(request.getParameter("dumping_log_txt")));
+            }
+        }
+
+        majob.setDumpingaddress(validateUtil.getStringValue(request.getParameter("DumpingAddress")));
+        majob.setLodingaddress(validateUtil.getStringValue(request.getParameter("lodingAddress")));
+
+        jobService.save(majob);
+
+        jobcustomerService.deleteOldCustomerJob(Constant.ACTIVE.toString(), majob.getId());
+        //Job assign for customer
+        if (request.getParameterValues("customer") != null) {
+            for (String customer : request.getParameterValues("customer")) {
+                MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(customer));
+                MaJobCustomer maJobCustomer = new MaJobCustomer();
+                maJobCustomer.setJobId(majob);
+                maJobCustomer.setCustomerId(maCustomer);
+                jobcustomerService.save(maJobCustomer);
+            }
+        }
+        return "redirect:/job/List?m=edit";
     }
 
     @RequestMapping(value = "/assignJobDr/{jobid}", method = RequestMethod.GET)
@@ -266,24 +402,6 @@ public class jobController {
         return "redirect:/job/List?m=notAssign";
     }
 
-//    @RequestMapping(value = "/searchAddress/{id}", method = RequestMethod.GET)
-//    public String searchAddress(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
-//        
-//        MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), id);
-//        if (maCustomer != null) {
-//            model.addAttribute("maCustomer", maCustomer);
-//        }
-//        return "Job/Address";
-//    }
-//    @RequestMapping(value = "/searchAddressDilivery/{id}", method = RequestMethod.GET)
-//    public String searchAddressDilivery(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
-//
-//        MaJobs majob = jobService.findone(Constant.ACTIVE.toString(), id);
-//        if (majob != null) {
-//            model.addAttribute("majob", majob);
-//        }
-//        return "Job/DiliveryAddress";
-//    }
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String Delete(HttpServletRequest request, Model model, @PathVariable("id") String id) {
 
@@ -297,135 +415,6 @@ public class jobController {
             return "redirect:/job/List?m=delete";
         }
         return "redirect:/job/List?m=notDelete";
-    }
-
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String edit(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
-
-        MaJobs maJobs = jobService.findone(Constant.ACTIVE.toString(), id);
-
-        if (maJobs != null) {
-            model.addAttribute("maJobs", maJobs);
-            List<MaCustomer> maCustomer = cusService.activeListEdit(Constant.ACTIVE.toString(), id);
-            model.addAttribute("maCustomer", maCustomer);
-            List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
-            model.addAttribute("maDriver", maDriver);
-
-            String maJobDrivers = jobDriverService.list(Constant.ACTIVE.toString(), id);
-            model.addAttribute("maJobDrivers", maJobDrivers);
-
-            String majobcustomer = jobcustomerService.list(Constant.ACTIVE.toString(), id);
-            model.addAttribute("majobcustomer", majobcustomer);
-
-            return "Job/Edit";
-        }
-        return "redirect:/job/List?m=n";
-    }
-
-    @RequestMapping(value = "/PostEdit", method = RequestMethod.POST)
-    public String PostEdit(HttpServletRequest request, Model model) {
-        //  JsonObject errors = new JsonObject();
-        List<String> errors = new ArrayList<>();
-        ValidateUtil validateUtil = new ValidateUtil();
-        validateUtil.checkNull(request, "jno", "Job Number", errors);
-        validateUtil.checkNull(request, "count", "Total Dumps", errors);
-        validateUtil.checkNull(request, "jobdate", "Job Date", errors);
-        validateUtil.checkNull(request, "jname", "Job Name", errors);
-        validateUtil.checkNull(request, "price", "Price", errors);
-        validateUtil.checkLength(errors, request, "jno", "Job Number", 255, 0);
-        validateUtil.checkLength(errors, request, "count", "Total Dumps", 255, 1);
-        validateUtil.checkLength(errors, request, "jname", "Job Name", 255, 1);
-        validateUtil.checkLength(errors, request, "others", "Others", 255, 0);
-        validateUtil.checkNull(request, "DumpingAddress", "Dumping Address", errors);
-        validateUtil.checkNull(request, "lodingAddress", "Loding Address", errors);
-        if (request.getParameter("count") != null & request.getParameter("count").equals("0")) {
-            errors.add("Total Dumps Allow More then 0");
-        }
-        if (request.getParameter("lat_log") != null && !request.getParameter("lat_log").equals("") && request.getParameter("lat_log").equals("on")) {
-            validateUtil.checkNull(request, "loding_lat", "Loding Latitude", errors);
-            validateUtil.checkNull(request, "loding_log", "Loding Logitude", errors);
-            validateUtil.checkNull(request, "dumping_lat", "Dumping Latitude", errors);
-            validateUtil.checkNull(request, "dumping_log", "Dumping Logitude", errors);
-        }
-        MaJobs majob = jobService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
-        Long jobTransaction = jobTransactionService.totalJobTransactionCount(majob.getId());
-        if (jobTransaction <= Long.parseLong(request.getParameter("count"))) {
-            majob.setJob_status(Constant.PENDING.toString());
-        } else if (jobTransaction >= Long.parseLong(request.getParameter("count"))) {
-            errors.add("Your Transaction is already completed. So, You can't able to decrease Total Dumps");
-        }
-
-        MaJobs checkjob = jobService.checkJobNumber(Constant.ACTIVE.toString(), request.getParameter("jno"));
-        if (checkjob != null && !majob.getJobnumber().equals(checkjob.getJobnumber())) {
-            errors.add("This Job Number is already exist");
-        }
-        if (errors.size() > 0) {
-            model.addAttribute(Constant.ERRORPARAM.toString(), errors);
-            model.addAttribute("maJobs", majob);
-            List<MaCustomer> maCustomer = cusService.activeListEdit(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
-            model.addAttribute("maCustomer", maCustomer);
-            List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
-            model.addAttribute("maDriver", maDriver);
-            String maJobDrivers = jobDriverService.list(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
-            model.addAttribute("maJobDrivers", maJobDrivers);
-            String majobcustomer = jobcustomerService.list(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
-            model.addAttribute("majobcustomer", majobcustomer);
-            return "Job/Edit";
-        }
-
-        majob.setHaulback(Boolean.parseBoolean(request.getParameter("haulBack")));
-        majob.setHauloff(Boolean.parseBoolean(request.getParameter("haulOff")));
-        majob.setSand(Boolean.parseBoolean(request.getParameter("Sand")));
-        majob.setCommon(Boolean.parseBoolean(request.getParameter("common")));
-        majob.setHourly(Boolean.parseBoolean(request.getParameter("hourly")));
-        majob.setJobdate(validateUtil.getDateValue(request.getParameter("jobdate")));
-        majob.setJobname(validateUtil.getStringValue(request.getParameter("jname")));
-        majob.setPrice(validateUtil.getStringValue(request.getParameter("price")));
-        majob.setJobnumber(validateUtil.getStringValue(request.getParameter("jno")));
-        majob.setOther(validateUtil.getStringValue(request.getParameter("others")));
-        majob.setNotes(validateUtil.getStringValue(request.getParameter("notes")));
-        majob.setTotaljobcount(validateUtil.getLongValue(request.getParameter("count")));
-
-        if (request.getParameter("lat_log") != null && !request.getParameter("lat_log").equals("") && request.getParameter("lat_log").equals("on")) {
-            majob.setFromlatitude(new BigDecimal(request.getParameter("loding_lat")));
-            majob.setFromlongitude(new BigDecimal(request.getParameter("loding_log")));
-            majob.setTolatitude(new BigDecimal(request.getParameter("dumping_lat")));
-            majob.setTolongitude(new BigDecimal(request.getParameter("dumping_log")));
-        } else {
-            if ((request.getParameter("loding_lat_txt") != null && !request.getParameter("loding_lat_txt").equals("")) && (request.getParameter("loding_log_txt") != null && !request.getParameter("loding_log_txt").equals(""))) {
-                majob.setFromlatitude(new BigDecimal(request.getParameter("loding_lat_txt")));
-                majob.setFromlongitude(new BigDecimal(request.getParameter("loding_log_txt")));
-            }
-            if ((request.getParameter("dumping_lat_txt") != null && !request.getParameter("dumping_lat_txt").equals("")) && (request.getParameter("dumping_log_txt") != null && !request.getParameter("dumping_log_txt").equals(""))) {
-                majob.setTolatitude(new BigDecimal(request.getParameter("dumping_lat_txt")));
-                majob.setTolongitude(new BigDecimal(request.getParameter("dumping_log_txt")));
-            }
-        }
-//        if ((request.getParameter("loding_lat_txt") != null && !request.getParameter("loding_lat_txt").equals("")) && (request.getParameter("loding_log_txt") != null && !request.getParameter("loding_log_txt").equals(""))) {
-//            majob.setFromlatitude(new BigDecimal(request.getParameter("loding_lat_txt")));
-//            majob.setFromlongitude(new BigDecimal(request.getParameter("loding_log_txt")));
-//        }
-//        if ((request.getParameter("dumping_lat_txt") != null && !request.getParameter("dumping_lat_txt").equals("")) && (request.getParameter("dumping_log_txt") != null && !request.getParameter("dumping_log_txt").equals(""))) {
-//            majob.setTolatitude(new BigDecimal(request.getParameter("dumping_lat_txt")));
-//            majob.setTolongitude(new BigDecimal(request.getParameter("dumping_log_txt")));
-//        }
-        majob.setDumpingaddress(validateUtil.getStringValue(request.getParameter("DumpingAddress")));
-        majob.setLodingaddress(validateUtil.getStringValue(request.getParameter("lodingAddress")));
-
-        jobService.save(majob);
-
-        jobcustomerService.deleteOldCustomerJob(Constant.ACTIVE.toString(), majob.getId());
-        //Job assign for customer
-        if (request.getParameterValues("customer") != null) {
-            for (String customer : request.getParameterValues("customer")) {
-                MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(customer));
-                MaJobCustomer maJobCustomer = new MaJobCustomer();
-                maJobCustomer.setJobId(majob);
-                maJobCustomer.setCustomerId(maCustomer);
-                jobcustomerService.save(maJobCustomer);
-            }
-        }
-        return "redirect:/job/List?m=edit";
     }
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)

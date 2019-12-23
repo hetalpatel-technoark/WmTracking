@@ -52,7 +52,9 @@ public interface customerRepository extends JpaRepository<MaCustomer, Long> {
     @Query(nativeQuery = true, value = "select u.* from ma_customer u where u.id=?1 and u.id not in (select customer_id from ma_job_customer ) ")
     MaCustomer findoneEdit(Long id);
 
-    @Query(nativeQuery = true, value = "select u.* from ma_customer u where (u.status=?1 or u.status='Inactive' ) and u.phone=?2")
-    MaCustomer checkMobile(String satus, String mobile);
+//    @Query(nativeQuery = true, value = "select u.* from ma_customer u where (u.status=?1 or u.status='Inactive' ) and u.phone=?2")
+//    MaCustomer checkMobile(String satus, String mobile);
+    @Query(nativeQuery = true, value = "select u.* from ma_customer u where (u.status=?1 or u.status='Inactive' ) and u.phone=?2 and u.countrycode=?3")
+    MaCustomer checkMobile(String satus, String mobile,String countrycode);
 
 }
