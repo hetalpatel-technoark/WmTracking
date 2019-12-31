@@ -10,6 +10,7 @@ import com.wmtrucking.exception.UnAthorizedUserException;
 import com.wmtrucking.services.driverService;
 import com.wmtrucking.utils.CommonUtils;
 import com.wmtrucking.utils.Constant;
+import com.wmtrucking.utils.OTPutils;
 import com.wmtrucking.utils.SessionUtils;
 import com.wmtrucking.utils.ValidateUtil;
 import java.io.PrintWriter;
@@ -17,6 +18,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -58,7 +60,7 @@ public class driverController {
 
     @RequestMapping(value = "/Create", method = RequestMethod.GET)
     public String Create(HttpServletRequest request, Model model) {
-        return "Driver/Create";
+               return "Driver/Create";
     }
 
     @RequestMapping(value = "/PostCreate", method = RequestMethod.POST)
@@ -69,8 +71,7 @@ public class driverController {
         List<String> errors = new ArrayList<>();
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "mob", "Mobile number", errors);
-//        validateUtil.checkNull(request, "email", "Email", errors);
-        //  validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
+        validateUtil.checkNull(request, "email", "Email", errors);
         validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
 //        validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
@@ -85,7 +86,7 @@ public class driverController {
         validateUtil.checkLength(errors, request, "city", "City", 255, 0);
         validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
         validateUtil.checkLength(errors, request, "state", "State", 255, 0);
-        validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
+        validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
         validateUtil.checkLength(errors, request, "mob", "Mobile", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
 
@@ -96,12 +97,12 @@ public class driverController {
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
             errors.add("Please enter proper Pincode ");
         }
-//        if (request.getParameter("email") != null && !request.getParameter("email").equals("")) {
-//            MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
-//            if (checkEmail != null) {
-//                errors.add("Email is already exist");
-//            }
-//        }
+        if (request.getParameter("email") != null && !request.getParameter("email").equals("")) {
+            MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
+            if (checkEmail != null) {
+                errors.add("Email is already exist");
+            }
+        }
 
         if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
@@ -131,6 +132,14 @@ public class driverController {
         //maDriver.setStatus(Constant.ACTIVE.toString());
         maDriver.setCreateddate(new Date());
         maDriver.setStatus(validateUtil.getStringValue(request.getParameter("status")));
+
+        OTPutils oTPutils = new OTPutils();
+        String code =String.valueOf(oTPutils.otp(6));
+        String sms_text ="Your password is : "+ code;
+        System.out.println("sms_text....." + code);
+        oTPutils.sendSMS(request.getParameter("countryCode")+mobile, sms_text);
+
+        maDriver.setPassword(code);
 
         drService.save(maDriver);
         return "redirect:/driver/drivelist?m=c";

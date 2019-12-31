@@ -7,6 +7,8 @@ package com.wmtrucking.services;
 
 import com.wmtrucking.entities.MaJobTransaction;
 import com.wmtrucking.repositories.JobTransactionRepository;
+import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -28,5 +30,13 @@ public class JobTransactionService {
 
     public Long totalJobTransactionCount(Long jobid) {
         return jobTransactionRepository.totalJobTransactionCount(jobid);
+    }
+
+    public List<MaJobTransaction> getStartJob(Date startDate) {
+        return jobTransactionRepository.getStartJob(startDate);
+    }
+
+    public List<MaJobTransaction> getEndJob(Date endtime) {
+        return jobTransactionRepository.getEndJob(endtime);
     }
 }

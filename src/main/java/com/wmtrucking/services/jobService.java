@@ -110,29 +110,33 @@ public class jobService {
         return jobPojo;
     }
 
-    public List<JobPojo> getStartJob(String satus, Date jobdate) {
-        String query = "select j.id, (SELECT TO_CHAR(j.jobdate, 'Month DD, YYYY') as jobdate),(SELECT TO_CHAR(t.starttime, 'Month DD, YYYY') as starttime)"
+    public List<JobPojo> getStartJob( Date jobdate) {
+        String query = "select j.id, (SELECT TO_CHAR(j.jobdate, 'Month DD, YYYY') as jobdate),(SELECT TO_CHAR(t.starttime, 'Month DD, YYYY') as starttime),"
                 + "j.jobname,j.jobnumber,( case when ((select count(id) from ma_job_transaction where job_id=j.id and status='Ended') = j.totaljobcount) then 0 "
                 + "                else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status='Ended') =0) then 1 "
                 + "              else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status='Ended') < j.totaljobcount) then 3 "
                 + "              else 2 end end end) as Transectionstatus,"
-                + "(select string_agg(firstname, ', ') from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivername "
-                + "            from ma_jobs j left join ma_job_transaction t on j.id=t.job_id  where status=? and "
-                + " cast(j.starttime as date)=? ORDER BY j.id desc";
-        List<JobPojo> jobPojo = jdbcTemplate.query(query, new Object[]{satus, jobdate}, new BeanPropertyRowMapper<JobPojo>(JobPojo.class));
+                + "(select CONCAT(firstname ,' ',middlename,' ',lastname)  from ma_driver where id in (select driver_id from ma_job_driver"
+                + "		where job_id=j.id and  driver_id=t.driverid and driver_id in(select driverid from ma_job_transaction where"
+                + "		 driver_id=t.driverid and job_id=j.id)))as drivername  "
+                + "            from ma_jobs j left join ma_job_transaction t on j.id=t.job_id  where j.status='Active' and "
+                + " cast(t.starttime as date)=? ORDER BY j.id desc";
+        List<JobPojo> jobPojo = jdbcTemplate.query(query, new Object[]{ jobdate}, new BeanPropertyRowMapper<JobPojo>(JobPojo.class));
         return jobPojo;
     }
 
-    public List<JobPojo> getEndJob(String satus, Date jobdate) {
-        String query = "select j.id, (SELECT TO_CHAR(j.jobdate, 'Month DD, YYYY') as jobdate),(SELECT TO_CHAR(t.starttime, 'Month DD, YYYY') as starttime)"
+    public List<JobPojo> getEndJob( Date jobdate) {
+        String query = "select j.id, (SELECT TO_CHAR(j.jobdate, 'Month DD, YYYY') as jobdate),(SELECT TO_CHAR(t.starttime, 'Month DD, YYYY') as starttime),"
                 + "j.jobname,j.jobnumber,( case when ((select count(id) from ma_job_transaction where job_id=j.id and status='Ended') = j.totaljobcount) then 0 "
                 + "                else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status='Ended') =0) then 1 "
                 + "              else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status='Ended') < j.totaljobcount) then 3 "
                 + "              else 2 end end end) as Transectionstatus,"
-                + "(select string_agg(firstname, ', ') from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivername "
-                + "            from ma_jobs j left join ma_job_transaction t on j.id=t.job_id  where status=? and "
-                + " cast(j.endtime as date)=? ORDER BY j.id desc";
-        List<JobPojo> jobPojo = jdbcTemplate.query(query, new Object[]{satus, jobdate}, new BeanPropertyRowMapper<JobPojo>(JobPojo.class));
+                + "(select CONCAT(firstname ,' ',middlename,' ',lastname)  from ma_driver where id in (select driver_id from ma_job_driver"
+                + "		where job_id=j.id and  driver_id=t.driverid and driver_id in(select driverid from ma_job_transaction where"
+                + "		 driver_id=t.driverid and job_id=j.id)))as drivername  "
+                + "            from ma_jobs j left join ma_job_transaction t on j.id=t.job_id  where j.status='Active' and "
+                + " cast(t.endtime as date)=? ORDER BY j.id desc";
+        List<JobPojo> jobPojo = jdbcTemplate.query(query, new Object[]{ jobdate}, new BeanPropertyRowMapper<JobPojo>(JobPojo.class));
         return jobPojo;
     }
 

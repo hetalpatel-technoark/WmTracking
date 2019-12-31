@@ -90,7 +90,7 @@
 
                 <div class="col-lg-3 col-md-12">
                     <div class="card">
-                        <a href="<%= request.getContextPath()%>/Dashboard/DumpsList?flag=pickup" >
+                        <a href="<%= request.getContextPath()%>/Dashboard/DumpsList/<%= request.getAttribute("jobDate")%>?flag=start" >
                             <div class="card-header d-flex flex-column align-items-start pb-0">
                                 <div class="avatar bg-rgba-primary p-50 m-0">
                                     <div class="avatar-content">
@@ -252,7 +252,6 @@
                                                         <td><%=checkInput.checkValue(majob.getCompleteddumps())%></td>
                                                         <td><%=checkInput.checkValue(majob.getDrivercount())%></td>
                                                         <td>
-
                                                             <% if (majob.getDrivername() != null) {
                                                                     String[] driver = majob.getDrivername().split(",");
                                                                     for (int i = 0; i < driver.length; i++) {

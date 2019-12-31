@@ -61,7 +61,7 @@
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
                                     Driver has been successfully deleted.
                                 </div>
-                                <%}else if (request.getParameter("m").equals("n")) {%>
+                                <%} else if (request.getParameter("m").equals("n")) {%>
                                 <div class="alert alert-danger">
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
                                     This Driver is assigned in job. For delete, please first remove Driver from job.
@@ -70,44 +70,44 @@
                                 <%}%>
 
                                 <div class="table-responsive">
-                                 <table class="table zero-configuration">
+                                    <table class="table zero-configuration">
                                         <thead>
                                             <tr>
                                                 <th> Name</th>
-                                             
+
                                                 <th>License Number</th>
                                                 <th>Mobile</th>
                                                 <th>Email</th>
                                                 <th>Status</th>
-<!--                                                <th>Address1</th>
-                                                <th>Address2</th>
-                                                <th>Address3</th>
-                                                <th>City</th>
-                                                <th>State</th>
-                                                <th>Country</th>
-                                                <th>Pincode</th>-->
+                                                <!--                                                <th>Address1</th>
+                                                                                                <th>Address2</th>
+                                                                                                <th>Address3</th>
+                                                                                                <th>City</th>
+                                                                                                <th>State</th>
+                                                                                                <th>Country</th>
+                                                                                                <th>Pincode</th>-->
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <%
-                                                 CheckInput checkInput = new CheckInput();
+                                                CheckInput checkInput = new CheckInput();
                                                 if (request.getAttribute("maDriver") != null) {
-                                                   
+
                                                     List<MaDriver> madrivers = (List<MaDriver>) request.getAttribute("maDriver");
                                                     if (!madrivers.isEmpty()) {
                                                         for (MaDriver madriver : madrivers) {
-                                 String name=madriver.getFirstname()+""+(madriver.getMiddlename()!=null? " "+madriver.getMiddlename() :"")+""+(madriver.getLastname()!=null? " "+madriver.getLastname():"");
-
+                                                            String name = madriver.getFirstname() + "" + (madriver.getMiddlename() != null ? " " + madriver.getMiddlename() : "") + "" + (madriver.getLastname() != null ? " " + madriver.getLastname() : "");
+                                                            String mobile = ((madriver.getCountrycode() != null && madriver.getCountrycode().equals("")) ? madriver.getCountrycode() + " " : "") + madriver.getMobile();
                                             %>
                                             <tr >
                                                 <td><%=name%></td>
-                                              
-                                                <td><%=checkInput.checkValue(madriver.getLicensenumber()) %></td>
-                                                <td><%=checkInput.checkValue(madriver.getMobile())%></td>
+
+                                                <td><%=checkInput.checkValue(madriver.getLicensenumber())%></td>
+                                                <td><%=checkInput.checkValue((madriver.getCountrycode() != null ? madriver.getCountrycode() + " " : "") + (madriver.getMobile()!=null? madriver.getMobile():""))%></td>
                                                 <td><%=checkInput.checkValue(madriver.getEmail())%></td>
 
-                                                <td><span class="label <%=madriver.getStatus().equals("Active")?"label-success":"label-danger" %>"><%=madriver.getStatus()%></span></td>
+                                                <td><span class="label <%=madriver.getStatus().equals("Active") ? "label-success" : "label-danger"%>"><%=madriver.getStatus()%></span></td>
 
                                                 <td>
                                                     <div class="btn-group">

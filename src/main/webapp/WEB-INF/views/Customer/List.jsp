@@ -61,7 +61,7 @@
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
                                     Customer has been successfully deleted.
                                 </div>
-                                <%}else if (request.getParameter("m").equals("n")) {%>
+                                <%} else if (request.getParameter("m").equals("n")) {%>
                                 <div class="alert alert-danger">
                                     <button class="close" data-dismiss="alert"><span>x</span></button>
                                     This customer is assigned in job. For delete, please first remove customer from job.
@@ -77,31 +77,33 @@
                                                 <th>Phone</th>
                                                 <th>Email</th>
                                                 <th>Status</th>
-                                                
-<!--                                                <th>Address1</th>
-                                                <th>Address2</th>
-                                                <th>Address3</th>
-                                                <th>City</th>
-                                                <th>State</th>
-                                                <th>Country</th>
-                                                <th>Pincode</th>-->
+
+                                                <!--                                                <th>Address1</th>
+                                                                                                <th>Address2</th>
+                                                                                                <th>Address3</th>
+                                                                                                <th>City</th>
+                                                                                                <th>State</th>
+                                                                                                <th>Country</th>
+                                                                                                <th>Pincode</th>-->
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <%
-                                                 CheckInput checkInput = new CheckInput();
+                                                CheckInput checkInput = new CheckInput();
                                                 if (request.getAttribute("maCustomer") != null) {
-                                                   
+
                                                     List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
                                                     if (!maCustomers.isEmpty()) {
                                                         for (MaCustomer maCustomer : maCustomers) {
-                                                  String name=maCustomer.getFirstname()+""+(maCustomer.getMiddlename()!=null? " "+maCustomer.getMiddlename() :"")+""+(maCustomer.getLastname()!=null? " "+maCustomer.getLastname():"");
+                                                            String name = maCustomer.getFirstname() + "" + (maCustomer.getMiddlename() != null ? " " + maCustomer.getMiddlename() : "") + "" + (maCustomer.getLastname() != null ? " " + maCustomer.getLastname() : "");
                                             %>
                                             <tr >
-                                                <td><%=name %></td>                                               
-                                                <td><%=checkInput.checkValue(maCustomer.getCompanyname()) %></td>
-                                                <td><%=checkInput.checkValue(maCustomer.getPhone())%></td>
+                                                <td><%=name%></td>                                               
+                                                <td><%=checkInput.checkValue(maCustomer.getCompanyname())%></td>
+                                         
+                                                <td><%=checkInput.checkValue((maCustomer.getCountrycode() != null ? maCustomer.getCountrycode() + " " : "") + (maCustomer.getPhone()!= null ? maCustomer.getPhone() : ""))%></td>
+
                                                 <td><%=checkInput.checkValue(maCustomer.getEmail())%></td>                                             
 <!--                                                <td><%=checkInput.checkValue(maCustomer.getAddress1())%></td>
                                                 <td><%=checkInput.checkValue(maCustomer.getAddress2())%></td>
@@ -110,7 +112,7 @@
                                                 <td><%=checkInput.checkValue(maCustomer.getState())%></td>
                                                 <td><%=checkInput.checkValue(maCustomer.getCountry())%></td>
                                                 <td><%=checkInput.checkValue(maCustomer.getPincode())%></td>-->
-                                                <td><span class="label <%=maCustomer.getStatus().equals("Active")?"label-success":"label-danger" %> "><%=maCustomer.getStatus()%></span></td>
+                                                <td><span class="label <%=maCustomer.getStatus().equals("Active") ? "label-success" : "label-danger"%> "><%=maCustomer.getStatus()%></span></td>
 
                                                 <td>
                                                     <div class="btn-group">
@@ -142,7 +144,7 @@
                                                     }
                                                 }%>
                                         </tbody>
-                                       
+
                                     </table>
                                 </div>
                             </div>
