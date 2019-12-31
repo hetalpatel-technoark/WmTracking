@@ -60,7 +60,7 @@ public class driverController {
 
     @RequestMapping(value = "/Create", method = RequestMethod.GET)
     public String Create(HttpServletRequest request, Model model) {
-               return "Driver/Create";
+        return "Driver/Create";
     }
 
     @RequestMapping(value = "/PostCreate", method = RequestMethod.POST)
@@ -134,10 +134,10 @@ public class driverController {
         maDriver.setStatus(validateUtil.getStringValue(request.getParameter("status")));
 
         OTPutils oTPutils = new OTPutils();
-        String code =String.valueOf(oTPutils.otp(6));
-        String sms_text ="Your password is : "+ code;
-        System.out.println("sms_text....." + code);
-        oTPutils.sendSMS(request.getParameter("countryCode")+mobile, sms_text);
+        String code = String.valueOf(oTPutils.otp(6));
+        String sms_text = "Your password is : " + code;
+        System.out.println("Your password is ....." + code);
+        oTPutils.sendSMS(request.getParameter("countryCode") + mobile, sms_text);
 
         maDriver.setPassword(code);
 
@@ -190,7 +190,7 @@ public class driverController {
         List<String> errors = new ArrayList<>();
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "mob", "Mobile number", errors);
-        //  validateUtil.checkNull(request, "email", "Email", errors);
+        validateUtil.checkNull(request, "email", "Email", errors);
 
         validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
@@ -202,7 +202,7 @@ public class driverController {
         validateUtil.checkLength(errors, request, "city", "City", 255, 0);
         validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
         validateUtil.checkLength(errors, request, "state", "State", 255, 0);
-        validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
+        validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
         validateUtil.checkLength(errors, request, "mob", "Mobile", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
         validateUtil.checkNull(request, "countryCode", "Country Code", errors);
@@ -227,6 +227,13 @@ public class driverController {
             MaDriver maDriver1 = drService.findoneEdit(maDriver.getId());
             if (maDriver1 == null) {
                 errors.add(" This Driver is assigned in job. For Inactive, please first remove Driver from job.");
+            }
+        }
+
+        if (request.getParameter("email") != null && !request.getParameter("email").equals("")) {
+            MaDriver checkEmail = drService.checkEmail(Constant.ACTIVE.toString(), request.getParameter("email"));
+            if (checkEmail != null && !maDriver.getEmail().equals(checkEmail.getEmail())) {
+                errors.add("Email is already exist");
             }
         }
         if (errors.size() > 0) {
