@@ -1,3 +1,4 @@
+<%@page import="com.squareup.okhttp.Request"%>
 <%@page import="com.wmtrucking.pojo.JobPojo"%>
 <%@page import="com.wmtrucking.utils.CheckInput"%>
 <%@page import="java.util.ArrayList"%>
@@ -23,16 +24,23 @@
     <!-- Page container -->
     <div class="content-wrapper">
         <div class="content-header row">
-            <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="content-header-left col-md-12 col-12 mb-2">
                 <div class="row breadcrumbs-top">
-                    <div class="col-12">
+                    <div class="col-9">
                         <h2 class="content-header-title float-left mb-0">Dumps List </h2>
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/Dashboard/Dashboard">Home</a>
                             </li>
-                            <li class="breadcrumb-item active"><a href="#">Dumps List</a></li>
+                            <li class="breadcrumb-item active"><a href="#"> <%= request.getAttribute("start") != null ? "Total Dumps Pickup" : "Total Dumps Done"%> List</a></li>
                         </ol>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="bg-default content-box text-right pad20A mrg25T">
+                        <a class="btn bg-gradient-primary mr-1 mb-1 waves-effect waves-light" href="<%=request.getContextPath()%>/Dashboard/Dashboard">
+                            <i class="fa fa-backward"></i> Back</a>
                     </div>
                 </div>
             </div>
@@ -58,7 +66,7 @@
                                                 <th >Job Date</th>  
                                                 <th >Job Status</th>                                                
                                                 <th >Driver Names </th>
-                                                <th>Start time </th>                                                
+                                                <th><%=request.getAttribute("start") != null ? "Start" : "End"%> time </th>                                                
 
                                             </tr>
                                         </thead>
@@ -66,8 +74,7 @@
                                             <%
                                                 CheckInput checkInput = new CheckInput();
                                                 List<JobPojo> majobs = (List<JobPojo>) request.getAttribute("jobPojo");
-                                               
-                                                    for (JobPojo majob : majobs) {
+                                                for (JobPojo majob : majobs) {
                                             %>
                                             <tr>
                                                 <td><%=checkInput.checkValue(majob.getJobnumber())%></td>
@@ -75,17 +82,14 @@
                                                 <% if (majob.getTransectionstatus().equals("0")) {%>
                                                 <td><span class="label label-success" >Completed</span></td>
                                                 <%} else if (majob.getTransectionstatus().equals("1")) {%>
-                                                <td><span class="label label-info " >Open</span></td>
-                                                <%} else if (majob.getTransectionstatus().equals("3")) {%>
                                                 <td><span class="label label-danger " >Pending</span></td>
                                                 <%}%>
                                                 <td><%=checkInput.checkValue(majob.getDrivername())%></td>
-                                                <td><%=checkInput.checkValue(majob.getStarttime())%></td>
-                                                <td><%=checkInput.checkValue(majob.getDrivercount())%></td>
+                                                <td><%=checkInput.checkValue(request.getAttribute("start") != null ?majob.getStarttime():majob.getEndtime() )%></td>
 
                                             </tr>
                                             <%   }
-                                                %>
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>

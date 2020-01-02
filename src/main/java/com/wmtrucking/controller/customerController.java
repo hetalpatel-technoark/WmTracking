@@ -80,7 +80,7 @@ public class customerController {
         validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "phone", "Phone", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
-        validateUtil.checkNull(request, "countryCode", "Country Code", errors);
+       // validateUtil.checkNull(request, "countryCode", "Country Code", errors);
 
         CommonUtils commonUtils = new CommonUtils();
         if (!commonUtils.validatePhoneNumber(request.getParameter("phone"))) {
@@ -99,7 +99,8 @@ public class customerController {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Customer/Create";
         }
-        MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"), request.getParameter("countryCode"));
+       // MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"), request.getParameter("countryCode"));
+        MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"));
         if (checkMobile != null) {
             errors.add("Mobile is already exist");
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
@@ -120,7 +121,7 @@ public class customerController {
 //        maCustomer.setCountry(validateUtil.getStringValue(request.getParameter("country")));
         maCustomer.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maCustomer.setPhone(validateUtil.getStringValue(request.getParameter("phone")));
-        maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
+      //  maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
         maCustomer.setStatus(validateUtil.getStringValue(request.getParameter("status")));
         //maCustomer.setStatus(Constant.ACTIVE.toString());
 
@@ -196,7 +197,8 @@ public class customerController {
             }
         }
 
-        MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"), request.getParameter("countryCode"));
+        //MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"), request.getParameter("countryCode"));
+        MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"));
         if (checkMobile != null && !maCustomer.getPhone().equals(checkMobile.getPhone())) {
             errors.add("Mobile is already exist");
         }
@@ -219,7 +221,7 @@ public class customerController {
 //        maCustomer.setCountry(validateUtil.getStringValue(request.getParameter("country")));
         maCustomer.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maCustomer.setPhone(validateUtil.getStringValue(request.getParameter("phone")));
-        maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
+      //  maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
 //        maCustomer.setStatus(Constant.ACTIVE.toString());
 
         cusService.save(maCustomer);

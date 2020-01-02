@@ -102,7 +102,8 @@
                                                 <td><%=name%></td>                                               
                                                 <td><%=checkInput.checkValue(maCustomer.getCompanyname())%></td>
                                          
-                                                <td><%=checkInput.checkValue((maCustomer.getCountrycode() != null ? maCustomer.getCountrycode() + " " : "") + (maCustomer.getPhone()!= null ? maCustomer.getPhone() : ""))%></td>
+<!--                                                <td><%=checkInput.checkValue((maCustomer.getCountrycode() != null ? maCustomer.getCountrycode() + " " : "") + (maCustomer.getPhone()!= null ? maCustomer.getPhone() : ""))%></td>-->
+                                                <td><%=checkInput.checkValue( (maCustomer.getPhone()!= null ? maCustomer.getPhone() : ""))%></td>
 
                                                 <td><%=checkInput.checkValue(maCustomer.getEmail())%></td>                                             
 <!--                                                <td><%=checkInput.checkValue(maCustomer.getAddress1())%></td>

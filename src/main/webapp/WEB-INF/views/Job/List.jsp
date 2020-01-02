@@ -157,9 +157,10 @@
                                                                 <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/view/<%=majob.getId()%>">
                                                                     <i class="feather icon-eye"></i><span>View</span>
                                                                 </a>
+                                                                    <%if (!majob.getTransectionstatus().equals("0")) {%>
                                                                 <a class="dropdown-item" href="<%=request.getContextPath()%>/job/edit/<%=majob.getId()%>">
                                                                     <i class="feather icon-edit"></i> <span>Edit</span>
-                                                                </a>
+                                                                </a><%}%>
                                                                 <a class="dropdown-item" onclick="changeStatus('Delete', '<%=majob.getId()%>')">
                                                                     <i class="feather icon-trash"></i> <span>Delete</span>
                                                                 </a>

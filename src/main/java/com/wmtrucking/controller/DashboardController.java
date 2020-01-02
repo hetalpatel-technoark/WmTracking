@@ -62,8 +62,8 @@ public class DashboardController {
         model.addAttribute("customer", cuService.count(Constant.ACTIVE.toString(), new Date()));
         model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), new Date()));
         model.addAttribute("job", joService.count(Constant.ACTIVE.toString()));
-        model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(), Constant.STARTED.toString(), new Date()));
-        model.addAttribute("countDumpingDone", joService.countDumpingDone(Constant.ACTIVE.toString(), Constant.ENDED.toString(), new Date()));
+        model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(),  new Date()));
+        model.addAttribute("countDumpingDone", joService.countDumpingDone(Constant.ACTIVE.toString(), new Date()));
 
 //        List<Object[]> monthWiseJob = joService.findMonthWiseJob();
 //        if (!monthWiseJob.isEmpty()) {
@@ -94,8 +94,8 @@ public class DashboardController {
         model.addAttribute("customer", cuService.count(Constant.ACTIVE.toString(), myDate));
         model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), myDate));
         model.addAttribute("job", joService.count(Constant.ACTIVE.toString()));
-        model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(), Constant.STARTED.toString(), myDate));
-        model.addAttribute("countDumpingDone", joService.countDumpingDone(Constant.ACTIVE.toString(), Constant.ENDED.toString(), myDate));
+        model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(), myDate));
+        model.addAttribute("countDumpingDone", joService.countDumpingDone(Constant.ACTIVE.toString(), myDate));
 
         List<JobPojo> maJobsesList = joService.getJobList(Constant.ACTIVE.toString(), myDate);
 
@@ -113,8 +113,8 @@ public class DashboardController {
         model.addAttribute("customer", cuService.count(Constant.ACTIVE.toString(), myDate));
         model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), myDate));
         model.addAttribute("job", joService.count(Constant.ACTIVE.toString()));
-        model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(), Constant.STARTED.toString(), myDate));
-        model.addAttribute("countDumpingDone", joService.countDumpingDone(Constant.ACTIVE.toString(), Constant.ENDED.toString(), myDate));
+        model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(), myDate));
+        model.addAttribute("countDumpingDone", joService.countDumpingDone(Constant.ACTIVE.toString(), myDate));
 
         List<JobPojo> maJobsesList = joService.getJobList(Constant.ACTIVE.toString(), myDate);
 
@@ -131,19 +131,13 @@ public class DashboardController {
             List<JobPojo> jobPojo = null;
             if (flag.equals("start")) {
                 jobPojo = joService.getStartJob(jobDate);
-                if (jobPojo.size() > 0) {
-                    model.addAttribute("jobPojo", jobPojo);
-                    model.addAttribute("start", "start");
-                }
+                model.addAttribute("start", "start");
             } else if (flag.equals("end")) {
                 jobPojo = joService.getEndJob(jobDate);
-                if (jobPojo.size() > 0) {
-                    model.addAttribute("jobPojo", jobPojo);
-                    model.addAttribute("end", "end");
-                }
+                model.addAttribute("end", "end");
             }
+            model.addAttribute("jobPojo", jobPojo);
         }
-
         return "Dashboard/DumpsList";
     }
 

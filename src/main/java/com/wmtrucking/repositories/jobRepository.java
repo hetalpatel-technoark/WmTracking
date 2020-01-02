@@ -57,20 +57,20 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
     @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and cast(u.jobdate as date)=?2 ORDER BY u.id desc")
     public List<MaJobs> listOfJob(String satus, Date jobdate);
 
-    @Query(nativeQuery = true, value = "select count(id) from ma_job_transaction where status=?2 "
-            + "   and cast(starttime as date)=?3 and job_id in(select id from ma_jobs where status=?1)")
-    Long countDumpingPickup(String satus, String transectionStatus, Date starttime);
-//    @Query(nativeQuery = true, value = "SELECT SUM(totaljobcount) FROM ma_jobs where status=?1 and id in(select job_id from ma_job_transaction "
-//            + "where status=?2 and cast(starttime as date)=?3)")
+//    @Query(nativeQuery = true, value = "select count(id) from ma_job_transaction where status=?2 "
+//            + "   and cast(starttime as date)=?3 and job_id in(select id from ma_jobs where status=?1)")
 //    Long countDumpingPickup(String satus, String transectionStatus, Date starttime);
+    @Query(nativeQuery = true, value = "select count(id) from ma_job_transaction where cast(starttime as date)=?2 and "
+            + "job_id in(select id from ma_jobs where status=?1)")
+    Long countDumpingPickup(String satus, Date starttime);
 
-//    @Query(nativeQuery = true, value = "SELECT SUM(totaljobcount) FROM ma_jobs where status=?1 and id in(select job_id from ma_job_transaction "
-//            + "where status=?2 and cast(endtime as date)=?3 )")
+    @Query(nativeQuery = true, value = "select count(id) from ma_job_transaction where cast(endtime as date)=?2 and "
+            + "job_id in(select id from ma_jobs where status=?1)")
+    Long countDumpingDone(String satus, Date endtime);
+
+//     @Query(nativeQuery = true, value = "select count(id) from ma_job_transaction where status=?2 "
+//            + "   and cast(endtime as date)=?3 and job_id in(select id from ma_jobs where status=?1)")
 //    Long countDumpingDone(String satus, String transectionStatus, Date endtime);
-    @Query(nativeQuery = true, value = "select count(id) from ma_job_transaction where status=?2 "
-            + "   and cast(endtime as date)=?3 and job_id in(select id from ma_jobs where status=?1)")
-    Long countDumpingDone(String satus, String transectionStatus, Date endtime);
-
     @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and u.jobnumber=?2")
     MaJobs checkJobNumber(String satus, String jobnumber);
 

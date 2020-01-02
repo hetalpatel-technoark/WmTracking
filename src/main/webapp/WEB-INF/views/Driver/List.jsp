@@ -74,7 +74,6 @@
                                         <thead>
                                             <tr>
                                                 <th> Name</th>
-
                                                 <th>License Number</th>
                                                 <th>Mobile</th>
                                                 <th>Email</th>
@@ -104,7 +103,8 @@
                                                 <td><%=name%></td>
 
                                                 <td><%=checkInput.checkValue(madriver.getLicensenumber())%></td>
-                                                <td><%=checkInput.checkValue((madriver.getCountrycode() != null ? madriver.getCountrycode() + " " : "") + (madriver.getMobile()!=null? madriver.getMobile():""))%></td>
+<!--                                                <td><%=checkInput.checkValue((madriver.getCountrycode() != null ? madriver.getCountrycode() + " " : "") + (madriver.getMobile()!=null? madriver.getMobile():""))%></td>-->
+                                                <td><%=checkInput.checkValue((madriver.getMobile()!=null? madriver.getMobile():""))%></td>
                                                 <td><%=checkInput.checkValue(madriver.getEmail())%></td>
 
                                                 <td><span class="label <%=madriver.getStatus().equals("Active") ? "label-success" : "label-danger"%>"><%=madriver.getStatus()%></span></td>

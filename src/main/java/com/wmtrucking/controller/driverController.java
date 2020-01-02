@@ -76,7 +76,7 @@ public class driverController {
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
 //        validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
         validateUtil.checkNull(request, "lname", "Last Name", errors);
-        validateUtil.checkNull(request, "countryCode", "Country Code", errors);
+       // validateUtil.checkNull(request, "countryCode", "Country Code", errors);
 
         validateUtil.checkNull(request, "lno", "Licence number", errors);
 //        validateUtil.checkNull(errors, request, "lno", "Licence number", 255, 1);
@@ -110,7 +110,8 @@ public class driverController {
         }
         //String mobile = "+" + request.getParameter("countryCode") + request.getParameter("mob");
         String mobile = request.getParameter("mob");
-        MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mobile, request.getParameter("countryCode"));
+       // MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mobile, request.getParameter("countryCode"));
+        MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mobile);
         if (checkMobile != null) {
             errors.add("Mobile is already exist");
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
@@ -128,7 +129,7 @@ public class driverController {
         maDriver.setState(validateUtil.getStringValue(request.getParameter("state")));
         maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maDriver.setMobile(mobile);
-        maDriver.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
+      //  maDriver.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
         //maDriver.setStatus(Constant.ACTIVE.toString());
         maDriver.setCreateddate(new Date());
         maDriver.setStatus(validateUtil.getStringValue(request.getParameter("status")));
@@ -137,7 +138,8 @@ public class driverController {
         String code = String.valueOf(oTPutils.otp(6));
         String sms_text = "Your password is : " + code;
         System.out.println("Your password is ....." + code);
-        oTPutils.sendSMS(request.getParameter("countryCode") + mobile, sms_text);
+        //oTPutils.sendSMS(request.getParameter("countryCode") + mobile, sms_text);
+        oTPutils.sendSMS(mobile, sms_text);
 
         maDriver.setPassword(code);
 
@@ -205,7 +207,7 @@ public class driverController {
         validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
         validateUtil.checkLength(errors, request, "mob", "Mobile", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
-        validateUtil.checkNull(request, "countryCode", "Country Code", errors);
+        //validateUtil.checkNull(request, "countryCode", "Country Code", errors);
 
         if (errors.size() > 0) {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
@@ -219,7 +221,8 @@ public class driverController {
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
             errors.add("Please enter proper Pincode ");
         }
-        MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("mob"), request.getParameter("countryCode"));
+        //MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("mob"), request.getParameter("countryCode"));
+        MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("mob"));
         if (checkMobile != null && !maDriver.getMobile().equals(checkMobile.getMobile())) {
             errors.add("Mobile is already exist");
         }
@@ -253,7 +256,7 @@ public class driverController {
         maDriver.setState(validateUtil.getStringValue(request.getParameter("state")));
         maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maDriver.setMobile(validateUtil.getStringValue(request.getParameter("mob")));
-        maDriver.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
+       // maDriver.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
 
         //maDriver.setStatus(Constant.ACTIVE.toString());
         drService.save(maDriver);

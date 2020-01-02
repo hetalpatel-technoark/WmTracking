@@ -46,8 +46,8 @@ public class driverService {
         return dRepository.checkEmail(satus, email);
     }
 
-    public MaDriver checkMobile(String satus, String mobile, String countrycode) {
-        return dRepository.checkMobile(satus, mobile,countrycode);
+    public MaDriver checkMobile(String satus, String mobile) {
+        return dRepository.checkMobile(satus, mobile);
     }
 
     public List<MaDriver> activeList(String satus) {

@@ -101,7 +101,7 @@
                                                     <div class="col-md-4">
                                                         <span>Phone Number*</span>
                                                     </div>
-                                                    <div class="col-md-2">
+<!--                                                    <div class="col-md-2">
                                                         <select name="countryCode" class="form-control" id="">
                                                             <option data-countryCode="GB" <%=checkInput.checkValueEdit(maCustomer.getCountrycode(), request.getParameter("countryCode")).equals("+44") ? "Selected" : ""%>  value="+" >UK (+44)</option>
                                                             <option data-countryCode="US" <%=checkInput.checkValueEdit(maCustomer.getCountrycode(), request.getParameter("countryCode")).equals("+1") ? "Selected" : ""%>  value="+1">USA (+1)</option>
@@ -321,9 +321,9 @@
                                                             </optgroup>
                                                         </select>                                                    
 
-                                                    </div>
+                                                    </div>-->
 
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-8">
                                                         <input type="text" required="" id="first-name" class="form-control" name="phone" value="<%=checkInput.checkValueEdit(maCustomer.getPhone(), request.getParameter("phone"))%>" placeholder="Phone Number">
                                                     </div>
                                                 </div>

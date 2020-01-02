@@ -94,7 +94,7 @@
                                                     <div class="col-md-4">
                                                         <span>Mobile Number*</span>
                                                     </div>
-                                                    <div class="col-md-2">
+<!--                                                    <div class="col-md-2">
                                                              <select name="countryCode" class="form-control" id="">
                                                             <option data-countryCode="GB" <%=checkInput.checkValue( request.getParameter("countryCode")).equals("+44") ? "Selected" : ""%>  value="+44" >UK (+44)</option>
                                                             <option data-countryCode="US" <%=checkInput.checkValue( request.getParameter("countryCode")).equals("+1") ? "Selected" : ""%>  value="+1">USA (+1)</option>
@@ -315,7 +315,8 @@
                                                         </select>                                                    
   
                                                     </div>
-                                                    <div class="col-md-6">
+                                                  -->
+                                                            <div class="col-md-8">
                                                         <input type="text"   required=""  class="form-control" name="mob" value="<%=checkInput.checkValue(request.getParameter("mob"))%>" placeholder="Mobile Number">
                                                     </div>
                                                 </div>

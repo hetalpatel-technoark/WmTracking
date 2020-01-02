@@ -100,7 +100,7 @@
                                                     <span>Price *</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input type="text" disabled="" required="" class="form-control" name="price" value="<%=checkInput.checkValue(request.getParameter("price"))%>"  >
+                                                    <input type="number" disabled="" required="" class="form-control" name="price" value="<%=checkInput.checkValueEdit(majob.getPrice(),request.getParameter("price"))%>"  >
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -221,7 +221,7 @@
                                                 <div class="col-md-4">                                                    
                                                     <span>Job Created Date </span></div>
                                                 <div class="col-md-8">
-                                                    <input type="text"  disabled=""  value="<%= new DateUtils().dateWithFormat(new Date(), "MMMM dd, yyyy")%>"  class="form-control " >
+                                                    <input type="text"  disabled=""  value="<%= new DateUtils().dateWithFormat(majob.getCreateddate(), "MMMM dd, yyyy")%>"  class="form-control " >
                                                 </div>
                                             </div>
                                         </div>

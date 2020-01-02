@@ -70,7 +70,6 @@
                                 <a class="page-link" href="<%= request.getContextPath()%>/Dashboard/PrevJobDate/<%= request.getAttribute("jobDate")%>">
                                     <i class="feather icon-chevrons-left"></i> Prev 
                                 </a></li>
-
                             <li class="page-item active"><a class="page-link" href="#"><%= request.getAttribute("jobDate")%></a></li>
 
                             <li class="page-item">
@@ -107,19 +106,21 @@
                 </div> 
                 <div class="col-lg-3 col-md-12">
                     <div class="card"  >
-                        <div class="card-header d-flex flex-column align-items-start pb-0">
-                            <div class="avatar bg-rgba-primary p-50 m-0">
-                                <div class="avatar-content">
-                                    <i class="feather icon-user  text-primary font-medium-5"></i>
-                                </div>
-                            </div>
-                            <h2 class="text-bold-700 mt-1">
-                                <%= request.getAttribute("countDumpingDone") != null ? request.getAttribute("countDumpingDone") : "0"%>
-                            </h2>
+                        <a href="<%= request.getContextPath()%>/Dashboard/DumpsList/<%= request.getAttribute("jobDate")%>?flag=end" >
 
-                            <!--                            <p class="mb-0">Total Drivers</p>-->
-                            <p class="mb-0">Total Dumps Done </p>
-                        </div>
+                            <div class="card-header d-flex flex-column align-items-start pb-0">
+                                <div class="avatar bg-rgba-primary p-50 m-0">
+                                    <div class="avatar-content">
+                                        <i class="feather icon-user  text-primary font-medium-5"></i>
+                                    </div>
+                                </div>
+                                <h2 class="text-bold-700 mt-1">
+                                    <%= request.getAttribute("countDumpingDone") != null ? request.getAttribute("countDumpingDone") : "0"%>
+                                </h2>
+
+                                <!--                            <p class="mb-0">Total Drivers</p>-->
+                                <p class="mb-0" style="color: black">Total Dumps Done </p>
+                            </div></a>
                         <br>
                     </div>
                 </div>
@@ -263,10 +264,10 @@
 
                                                     </tr>
                                                     <%   }
-                                                        }else{%>
-                                                        <tr><td colspan="8"><center><b>No records found</b></center></td>
-</tr>
-<%}%>
+                                                    } else {%>
+                                                    <tr><td colspan="8"><center><b>No records found</b></center></td>
+                                                </tr>
+                                                <%}%>
                                                 </tbody>
 
                                             </table>

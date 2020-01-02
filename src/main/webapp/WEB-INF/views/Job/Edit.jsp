@@ -113,7 +113,7 @@
                                                         <span>Price *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" required="" class="form-control" name="price" value="<%=checkInput.checkValueEdit(majob.getPrice(), request.getParameter("price"))%>"  placeholder="Price">
+                                                        <input type="number" required="" class="form-control" name="price" value="<%=checkInput.checkValueEdit(majob.getPrice(), request.getParameter("price"))%>"  placeholder="Price">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">

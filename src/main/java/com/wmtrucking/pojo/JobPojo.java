@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  */
 public class JobPojo {
 
-    String customername, jobname, jobnumber, status, transectionstatus, drivername,jobdate,starttime;
+    String customername, jobname, jobnumber, status, transectionstatus, drivername,jobdate,starttime,endtime;
    
     Long id, totaldumps, completeddumps, drivercount;
 
@@ -22,6 +22,14 @@ public class JobPojo {
     BigDecimal fromlatitude, fromlongitude, tolatitude, tolongitude;
     public String getCustomername() {
         return customername;
+    }
+
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
     }
 
     public void setCustomername(String customername) {
