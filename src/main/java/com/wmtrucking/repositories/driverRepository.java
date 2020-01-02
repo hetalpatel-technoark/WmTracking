@@ -26,6 +26,9 @@ public interface driverRepository extends JpaRepository<MaDriver, Long> {
     @Query(nativeQuery = true, value = "select u.* from ma_driver u where u.status=?1")
     List<MaDriver> activeList(String satus);
 
+    @Query(nativeQuery = true, value = "select u.* from ma_driver u where u.status=?1 and id not in (select driver_id from ma_job_driver where  job_id=?2)")
+    List<MaDriver> driverList(String satus,Long job_id);
+
     @Query(nativeQuery = true, value = "select u.* from ma_driver u where u.status!=?1 and u.id=?2")
     MaDriver findone(String satus, Long id);
 

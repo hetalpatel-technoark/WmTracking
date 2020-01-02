@@ -27,6 +27,11 @@ public interface jobDriverRepository extends JpaRepository<MaJobDriver, Long> {
     @Query(nativeQuery = true, value = "delete from ma_job_driver  where job_id=?2 and job_id in(select id from ma_jobs where status=?1 ) ")
     void deleteOldDriverJob(String satus, Long jobId);
 
+  
+    @Query(nativeQuery = true, value = "select d.* from ma_job_driver d where d.id=?1 and d.driver_id not in(select driverid from ma_job_transaction "
+            + " where job_id=d.job_id)")
+    MaJobDriver driverJob(Long Id);
+
     @Modifying
     @Query(nativeQuery = true, value = "delete from ma_job_driver  where job_id=?2 and driver_id=?3 and "
             + "job_id in(select id from ma_jobs where status=?1 ) ")
@@ -35,8 +40,7 @@ public interface jobDriverRepository extends JpaRepository<MaJobDriver, Long> {
     @Query(nativeQuery = true, value = "select * from ma_job_driver u where u.job_id=?2 and u.job_id in(select id from ma_jobs where status=?1 ) ")
     List<MaJobDriver> listOfDriver(String satus, Long jobId);
 
-    @Query(nativeQuery = true, value = "select * from ma_job_driver u where u.job_id=?2 and driver_id=?3 and "
-            + " u.job_id in(select id from ma_jobs where status=?1 ) ")
-    MaJobDriver findDriver(String satus, Long jobId, Long Driverid);
-
+//    @Query(nativeQuery = true, value = "select * from ma_job_driver u where u.job_id=?2 and driver_id=?3 and "
+//            + " u.job_id in(select id from ma_jobs where status=?1 ) ")
+//    MaJobDriver findDriver(String satus, Long jobId, Long Driverid);
 }

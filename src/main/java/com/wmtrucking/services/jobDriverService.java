@@ -26,6 +26,10 @@ public class jobDriverService {
         jobDriverRepository.save(maJobDriver);
     }
 
+    public void delete(MaJobDriver maJobDriver) {
+        jobDriverRepository.delete(maJobDriver);
+    }
+
     public String list(String satus, Long jobId) {
         return jobDriverRepository.list(satus, jobId);
     }
@@ -35,24 +39,25 @@ public class jobDriverService {
         jobDriverRepository.deleteOldDriverJob(satus, jobId);
     }
 
-    @Transactional
-    public void delete(MaJobDriver maJobDriver){
-    jobDriverRepository.delete(maJobDriver);
-    }
-    @Transactional
-    public void delete(List<MaJobDriver> maJobDriver){
-    jobDriverRepository.deleteInBatch(maJobDriver);
-    }
-    
-     @Transactional
-    public void deleteOldDriversJob(String satus, Long jobId, Long Driverid) {
-        jobDriverRepository.deleteOldDriversJob(satus, jobId, Driverid);
+    public MaJobDriver driverJob(Long Id) {
+        return jobDriverRepository.driverJob(Id);
     }
 
-    public MaJobDriver findDriver(String satus, Long jobId, Long Driverid) {
-        return jobDriverRepository.findDriver(satus, jobId, Driverid);
-    }
-
+//    @Transactional
+//    public void delete(MaJobDriver maJobDriver) {
+//        jobDriverRepository.delete(maJobDriver);
+//    }
+//    @Transactional
+//    public void delete(List<MaJobDriver> maJobDriver) {
+//        jobDriverRepository.deleteInBatch(maJobDriver);
+//    }
+//    @Transactional
+//    public void deleteOldDriversJob(String satus, Long jobId, Long Driverid) {
+//        jobDriverRepository.deleteOldDriversJob(satus, jobId, Driverid);
+//    }
+//    public MaJobDriver findDriver(String satus, Long jobId, Long Driverid) {
+//        return jobDriverRepository.findDriver(satus, jobId, Driverid);
+//    }
     public List<MaJobDriver> listOfDriver(String satus, Long jobId) {
         return jobDriverRepository.listOfDriver(satus, jobId);
     }

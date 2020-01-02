@@ -15,9 +15,9 @@
 <jsp:include page="../Template/header.jsp"></jsp:include>
     <div class="content-wrapper">
         <div class="content-header row">
-            <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="content-header-left col-md-12 col-12 mb-2">
                 <div class="row breadcrumbs-top">
-                    <div class="col-12">
+                    <div class="col-9">
                         <h2 class="content-header-title float-left mb-0">Assign Driver</h2>
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
@@ -30,11 +30,20 @@
                         </ol>
                     </div>
                 </div>
+                <div class="col-3">
+                    <div class="bg-default content-box text-right pad20A mrg25T">
+                        <a class="btn bg-gradient-primary mr-1 mb-1 waves-effect waves-light" href="<%= request.getContextPath()%>/job/List">
+                            <i class="fa fa-backward"></i> Back</a>
+                    </div>
+                </div>
             </div>
         </div>        
     </div>
     <div class="content-body">
         <!-- Basic Horizontal form layout section start -->
+        <%
+            if (request.getParameter("flag") == null) {
+        %>
         <section id="basic-horizontal-layouts">
             <div class="row match-height">
                 <div class="col-md-12 col-12">
@@ -59,7 +68,19 @@
                         MaJobs majob = (MaJobs) request.getAttribute("maJob");
 
                     %>
-
+                    <%if (request.getParameter("m") != null) {%>
+                    <%if (request.getParameter("m").equals("remove")) {%>
+                    <div class="alert alert-success">
+                        <button class="close" data-dismiss="alert"><span>x</span></button>
+                        Driver has been remove.
+                    </div>
+                    <%} else if (request.getParameter("m").equals("notremove")) {%>
+                    <div class="alert alert-danger">
+                        <button class="close" data-dismiss="alert"><span>x</span></button>
+                        Job has already started. So, you can't able to remove this driver 
+                    </div>
+                    <%}
+                        }%>
                     <div class="card">
                         <div class="card-content">
                             <div class="card-body">
@@ -75,14 +96,13 @@
                                                     <div class="col-md-8">
                                                         <select class="select2 form-control"  name="driver" required multiple="multiple">
                                                             <%
-                                                                String selectedDriver = (String) request.getAttribute("selectedDriver");
+                                                                // String selectedDriver = (String) request.getAttribute("selectedDriver");
 
                                                                 List<MaDriver> maDrivers = (List<MaDriver>) request.getAttribute("TotalDriver");
                                                                 for (MaDriver maDriver : maDrivers) {
-                                                                    String Name=maDriver.getFirstname() +" "+ (maDriver.getMiddlename()!=null ? maDriver.getMiddlename()+" "  :"")+""+(maDriver.getLastname()!=null ? maDriver.getLastname():"") ;
+                                                                    String Name = maDriver.getFirstname() + " " + (maDriver.getMiddlename() != null ? maDriver.getMiddlename() + " " : "") + "" + (maDriver.getLastname() != null ? maDriver.getLastname() : "");
                                                             %>
-                                                            <option <%=selectedDriver != null && selectedDriver.contains(checkInput.checkValueEdit(maDriver.getId(), request.getParameter("driver"))) ? "selected" : ""%>
-                                                                value="<%=maDriver.getId()%>"><%= Name%></option>
+                                                            <option  value="<%=maDriver.getId()%>"><%= Name%></option>
                                                             <%}%>
                                                         </select>
                                                     </div>
@@ -108,8 +128,7 @@
 
                                             </div>
                                             <div class="col-md-8 offset-md-4">
-                                                <button type="submit" class="btn btn-primary mr-1 mb-1">Save Information</button>
-                                                <a href="<%= request.getContextPath()%>/job/List" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a>
+                                                <button type="submit" class="btn btn-primary mr-1 mb-1">Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -121,9 +140,9 @@
             </div>
         </section>  
 
-        <%
+        <%}
             List<MaJobDriver> maJobDrivers = (List<MaJobDriver>) request.getAttribute("maJobDrivers");
-            if(maJobDrivers.size()>0){
+            if (maJobDrivers.size() > 0) {
         %>
         <section id="basic-horizontal-layouts">
             <div class="row match-height">
@@ -131,9 +150,10 @@
                     <div class="card">
                         <div class="card-content">
                             <div class="card-body">
+
                                 <div class="form-body">
                                     <div class="row">   <div class="col-1"></div>
-                                        <div class="col-10">
+                                        <div class="col-12">
 
                                             <div class="table-responsive">
                                                 <table class="table zero-configuration">
@@ -141,6 +161,8 @@
                                                         <tr>
                                                             <th>Driver Name</th>                                             
                                                             <th>Assigned Date</th> 
+                                                                <%if (request.getParameter("flag") == null) {%>  
+                                                            <th style="text-align: center">Action</th> <%}%>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -150,6 +172,9 @@
                                                         <tr>
                                                             <td><%= maJobDriver.getDriverId().getFirstname()%></td>
                                                             <td><%= maJobDriver.getCreateddate() != null ? new DateUtils().dateWithFormat(maJobDriver.getCreateddate(), "MMMM dd, yyyy") : ""%></td>
+                                                            <%if (request.getParameter("flag") == null) {%>   <td style="text-align: center">
+                                                                <a title="Delete" href="<%= request.getContextPath()%>/job/deleteAssignDriver/<%= maJobDriver.getId()%>/<%= maJobDriver.getJobId().getId()%>"><i class="feather icon-trash-2" style="color: red"></i></a>
+                                                            </td><%}%>
                                                         </tr>
                                                         <%}%>
                                                     </tbody>
@@ -164,7 +189,7 @@
                 </div>
             </div>
         </section>  
-                                                    <%}%>
+        <%}%>
 
     </div>
 </div>

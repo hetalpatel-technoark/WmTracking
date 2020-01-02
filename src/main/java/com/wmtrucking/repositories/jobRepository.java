@@ -36,7 +36,8 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
     @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and u.id=?2")
     MaJobs findone(String satus, Long id);
 
-    @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and u.id=?2 and id not in (select job_id from ma_job_transaction) ")
+    @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and u.id=?2 and "
+            + "id not in (select job_id from ma_job_transaction) ")
     MaJobs findPendingJob(String satus, Long id);
 
     @Query(nativeQuery = true, value = "select count(u.id) from ma_jobs u where u.status=?1")

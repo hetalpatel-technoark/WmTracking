@@ -151,19 +151,27 @@
                                                                 <i class="feather icon-menu"></i>
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton100">
-                                                                <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/assignJobDr/<%=majob.getId()%>">
-                                                                    <i class="feather icon-user "></i><span>Assign Driver</span>
-                                                                </a> 
+                                                                
                                                                 <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/view/<%=majob.getId()%>">
                                                                     <i class="feather icon-eye"></i><span>View</span>
                                                                 </a>
                                                                     <%if (!majob.getTransectionstatus().equals("0")) {%>
+                                                                    <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/assignJobDr/<%=majob.getId()%>">
+                                                                    <i class="feather icon-user "></i><span>Assign Driver</span>
+                                                                </a> 
                                                                 <a class="dropdown-item" href="<%=request.getContextPath()%>/job/edit/<%=majob.getId()%>">
                                                                     <i class="feather icon-edit"></i> <span>Edit</span>
-                                                                </a><%}%>
+                                                                </a>
+                                                                     <%if (!majob.getTransectionstatus().equals("3")) {%>
                                                                 <a class="dropdown-item" onclick="changeStatus('Delete', '<%=majob.getId()%>')">
                                                                     <i class="feather icon-trash"></i> <span>Delete</span>
                                                                 </a>
+                                                                <%}}else{%>
+                                                                <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/assignJobDr/<%=majob.getId()%>?flag=complete">
+                                                                    <i class="feather icon-user "></i><span>Assign Driver</span>
+                                                                </a> 
+                                                                <%}%>
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>

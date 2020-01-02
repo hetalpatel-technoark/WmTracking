@@ -39,7 +39,7 @@ public class driverService {
     }
 
     public Long count(String satus, Date createddate) {
-        return dRepository.count(satus,createddate);
+        return dRepository.count(satus, createddate);
     }
 
     public MaDriver checkEmail(String satus, String email) {
@@ -53,8 +53,12 @@ public class driverService {
     public List<MaDriver> activeList(String satus) {
         return dRepository.activeList(satus);
     }
-    
-    public  MaDriver findoneEdit(Long id){
-    return dRepository.findoneEdit( id);
+
+    public List<MaDriver> driverList(String satus, Long job_id) {
+        return dRepository.driverList(satus, job_id);
+    }
+
+    public MaDriver findoneEdit(Long id) {
+        return dRepository.findoneEdit(id);
     }
 }

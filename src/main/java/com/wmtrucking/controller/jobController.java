@@ -344,13 +344,14 @@ public class jobController {
         /**
          * Selected driver *
          */
-        String selectedDriver = jobDriverService.list(Constant.ACTIVE.toString(), jobid);
-        model.addAttribute("selectedDriver", selectedDriver);
+//        String selectedDriver = jobDriverService.list(Constant.ACTIVE.toString(), jobid);
+        //      model.addAttribute("selectedDriver", selectedDriver);
 
         /**
          * List of driver *
          */
-        List<MaDriver> TotalDriver = drService.activeList(Constant.ACTIVE.toString());
+        //List<MaDriver> TotalDriver = drService.activeList(Constant.ACTIVE.toString());
+        List<MaDriver> TotalDriver = drService.driverList(Constant.ACTIVE.toString(), jobid);
         model.addAttribute("TotalDriver", TotalDriver);
 
         /**
@@ -377,17 +378,17 @@ public class jobController {
             model.addAttribute("maJob", majob);
             return "Job/AssignJobDr";
         }
-        MaJobs majob = jobService.findPendingJob(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("jobid")));
 
+        MaJobs majob = jobService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("jobid")));
         if (majob != null) {
-            List<MaJobDriver> maJobDriversold = jobDriverService.listOfDriver(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("jobid")));
+            // List<MaJobDriver> maJobDriversold = jobDriverService.listOfDriver(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("jobid")));
             if (request.getParameterValues("driver") != null) {
                 for (String driver : request.getParameterValues("driver")) {
-                    MaJobDriver mjd = jobDriverService.findDriver(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("jobid")), Long.parseLong(driver));
+                    //  MaJobDriver mjd = jobDriverService.findDriver(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("jobid")), Long.parseLong(driver));
                     Date creDate = new Date();
-                    if (mjd != null) {
-                        creDate = mjd.getCreateddate();
-                    }
+//                    if (mjd != null) {
+//                        creDate = mjd.getCreateddate();
+//                    }
                     MaDriver maDriver = drService.findone(Constant.DETETED.toString(), Long.parseLong(driver));
                     MaJobDriver maJobDriver = new MaJobDriver();
                     maJobDriver.setJobId(majob);
@@ -396,10 +397,23 @@ public class jobController {
                     jobDriverService.save(maJobDriver);
                 }
             }
-            jobDriverService.delete(maJobDriversold);
+
+            // jobDriverService.delete(maJobDriversold);
             return "redirect:/job/List?m=assign";
         }
         return "redirect:/job/List?m=notAssign";
+    }
+
+    @RequestMapping(value = "/deleteAssignDriver/{id}/{jobid}", method = RequestMethod.GET)
+    public String deleteAssignDriver(HttpServletRequest request, Model model, @PathVariable("id") Long id, @PathVariable("jobid") Long jobid) {
+
+        MaJobDriver maJobDriver = jobDriverService.driverJob(id);
+
+        if (maJobDriver != null) {
+            jobDriverService.delete(maJobDriver);
+            return "redirect:/job/assignJobDr/"+jobid+"?m=remove";
+        }
+        return "redirect:/job/assignJobDr/"+jobid+"?m=notremove";
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
