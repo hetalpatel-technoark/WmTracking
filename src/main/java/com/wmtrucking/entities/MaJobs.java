@@ -61,6 +61,8 @@ public class MaJobs implements Serializable {
     private BigDecimal tolongitude;
     @Column(name = "totaljobcount")
     private Long totaljobcount;
+    @OneToMany(mappedBy = "jobid")
+    private List<MaInvoice> maInvoiceList;
     @OneToMany(mappedBy = "jobId")
     private List<MaJobTransaction> maJobTransactionList;
     @OneToMany(mappedBy = "jobId")
@@ -444,6 +446,14 @@ public class MaJobs implements Serializable {
         this.maJobCustomerList = maJobCustomerList;
     }
 
+    public List<MaJobTransaction> getMaJobTransactionList() {
+        return maJobTransactionList;
+    }
+
+    public void setMaJobTransactionList(List<MaJobTransaction> maJobTransactionList) {
+        this.maJobTransactionList = maJobTransactionList;
+    }
+
     public String getJobnumber() {
         return jobnumber;
     }
@@ -508,12 +518,12 @@ public class MaJobs implements Serializable {
         this.totaljobcount = totaljobcount;
     }
 
-    public List<MaJobTransaction> getMaJobTransactionList() {
-        return maJobTransactionList;
+    public List<MaInvoice> getMaInvoiceList() {
+        return maInvoiceList;
     }
 
-    public void setMaJobTransactionList(List<MaJobTransaction> maJobTransactionList) {
-        this.maJobTransactionList = maJobTransactionList;
+    public void setMaInvoiceList(List<MaInvoice> maInvoiceList) {
+        this.maInvoiceList = maInvoiceList;
     }
 
 }

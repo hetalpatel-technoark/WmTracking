@@ -124,8 +124,6 @@
                                                         <input type="text" disabled class="form-control"  value="<%=checkInput.checkValueEdit(majob.getJobname(), request.getParameter("jname"))%>" >
                                                     </div>
                                                 </div>
-
-
                                             </div>
                                             <div class="col-md-8 offset-md-4">
                                                 <button type="submit" class="btn btn-primary mr-1 mb-1">Save</button>

@@ -41,7 +41,7 @@ public enum Constant {
         }
 
     },
-     ENDED {
+    ENDED {
         @Override
         public String toString() {
             return "Ended";
@@ -60,6 +60,12 @@ public enum Constant {
             return "MM-dd-yyyy";
         }
 
-    }
+    },
+    AESENCRYPTKEY {
+        @Override
+        public String toString() {
+            return "78666"; //To change body of generated methods, choose Tools | Templates.
+        }
+    },
 
 }

@@ -49,7 +49,7 @@ public class driverController {
     }
 
     @RequestMapping(value = "/drivelist", method = RequestMethod.GET)
-    public String createnote(HttpServletRequest request, Model model) {
+    public String drivelist(HttpServletRequest request, Model model) {
 
         // MaAuthobject iamObjects = (MaAuthobject) sessionUtils.getSessionValue(request, Constant.AUTHSESSION.toString());
         List<MaDriver> maDriver = drService.list(Constant.DETETED.toString());

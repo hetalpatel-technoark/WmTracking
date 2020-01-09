@@ -60,35 +60,42 @@ public class MaDriver implements Serializable {
 //    @Column(name = "address3")
 //    private String address3;
     @Size(max = 2147483647)
+    @Column(name = "address2")
+    private String address2;
+    @Size(max = 2147483647)
+    @Column(name = "address3")
+    private String address3;
+//    @Size(max = 2147483647)
+//    @Column(name = "country")
+//    private String country;
+    @Size(max = 2147483647)
     @Column(name = "city")
     private String city;
     @Size(max = 2147483647)
     @Column(name = "state")
     private String state;
-//    @Size(max = 2147483647)
-//    @Column(name = "country")
-//    private String country;
+    @Size(max = 2147483647)
+    @Column(name = "country")
+    private String country;
     @Size(max = 2147483647)
     @Column(name = "pincode")
     private String pincode;
     @Size(max = 2147483647)
     @Column(name = "mobile")
     private String mobile;
-    @Column(name = "countrycode")
-    private String countrycode;
-    @Column(name = "password")
-    private String Password;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 2147483647)
     @Column(name = "email")
     private String email;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 2147483647)
     @Column(name = "status")
     private String status;
+    @OneToMany(mappedBy = "driverid")
+    private List<MaInvoice> maInvoiceList;
+    @Column(name = "countrycode")
+    private String countrycode;
+    @Column(name = "password")
+    private String Password;
     @OneToMany(mappedBy = "driverid")
     private List<MaJobTransaction> maJobTransactionList;
     @OneToMany(mappedBy = "driverId")
@@ -217,6 +224,12 @@ public class MaDriver implements Serializable {
     public void setMaJobTrackingList(List<MaJobTracking> maJobTrackingList) {
         this.maJobTrackingList = maJobTrackingList;
     }
+    public List<MaJobTransaction> getMaJobTransactionList() {
+        return maJobTransactionList;
+    }
+    public void setMaJobTransactionList(List<MaJobTransaction> maJobTransactionList) {
+        this.maJobTransactionList = maJobTransactionList;
+    }
 
     public String getLicensenumber() {
         return licensenumber;
@@ -258,6 +271,22 @@ public class MaDriver implements Serializable {
         this.address1 = address1;
     }
 
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getAddress3() {
+        return address3;
+    }
+
+    public void setAddress3(String address3) {
+        this.address3 = address3;
+    }
+
     public String getCity() {
         return city;
     }
@@ -272,6 +301,14 @@ public class MaDriver implements Serializable {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getPincode() {
@@ -306,12 +343,12 @@ public class MaDriver implements Serializable {
         this.status = status;
     }
 
-    public List<MaJobTransaction> getMaJobTransactionList() {
-        return maJobTransactionList;
+    public List<MaInvoice> getMaInvoiceList() {
+        return maInvoiceList;
     }
 
-    public void setMaJobTransactionList(List<MaJobTransaction> maJobTransactionList) {
-        this.maJobTransactionList = maJobTransactionList;
+    public void setMaInvoiceList(List<MaInvoice> maInvoiceList) {
+        this.maInvoiceList = maInvoiceList;
     }
 
 }
