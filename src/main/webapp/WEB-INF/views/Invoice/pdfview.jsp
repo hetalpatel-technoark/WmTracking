@@ -8,7 +8,7 @@
 
         <style>
             .invoice-box {
-                
+
                 margin: auto;
                 padding: 1px;
                 border: 1px solid #eee;
@@ -16,7 +16,6 @@
                 font-size: 16px;
                 line-height: 24px;
                 font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-                color: #555;
             }
 
             .invoice-box table {
@@ -111,13 +110,25 @@
                     <td colspan="2">
                         <table>
                             <tr>
+                                <td class="title" style="text-align: center">
+                                    <img src="http://54.171.107.227:8081/assets-new/app-assets/images/CompLogo.jpg" style="width:280px; "/>
+                                </td>                                
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="top">
+                    <td colspan="2">
+                        <table>
+                            <tr>
                                 <td class="title" style="text-align: left">
-                                    <img src="http://54.171.107.227:8081/assets-new/app-assets/images/CompLogo.jpg" style="width:200px; "/>
+                                    <b>Invoice</b>
                                 </td>
                                 <td style="text-align: right">
-                                    Invoice #: <%= invoices.getId() %><br/>
-                                    Created: <%=new DateUtils().dateWithFormat(invoices.getCreateddate(), "dd/MM/yyy")%><br/>
-                                 
+                                    Invoice #: <%= invoices.getId()%><br/>
+                                    Job Number: <%=invoices.getJobid().getJobnumber()%><br/>
+                                    Create Date: <%=new DateUtils().dateWithFormat(invoices.getCreateddate(), "MMMM dd, yyyy")%><br/>
+
                                 </td>
                             </tr>
                         </table>
@@ -129,37 +140,41 @@
                         <table>
                             <tr>
                                 <td style="text-align: left">
-                                    From<br/>
-                                   <%=invoices.getFromaddress() %>
-                                </td>
-
+                                    <b> To:</b><br/>
+                                    <%=invoices.getToaddress().replace(",", ",<br/>")%>
+                                </td> 
                                 <td style="text-align: right">
-                                     To<br/>
-                                      <%=invoices.getToaddress()%>
-                                </td>
+                                    <b> From:</b><br/>
+                                    <%=invoices.getFromaddress().replace(",", ",<br/>")%>
+                                </td>       
+                            </tr>
+                            <tr> 
+
                             </tr>
                         </table>
                     </td>
                 </tr>               
-                <tr class="heading">
-                    <td style="width: 20%">
-                       Invoice Amount 
+                <tr class="heading">                    
+                    <td >
+                        Discription
                     </td>
-
-                    <td>
-                     Comments
+                    <td style="width: 20%; text-align:right ">
+                        Invoice Amount 
                     </td>
                 </tr>
-
-                <tr class="details">
-                    <td style="width: 20%">
-                    $ <%= invoices.getAmount() %>
+                <tr class="details">                   
+                    <td  >
+                        <%= invoices.getComments()%>
                     </td>
-
-                    <td>
-                       <%= invoices.getComments()%>
+                    <td style="width: 20%; text-align:right">
+                        $ <%= invoices.getAmount()%>
                     </td>
-                </tr>    </table>
+                </tr>   
+
+            </table>
+            <hr/>
+            <div style="text-align: right;background: #F5F5F5;padding-bottom: 10px;padding-top: 5px"> <b> Total:  $ <%= invoices.getAmount()%></b></div>
+
         </div>
     </body>
 </html>

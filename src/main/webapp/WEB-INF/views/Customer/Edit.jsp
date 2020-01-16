@@ -80,20 +80,20 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Last Name</span>
+                                                        <span>Last Name *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="first-name" class="form-control" name="lname" value="<%=checkInput.checkValueEdit(maCustomer.getLastname(), request.getParameter("lname"))%>" placeholder="Last Name">
+                                                        <input type="text" required id="first-name" class="form-control" name="lname" value="<%=checkInput.checkValueEdit(maCustomer.getLastname(), request.getParameter("lname"))%>" placeholder="Last Name">
                                                     </div>
                                                 </div>
 
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Company Name</span>
+                                                        <span>Company Name *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="first-name" class="form-control" name="cmpname" value="<%=checkInput.checkValueEdit(maCustomer.getCompanyname(), request.getParameter("cmpname"))%>" placeholder="Company Name">
+                                                        <input type="text" required id="first-name" class="form-control" name="cmpname" value="<%=checkInput.checkValueEdit(maCustomer.getCompanyname(), request.getParameter("cmpname"))%>" placeholder="Company Name">
                                                     </div>
                                                 </div>
 
@@ -353,7 +353,7 @@
                                                         <span>Address</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="first-name" class="form-control" name="add1" value="<%=checkInput.checkValueEdit(maCustomer.getAddress1(), request.getParameter("add1"))%>" placeholder="Address 1">
+                                                        <input type="text" id="first-name" class="form-control" name="add1" value="<%=checkInput.checkValueEdit(maCustomer.getAddress1(), request.getParameter("add1"))%>" placeholder="Address">
                                                     </div>
                                                 </div>
                                                 <!--                                                <div class="form-group row">

@@ -35,10 +35,13 @@ public class jobService {
         return jobRepository.list(satus);
     }
 
-    public MaJobs findone(String satus, Long id) {
-        return jobRepository.findone(satus, id);
+    public MaJobs findone(String satus, Long id, Boolean isarchive) {
+        return jobRepository.findone(satus, id,isarchive);
     }
 
+    public MaJobs findoneCompletedjob(String satus, Long id) {
+        return jobRepository.findoneCompletedjob(satus, id);
+    }
     public Long count(String satus) {
         return jobRepository.count(satus);
     }
@@ -59,8 +62,8 @@ public class jobService {
         return jobRepository.listOfJob(satus, jobdate);
     }
 
-    public MaJobs findPendingJob(String satus, Long id) {
-        return jobRepository.findPendingJob(satus, id);
+    public MaJobs findPendingJob(String satus, Long id, Boolean isarchive) {
+        return jobRepository.findPendingJob(satus, id, isarchive);
     }
 
 //    public List<JobPojo> getJobList(String satus, Date jobdate) {
@@ -79,8 +82,8 @@ public class jobService {
 //        return jobPojo;
 //    }
     public List<JobPojo> getJobList(String satus, Date jobdate) {
-        String query = "select j.id, (select string_agg(firstname, ', ') from ma_customer where id in (select customer_id from ma_job_customer"
-                + "				 where job_id=j.id))as customername ,(SELECT TO_CHAR(j.jobdate, 'Month DD, YYYY') as jobdate),"
+        String query = "select j.id, (select string_agg(firstname, ', ') from ma_customer where id in (select customer_id from ma_job_customer where "
+                + "job_id=j.id))as customername ,(SELECT TO_CHAR(j.jobdate, 'Month DD, YYYY') as jobdate),"
                 + "j.jobname,j.jobnumber, j.totaljobcount as totaldumps, j.status,"
                 + "            (select count(id) from ma_job_transaction where job_id=j.id and status='Ended')as completeddumps,"
                 + "            (select count(id) from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivercount,"
@@ -94,7 +97,7 @@ public class jobService {
         return jobPojo;
     }
 
-    public List<JobPojo> getJobList(String satus) {
+    public List<JobPojo> getJobList(String satus,Boolean isarchive) {
         String query = "select j.id, (select string_agg(firstname, ', ') from ma_customer where id in (select customer_id from ma_job_customer"
                 + "				 where job_id=j.id))as customername ,(SELECT TO_CHAR(j.jobdate, 'Month DD, YYYY') as jobdate),"
                 + "j.jobname,j.jobnumber, j.totaljobcount as totaldumps, j.status,"
@@ -105,8 +108,8 @@ public class jobService {
                 + "              else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status='Ended') < j.totaljobcount) then 3 "
                 + "              else 2 end end end) as Transectionstatus,fromlatitude, fromlongitude,tolatitude,tolongitude,"
                 + "            (select string_agg(firstname, ', ') from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivername "
-                + "            from ma_jobs j where status=? ORDER BY j.id desc";
-        List<JobPojo> jobPojo = jdbcTemplate.query(query, new Object[]{satus}, new BeanPropertyRowMapper<JobPojo>(JobPojo.class));
+                + "            from ma_jobs j where j.status=? and j.isarchive=? ORDER BY j.id desc";
+        List<JobPojo> jobPojo = jdbcTemplate.query(query, new Object[]{satus,isarchive}, new BeanPropertyRowMapper<JobPojo>(JobPojo.class));
         return jobPojo;
     }
 

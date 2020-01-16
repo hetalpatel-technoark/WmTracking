@@ -64,7 +64,7 @@ public class MaJWT {
             JWTVerifier verifier = JWT
                     .require(algorithm)
                     .build();
-            return verifier.verify(request.getHeader(TOKEN)).getId();
+            return verifier.verify(jwt).getId();
 
         } catch (Exception e) {
             return null;

@@ -71,7 +71,7 @@ public class driverController {
         List<String> errors = new ArrayList<>();
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "mob", "Mobile number", errors);
-        validateUtil.checkNull(request, "email", "Email", errors);
+        //validateUtil.checkNull(request, "email", "Email", errors);
         validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
 //        validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
@@ -86,7 +86,7 @@ public class driverController {
         validateUtil.checkLength(errors, request, "city", "City", 255, 0);
         validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
         validateUtil.checkLength(errors, request, "state", "State", 255, 0);
-        validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
+        validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "mob", "Mobile", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
 
@@ -192,7 +192,7 @@ public class driverController {
         List<String> errors = new ArrayList<>();
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "mob", "Mobile number", errors);
-        validateUtil.checkNull(request, "email", "Email", errors);
+     //   validateUtil.checkNull(request, "email", "Email", errors);
 
         validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
@@ -204,7 +204,7 @@ public class driverController {
         validateUtil.checkLength(errors, request, "city", "City", 255, 0);
         validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
         validateUtil.checkLength(errors, request, "state", "State", 255, 0);
-        validateUtil.checkLength(errors, request, "email", "Email", 255, 1);
+        validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "mob", "Mobile", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
         //validateUtil.checkNull(request, "countryCode", "Country Code", errors);

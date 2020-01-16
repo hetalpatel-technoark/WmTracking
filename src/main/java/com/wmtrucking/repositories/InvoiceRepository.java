@@ -26,6 +26,6 @@ public interface InvoiceRepository extends JpaRepository<MaInvoice, Long> {
     @Query(nativeQuery = true, value = "select u.* from ma_invoice u where u.status=?1 and u.id=?2")
     MaInvoice findoneinvoice(String satus, Long id);
 
-    @Query(nativeQuery = true, value = "select u.* from ma_invoice u where u.status=?1 and u.id=?2 and u.driverid=?3")
-    MaInvoice findDriverinvoice(String satus, Long id, Long driverid);
+    @Query(nativeQuery = true, value = "select u.* from ma_invoice u where u.status=?1 and u.jobid=?2 and u.driverid=?3")
+    MaInvoice findDriverinvoice(String satus, Long jobid, Long driverid);
 }

@@ -29,7 +29,7 @@ public class invoiceService {
         return invoiceRepository.findoneinvoice(satus, id);
     }
 
-    public MaInvoice findDriverinvoice(String satus, Long id, Long driverid) {
-        return invoiceRepository.findDriverinvoice(satus, id, driverid);
+    public MaInvoice findDriverinvoice(String satus, Long jobid, Long driverid) {
+        return invoiceRepository.findDriverinvoice(satus, jobid, driverid);
     }
 }

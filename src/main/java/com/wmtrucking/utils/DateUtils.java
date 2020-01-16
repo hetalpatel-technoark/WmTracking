@@ -90,14 +90,14 @@ public class DateUtils {
     public Date IncreaseDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        cal.add(Calendar.DATE, days); 
         return cal.getTime();
     }
 
     public Date DecreaseDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.add(Calendar.DATE, -days); //minus number would decrement the days
+        cal.add(Calendar.DATE, -days); 
         return cal.getTime();
     }
 }

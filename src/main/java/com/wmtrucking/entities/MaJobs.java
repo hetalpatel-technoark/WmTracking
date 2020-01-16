@@ -68,6 +68,9 @@ public class MaJobs implements Serializable {
     @OneToMany(mappedBy = "jobId")
     private List<MaJobCustomer> maJobCustomerList;
 
+    @Column(name = "isarchive")
+    private Boolean isarchive;
+    
     @Column(name = "hauloff")
     private Boolean hauloff;
 
@@ -165,6 +168,14 @@ public class MaJobs implements Serializable {
 
     public MaJobs(Long id) {
         this.id = id;
+    }
+
+    public Boolean getIsarchive() {
+        return isarchive;
+    }
+
+    public void setIsarchive(Boolean isarchive) {
+        this.isarchive = isarchive;
     }
 
     public Long getId() {

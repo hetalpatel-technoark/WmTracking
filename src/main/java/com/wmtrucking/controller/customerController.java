@@ -64,23 +64,21 @@ public class customerController {
     public String PostCreate(HttpServletRequest request, Model model) {
         List<String> errors = new ArrayList<>();
         ValidateUtil validateUtil = new ValidateUtil();
-        validateUtil.checkNull(request, "fname", "Name", errors);
+        validateUtil.checkNull(request, "fname", "First Name", errors);
         validateUtil.checkNull(request, "phone", "Phone number", errors);
-        // validateUtil.checkNull(request, "email", "Email", errors);
-        validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
+        validateUtil.checkNull(request, "lname", "Last Name", errors);
+        validateUtil.checkNull(request, "cmpname", "Company Name", errors);
+        validateUtil.checkLength(errors, request, "fname", "First Name", 255, 0);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
         validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
         validateUtil.checkLength(errors, request, "cmpname", "Company Name", 255, 0);
-        validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
-//        validateUtil.checkLength(errors, request, "add2", "Address 2", 255, 0);
-//        validateUtil.checkLength(errors, request, "add3", "Address 3", 255, 0);
         validateUtil.checkLength(errors, request, "city", "City", 255, 0);
         validateUtil.checkLength(errors, request, "pin", "Pincode", 255, 0);
         validateUtil.checkLength(errors, request, "state", "State", 255, 0);
         validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "phone", "Phone", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
-       // validateUtil.checkNull(request, "countryCode", "Country Code", errors);
+        // validateUtil.checkNull(request, "countryCode", "Country Code", errors);
 
         CommonUtils commonUtils = new CommonUtils();
         if (!commonUtils.validatePhoneNumber(request.getParameter("phone"))) {
@@ -99,7 +97,7 @@ public class customerController {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Customer/Create";
         }
-       // MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"), request.getParameter("countryCode"));
+        // MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"), request.getParameter("countryCode"));
         MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"));
         if (checkMobile != null) {
             errors.add("Mobile is already exist");
@@ -121,7 +119,7 @@ public class customerController {
 //        maCustomer.setCountry(validateUtil.getStringValue(request.getParameter("country")));
         maCustomer.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maCustomer.setPhone(validateUtil.getStringValue(request.getParameter("phone")));
-      //  maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
+        //  maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
         maCustomer.setStatus(validateUtil.getStringValue(request.getParameter("status")));
         //maCustomer.setStatus(Constant.ACTIVE.toString());
 
@@ -161,14 +159,15 @@ public class customerController {
         MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("id")));
         List<String> errors = new ArrayList<>();
         ValidateUtil validateUtil = new ValidateUtil();
-        validateUtil.checkNull(request, "fname", "Name", errors);
+        validateUtil.checkNull(request, "fname", "First Name", errors);
         validateUtil.checkNull(request, "phone", "Phone number", errors);
-        //validateUtil.checkNull(request, "email", "Email", errors);
-        validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
+        validateUtil.checkNull(request, "lname", "Last Name", errors);
+        validateUtil.checkNull(request, "cmpname", "Company Name", errors);
+        validateUtil.checkLength(errors, request, "fname", "First Name", 255, 0);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
         validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
         validateUtil.checkLength(errors, request, "cmpname", "Company Name", 255, 0);
-        validateUtil.checkLength(errors, request, "add1", "Address 1", 255, 0);
+        validateUtil.checkLength(errors, request, "add1", "Address ", 255, 0);
 //        validateUtil.checkLength(errors, request, "add2", "Address 2", 255, 0);
 //        validateUtil.checkLength(errors, request, "add3", "Address 3", 255, 0);
         validateUtil.checkLength(errors, request, "city", "City", 255, 0);
@@ -221,7 +220,7 @@ public class customerController {
 //        maCustomer.setCountry(validateUtil.getStringValue(request.getParameter("country")));
         maCustomer.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maCustomer.setPhone(validateUtil.getStringValue(request.getParameter("phone")));
-      //  maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
+        //  maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
 //        maCustomer.setStatus(Constant.ACTIVE.toString());
 
         cusService.save(maCustomer);

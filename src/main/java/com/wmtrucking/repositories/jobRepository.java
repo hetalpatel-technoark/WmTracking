@@ -33,12 +33,21 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
             + "from ma_jobs j where status=?1")
     public List<Object[]> list(String status, String transectionstatus);
 
-    @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and u.id=?2")
-    MaJobs findone(String satus, Long id);
+//    @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and u.id=?2")
+//    MaJobs findone(String satus, Long id);
+    @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and u.id=?2 and isarchive=?3 ")
+    MaJobs findone(String satus, Long id, Boolean isarchive);
 
     @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and u.id=?2 and "
-            + "id not in (select job_id from ma_job_transaction) ")
-    MaJobs findPendingJob(String satus, Long id);
+            + "u.totaljobcount not in (select count(id) from ma_job_transaction where job_id=?2 and status='Ended') ")
+    MaJobs findoneCompletedjob(String satus, Long id);
+
+//    @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and u.id=?2 and "
+//            + "id not in (select job_id from ma_job_transaction) ")
+//    MaJobs findPendingJob(String satus, Long id);
+    @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and u.id=?2 and id not in (select job_id from ma_job_transaction) and"
+            + " isarchive=?3 ")
+    MaJobs findPendingJob(String satus, Long id, Boolean isarchive);
 
     @Query(nativeQuery = true, value = "select count(u.id) from ma_jobs u where u.status=?1")
     Long count(String satus);

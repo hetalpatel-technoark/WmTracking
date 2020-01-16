@@ -53,7 +53,7 @@
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <span>Middle Name*</span>
+                                                    <span>Middle Name</span>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input readonly type="text" class="form-control" name="mname" value="<%=checkInput.checkValueEdit (maCustomer.getMiddlename(),request.getParameter("mname"))%>" placeholder="Middle Name">
@@ -71,7 +71,7 @@
 
                                             <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <span>Company Name</span>
+                                                    <span>Company Name *</span>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input readonly type="text" class="form-control" name="cmpname" value="<%=checkInput.checkValueEdit (maCustomer.getCompanyname(),request.getParameter("cmpname"))%>" placeholder="Company name">
@@ -80,7 +80,7 @@
 
                                             <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <span>Phone Number</span>
+                                                    <span>Phone Number*</span>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input readonly type="text" readonly="" class="form-control" name="phone" value="<%=checkInput.checkValueEdit (maCustomer.getPhone(),request.getParameter("phone"))%>" placeholder="Phone Number">
@@ -112,25 +112,9 @@
                                                     <span>Address 1</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input readonly type="text" class="form-control" name="add1" value="<%=checkInput.checkValueEdit (maCustomer.getAddress1(),request.getParameter("add1"))%>" placeholder="Address 1">
+                                                    <input readonly type="text" class="form-control" name="add1" value="<%=checkInput.checkValueEdit (maCustomer.getAddress1(),request.getParameter("add1"))%>" placeholder="Address">
                                                 </div>
                                             </div>
-<!--                                            <div class="form-group row">
-                                                <div class="col-md-4">
-                                                    <span>Address 2</span>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input readonly type="text" class="form-control" name="add2" value="<%=checkInput.checkValueEdit (maCustomer.getAddress2(),request.getParameter("add2"))%>" placeholder="Address 2">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-4">
-                                                    <span>Address 3</span>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input readonly type="text" class="form-control" name="add3" value="<%=checkInput.checkValueEdit (maCustomer.getAddress3(),request.getParameter("add3"))%>" placeholder="Address 3">
-                                                </div>
-                                            </div>-->
 
 
                                             <div class="form-group row">

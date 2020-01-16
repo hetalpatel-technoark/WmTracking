@@ -113,7 +113,7 @@
                                                         <span>Price *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="number" required="" class="form-control" name="price" value="<%=checkInput.checkValueEdit(majob.getPrice(), request.getParameter("price"))%>"  placeholder="Price">
+                                                        <input type="text" required="" class="form-control" id="price" onchange ="showSave()"  name="price" value="<%=checkInput.checkValueEdit(majob.getPrice(), request.getParameter("price"))%>"  placeholder="Price">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -298,7 +298,7 @@
 
                                             </div>
                                             <div class="col-md-8 offset-md-4">
-                                                <button type="submit" class="btn btn-primary mr-1 mb-1">Update Information</button>
+                                                <button type="submit" style="display: none" id="save" class="btn btn-primary mr-1 mb-1">Update Information</button>
                                                 <a href="<%= request.getContextPath()%>/job/List" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a>
                                             </div>
                                         </div>
@@ -322,12 +322,21 @@
 <jsp:include page="../Template/footer.jsp"></jsp:include>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
 <script>
-
+                                                            function showSave() {
+                                                                if ($("#price").val() !== null && $("#price").val() !== "") {
+                                                                    $("#save").show();
+                                                                } else {
+                                                                    $("#save").hide();
+                                                                }
+                                                            }
 
                                                             $(document).ready(function () {
+                                                                 if ($("#price").val() !== null && $("#price").val() !== "") {
+                                                                    $("#save").show();
+                                                                }
                                                                 $(".pickadate1").pickadate({
                                                                     format: "mmmm dd, yyyy",
-                                                                       min: new Date(),
+                                                                    min: new Date(),
                                                                 });
                                                                 $('.latlog').click(function () {
                                                                     if ($(this).prop("checked") == true) {

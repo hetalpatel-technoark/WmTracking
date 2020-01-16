@@ -16,8 +16,6 @@ import com.wmtrucking.utils.Constant;
 import com.wmtrucking.utils.InternalRenderer;
 import com.wmtrucking.utils.MaJWT;
 import com.wmtrucking.utils.SessionUtils;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,7 +24,6 @@ import java.util.List;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.DatatypeConverter;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -80,7 +77,6 @@ public class InvoiceController {
         request.setAttribute("maInvoice", maInvoice);
         try {
             String evalView = internalRenderer.evalView(request, response, model, locale, "Invoice/pdfview");
-            System.out.println("evalView::::::: " + evalView);
             response.setContentType("application/pdf");
             response.setHeader("Content-Disposition", "inline; filename=" + invoiceid + ".pdf");
 
@@ -108,8 +104,8 @@ public class InvoiceController {
         }
     }
 
-    @RequestMapping(value = "/pdfAPI/{invoiceid}", method = RequestMethod.GET)
-    public void pdfAPI(HttpServletRequest request, HttpServletResponse response, Locale locale, Model model, @PathVariable("invoiceid") Long invoiceid)
+    @RequestMapping(value = "/pdfAPI/{jobid}", method = RequestMethod.GET)
+    public void pdfAPI(HttpServletRequest request, HttpServletResponse response, Locale locale, Model model, @PathVariable("jobid") Long jobid)
             throws IOException, DocumentException, UnAthorizedUserException {
 
         if (!maJWT.checkHeadersWithAuth(request)) {
@@ -122,30 +118,32 @@ public class InvoiceController {
             return;
         }
 
-        MaInvoice maInvoice = invoiceService.findDriverinvoice(Constant.ACTIVE.toString(), invoiceid, Long.parseLong(driverId));
-        request.setAttribute("maInvoice", maInvoice);
-        try {
-            String evalView = internalRenderer.evalView(request, response, model, locale, "Invoice/pdfview");
-            System.out.println("evalView::::::: " + evalView);
-            response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition", "inline; filename=" + invoiceid + ".pdf");
+        MaInvoice maInvoice = invoiceService.findDriverinvoice(Constant.ACTIVE.toString(), jobid, Long.parseLong(driverId));
+        if (maInvoice != null) {
+            request.setAttribute("maInvoice", maInvoice);
+            try {
+                String evalView = internalRenderer.evalView(request, response, model, locale, "Invoice/pdfview");
+                System.out.println("evalView::::::: " + evalView);
+                response.setContentType("application/pdf");
+                response.setHeader("Content-Disposition", "inline; filename=" + maInvoice.getId() + ".pdf");
 
-            StringBuilder result = new StringBuilder();
-            result.append(evalView);
+                StringBuilder result = new StringBuilder();
+                result.append(evalView);
 
-            Document document = new Document(PageSize.A4, 25, 25, 25, 0);
-            PdfWriter pdfWriter = PdfWriter.getInstance(document, response.getOutputStream());
-            document.open();
+                Document document = new Document(PageSize.A4, 25, 25, 25, 0);
+                PdfWriter pdfWriter = PdfWriter.getInstance(document, response.getOutputStream());
+                document.open();
 
-            XMLWorkerHelper xMLWorkerHelper = XMLWorkerHelper.getInstance();
-            ByteArrayInputStream bis
-                    = new ByteArrayInputStream(result.toString().getBytes());
+                XMLWorkerHelper xMLWorkerHelper = XMLWorkerHelper.getInstance();
+                ByteArrayInputStream bis
+                        = new ByteArrayInputStream(result.toString().getBytes());
 
-            xMLWorkerHelper.parseXHtml(pdfWriter, document, bis);
+                xMLWorkerHelper.parseXHtml(pdfWriter, document, bis);
 
-            document.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+                document.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 

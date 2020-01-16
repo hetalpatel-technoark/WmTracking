@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface driverRepository extends JpaRepository<MaDriver, Long> {
 
-    @Query(nativeQuery = true, value = "select u.* from ma_driver u where u.status!=?1")
+    @Query(nativeQuery = true, value = "select u.* from ma_driver u where u.status!=?1 ORDER BY u.id desc ")
     List<MaDriver> list(String satus);
 
     @Query(nativeQuery = true, value = "select u.* from ma_driver u where u.status=?1")

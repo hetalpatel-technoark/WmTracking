@@ -2,6 +2,7 @@
 
 <%
     URL url = new URL(request.getRequestURL().toString());
+    System.out.println("url.."+url);
 %>
 <!-- BEGIN: Main Menu-->
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
@@ -27,7 +28,7 @@
 
             <li class="<%=url.toString().contains("Driver") ? "active" : ""%> nav-item"><a href="<%=request.getContextPath()%>/driver/drivelist" title="Driver"><i class="feather icon-user"></i><span class="menu-title" data-i18n="Email">Drivers</span></a>
             </li>
-            <li class="<%=url.toString().contains("Job") ? "active" : ""%> nav-item"><a href="<%=request.getContextPath()%>/job/List" title="Job"><i class="feather icon-award "></i><span class="menu-title" data-i18n="Email">Jobs</span></a>
+            <li class="<%=url.toString().contains("Job")||url.toString().contains("Invoice")  ? "active" : ""%> nav-item"><a href="<%=request.getContextPath()%>/job/List" title="Job"><i class="feather icon-award "></i><span class="menu-title" data-i18n="Email">Jobs</span></a>
             </li>
 <!--            <li class=" nav-item"><a href="#" title="Report"><i class="feather icon-bar-chart "></i><span class="menu-title" data-i18n="Email">Report</span></a>
             </li>-->

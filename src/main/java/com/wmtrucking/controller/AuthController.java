@@ -7,8 +7,10 @@ package com.wmtrucking.controller;
 
 import com.wmtrucking.entities.MaAuthobject;
 import com.wmtrucking.services.authService;
+import com.wmtrucking.utils.CommonUtils;
 import com.wmtrucking.utils.Constant;
 import com.wmtrucking.utils.SessionUtils;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -45,15 +47,21 @@ public class AuthController {
             model.addAttribute("error", "Username or password is incorrect.");
             return "index";
         }
+        
+        String remember = request.getParameter("rememberme");
+        if (remember != null) {
+            new CommonUtils().addCookie(response, "WmTrucking", accounts.getPassword(), 60 * 60 * 24 * 15);
+
+        }
         SessionUtils sessionUtils = new SessionUtils();
         sessionUtils.setSessionValue(request, Constant.AUTHSESSION.toString(), accounts);
         return "redirect:/Dashboard/Dashboard";
 //        return "redirect:/customer/List";
     }
 
-     @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(Model model, HttpServletRequest request, HttpServletResponse response) {
-      
+
         SessionUtils sessionUtils = new SessionUtils();
         sessionUtils.invelidate(request);
         return "redirect:/";

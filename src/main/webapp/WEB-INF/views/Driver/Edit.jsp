@@ -324,15 +324,15 @@
                                                                                                         </div>-->
 
                                                     <div class="col-md-8">
-                                                        <input type="text" required=""  class="form-control" name="mob" value="<%=checkInput.checkValueEdit(madriver.getMobile(), request.getParameter("mob"))%>" placeholder="Mobile Number">
+                                                        <input type="text" required="" id="mobile" class="form-control" name="mob" value="<%=checkInput.checkValueEdit(madriver.getMobile(), request.getParameter("mob"))%>" placeholder="Mobile Number">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Email *</span>
+                                                        <span>Email </span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="email" required="" class="form-control" name="email" value="<%=checkInput.checkValueEdit(madriver.getEmail(), request.getParameter("email"))%>" placeholder="Email">
+                                                        <input type="email" class="form-control" name="email" value="<%=checkInput.checkValueEdit(madriver.getEmail(), request.getParameter("email"))%>" placeholder="Email">
                                                     </div>
                                                 </div>
                                                     <div class="form-group row">
@@ -410,6 +410,13 @@
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+<script>
+   // $('#mobile').inputmask("(999) 999-9999");
+    $('#mobile').inputmask("999-999-9999");
+
+</script>
 <!-- END: Content-->
 <jsp:include page="../Template/pageEnd.jsp"></jsp:include>    
 

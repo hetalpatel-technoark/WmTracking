@@ -25,16 +25,24 @@
     <!-- Page container -->
     <div class="content-wrapper">
         <div class="content-header row">
-            <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="content-header-left col-md-12 col-12 mb-2">
                 <div class="row breadcrumbs-top">
-                    <div class="col-12">
+                    <div class="col-9">
                         <h2 class="content-header-title float-left mb-0">Invoice </h2>
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/Dashboard/Dashboard">Home</a>
                             </li>
+                            <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/job/List">Job</a>
+                            </li>
                             <li class="breadcrumb-item active"><a href="#">Invoice List</a></li>
                         </ol>
+                    </div>
+                </div>
+                             <div class="col-3">
+                    <div class="bg-default content-box text-right pad20A mrg25T">
+                        <a class="btn bg-gradient-primary mr-1 mb-1 waves-effect waves-light" href="<%= request.getContextPath()%>/job/List">
+                            <i class="fa fa-backward"></i> Back</a>
                     </div>
                 </div>
             </div>
@@ -82,8 +90,9 @@
                                                 <td><%=checkInput.checkValue(maInvoice.getDriverid().getFirstname())%></td>  
                                                 <td>
                                                     <div class="btn-group">
-                                                        <a target="_blank" href="<%=request.getContextPath()%>/invoice/pdf/<%=maInvoice.getId()%>" >
-                                                            <span class="label label-pur " style="background:#7367F0"> <i class="fa fa-share-alt "></i> View Pdf</span></a>
+                                                        <a href="<%=request.getContextPath()%>/invoice/pdf/<%=maInvoice.getId()%>" target="_blank" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Generate PDF">
+                                                            <i class="fa fa-file-pdf-o" style="font-size:14px;"></i> 
+                                                        </a>
                                                     </div>
                                                 </td>
                                             </tr>

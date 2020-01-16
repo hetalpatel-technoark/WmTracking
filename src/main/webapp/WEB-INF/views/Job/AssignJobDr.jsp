@@ -1,3 +1,4 @@
+<%@page import="com.wmtrucking.pojo.DriverPojo"%>
 <%@page import="com.wmtrucking.entities.MaJobDriver"%>
 <%@page import="com.wmtrucking.entities.MaJobs"%>
 <%@page import="com.wmtrucking.utils.DateUtils"%>
@@ -139,8 +140,9 @@
         </section>  
 
         <%}
-            List<MaJobDriver> maJobDrivers = (List<MaJobDriver>) request.getAttribute("maJobDrivers");
+            List<DriverPojo> maJobDrivers = (List<DriverPojo>) request.getAttribute("maJobDrivers");
             if (maJobDrivers.size() > 0) {
+                CheckInput checkInput = new CheckInput();
         %>
         <section id="basic-horizontal-layouts">
             <div class="row match-height">
@@ -159,19 +161,23 @@
                                                         <tr>
                                                             <th>Driver Name</th>                                             
                                                             <th>Assigned Date</th> 
+                                                            <th style="text-align: center">Total Dumps Pickup </th> 
+                                                            <th style="text-align: center">Total Dumps Done </th> 
                                                                 <%if (request.getParameter("flag") == null) {%>  
                                                             <th style="text-align: center">Action</th> <%}%>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            for (MaJobDriver maJobDriver : maJobDrivers) {
+                                                            for (DriverPojo maJobDriver : maJobDrivers) {
                                                         %>
                                                         <tr>
-                                                            <td><%= maJobDriver.getDriverId().getFirstname()%></td>
-                                                            <td><%= maJobDriver.getCreateddate() != null ? new DateUtils().dateWithFormat(maJobDriver.getCreateddate(), "MMMM dd, yyyy") : ""%></td>
+                                                            <td><%=checkInput.checkValue(maJobDriver.getFirstname())%></td>
+                                                            <td><%=checkInput.checkValue( maJobDriver.getCreateddate())%></td>
+                                                            <td style="text-align: center"><%= checkInput.checkValue(maJobDriver.getPickupjobcount())%></td>
+                                                            <td style="text-align: center"><%=checkInput.checkValue( maJobDriver.getDonejobcount())%></td>
                                                             <%if (request.getParameter("flag") == null) {%>   <td style="text-align: center">
-                                                                <a title="Delete" href="<%= request.getContextPath()%>/job/deleteAssignDriver/<%= maJobDriver.getId()%>/<%= maJobDriver.getJobId().getId()%>"><i class="feather icon-trash-2" style="color: red"></i></a>
+                                                                <a title="Delete" href="<%= request.getContextPath()%>/job/deleteAssignDriver/<%= maJobDriver.getId()%>/<%= maJobDriver.getJob_id()%>"><i class="feather icon-trash-2" style="color: red"></i></a>
                                                             </td><%}%>
                                                         </tr>
                                                         <%}%>

@@ -73,18 +73,11 @@
                                     <table class="table zero-configuration">
                                         <thead>
                                             <tr>
-                                                <th> Name</th>
+                                                <th>Driver Name</th>
                                                 <th>License Number</th>
                                                 <th>Mobile</th>
-                                                <th>Email</th>
+<!--                                                <th>Email</th>-->
                                                 <th>Status</th>
-                                                <!--                                                <th>Address1</th>
-                                                                                                <th>Address2</th>
-                                                                                                <th>Address3</th>
-                                                                                                <th>City</th>
-                                                                                                <th>State</th>
-                                                                                                <th>Country</th>
-                                                                                                <th>Pincode</th>-->
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -99,13 +92,13 @@
                                                             String name = madriver.getFirstname() + "" + (madriver.getMiddlename() != null ? " " + madriver.getMiddlename() : "") + "" + (madriver.getLastname() != null ? " " + madriver.getLastname() : "");
                                                             String mobile = ((madriver.getCountrycode() != null && madriver.getCountrycode().equals("")) ? madriver.getCountrycode() + " " : "") + madriver.getMobile();
                                             %>
-                                            <tr >
+                                            <tr>
                                                 <td><%=name%></td>
 
                                                 <td><%=checkInput.checkValue(madriver.getLicensenumber())%></td>
 <!--                                                <td><%=checkInput.checkValue((madriver.getCountrycode() != null ? madriver.getCountrycode() + " " : "") + (madriver.getMobile()!=null? madriver.getMobile():""))%></td>-->
                                                 <td><%=checkInput.checkValue((madriver.getMobile()!=null? madriver.getMobile():""))%></td>
-                                                <td><%=checkInput.checkValue(madriver.getEmail())%></td>
+<!--                                                <td><%=checkInput.checkValue(madriver.getEmail())%></td>-->
 
                                                 <td><span class="label <%=madriver.getStatus().equals("Active") ? "label-success" : "label-danger"%>"><%=madriver.getStatus()%></span></td>
 
@@ -116,12 +109,9 @@
                                                                 <i class="feather icon-menu"></i>
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton100">
-
                                                                 <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/driver/view/<%=madriver.getId()%>">
                                                                     <i class="feather icon-eye"></i><span>View</span>
                                                                 </a>
-
-
                                                                 <a class="dropdown-item" href="<%=request.getContextPath()%>/driver/edit/<%=madriver.getId()%>">
                                                                     <i class="feather icon-edit"></i> <span>Edit</span>
                                                                 </a>

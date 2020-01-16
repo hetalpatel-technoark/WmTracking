@@ -50,7 +50,7 @@
         <div class="content-header-left col-md-12 col-12 mb-2">
             <div class="row breadcrumbs-top">
                 <div class="col-6">
-                    <h2 class="content-header-title float-left mb-0">Dashboard</h2>
+                    <h3 class="content-header-title float-left mb-0">Interactive Dashboard</h3>
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/Dashboard/Dashboard">Home</a>
@@ -221,14 +221,23 @@
                                             <table class="table zero-configuration">
                                                 <thead>
                                                     <tr>
-                                                        <th>Company Name</th>                                             
+                                                        <!--                                                        <th>Company Name</th>                                             
+                                                                                                                <th>Job Number</th>                                             
+                                                                                                                <th>Job Date</th>  
+                                                                                                                <th>Job Status</th>  
+                                                                                                                <th> Total Dumps</th>
+                                                                                                                <th>Completed Dumps</th>
+                                                                                                                <th> Total Driver </th>
+                                                                                                                <th> Driver Names </th>-->
+
                                                         <th>Job Name</th>                                             
-                                                        <th>Job Date</th>  
-                                                        <th>Job Status</th>  
+                                                        <th>Job Number</th>                                             
+                                                        <th>Job Date</th>                                                          
                                                         <th> Total Dumps</th>
                                                         <th>Completed Dumps</th>
+                                                        <th>Job Status</th>  
                                                         <th> Total Driver </th>
-                                                        <th> Driver Names </th>
+                                                        
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -239,9 +248,11 @@
                                                             for (JobPojo majob : majobs) {
                                                     %>
                                                     <tr>
-                                                        <td><%=checkInput.checkValue(majob.getCustomername())%></td>
                                                         <td><%=checkInput.checkValue(majob.getJobname())%></td>
-                                                        <td><%=checkInput.checkValue(majob.getJobdate())%></td>                                               
+                                                        <td><%=checkInput.checkValue(majob.getJobnumber())%></td>
+                                                        <td><%=checkInput.checkValue(majob.getJobdate())%></td>  
+                                                        <td><%=checkInput.checkValue(majob.getTotaldumps())%></td>
+                                                        <td><%=checkInput.checkValue(majob.getCompleteddumps())%></td>
                                                         <% if (majob.getTransectionstatus().equals("0")) {%>
                                                         <td><span class="label label-success" >Completed</span></td>
                                                         <%} else if (majob.getTransectionstatus().equals("1")) {%>
@@ -249,10 +260,8 @@
                                                         <%} else if (majob.getTransectionstatus().equals("3")) {%>
                                                         <td><span class="label label-danger " >Pending</span></td>
                                                         <%}%>
-                                                        <td><%=checkInput.checkValue(majob.getTotaldumps())%></td>
-                                                        <td><%=checkInput.checkValue(majob.getCompleteddumps())%></td>
                                                         <td><%=checkInput.checkValue(majob.getDrivercount())%></td>
-                                                        <td>
+<!--                                                        <td>
                                                             <% if (majob.getDrivername() != null) {
                                                                     String[] driver = majob.getDrivername().split(",");
                                                                     for (int i = 0; i < driver.length; i++) {
@@ -260,12 +269,12 @@
                                                             <span class="label <%= i % 2 == 0 ? "label-orange" : "label-pur"%>  " ><%= driver[i]%></span>
                                                             <%}
                                                                 }%>
-                                                        </td> 
+                                                        </td> -->
 
                                                     </tr>
                                                     <%   }
                                                     } else {%>
-                                                    <tr><td colspan="8"><center><b>No records found</b></center></td>
+                                                    <tr><td colspan="7"><center><b>No records found</b></center></td>
                                                 </tr>
                                                 <%}%>
                                                 </tbody>
