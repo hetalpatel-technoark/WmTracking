@@ -15,6 +15,7 @@ import com.wmtrucking.utils.ValidateUtil;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,34 +33,34 @@ import org.springframework.web.servlet.ModelAndView;
 @Scope("request")
 @Controller
 public class customerController {
-
+    
     @Autowired
     SessionUtils sessionUtils;
     @Autowired
     customerService cusService;
-
+    
     @ModelAttribute(value = "customer")
     public void customer(HttpServletRequest request, Model model) throws UnAthorizedUserException {
         if (sessionUtils.getSessionValue(request, Constant.AUTHSESSION.toString()) == null) {
             throw new UnAthorizedUserException("");
         }
     }
-
+    
     @RequestMapping(value = "/customerList", method = RequestMethod.GET)
     public String createnote(HttpServletRequest request, Model model) {
-
+        
         List<MaCustomer> maCustomer = cusService.list(Constant.DETETED.toString());
         model.addAttribute("maCustomer", maCustomer);
-
+        
         return "Customer/List";
     }
-
+    
     @RequestMapping(value = "/Create", method = RequestMethod.GET)
     public String Create(HttpServletRequest request, Model model) {
-
+        
         return "Customer/Create";
     }
-
+    
     @RequestMapping(value = "/PostCreate", method = RequestMethod.POST)
     public String PostCreate(HttpServletRequest request, Model model) {
         List<String> errors = new ArrayList<>();
@@ -104,7 +105,7 @@ public class customerController {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Customer/Create";
         }
-
+        
         MaCustomer maCustomer = new MaCustomer();
         maCustomer.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
         maCustomer.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
@@ -121,31 +122,32 @@ public class customerController {
         maCustomer.setPhone(validateUtil.getStringValue(request.getParameter("phone")));
         //  maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
         maCustomer.setStatus(validateUtil.getStringValue(request.getParameter("status")));
+        maCustomer.setCreateddate(new Date());
         //maCustomer.setStatus(Constant.ACTIVE.toString());
 
         cusService.save(maCustomer);
         return "redirect:/customer/customerList?m=c";
     }
-
+    
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String Delete(HttpServletRequest request, Model model, @PathVariable("id") String id) {
-
+        
         MaCustomer maCustomer = cusService.findoneDelete(Constant.ACTIVE.toString(), Long.parseLong(id));
-
+        
         if (maCustomer != null) {
             maCustomer.setStatus(Constant.DETETED.toString());
             cusService.save(maCustomer);
             return "redirect:/customer/customerList?m=d";
-
+            
         }
         return "redirect:/customer/customerList?m=n";
     }
-
+    
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String edit(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
-
+        
         MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), id);
-
+        
         if (maCustomer != null) {
             model.addAttribute("maCustomer", maCustomer);
             return "Customer/Edit";
@@ -153,7 +155,7 @@ public class customerController {
         model.addAttribute("message", "notFound");
         return "redirect:/customer/customerList";
     }
-
+    
     @RequestMapping(value = "/postEdit", method = RequestMethod.POST)
     public String postEdit(HttpServletRequest request, Model model) {
         MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("id")));
@@ -176,7 +178,7 @@ public class customerController {
         validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "phone", "Phone", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
-
+        
         if (errors.size() > 0) {
             model.addAttribute("maCustomer", maCustomer);
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
@@ -226,12 +228,12 @@ public class customerController {
         cusService.save(maCustomer);
         return "redirect:/customer/customerList?m=e";
     }
-
+    
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String view(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
-
+        
         MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), id);
-
+        
         if (maCustomer != null) {
             model.addAttribute("maCustomer", maCustomer);
             return "Customer/view";
@@ -239,7 +241,7 @@ public class customerController {
         model.addAttribute("message", "notFound");
         return "redirect:/customer/customerList";
     }
-
+    
     @ExceptionHandler(Exception.class)
     public ModelAndView handleError(HttpServletRequest req, Exception ex) {
         StringWriter errors = new StringWriter();
@@ -250,5 +252,5 @@ public class customerController {
         mav.setViewName("redirect:/");
         return mav;
     }
-
+    
 }

@@ -36,22 +36,25 @@ public class AuthController {
     public String access(Model model, HttpServletRequest request, HttpServletResponse response) {
         if (request.getParameter("username") == null || request.getParameter("username").equals("")) {
             model.addAttribute("error", "Username and password is mandetory.");
-            return "index";
+            //return "index";
+            return "auth/login";
         }
         if (request.getParameter("password") == null || request.getParameter("password").equals("")) {
             model.addAttribute("error", "Username and password is mandetory.");
-            return "index";
+            // return "index";
+            return "auth/login";
         }
         MaAuthobject accounts = auService.findUser(request.getParameter("username"), request.getParameter("password"));
         if (accounts == null) {
             model.addAttribute("error", "Username or password is incorrect.");
-            return "index";
+//            return "index";
+            return "auth/login";
         }
-        
+
         String remember = request.getParameter("rememberme");
         if (remember != null) {
-            new CommonUtils().addCookie(response, "WmTrucking", accounts.getPassword(), 60 * 60 * 24 * 15);
-
+            String uuid = new CommonUtils().encryptAESURL(accounts.getAuthid().toString(), null);
+            new CommonUtils().addCookie(response, Constant.COOKIE_NAME.toString(), uuid, 60 * 60 * 24 * 15);
         }
         SessionUtils sessionUtils = new SessionUtils();
         sessionUtils.setSessionValue(request, Constant.AUTHSESSION.toString(), accounts);
@@ -63,6 +66,7 @@ public class AuthController {
     public String logout(Model model, HttpServletRequest request, HttpServletResponse response) {
 
         SessionUtils sessionUtils = new SessionUtils();
+        new CommonUtils().removeCookie(response, Constant.COOKIE_NAME.toString());
         sessionUtils.invelidate(request);
         return "redirect:/";
     }

@@ -19,6 +19,23 @@
     .label-pur {
         background-color: #f092b0;
     }
+    .tooltip-wrap {
+        position: relative;
+    }
+    .tooltip-wrap .tooltip-content {
+        display: none;
+        position: absolute;
+        bottom: -49%;
+        left: -90%;
+        right: -85%;
+        background-color: #fff;
+        padding: 0.5em;
+    }
+    .tooltip-wrap:hover .tooltip-content {
+        display: block;
+        background-color: #ffe6e6;
+        border-radius: 15px !important;
+    }
 </style>
 <jsp:include page="../Template/header.jsp"></jsp:include>
     <!-- Page container -->
@@ -111,19 +128,12 @@
                                     <table class="table zero-configuration">
                                         <thead>
                                             <tr>
-                                                <!--                                                <th>Company Name</th>                                             
-                                                                                                <th >Job Number</th>                                             
-                                                                                                <th >Job Date</th>  
-                                                                                                <th >Job Status</th>  
-                                                                                                <th > Total Dumps</th>
-                                                                                                <th >Completed Dumps</th>
-                                                                                                <th > Total Driver </th>
-                                                                                                <th >Driver Names </th>                                               
-                                                                                                <th >Actions</th>-->
+
                                                 <th>Job Number</th>
                                                 <th>Job Name</th>                                 
                                                 <th>Job Date</th>  
                                                 <th> Total Dumps</th>
+                                                <th>Pickup Dumps</th>
                                                 <th>Completed Dumps</th>
                                                 <th width="50%">Job Status</th>  
                                                 <th> Total Driver </th>
@@ -143,25 +153,45 @@
                                                 <td><%=checkInput.checkValue(majob.getJobname())%></td>
                                                 <td><%=checkInput.checkValue(majob.getJobdate())%></td>   
                                                 <td><%=checkInput.checkValue(majob.getTotaldumps())%></td>
+                                                <td><%=checkInput.checkValue(majob.getPickupddumps())%></td>
                                                 <td><%=checkInput.checkValue(majob.getCompleteddumps())%></td>
-                                                <% if (majob.getTransectionstatus().equals("0")) {%>
+                                                <% if (majob.getJobStatus().equals("Completed")) {%>
                                                 <td><span class="label label-success" >Completed</span></td>
-                                                <%} else if (majob.getTransectionstatus().equals("1")) {%>
-                                                <td><span class="label label-info " >In Progress</span></td>
-                                                <%} else if (majob.getTransectionstatus().equals("3")) {%>
+                                                <%} else if (majob.getJobStatus().equals("Active")) {%>
+                                                <td><span class="label label-info " >Active</span></td>
+                                                <%} else if (majob.getJobStatus().equals("Pending")) {%>
                                                 <td><span class="label label-danger " >Pending</span></td>
                                                 <%}%>
                                                 <td style="text-align: center"><%=checkInput.checkValue(majob.getDrivercount())%></td>
-                                                <td>
+                                                <!--                                                                                                <td>
+                                                                                                
+                                                <% if (majob.getDrivername() != null) {
+                                                        String[] driver = majob.getDrivername().split(",");
+                                                        for (int i = 0; i < driver.length; i++) {
+                                                %>
+                                                <span class="label <%= i % 2 == 0 ? "label-orange" : "label-pur"%>  " ><%= driver[i]%></span>
+                                                <%}
+                                                    }%>
+                                            </td>                                            -->
 
-                                                    <% if (majob.getDrivername() != null) {
-                                                            String[] driver = majob.getDrivername().split(",");
-                                                            for (int i = 0; i < driver.length; i++) {
-                                                    %>
-                                                    <span class="label <%= i % 2 == 0 ? "label-orange" : "label-pur"%>  " ><%= driver[i]%></span>
-                                                    <%}
-                                                        }%>
-                                                </td>                                            
+                                                <td> 
+                                                    <%if (majob.getDrivercount() > 0) {%>
+                                                    <div class="tooltip-wrap">
+
+                                                        <i class="feather icon-users "></i>                                                  
+                                                        <div class="tooltip-content">
+                                                            <p>  <% if (majob.getDrivername() != null) {
+                                                                    String[] driver = majob.getDrivername().split(","); %>
+                                                           
+                                                            <table>
+                                                                <%   for (int i = 0; i < driver.length; i++) {
+                                                                %>
+                                                                <tr><td> <span class="label label-orange " ><%= driver[i]%></span></td></tr>
+                                                                <%}%>
+                                                            </table>
+                                                            <%}%></p>
+                                                        </div> 
+                                                    </div><%}%></td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <div class="dropdown">
@@ -185,18 +215,19 @@
                                                                 <%}
                                                                 } else {%>
                                                                 <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/assignJobDr/<%=majob.getId()%>?flag=complete">
-                                                                    <i class="feather icon-user "></i><span>Assign Driver</span>
+                                                                    <i class="feather icon-user "></i><span>View Assign Driver</span>
                                                                 </a> 
                                                                 <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/invoice/list/<%=majob.getId()%>">
                                                                     <i class="feather icon-eye "></i><span>Show Invoice</span>
+                                                                </a>
+                                                                     <a class="dropdown-item"  onclick="archive('Archive', '<%=majob.getId()%>')">
+                                                                    <i class="feather icon-archive "></i> <span>Archive</span>
                                                                 </a>
                                                                 <%}%>
                                                                 <a class="dropdown-item" href="<%=request.getContextPath()%>/job/edit/<%=majob.getId()%>">
                                                                     <i class="feather icon-edit"></i> <span>Edit</span>
                                                                 </a>
-                                                                <a class="dropdown-item"  onclick="archive('Archive', '<%=majob.getId()%>')">
-                                                                    <i class="feather icon-archive "></i> <span>Archive</span>
-                                                                </a>
+                                                               
 
                                                             </div>
                                                         </div>
@@ -208,6 +239,8 @@
                                         </tbody>
 
                                     </table>
+                                    <p id="info" style="display: none">Text to popup</p>
+
                                 </div>
                             </div>
                         </div>
@@ -234,6 +267,16 @@
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
 
 <script>
+
+                                                                    $(document).ready(function () {
+                                                                        var e = document.getElementById('icon');
+                                                                        e.onmouseover = function () {
+                                                                            document.getElementById('info').style.display = 'block';
+                                                                        }
+                                                                        e.onmouseout = function () {
+                                                                            document.getElementById('info').style.display = 'none';
+                                                                        }
+                                                                    });
 
                                                                     function archive(status, id) {
                                                                         Swal.fire({

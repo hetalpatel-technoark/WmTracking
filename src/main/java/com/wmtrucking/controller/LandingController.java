@@ -5,6 +5,9 @@
  */
 package com.wmtrucking.controller;
 
+import com.wmtrucking.entities.MaAuthobject;
+import com.wmtrucking.services.authService;
+import com.wmtrucking.utils.CommonUtils;
 import com.wmtrucking.utils.Constant;
 import com.wmtrucking.utils.SessionUtils;
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +24,24 @@ public class LandingController {
 
     @Autowired
     SessionUtils sessionUtils;
+    @Autowired
+    authService authService;
 
     @RequestMapping(value = "/")
     public String Root(HttpServletRequest request) {
-        if (sessionUtils.getSessionValue(request, Constant.AUTHSESSION.toString()) == null) {
+
+        CommonUtils commonUtils = new CommonUtils();
+        String uuid = commonUtils.getCookieValue(request, Constant.COOKIE_NAME.toString());
+        if (uuid != null) {
+            Long accountid = Long.parseLong(commonUtils.decryptAESURL(uuid));
+            System.out.println("accountid...." + accountid);
+            MaAuthobject maAuthobject = authService.findOneUser(accountid);
+            if (maAuthobject != null) {
+                SessionUtils sessionUtils = new SessionUtils();
+                sessionUtils.setSessionValue(request, Constant.AUTHSESSION.toString(), maAuthobject);
+                return "redirect:/Dashboard/Dashboard";
+            }
+        } else if (sessionUtils.getSessionValue(request, Constant.AUTHSESSION.toString()) == null) {
             return "auth/login";
         }
         return "redirect:/Dashboard/Dashboard";

@@ -42,8 +42,8 @@ public class customerService {
         return cuRepository.checkEmail(satus, email);
     }
 
-    public Long count(String satus, Date jobdate) {
-        return cuRepository.count(satus, jobdate);
+    public Long customercount(String satus, Date jobdate) {
+        return cuRepository.customercount(satus, jobdate);
     }
 
     public List<MaCustomer> activeList(String satus) {

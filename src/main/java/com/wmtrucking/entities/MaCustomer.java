@@ -6,6 +6,7 @@
 package com.wmtrucking.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,6 +19,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -81,7 +84,9 @@ public class MaCustomer implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "status")
     private String status;
-
+    @Column(name = "createddate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createddate;
     @Column(name = "countrycode")
     private String countrycode;
     @OneToMany(mappedBy = "customerId")
@@ -114,6 +119,14 @@ public class MaCustomer implements Serializable {
 
     public List<MaJobs> getMaJobsList() {
         return maJobsList;
+    }
+
+    public Date getCreateddate() {
+        return createddate;
+    }
+
+    public void setCreateddate(Date createddate) {
+        this.createddate = createddate;
     }
 
     public void setMaJobsList(List<MaJobs> maJobsList) {
@@ -152,9 +165,11 @@ public class MaCustomer implements Serializable {
     public void setMaJobCustomerList(List<MaJobCustomer> maJobCustomerList) {
         this.maJobCustomerList = maJobCustomerList;
     }
+
     public String getCountrycode() {
         return countrycode;
     }
+
     public void setCountrycode(String countrycode) {
         this.countrycode = countrycode;
     }

@@ -70,7 +70,7 @@
                                 <a class="page-link" href="<%= request.getContextPath()%>/Dashboard/PrevJobDate/<%= request.getAttribute("jobDate")%>">
                                     <i class="feather icon-chevrons-left"></i> Prev 
                                 </a></li>
-                            <li class="page-item active"><a class="page-link" href="#"><%= request.getAttribute("jobDate")%></a></li>
+                            <li class="page-item active"><a class="page-link" href="#"><%= request.getAttribute("showJobDate") != null ? request.getAttribute("showJobDate") : request.getAttribute("jobDate")%></a></li>
 
                             <li class="page-item">
                                 <a class="page-link" href="<%= request.getContextPath()%>/Dashboard/NextJobDate/<%= request.getAttribute("jobDate")%>"> Next <i class="feather icon-chevrons-right"></i> 
@@ -84,125 +84,6 @@
 
     <div class="content-body">
         <!-- Analytics card section start -->
-        <section id="apexchart">
-            <div class="row">
-
-                <div class="col-lg-3 col-md-12">
-                    <div class="card">
-                        <a href="<%= request.getContextPath()%>/Dashboard/DumpsList/<%= request.getAttribute("jobDate")%>?flag=start" >
-                            <div class="card-header d-flex flex-column align-items-start pb-0">
-                                <div class="avatar bg-rgba-primary p-50 m-0">
-                                    <div class="avatar-content">
-                                        <i class="feather icon-users   text-primary font-medium-5"></i>
-                                    </div>
-                                </div>
-                                <h2 class="text-bold-700 mt-1">
-                                    <%= request.getAttribute("countDumpingPickup") != null ? request.getAttribute("countDumpingPickup") : "0"%>
-                                </h2>
-                                <p class="mb-0" style="color: black" >Total Dumps Pickup </p>
-                            </div><br>
-                        </a>
-                    </div>
-                </div> 
-                <div class="col-lg-3 col-md-12">
-                    <div class="card"  >
-                        <a href="<%= request.getContextPath()%>/Dashboard/DumpsList/<%= request.getAttribute("jobDate")%>?flag=end" >
-
-                            <div class="card-header d-flex flex-column align-items-start pb-0">
-                                <div class="avatar bg-rgba-primary p-50 m-0">
-                                    <div class="avatar-content">
-                                        <i class="feather icon-user  text-primary font-medium-5"></i>
-                                    </div>
-                                </div>
-                                <h2 class="text-bold-700 mt-1">
-                                    <%= request.getAttribute("countDumpingDone") != null ? request.getAttribute("countDumpingDone") : "0"%>
-                                </h2>
-
-                                <!--                            <p class="mb-0">Total Drivers</p>-->
-                                <p class="mb-0" style="color: black">Total Dumps Done </p>
-                            </div></a>
-                        <br>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-12">
-                    <div class="card">
-                        <div class="card-header d-flex flex-column align-items-start pb-0">
-                            <div class="avatar bg-rgba-primary p-50 m-0">
-                                <div class="avatar-content">
-                                    <i class="feather icon-award  text-primary font-medium-5"></i>
-                                </div>
-                            </div>
-                            <h2 class="text-bold-700 mt-1">
-                                <%= request.getAttribute("driver")%>
-                            </h2>
-                            <!--                            <p class="mb-0">Total Jobs</p>-->
-                            <p class="mb-0">Total Driver Assigned </p>
-                        </div><br>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-12">
-                    <div class="card" >
-                        <div class="card-header d-flex flex-column align-items-start pb-0">
-                            <div class="avatar bg-rgba-primary p-50 m-0">
-                                <div class="avatar-content">
-                                    <i class="feather icon-award  text-primary font-medium-5"></i>
-                                </div>
-                            </div>
-                            <h2 class="text-bold-700 mt-1">
-                                <%= request.getAttribute("customer")%>
-                            </h2>
-                            <p class="mb-0">Total Companies </p>
-                        </div><br>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-        <!--        <section id="apexchart">
-                    <div class="row">
-                         Line Chart 
-                        <div class="col-lg-12 col-md-12">
-                            <div class="card">
-        
-                                <div class="card-header">
-                                    <h4 class="card-title">Job for Month Base </h4>
-                                </div>  
-                                <div class="card-content">
-                                    <div class="card-body">
-                                        <div id="line-chart"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>-->
-
-        <section id="">
-            <div class="row">
-
-                <div class="col-lg-12 col-md-12">
-                    <div class="card">
-                        <div class="row">
-
-                            <div class="col-lg-12">
-                                <div class="card-header">
-                                    <h4 class="card-title">Daily Report  </h4>
-                                </div>  
-                                <div class="card-content">
-
-                                    <div id="gmaps-basic-maps"> 
-                                        <!--                                        <div id="pickupMap" class="height-400"></div>-->
-
-                                        <div id="pickupMap" class="height-400"></div>
-                                    </div>
-                                </div></div> 
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="">
             <div class="row">
 
@@ -234,10 +115,11 @@
                                                         <th>Job Number</th>                                             
                                                         <th>Job Date</th>                                                          
                                                         <th> Total Dumps</th>
+                                                        <th>Pickup Dumps</th>
                                                         <th>Completed Dumps</th>
                                                         <th>Job Status</th>  
-                                                        <th> Total Driver </th>
-                                                        
+                                                        <th> Total Drivers </th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -252,24 +134,28 @@
                                                         <td><%=checkInput.checkValue(majob.getJobnumber())%></td>
                                                         <td><%=checkInput.checkValue(majob.getJobdate())%></td>  
                                                         <td><%=checkInput.checkValue(majob.getTotaldumps())%></td>
+                                                        <td><%=checkInput.checkValue(majob.getPickupddumps())%></td>
+
                                                         <td><%=checkInput.checkValue(majob.getCompleteddumps())%></td>
-                                                        <% if (majob.getTransectionstatus().equals("0")) {%>
+                                                        <% if (majob.getJobStatus().equals("Completed")) {%>
                                                         <td><span class="label label-success" >Completed</span></td>
-                                                        <%} else if (majob.getTransectionstatus().equals("1")) {%>
-                                                        <td><span class="label label-info " >Open</span></td>
-                                                        <%} else if (majob.getTransectionstatus().equals("3")) {%>
+                                                        <%} else if (majob.getJobStatus().equals("Active")) {%>
+                                                        <td><span class="label label-info " >Active</span></td>
+                                                        <%} else if (majob.getJobStatus().equals("Pending")) {%>
                                                         <td><span class="label label-danger " >Pending</span></td>
                                                         <%}%>
+<!--                                                        <td><%=checkInput.checkValue(majob.getJobStatus())%></td>-->
+
                                                         <td><%=checkInput.checkValue(majob.getDrivercount())%></td>
-<!--                                                        <td>
-                                                            <% if (majob.getDrivername() != null) {
-                                                                    String[] driver = majob.getDrivername().split(",");
-                                                                    for (int i = 0; i < driver.length; i++) {
-                                                            %>
-                                                            <span class="label <%= i % 2 == 0 ? "label-orange" : "label-pur"%>  " ><%= driver[i]%></span>
-                                                            <%}
-                                                                }%>
-                                                        </td> -->
+                                                        <!--                                                        <td>
+                                                        <% if (majob.getDrivername() != null) {
+                                                                String[] driver = majob.getDrivername().split(",");
+                                                                for (int i = 0; i < driver.length; i++) {
+                                                        %>
+                                                        <span class="label <%= i % 2 == 0 ? "label-orange" : "label-pur"%>  " ><%= driver[i]%></span>
+                                                        <%}
+                                                            }%>
+                                                    </td> -->
 
                                                     </tr>
                                                     <%   }
@@ -290,6 +176,157 @@
                 </div>
             </div>
         </section>
+
+        <!--        <section id="apexchart">
+                   <div class="row">
+                        Line Chart 
+                       <div class="col-lg-12 col-md-12">
+                           <div class="card">
+       
+                               <div class="card-header">
+                                   <h4 class="card-title">Job for Month Base </h4>
+                               </div>  
+                               <div class="card-content">
+                                   <div class="card-body">
+                                       <div id="line-chart"></div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </section>-->
+
+        <section id="">
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="row">
+
+                            <div class="col-lg-12">
+                                <div class="card-header">
+                                    <h4 class="card-title">Daily Report  </h4>
+                                </div>  
+                                <div class="card-content">
+
+                                    <div id="gmaps-basic-maps"> 
+                                        <!--                                        <div id="pickupMap" class="height-400"></div>-->
+
+                                        <div id="pickupMap" class="height-400"></div>
+                                    </div>
+                                </div></div> 
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="apexchart">
+            <div class="row">
+                <div class="col-lg-2 col-md-12" style="padding: 0px"  >
+                    <div class="card"  style="height: 80%;">
+                        <div class="card-header d-flex flex-column align-items-start pb-0">
+                            <div class="avatar bg-rgba-primary p-50 m-0">
+                                <div class="avatar-content">
+                                    <i class="feather icon-at-sign   text-primary font-medium-5"></i>
+                                </div>
+                            </div>
+                            <h2 class="text-bold-700 mt-1">
+                                <%= request.getAttribute("job") != null ? request.getAttribute("job") : "0"%>
+                            </h2>
+                            <p class="mb-0" style="color: black">Total Job</p>
+                        </div><br>
+
+                    </div>
+                </div> 
+                <div class="col-lg-2 col-md-12"  >
+                    <div class="card"  style="height: 80%;">
+                        <div class="card-header d-flex flex-column align-items-start pb-0">
+                            <div class="avatar bg-rgba-primary p-50 m-0">
+                                <div class="avatar-content">
+                                    <i class="feather icon-users   text-primary font-medium-5"></i>
+                                </div>
+                            </div>
+                            <h2 class="text-bold-700 mt-1">
+                                <%= request.getAttribute("totalDump") != null ? request.getAttribute("totalDump") : "0"%>
+                            </h2>
+                            <p class="mb-0" style="color: black">Total Dumps</p>
+                        </div><br>
+
+                    </div>
+                </div> 
+                <div class="col-lg-2 col-md-12" style="padding: 0px"  >
+                    <div class="card"  style="height: 80%;">
+                        <a href="<%= request.getContextPath()%>/Dashboard/DumpsList/<%= request.getAttribute("jobDate")%>?flag=start" >
+                            <div class="card-header d-flex flex-column align-items-start pb-0">
+                                <div class="avatar bg-rgba-primary p-50 m-0">
+                                    <div class="avatar-content">
+                                        <i class="feather icon-users   text-primary font-medium-5"></i>
+                                    </div>
+                                </div>
+                                <h2 class="text-bold-700 mt-1">
+                                    <%= request.getAttribute("countDumpingPickup") != null ? request.getAttribute("countDumpingPickup") : "0"%>
+                                </h2>
+                                <p class="mb-0" style="color: black" >Total Dumps Pickup </p>
+                            </div><br>
+                        </a>
+                    </div>
+                </div> 
+                <div class="col-lg-2 col-md-12" >
+                    <div class="card"  style="height: 80%;"  >
+                        <a href="<%= request.getContextPath()%>/Dashboard/DumpsList/<%= request.getAttribute("jobDate")%>?flag=end" >
+
+                            <div class="card-header d-flex flex-column align-items-start pb-0">
+                                <div class="avatar bg-rgba-primary p-50 m-0">
+                                    <div class="avatar-content">
+                                        <i class="feather icon-user  text-primary font-medium-5"></i>
+                                    </div>
+                                </div>
+                                <h2 class="text-bold-700 mt-1">
+                                    <%= request.getAttribute("countDumpingDone") != null ? request.getAttribute("countDumpingDone") : "0"%>
+                                </h2>
+
+                                <!--                            <p class="mb-0">Total Drivers</p>-->
+                                <p class="mb-0" style="color: black">Total Dumps Done </p>
+                            </div></a>
+                        <br>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-12" style="padding: 0px" >
+                    <div class="card"  style="height: 80%;">
+                        <div class="card-header d-flex flex-column align-items-start pb-0">
+                            <div class="avatar bg-rgba-primary p-50 m-0">
+                                <div class="avatar-content">
+                                    <i class="feather icon-award  text-primary font-medium-5"></i>
+                                </div>
+                            </div>
+                            <h2 class="text-bold-700 mt-1">
+                                <%= request.getAttribute("driver")%>
+                            </h2>
+                            <!--                            <p class="mb-0">Total Jobs</p>-->
+                            <p class="mb-0">Total Driver Assigned </p>
+                        </div><br>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-12"  >
+                    <div class="card"  style="height: 80%;" >
+                        <div class="card-header d-flex flex-column align-items-start pb-0">
+                            <div class="avatar bg-rgba-primary p-50 m-0">
+                                <div class="avatar-content">
+                                    <i class="feather icon-award  text-primary font-medium-5"></i>
+                                </div>
+                            </div>
+                            <h2 class="text-bold-700 mt-1">
+                                <%= request.getAttribute("customer")%>
+                            </h2>
+                            <p class="mb-0">Total Companies </p>
+                        </div><br>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
     </div>
 </div>
 

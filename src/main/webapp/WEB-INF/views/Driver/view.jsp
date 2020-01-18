@@ -46,6 +46,14 @@
                                         <div class="col-6">
                                             <div class="form-group row">
                                                 <div class="col-md-4">
+                                                    <span>Driver ID *</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" required disabled=""  class="form-control" name="driverid" value="<%=checkInput.checkValue(madriver.getDrivernumber())%>" placeholder="Driver ID">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
                                                     <span>First Name*</span>
                                                 </div>
                                                 <div class="col-md-8">
@@ -69,41 +77,30 @@
                                                 </div>
                                             </div>
 
-
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
+                                                    <span>Trucking Company Name </span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" disabled class="form-control" name="cmpname" value="<%=checkInput.checkValue(madriver.getCompanyname())%>" placeholder="Trucking Company Name">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
+                                                    <span>Driving License* </span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" required="" disabled class="form-control" name="driverLicNo" value="<%=checkInput.checkValue(madriver.getDriverlicense())%>" placeholder="Driving License">
+                                                </div>
+                                            </div>
                                             <div class="form-group row">
                                                 <div class="col-md-4">
                                                     <span>License Plate Number *</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input readonly type="text"  class="form-control" name="cmpname" value="<%=checkInput.checkValueEdit(madriver.getLicensenumber(), request.getParameter("cmpname"))%>" placeholder="License number">
+                                                    <input readonly type="text" disabled class="form-control" name="cmpname" value="<%=checkInput.checkValueEdit(madriver.getLicensenumber(), request.getParameter("cmpname"))%>" placeholder="License number">
                                                 </div>
                                             </div>
-
-                                            <div class="form-group row">
-                                                <div class="col-md-4">
-                                                    <span>Mobile</span>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input readonly type="text" readonly=""  class="form-control" name="phone" value="<%=checkInput.checkValueEdit(madriver.getMobile(), request.getParameter("phone"))%>" placeholder="Mobile no">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-4">
-                                                    <span>Email</span>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input readonly type="text" readonly=""  class="form-control" name="email" value="<%=checkInput.checkValueEdit(madriver.getEmail(), request.getParameter("email"))%>" placeholder="Email">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-4">
-                                                    <span>Password</span>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input type="text" required="" disabled="" class="form-control"  value="<%=checkInput.checkValue(madriver.getPassword())%>" placeholder="Password">
-                                                </div>
-                                            </div>
-
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group row">
@@ -136,6 +133,30 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input readonly type="text"  id="pincode" class="form-control" name="pin" value="<%=checkInput.checkValueEdit(madriver.getPincode(), request.getParameter("pin"))%>" placeholder="Zipcode">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
+                                                    <span>Mobile</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input readonly type="text" readonly=""  class="form-control" name="phone" value="<%=checkInput.checkValueEdit(madriver.getMobile(), request.getParameter("phone"))%>" placeholder="Mobile no">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
+                                                    <span>Email</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input readonly type="text" readonly=""  class="form-control" name="email" value="<%=checkInput.checkValueEdit(madriver.getEmail(), request.getParameter("email"))%>" placeholder="Email">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
+                                                    <span>Password</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" required="" disabled="" class="form-control"  value="<%=checkInput.checkValue(madriver.getPassword())%>" placeholder="Password">
                                                 </div>
                                             </div>
                                             <div class="form-group row">

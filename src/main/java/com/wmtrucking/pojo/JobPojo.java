@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.wmtrucking.pojo;
+
 import java.math.BigDecimal;
 
 /**
@@ -12,14 +13,15 @@ import java.math.BigDecimal;
  */
 public class JobPojo {
 
-    String customername, jobname, jobnumber, status, transectionstatus, drivername,jobdate,starttime,endtime;
-   
-    Long id, totaldumps, completeddumps, drivercount;
+    String customername, jobname, jobnumber, status, transectionstatus, drivername, jobdate, starttime, endtime, jobStatus;
+
+    Long id, totaldumps, completeddumps, drivercount,pickupddumps;
 
 //    String jobname, jobnumber, transectionstatus, drivername;
 //    Long id, totaljobcount, transactioncount, drivercount;
 //    Date jobdate;
     BigDecimal fromlatitude, fromlongitude, tolatitude, tolongitude;
+
     public String getCustomername() {
         return customername;
     }
@@ -32,8 +34,24 @@ public class JobPojo {
         this.endtime = endtime;
     }
 
+    public Long getPickupddumps() {
+        return pickupddumps;
+    }
+
+    public void setPickupddumps(Long pickupddumps) {
+        this.pickupddumps = pickupddumps;
+    }
+
     public void setCustomername(String customername) {
         this.customername = customername;
+    }
+
+    public String getJobStatus() {
+        return jobStatus;
+    }
+
+    public void setJobStatus(String jobStatus) {
+        this.jobStatus = jobStatus;
     }
 
     public String getJobname() {

@@ -29,8 +29,8 @@
         <section id="basic-horizontal-layouts">
             <div class="row match-height">
                 <div class="col-md-12 col-12">
-                    <%                   
-        MaCustomer maCustomer = null;
+                    <%
+                        MaCustomer maCustomer = null;
                         if (request.getAttribute("maCustomer") != null) {
                             maCustomer = (MaCustomer) request.getAttribute("maCustomer");
                         }
@@ -48,7 +48,7 @@
                                                     <span>First Name*</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input readonly  type="text" class="form-control" name="fname" value="<%=checkInput.checkValueEdit(maCustomer.getFirstname(),request.getParameter("fname"))%>" placeholder="First Name">
+                                                    <input readonly  type="text" class="form-control" name="fname" value="<%=checkInput.checkValueEdit(maCustomer.getFirstname(), request.getParameter("fname"))%>" placeholder="First Name">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -56,7 +56,7 @@
                                                     <span>Middle Name</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input readonly type="text" class="form-control" name="mname" value="<%=checkInput.checkValueEdit (maCustomer.getMiddlename(),request.getParameter("mname"))%>" placeholder="Middle Name">
+                                                    <input readonly type="text" class="form-control" name="mname" value="<%=checkInput.checkValueEdit(maCustomer.getMiddlename(), request.getParameter("mname"))%>" placeholder="Middle Name">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -64,7 +64,7 @@
                                                     <span>Last Name*</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input readonly type="text" class="form-control" name="lname" value="<%=checkInput.checkValueEdit (maCustomer.getLastname(),request.getParameter("lname"))%>" placeholder="Last Name">
+                                                    <input readonly type="text" class="form-control" name="lname" value="<%=checkInput.checkValueEdit(maCustomer.getLastname(), request.getParameter("lname"))%>" placeholder="Last Name">
                                                 </div>
                                             </div>
 
@@ -74,7 +74,7 @@
                                                     <span>Company Name *</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input readonly type="text" class="form-control" name="cmpname" value="<%=checkInput.checkValueEdit (maCustomer.getCompanyname(),request.getParameter("cmpname"))%>" placeholder="Company name">
+                                                    <input readonly type="text" class="form-control" name="cmpname" value="<%=checkInput.checkValueEdit(maCustomer.getCompanyname(), request.getParameter("cmpname"))%>" placeholder="Company name">
                                                 </div>
                                             </div>
 
@@ -83,7 +83,7 @@
                                                     <span>Phone Number*</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input readonly type="text" readonly="" class="form-control" name="phone" value="<%=checkInput.checkValueEdit (maCustomer.getPhone(),request.getParameter("phone"))%>" placeholder="Phone Number">
+                                                    <input readonly type="text" readonly="" class="form-control" name="phone" value="<%=checkInput.checkValueEdit(maCustomer.getPhone(), request.getParameter("phone"))%>" placeholder="Phone Number">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -91,7 +91,7 @@
                                                     <span>Email</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input readonly type="text" readonly=""  class="form-control" name="email" value="<%=checkInput.checkValueEdit (maCustomer.getEmail(),request.getParameter("email"))%>" placeholder="Email">
+                                                    <input readonly type="text" readonly=""  class="form-control" name="email" value="<%=checkInput.checkValueEdit(maCustomer.getEmail(), request.getParameter("email"))%>" placeholder="Email">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -100,8 +100,8 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <select disabled="" class="form-control select-class" name="status" required>
-                                                        <option <%= maCustomer.getStatus().equals("Active")?"selected":"" %> value="Active">Active</option>
-                                                        <option <%= maCustomer.getStatus().equals("Inactive")?"selected":"" %> value="Inactive">Inactive</option>
+                                                        <option <%= maCustomer.getStatus().equals("Active") ? "selected" : ""%> value="Active">Active</option>
+                                                        <option <%= maCustomer.getStatus().equals("Inactive") ? "selected" : ""%> value="Inactive">Inactive</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -112,7 +112,7 @@
                                                     <span>Address 1</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input readonly type="text" class="form-control" name="add1" value="<%=checkInput.checkValueEdit (maCustomer.getAddress1(),request.getParameter("add1"))%>" placeholder="Address">
+                                                    <input readonly type="text" class="form-control" name="add1" value="<%=checkInput.checkValueEdit(maCustomer.getAddress1(), request.getParameter("add1"))%>" placeholder="Address">
                                                 </div>
                                             </div>
 
@@ -122,7 +122,7 @@
                                                     <span>City</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input readonly type="text" class="form-control" name="city" value="<%=checkInput.checkValueEdit (maCustomer.getCity(),request.getParameter("city"))%>" placeholder="City">
+                                                    <input readonly type="text" class="form-control" name="city" value="<%=checkInput.checkValueEdit(maCustomer.getCity(), request.getParameter("city"))%>" placeholder="City">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -130,23 +130,31 @@
                                                     <span>State</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input readonly type="text" class="form-control" name="state" value="<%=checkInput.checkValueEdit (maCustomer.getState(),request.getParameter("state"))%>" placeholder="State">
+                                                    <input readonly type="text" class="form-control" name="state" value="<%=checkInput.checkValueEdit(maCustomer.getState(), request.getParameter("state"))%>" placeholder="State">
                                                 </div>
                                             </div>
-<!--                                            <div class="form-group row">
-                                                <div class="col-md-4">
-                                                    <span>Country</span>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input readonly type="text" class="form-control" name="country" value="<%=checkInput.checkValueEdit (maCustomer.getCountry(),request.getParameter("country"))%>" placeholder="Country">
-                                                </div>
-                                            </div>-->
+                                            <!--                                            <div class="form-group row">
+                                                                                            <div class="col-md-4">
+                                                                                                <span>Country</span>
+                                                                                            </div>
+                                                                                            <div class="col-md-8">
+                                                                                                <input readonly type="text" class="form-control" name="country" value="<%=checkInput.checkValueEdit(maCustomer.getCountry(), request.getParameter("country"))%>" placeholder="Country">
+                                                                                            </div>
+                                                                                        </div>-->
                                             <div class="form-group row">
                                                 <div class="col-md-4">
                                                     <span>Zipcode</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input readonly type="text" class="form-control" name="pin" value="<%=checkInput.checkValueEdit (maCustomer.getPincode(),request.getParameter("pin"))%>" placeholder="Zipcode">
+                                                    <input readonly type="text" class="form-control" name="pin" value="<%=checkInput.checkValueEdit(maCustomer.getPincode(), request.getParameter("pin"))%>" placeholder="Zipcode">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
+                                                    <span>Invoice History</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" disabled="" id="first-name" class="form-control" name="invoicehistory" value="" placeholder="Invoice History">
                                                 </div>
                                             </div>
                                         </div>

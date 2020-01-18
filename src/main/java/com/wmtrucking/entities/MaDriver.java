@@ -84,12 +84,23 @@ public class MaDriver implements Serializable {
     @Column(name = "mobile")
     private String mobile;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 2147483647)
     @Column(name = "email")
     private String email;
     @Size(max = 2147483647)
     @Column(name = "status")
     private String status;
+
+    @Column(name = "driverlicense")
+    private String driverlicense;
+    @Column(name = "drivernumber")
+    private String drivernumber;
+    @Column(name = "companyname")
+    private String companyname;
+
+    @OneToMany(mappedBy = "driverid")
+    private List<MaPushNotification> maPushNotificationList;
     @OneToMany(mappedBy = "driverid")
     private List<MaInvoice> maInvoiceList;
     @Column(name = "countrycode")
@@ -105,6 +116,7 @@ public class MaDriver implements Serializable {
     @Column(name = "otp_expire_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date otpExpireTime;
+
     @OneToMany(mappedBy = "driverId")
     private List<MaJobDriver> maJobDriverList;
     private static final long serialVersionUID = 1L;
@@ -150,6 +162,30 @@ public class MaDriver implements Serializable {
 
     public String getCountrycode() {
         return countrycode;
+    }
+
+    public String getDriverlicense() {
+        return driverlicense;
+    }
+
+    public void setDriverlicense(String driverlicense) {
+        this.driverlicense = driverlicense;
+    }
+
+    public String getDrivernumber() {
+        return drivernumber;
+    }
+
+    public void setDrivernumber(String drivernumber) {
+        this.drivernumber = drivernumber;
+    }
+
+    public String getCompanyname() {
+        return companyname;
+    }
+
+    public void setCompanyname(String companyname) {
+        this.companyname = companyname;
     }
 
     public void setCountrycode(String countrycode) {
@@ -224,11 +260,21 @@ public class MaDriver implements Serializable {
     public void setMaJobTrackingList(List<MaJobTracking> maJobTrackingList) {
         this.maJobTrackingList = maJobTrackingList;
     }
+
     public List<MaJobTransaction> getMaJobTransactionList() {
         return maJobTransactionList;
     }
+
     public void setMaJobTransactionList(List<MaJobTransaction> maJobTransactionList) {
         this.maJobTransactionList = maJobTransactionList;
+    }
+
+    public List<MaInvoice> getMaInvoiceList() {
+        return maInvoiceList;
+    }
+
+    public void setMaInvoiceList(List<MaInvoice> maInvoiceList) {
+        this.maInvoiceList = maInvoiceList;
     }
 
     public String getLicensenumber() {
@@ -343,12 +389,12 @@ public class MaDriver implements Serializable {
         this.status = status;
     }
 
-    public List<MaInvoice> getMaInvoiceList() {
-        return maInvoiceList;
+    public List<MaPushNotification> getMaPushNotificationList() {
+        return maPushNotificationList;
     }
 
-    public void setMaInvoiceList(List<MaInvoice> maInvoiceList) {
-        this.maInvoiceList = maInvoiceList;
+    public void setMaPushNotificationList(List<MaPushNotification> maPushNotificationList) {
+        this.maPushNotificationList = maPushNotificationList;
     }
 
 }

@@ -58,12 +58,12 @@ public class DashboardController {
 
     @RequestMapping(value = "/Dashboard", method = RequestMethod.GET)
     public String dashboard(Model model, HttpServletRequest request, HttpServletResponse response) {
-
-        model.addAttribute("customer", cuService.count(Constant.ACTIVE.toString(), new Date()));
-        model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), new Date()));
+        model.addAttribute("job", joService.count(Constant.ACTIVE.toString(), new Date()));
+        model.addAttribute("totalDump", joService.totalDumpCount(Constant.ACTIVE.toString(), new Date()));
         model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(), new Date()));
         model.addAttribute("countDumpingDone", joService.countDumpingDone(Constant.ACTIVE.toString(), new Date()));
-        // model.addAttribute("job", joService.count(Constant.ACTIVE.toString()));
+        model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), new Date()));
+        model.addAttribute("customer", cuService.customercount(Constant.ACTIVE.toString(), new Date()));
 
 //        List<Object[]> monthWiseJob = joService.findMonthWiseJob();
 //        if (!monthWiseJob.isEmpty()) {
@@ -78,10 +78,11 @@ public class DashboardController {
 //            model.addAttribute("customerWiseJob", customerWiseJob);
 //        }
         // contains only date information without time
+       
         List<JobPojo> maJobsesList = joService.getJobList(Constant.ACTIVE.toString(), new Date());
         model.addAttribute("maJobsesList", maJobsesList);
-       // model.addAttribute("jobDate", new DateUtils().dateWithFormat(new Date(), "MMMM dd, yyyy"));
-        model.addAttribute("jobDate", "Todays Date");
+        model.addAttribute("jobDate", new DateUtils().dateWithFormat(new Date(), "MMMM dd, yyyy"));
+        model.addAttribute("showJobDate", "Today Date");
 
         return "Dashboard/Dashboard";
     }
@@ -92,11 +93,18 @@ public class DashboardController {
         DateUtils dateutil = new DateUtils();
         Date sourceDate = dateutil.stringToDate(jobDate, "MMMM dd, yyyy");
         Date myDate = dateutil.IncreaseDays(sourceDate, 1);
-        model.addAttribute("customer", cuService.count(Constant.ACTIVE.toString(), myDate));
-        model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), myDate));
-        model.addAttribute("job", joService.count(Constant.ACTIVE.toString()));
+//        model.addAttribute("customer", cuService.count(Constant.ACTIVE.toString(), myDate));
+//        model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), myDate));
+//        model.addAttribute("job", joService.count(Constant.ACTIVE.toString()));
+//        model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(), myDate));
+//        model.addAttribute("countDumpingDone", joService.countDumpingDone(Constant.ACTIVE.toString(), myDate));
+
+        model.addAttribute("job", joService.count(Constant.ACTIVE.toString(), myDate));
+        model.addAttribute("totalDump", joService.totalDumpCount(Constant.ACTIVE.toString(), myDate));
         model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(), myDate));
         model.addAttribute("countDumpingDone", joService.countDumpingDone(Constant.ACTIVE.toString(), myDate));
+        model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), myDate));
+        model.addAttribute("customer", cuService.customercount(Constant.ACTIVE.toString(), myDate));
 
         List<JobPojo> maJobsesList = joService.getJobList(Constant.ACTIVE.toString(), myDate);
 
@@ -111,11 +119,18 @@ public class DashboardController {
         DateUtils dateutil = new DateUtils();
         Date sourceDate = dateutil.stringToDate(jobDate, "MMMM dd, yyyy");
         Date myDate = dateutil.DecreaseDays(sourceDate, 1);
-        model.addAttribute("customer", cuService.count(Constant.ACTIVE.toString(), myDate));
-        model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), myDate));
-        model.addAttribute("job", joService.count(Constant.ACTIVE.toString()));
+//        model.addAttribute("customer", cuService.count(Constant.ACTIVE.toString(), myDate));
+//        model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), myDate));
+//        model.addAttribute("job", joService.count(Constant.ACTIVE.toString()));
+//        model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(), myDate));
+//        model.addAttribute("countDumpingDone", joService.countDumpingDone(Constant.ACTIVE.toString(), myDate));
+
+        model.addAttribute("job", joService.count(Constant.ACTIVE.toString(), myDate));
+        model.addAttribute("totalDump", joService.totalDumpCount(Constant.ACTIVE.toString(), myDate));
         model.addAttribute("countDumpingPickup", joService.countDumpingPickup(Constant.ACTIVE.toString(), myDate));
         model.addAttribute("countDumpingDone", joService.countDumpingDone(Constant.ACTIVE.toString(), myDate));
+        model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), myDate));
+        model.addAttribute("customer", cuService.customercount(Constant.ACTIVE.toString(), myDate));
 
         List<JobPojo> maJobsesList = joService.getJobList(Constant.ACTIVE.toString(), myDate);
 

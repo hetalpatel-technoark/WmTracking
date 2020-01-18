@@ -16,12 +16,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class authService {
-
+    
     @Autowired
     private authRepository auRepository;
-
+    
     public MaAuthobject findUser(String email, String password) {
         return auRepository.findUser(email, password);
     }
-
+    
+    public MaAuthobject findOneUser(Long authid) {
+        return auRepository.findOneUser(authid);
+    }
 }

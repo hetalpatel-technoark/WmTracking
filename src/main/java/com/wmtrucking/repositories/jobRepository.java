@@ -49,8 +49,8 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
             + " isarchive=?3 ")
     MaJobs findPendingJob(String satus, Long id, Boolean isarchive);
 
-    @Query(nativeQuery = true, value = "select count(u.id) from ma_jobs u where u.status=?1")
-    Long count(String satus);
+    @Query(nativeQuery = true, value = "select count(u.id) from ma_jobs u where u.status=?1 and cast(u.createddate as date)=?2")
+    Long count(String satus, Date createddate);
 
     @Query(nativeQuery = true, value = "SELECT to_char(jobdate,'MON-YY'),count(id) FROM ma_jobs where jobdate is not null and status='Active'"
             + " group by to_char(jobdate,'MON-YY'),extract (year from (jobdate)),extract (month from (jobdate)) "
@@ -67,9 +67,9 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
     @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and cast(u.jobdate as date)=?2 ORDER BY u.id desc")
     public List<MaJobs> listOfJob(String satus, Date jobdate);
 
-//    @Query(nativeQuery = true, value = "select count(id) from ma_job_transaction where status=?2 "
-//            + "   and cast(starttime as date)=?3 and job_id in(select id from ma_jobs where status=?1)")
-//    Long countDumpingPickup(String satus, String transectionStatus, Date starttime);
+    @Query(nativeQuery = true, value = "select sum(totaljobcount) from ma_jobs where cast(createddate as date)=?2 and status=?1")
+    Long totalDumpCount(String satus, Date createdDate);
+
     @Query(nativeQuery = true, value = "select count(id) from ma_job_transaction where cast(starttime as date)=?2 and "
             + "job_id in(select id from ma_jobs where status=?1)")
     Long countDumpingPickup(String satus, Date starttime);

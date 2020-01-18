@@ -36,14 +36,19 @@ public class jobService {
     }
 
     public MaJobs findone(String satus, Long id, Boolean isarchive) {
-        return jobRepository.findone(satus, id,isarchive);
+        return jobRepository.findone(satus, id, isarchive);
+    }
+
+    public Long totalDumpCount(String satus, Date createdDate) {
+        return jobRepository.totalDumpCount(satus, createdDate);
     }
 
     public MaJobs findoneCompletedjob(String satus, Long id) {
         return jobRepository.findoneCompletedjob(satus, id);
     }
-    public Long count(String satus) {
-        return jobRepository.count(satus);
+
+    public Long count(String satus, Date createddate) {
+        return jobRepository.count(satus, createddate);
     }
 
     public List<Object[]> findMonthWiseJob() {
@@ -67,41 +72,49 @@ public class jobService {
     }
 
 //    public List<JobPojo> getJobList(String satus, Date jobdate) {
-//        String query = "select j.id, j.jobname,j.jobnumber,  j.jobdate, j.totaljobcount, "
-//                + "           (select count(id) from ma_job_transaction where job_id=j.id and status='Ended')as transactioncount,"
-//                + "           (select count(id) from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivercount,"
-//                + "            ( case when ((select count(id) from ma_job_transaction where job_id=j.id and status='Ended') = j.totaljobcount) then 0 "
-//                + "               else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status='Ended') =0) then 1 "
-//                + "             else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status='Ended') < j.totaljobcount) then 3 "
-//                + "             else 2 end end end) as Transectionstatus ,"
-//                + "		(select string_agg(firstname, ', ')"
-//                + "  from ma_driver where id in (select driver_id from ma_job_driver"
-//                + "			where job_id=j.id))as drivername , fromlatitude, fromlongitude,tolatitude,tolongitude"
-//                + "			from ma_jobs j where status=? and cast(j.jobdate as date)=? ORDER BY j.id desc";
+//        String query = "select j.id, (select string_agg(firstname, ', ') from ma_customer where id in (select customer_id from ma_job_customer where "
+//                + "job_id=j.id))as customername ,(SELECT TO_CHAR(j.jobdate, 'Month DD, YYYY') as jobdate),"
+//                + "j.jobname,j.jobnumber, j.totaljobcount as totaldumps, j.status,"
+//                + "            (select count(id) from ma_job_transaction where job_id=j.id and status='Ended')as completeddumps,"
+//                + "            (select count(id) from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivercount,"
+//                + "             ( case when ((select count(id) from ma_job_transaction where job_id=j.id and status='Ended') = j.totaljobcount) then 0 "
+//                + "                else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status='Ended') =0) then 1 "
+//                + "              else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status='Ended') < j.totaljobcount) then 3 "
+//                + "              else 2 end end end) as Transectionstatus,fromlatitude, fromlongitude,tolatitude,tolongitude,"
+//                + "            (select string_agg(firstname, ', ') from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivername "
+//                + "            from ma_jobs j where status=? and cast(j.jobdate as date)=? ORDER BY j.id desc";
 //        List<JobPojo> jobPojo = jdbcTemplate.query(query, new Object[]{satus, jobdate}, new BeanPropertyRowMapper<JobPojo>(JobPojo.class));
 //        return jobPojo;
 //    }
-    public List<JobPojo> getJobList(String satus, Date jobdate) {
+    public List<JobPojo> getJobList(String satus, Date createddate) {
         String query = "select j.id, (select string_agg(firstname, ', ') from ma_customer where id in (select customer_id from ma_job_customer where "
                 + "job_id=j.id))as customername ,(SELECT TO_CHAR(j.jobdate, 'Month DD, YYYY') as jobdate),"
                 + "j.jobname,j.jobnumber, j.totaljobcount as totaldumps, j.status,"
+                + "(case when (j.job_status='Completed') then 'Completed' else case when (j.job_status='Pending') then "
+                + "	(case when ((select count(id) from ma_job_transaction where job_id=j.id ) >0 ) then 'Active'"
+                + " else 'Pending' end ) end end ) as jobStatus,"
                 + "            (select count(id) from ma_job_transaction where job_id=j.id and status='Ended')as completeddumps,"
+                + "(select count(id) from ma_job_transaction where job_id=j.id and status='Started')as pickupddumps,"
                 + "            (select count(id) from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivercount,"
                 + "             ( case when ((select count(id) from ma_job_transaction where job_id=j.id and status='Ended') = j.totaljobcount) then 0 "
                 + "                else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status='Ended') =0) then 1 "
                 + "              else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status='Ended') < j.totaljobcount) then 3 "
                 + "              else 2 end end end) as Transectionstatus,fromlatitude, fromlongitude,tolatitude,tolongitude,"
                 + "            (select string_agg(firstname, ', ') from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivername "
-                + "            from ma_jobs j where status=? and cast(j.jobdate as date)=? ORDER BY j.id desc";
-        List<JobPojo> jobPojo = jdbcTemplate.query(query, new Object[]{satus, jobdate}, new BeanPropertyRowMapper<JobPojo>(JobPojo.class));
+                + "            from ma_jobs j where status=? and cast(j.createddate as date)=? ORDER BY j.id desc";
+        List<JobPojo> jobPojo = jdbcTemplate.query(query, new Object[]{satus, createddate}, new BeanPropertyRowMapper<JobPojo>(JobPojo.class));
         return jobPojo;
     }
 
-    public List<JobPojo> getJobList(String satus,Boolean isarchive) {
+    public List<JobPojo> getJobList(String satus, Boolean isarchive) {
         String query = "select j.id, (select string_agg(firstname, ', ') from ma_customer where id in (select customer_id from ma_job_customer"
                 + "				 where job_id=j.id))as customername ,(SELECT TO_CHAR(j.jobdate, 'Month DD, YYYY') as jobdate),"
                 + "j.jobname,j.jobnumber, j.totaljobcount as totaldumps, j.status,"
+                + "(case when (j.job_status='Completed') then 'Completed' else case when (j.job_status='Pending') then "
+                + "	(case when ((select count(id) from ma_job_transaction where job_id=j.id ) >0 ) then 'Active'"
+                + " else 'Pending' end ) end end ) as jobStatus,"
                 + "            (select count(id) from ma_job_transaction where job_id=j.id and status='Ended')as completeddumps,"
+                + "(select count(id) from ma_job_transaction where job_id=j.id and status='Started')as pickupddumps,"
                 + "            (select count(id) from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivercount,"
                 + "             ( case when ((select count(id) from ma_job_transaction where job_id=j.id and status='Ended') = j.totaljobcount) then 0 "
                 + "                else case when ( (select count(id) from ma_job_transaction where job_id=j.id and status='Ended') =0) then 1 "
@@ -109,7 +122,7 @@ public class jobService {
                 + "              else 2 end end end) as Transectionstatus,fromlatitude, fromlongitude,tolatitude,tolongitude,"
                 + "            (select string_agg(firstname, ', ') from ma_driver where id in (select driver_id from ma_job_driver where job_id=j.id))as drivername "
                 + "            from ma_jobs j where j.status=? and j.isarchive=? ORDER BY j.id desc";
-        List<JobPojo> jobPojo = jdbcTemplate.query(query, new Object[]{satus,isarchive}, new BeanPropertyRowMapper<JobPojo>(JobPojo.class));
+        List<JobPojo> jobPojo = jdbcTemplate.query(query, new Object[]{satus, isarchive}, new BeanPropertyRowMapper<JobPojo>(JobPojo.class));
         return jobPojo;
     }
 

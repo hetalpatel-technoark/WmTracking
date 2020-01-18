@@ -71,12 +71,15 @@ public class driverController {
         List<String> errors = new ArrayList<>();
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "mob", "Mobile number", errors);
-        //validateUtil.checkNull(request, "email", "Email", errors);
+
+        validateUtil.checkNull(request, "driverid", "Driver Id", errors);
+        validateUtil.checkNull(request, "driverLicNo", "Driver License Number", errors);
+        validateUtil.checkLength(errors, request, "cmpname", "Trucking Company Name", 255, 0);
         validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
 //        validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
         validateUtil.checkNull(request, "lname", "Last Name", errors);
-       // validateUtil.checkNull(request, "countryCode", "Country Code", errors);
+        // validateUtil.checkNull(request, "countryCode", "Country Code", errors);
 
         validateUtil.checkNull(request, "lno", "Licence number", errors);
 //        validateUtil.checkNull(errors, request, "lno", "Licence number", 255, 1);
@@ -89,8 +92,10 @@ public class driverController {
         validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "mob", "Mobile", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
-
         CommonUtils commonUtils = new CommonUtils();
+        if (request.getParameter("driverid") != null && !commonUtils.isBigInteger(request.getParameter("driverid"))) {
+            errors.add("Please Enter Proper Driver Id");
+        }
         if (!commonUtils.validatePhoneNumber(request.getParameter("mob"))) {
             errors.add("Please enter proper Phone number ");
         }
@@ -110,7 +115,7 @@ public class driverController {
         }
         //String mobile = "+" + request.getParameter("countryCode") + request.getParameter("mob");
         String mobile = request.getParameter("mob");
-       // MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mobile, request.getParameter("countryCode"));
+        // MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mobile, request.getParameter("countryCode"));
         MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mobile);
         if (checkMobile != null) {
             errors.add("Mobile is already exist");
@@ -122,6 +127,11 @@ public class driverController {
         maDriver.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
         maDriver.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
         maDriver.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
+
+        maDriver.setDrivernumber(validateUtil.getStringValue(request.getParameter("driverid")));
+        maDriver.setDriverlicense(validateUtil.getStringValue(request.getParameter("driverLicNo")));
+        maDriver.setCompanyname(validateUtil.getStringValue(request.getParameter("cmpname")));
+
         maDriver.setLicensenumber(validateUtil.getStringValue(request.getParameter("lno")));
         maDriver.setAddress1(validateUtil.getStringValue(request.getParameter("add1")));
         maDriver.setCity(validateUtil.getStringValue(request.getParameter("city")));
@@ -129,7 +139,7 @@ public class driverController {
         maDriver.setState(validateUtil.getStringValue(request.getParameter("state")));
         maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maDriver.setMobile(mobile);
-      //  maDriver.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
+        //  maDriver.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
         //maDriver.setStatus(Constant.ACTIVE.toString());
         maDriver.setCreateddate(new Date());
         maDriver.setStatus(validateUtil.getStringValue(request.getParameter("status")));
@@ -192,8 +202,10 @@ public class driverController {
         List<String> errors = new ArrayList<>();
         validateUtil.checkNull(request, "fname", "Name", errors);
         validateUtil.checkNull(request, "mob", "Mobile number", errors);
-     //   validateUtil.checkNull(request, "email", "Email", errors);
 
+        validateUtil.checkNull(request, "driverid", "Driver Id", errors);
+        validateUtil.checkNull(request, "driverLicNo", "Driver License Number", errors);
+        validateUtil.checkLength(errors, request, "cmpname", "Trucking Company Name", 255, 0);
         validateUtil.checkLength(errors, request, "fname", "First Name", 255, 1);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
         validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
@@ -215,6 +227,9 @@ public class driverController {
             return "Driver/Edit";
         }
         CommonUtils commonUtils = new CommonUtils();
+        if (!commonUtils.isBigInteger(request.getParameter("driverid"))) {
+            errors.add("Please Enter Proper Driver Id");
+        }
         if (!commonUtils.validatePhoneNumber(request.getParameter("mob"))) {
             errors.add("Please enter proper Phone number ");
         }
@@ -249,6 +264,11 @@ public class driverController {
         maDriver.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
         maDriver.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
         maDriver.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
+
+        maDriver.setDrivernumber(validateUtil.getStringValue(request.getParameter("driverid")));
+        maDriver.setDriverlicense(validateUtil.getStringValue(request.getParameter("driverLicNo")));
+        maDriver.setCompanyname(validateUtil.getStringValue(request.getParameter("cmpname")));
+
         maDriver.setLicensenumber(validateUtil.getStringValue(request.getParameter("lno")));
         maDriver.setAddress1(validateUtil.getStringValue(request.getParameter("add1")));
         maDriver.setCity(validateUtil.getStringValue(request.getParameter("city")));
@@ -256,7 +276,7 @@ public class driverController {
         maDriver.setState(validateUtil.getStringValue(request.getParameter("state")));
         maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
         maDriver.setMobile(validateUtil.getStringValue(request.getParameter("mob")));
-       // maDriver.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
+        // maDriver.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
 
         //maDriver.setStatus(Constant.ACTIVE.toString());
         drService.save(maDriver);

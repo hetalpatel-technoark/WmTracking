@@ -1,8 +1,18 @@
 package com.wmtrucking.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.regex.Pattern;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,6 +73,69 @@ public class CommonUtils {
 
     public void removeCookie(HttpServletResponse response, String name) {
         addCookie(response, name, null, 0);
+    }
+
+    private SecretKeySpec setKey(String plainkey) {
+        SecretKeySpec secretKey = null;
+        byte[] keybytes;
+
+        MessageDigest sha = null;
+        try {
+            keybytes = plainkey.getBytes("UTF-8");
+            sha = MessageDigest.getInstance("SHA-256");
+            keybytes = sha.digest(keybytes);
+            keybytes = Arrays.copyOf(keybytes, 16);
+            secretKey = new SecretKeySpec(keybytes, "AES");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return secretKey;
+    }
+
+    public static String encryptAESURL(String plaintext, String passkey) {
+        try {
+            byte[] keyBytes = new byte[]{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09,
+                0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            SecretKeySpec key = new SecretKeySpec(keyBytes, "AES");
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+
+            byte[] cipherText = cipher.doFinal(plaintext.getBytes());
+            //Encode Character which are not allowed on URL
+            String encodedTxt = org.apache.commons.codec.binary.Base64.encodeBase64URLSafeString(cipherText);
+
+            return encodedTxt;
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    public static String decryptAESURL(String text) {
+        try {
+            byte[] keyBytes = new byte[]{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09,
+                0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            SecretKeySpec key = new SecretKeySpec(keyBytes, "AES");
+
+            cipher.init(Cipher.DECRYPT_MODE, key);
+            String decodeStr = URLDecoder.decode(
+                    text,
+                    StandardCharsets.UTF_8.toString());
+            //Decode URl safe to base 64
+            byte[] base64decodedTokenArr = org.apache.commons.codec.binary.Base64.decodeBase64(decodeStr.getBytes());
+
+            byte[] decryptedPassword = cipher.doFinal(base64decodedTokenArr);
+            //byte[] decryptedPassword = cipher.doFinal(decodeStr.getBytes());
+            String decodeTxt = new String(decryptedPassword);
+            return decodeTxt;
+        } catch (Exception e) {
+
+        }
+
+        return null;
     }
 
     public boolean checkDouble(String str) {
