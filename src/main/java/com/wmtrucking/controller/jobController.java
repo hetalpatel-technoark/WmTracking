@@ -449,8 +449,8 @@ public class jobController {
                     String android = maDriver.getMaPushNotificationList().stream().filter(line -> "Android".equalsIgnoreCase(line.getType()))
                             .collect(Collectors.toList()).stream().map(c -> c.getDevicetoken()).collect(Collectors.joining(","));
 
-                    threadPoolTaskExecutor.execute(new APNPushUtil(ios, "You are assign in " + majob.getJobname()));
-                    threadPoolTaskExecutor.execute(new FirebaseNotification(android, "You are assign in " + majob.getJobname(), "", null));
+                    threadPoolTaskExecutor.execute(new APNPushUtil(ios, "You have assigned in job" + majob.getJobname()));
+                    threadPoolTaskExecutor.execute(new FirebaseNotification(android, "You have assigned in " + majob.getJobname()));
 
                 }
             }
@@ -468,6 +468,14 @@ public class jobController {
 
         if (maJobDriver != null) {
             jobDriverService.delete(maJobDriver);
+
+            String ios = maJobDriver.getDriverId().getMaPushNotificationList().stream().filter(line -> "IOS".equalsIgnoreCase(line.getType()))
+                    .collect(Collectors.toList()).stream().map(c -> c.getDevicetoken()).collect(Collectors.joining(","));
+            String android = maJobDriver.getDriverId().getMaPushNotificationList().stream().filter(line -> "Android".equalsIgnoreCase(line.getType()))
+                    .collect(Collectors.toList()).stream().map(c -> c.getDevicetoken()).collect(Collectors.joining(","));
+
+            threadPoolTaskExecutor.execute(new APNPushUtil(ios, "You have Removed in job " + maJobDriver.getJobId().getJobname()));
+            threadPoolTaskExecutor.execute(new FirebaseNotification(android, "You have Removed in job " + maJobDriver.getJobId().getJobname()));
             return "redirect:/job/assignJobDr/" + jobid + "?m=remove";
         }
         return "redirect:/job/assignJobDr/" + jobid + "?m=notremove";

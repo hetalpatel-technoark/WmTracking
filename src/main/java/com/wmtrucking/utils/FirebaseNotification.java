@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.wmtrucking.utils;
 
 import com.google.gson.Gson;
@@ -15,13 +10,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * This APNPushUtil used for send push notification to Android users. Use thread
@@ -37,38 +32,22 @@ public class FirebaseNotification implements Runnable {
 
     private String deviceToken;
     private String title;
-    private String text;
-    private String extradata;
 
-    /**
-     * Construct your data <br/><b>deviceToken: </b> Comma(,) separated tokens
-     * <br/><b>title: </b> Title which is display on device <br/><b>text : </b>
-     * Text which is display on notification body <br/><b>extradata : </b>
-     * provide extradata if you want other wise provide. JSON Format
-     *
-     * @param deviceToken
-     * @param title
-     * @param text
-     * @param extradata
-     * @param userType
-     */
-    public FirebaseNotification(Object deviceToken, String title, String text, String extradata) {
+
+    public FirebaseNotification(Object deviceToken, String title) {
         this.deviceToken = null;
         this.title = null;
-        this.text = null;
-        this.extradata = null;
+      
 
         this.deviceToken = deviceToken == null ? null : deviceToken.toString();
         this.title = title;
-        this.text = text;
-        this.extradata = extradata;
+        
     }
 
     public FirebaseNotification() {
         this.deviceToken = null;
         this.title = null;
-        this.text = null;
-        this.extradata = null;
+      
     }
 
     @Override
@@ -77,21 +56,21 @@ public class FirebaseNotification implements Runnable {
         LOG.info("Sending Android pushnotification on " + new Date().toString());
         LOG.info("=====================================");
         LOG.info("deviceToken=> " + this.deviceToken);
-        //PropertiesCache propertiesCache = PropertiesCache.getInstance();
         if (this.deviceToken != null && this.deviceToken.length() > 0) {
-            System.out.println("deviceToken........"+deviceToken);
             try {
 
                 NotificationRequestModel notificationRequestModel = new NotificationRequestModel();
                 NotificationData notificationData = new NotificationData();
-                notificationData.setDetail(this.text);
+               // notificationData.setDetail(this.text);
                 notificationData.setTitle(this.title);
-                notificationData.setExtra(this.extradata);
+              //  notificationData.setExtra(this.extradata);
                 notificationRequestModel.setData(notificationData);
+
                 //Removing duplicate values
                 HashSet<String> distinctValues = new HashSet<>(Arrays.asList(this.deviceToken.split(",")));
                 String[] d = StringUtils.join(distinctValues, ",").split(",");
                 notificationRequestModel.setTo(d);
+
                 HttpClient httpClient = HttpClientBuilder.create().build();
                 HttpPost postRequest = new HttpPost(
                         "https://fcm.googleapis.com/fcm/send");
@@ -107,21 +86,21 @@ public class FirebaseNotification implements Runnable {
 
                 // server key of your firebase project goes here in header field.
                 // You can get it from firebase console.
-                postRequest.addHeader("Authorization", Constant.FCM_SERVERKEY.toString());
+                postRequest.addHeader("Authorization", "key=" + Constant.FCM_SERVERKEY);
+                // postRequest.addHeader("Authorization", "key=AAAAg6l6Eoc:APA91bHUtyeJPNM_KJf4ZMkO1d8dVhIc5dCqi-gHmM7zV4e-ssKXHRvr3vCmSpjIoy1XpMdBt7lGksfqS55ezznOQoHPdDK3-7N6tM3HM4Mz0NGETWdugXKeBlvFLACwWeIzD4RT8jcO");
 
                 postRequest.setEntity(input);
 
-                System.out.println("reques: json............>  " + json);
+                System.out.println("reques:" + json);
                 HttpResponse response = httpClient.execute(postRequest);
-                System.out.println("response_code...."+response.getStatusLine().getStatusCode());
+                System.out.println("response_code...." + response.getStatusLine().getStatusCode());
+
                 if (response.getStatusLine().getStatusCode() != 200) {
                     LOG.info("Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
                 } else if (response.getStatusLine().getStatusCode() == 200) {
-
                     LOG.info("response:" + EntityUtils.toString(response.getEntity()));
 
                 }
-
                 LOG.info("End Android pushnotification on " + new Date().toString());
                 LOG.info("=====================================");
             } catch (Exception e) {
@@ -132,7 +111,7 @@ public class FirebaseNotification implements Runnable {
     }
 
     public static void main(String[] args) {
-        FirebaseNotification fn = new FirebaseNotification("", "hi", "test", "");
+        FirebaseNotification fn = new FirebaseNotification("", "hi");
         fn.run();
     }
 }

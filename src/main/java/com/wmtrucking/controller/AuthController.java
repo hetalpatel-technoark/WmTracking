@@ -10,7 +10,6 @@ import com.wmtrucking.services.authService;
 import com.wmtrucking.utils.CommonUtils;
 import com.wmtrucking.utils.Constant;
 import com.wmtrucking.utils.SessionUtils;
-import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

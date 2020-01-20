@@ -25,9 +25,9 @@
     .tooltip-wrap .tooltip-content {
         display: none;
         position: absolute;
-        bottom: -49%;
+        bottom: -110%;
         left: -90%;
-        right: -85%;
+        right: -75%;
         background-color: #fff;
         padding: 0.5em;
     }
@@ -64,13 +64,24 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Job - List</h4>
-                            <div class="bg-default content-box text-right pad20A mrg25T">
-                                <a class="btn bg-gradient-primary" href="<%=request.getContextPath()%>/job/Create">
-                                    <i class="fa fa-plus"></i> Create New Job</a>
+                            <div class="col-lg-2">
+                                <h4 class="card-title">Job - List</h4>
+                            </div>
+                            <div class="col-lg-10 row bg-default content-box text-right pad20A mrg25T">
+                                <div class=" input-group col-lg-1"></div>
+                                <div class=" input-group col-lg-5">                                        
+                                    <span class="input-group-addon" style=" padding-top: 0.6rem !important; padding-bottom:0px !important; padding-left: 10px;padding-right: 10px; border-radius: 2px;">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                    <input id="myInput" class="form-control" onkeyup="myFunction()" type="text" placeholder="Search by Job Name/Number..">
+                                </div>
+                                <div class="col-lg-6">
+                                    <a class="btn bg-gradient-primary" href="<%=request.getContextPath()%>/job/Create">
+                                        <i class="fa fa-plus"></i> Create New Job</a>
 
-                                <a class="btn bg-gradient-primary" href="<%=request.getContextPath()%>/job/archiveList">
-                                    <i class="fa fa-archive"></i> Archive Job</a>
+                                    <a class="btn bg-gradient-primary" href="<%=request.getContextPath()%>/job/archiveList">
+                                        <i class="fa fa-archive"></i> Archive Job</a>
+                                </div>
                             </div>
                         </div>
                         <div class="card-content">
@@ -125,20 +136,19 @@
                                 <%}%>
                                 <%}%>
                                 <div class="table-responsive">
-                                    <table class="table zero-configuration">
+                                    <table id="myTable" class="table zero-configuration">
                                         <thead>
-                                            <tr>
-
-                                                <th>Job Number</th>
-                                                <th>Job Name</th>                                 
-                                                <th>Job Date</th>  
+                                            <tr>     
+                                                <th>Job Name</th>                                             
+                                                <th>Job Number</th>                                             
+                                                <th>Job Date</th>                                                          
                                                 <th> Total Dumps</th>
                                                 <th>Pickup Dumps</th>
                                                 <th>Completed Dumps</th>
-                                                <th width="50%">Job Status</th>  
-                                                <th> Total Driver </th>
-                                                <th >Driver Names </th>
-                                                <th>Actions</th>
+                                                <th>Job Status</th>  
+                                                <th> Total Drivers </th> 
+                                                 <th >Driver Names </th>
+                                                <th>Actions</th>    
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -149,9 +159,9 @@
                                                     for (JobPojo majob : majobs) {
                                             %>
                                             <tr>
-                                                <td><%=checkInput.checkValue(majob.getJobnumber())%></td>
                                                 <td><%=checkInput.checkValue(majob.getJobname())%></td>
-                                                <td><%=checkInput.checkValue(majob.getJobdate())%></td>   
+                                                <td><%=checkInput.checkValue(majob.getJobnumber())%></td>
+                                                <td><%=checkInput.checkValue(majob.getJobdate())%></td>  
                                                 <td><%=checkInput.checkValue(majob.getTotaldumps())%></td>
                                                 <td><%=checkInput.checkValue(majob.getPickupddumps())%></td>
                                                 <td><%=checkInput.checkValue(majob.getCompleteddumps())%></td>
@@ -162,19 +172,8 @@
                                                 <%} else if (majob.getJobStatus().equals("Pending")) {%>
                                                 <td><span class="label label-danger " >Pending</span></td>
                                                 <%}%>
-                                                <td style="text-align: center"><%=checkInput.checkValue(majob.getDrivercount())%></td>
-                                                <!--                                                                                                <td>
-                                                                                                
-                                                <% if (majob.getDrivername() != null) {
-                                                        String[] driver = majob.getDrivername().split(",");
-                                                        for (int i = 0; i < driver.length; i++) {
-                                                %>
-                                                <span class="label <%= i % 2 == 0 ? "label-orange" : "label-pur"%>  " ><%= driver[i]%></span>
-                                                <%}
-                                                    }%>
-                                            </td>                                            -->
-
-                                                <td> 
+                                                <td><%=checkInput.checkValue(majob.getDrivercount())%></td>
+                                              <td> 
                                                     <%if (majob.getDrivercount() > 0) {%>
                                                     <div class="tooltip-wrap">
 
@@ -183,12 +182,11 @@
                                                             <p>  <% if (majob.getDrivername() != null) {
                                                                     String[] driver = majob.getDrivername().split(","); %>
                                                            
-                                                            <table>
                                                                 <%   for (int i = 0; i < driver.length; i++) {
                                                                 %>
-                                                                <tr><td> <span class="label label-orange " ><%= driver[i]%></span></td></tr>
-                                                                <%}%>
-                                                            </table>
+                                                               <span class="label label-orange " ><%= driver[i]%></span>
+                                                                        <%}%>
+                                                            
                                                             <%}%></p>
                                                         </div> 
                                                     </div><%}%></td>
@@ -220,14 +218,14 @@
                                                                 <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/invoice/list/<%=majob.getId()%>">
                                                                     <i class="feather icon-eye "></i><span>Show Invoice</span>
                                                                 </a>
-                                                                     <a class="dropdown-item"  onclick="archive('Archive', '<%=majob.getId()%>')">
+                                                                <a class="dropdown-item"  onclick="archive('Archive', '<%=majob.getId()%>')">
                                                                     <i class="feather icon-archive "></i> <span>Archive</span>
                                                                 </a>
                                                                 <%}%>
                                                                 <a class="dropdown-item" href="<%=request.getContextPath()%>/job/edit/<%=majob.getId()%>">
                                                                     <i class="feather icon-edit"></i> <span>Edit</span>
                                                                 </a>
-                                                               
+
 
                                                             </div>
                                                         </div>
@@ -235,13 +233,15 @@
                                                 </td>
                                             </tr>
                                             <%   }
-                                                }%>
+                                            } else {%>
+                                            <tr><td colspan="7"><center><b>No records found</b></center></td>
+                                        </tr>
+                                        <%}%>
                                         </tbody>
 
                                     </table>
-                                    <p id="info" style="display: none">Text to popup</p>
-
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -254,6 +254,33 @@
 <jsp:include page="../Template/pageEnd.jsp"></jsp:include>    
 
 <jsp:include page="../Template/footer.jsp"></jsp:include>
+    <script>
+
+
+        function myFunction() {
+            var input, filter, table, tr, td, td2, i, txtValue, txtValue1;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                td2 = tr[i].getElementsByTagName("td")[0];
+                if (td || td2) {
+                    txtValue = td.textContent || td.innerText;
+                    txtValue1 = td2.textContent || td2.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else if (txtValue1.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+
+        }
+    </script>
 
     <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
@@ -268,52 +295,54 @@
 
 <script>
 
-                                                                    $(document).ready(function () {
-                                                                        var e = document.getElementById('icon');
-                                                                        e.onmouseover = function () {
-                                                                            document.getElementById('info').style.display = 'block';
-                                                                        }
-                                                                        e.onmouseout = function () {
-                                                                            document.getElementById('info').style.display = 'none';
-                                                                        }
-                                                                    });
-
-                                                                    function archive(status, id) {
-                                                                        Swal.fire({
-                                                                            title: "Are You Sure to " + status + " This Job?",
-                                                                            text: "You Are Going to " + status + " Job",
-                                                                            type: 'warning',
-                                                                            showCancelButton: true,
-                                                                            confirmButtonColor: '#3085d6',
-                                                                            cancelButtonColor: '#d33',
-                                                                            confirmButtonText: "Yes, " + status + " it!",
-                                                                            confirmButtonClass: 'btn btn-primary',
-                                                                            cancelButtonClass: 'btn btn-danger ml-1',
-                                                                            buttonsStyling: false,
-                                                                        }).then(function (result) {
-                                                                            if (result.value) {
-                                                                                window.location = "<%=request.getContextPath()%>/job/archive/" + id;
-                                                                            }
-                                                                        })
-                                                                    }
-                                                                    function changeStatus(status, id) {
-                                                                        Swal.fire({
-                                                                            title: "Are You Sure to " + status + " This Job?",
-                                                                            text: "You Are Going to " + status + " Job",
-                                                                            type: 'warning',
-                                                                            showCancelButton: true,
-                                                                            confirmButtonColor: '#3085d6',
-                                                                            cancelButtonColor: '#d33',
-                                                                            confirmButtonText: "Yes, " + status + " it!",
-                                                                            confirmButtonClass: 'btn btn-primary',
-                                                                            cancelButtonClass: 'btn btn-danger ml-1',
-                                                                            buttonsStyling: false,
-                                                                        }).then(function (result) {
-                                                                            if (result.value) {
-                                                                                window.location = "<%=request.getContextPath()%>/job/delete/" + id;
 
 
-                                                                            }
-                                                                        })
-                                                                    }
+//                                                                    $(document).ready(function () {
+//                                                                        var e = document.getElementById('icon');
+//                                                                        e.onmouseover = function () {
+//                                                                            document.getElementById('info').style.display = 'block';
+//                                                                        }
+//                                                                        e.onmouseout = function () {
+//                                                                            document.getElementById('info').style.display = 'none';
+//                                                                        }
+//                                                                    });
+
+        function archive(status, id) {
+            Swal.fire({
+                title: "Are You Sure to " + status + " This Job?",
+                text: "You Are Going to " + status + " Job",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Yes, " + status + " it!",
+                confirmButtonClass: 'btn btn-primary',
+                cancelButtonClass: 'btn btn-danger ml-1',
+                buttonsStyling: false,
+            }).then(function (result) {
+                if (result.value) {
+                    window.location = "<%=request.getContextPath()%>/job/archive/" + id;
+                }
+            })
+        }
+        function changeStatus(status, id) {
+            Swal.fire({
+                title: "Are You Sure to " + status + " This Job?",
+                text: "You Are Going to " + status + " Job",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Yes, " + status + " it!",
+                confirmButtonClass: 'btn btn-primary',
+                cancelButtonClass: 'btn btn-danger ml-1',
+                buttonsStyling: false,
+            }).then(function (result) {
+                if (result.value) {
+                    window.location = "<%=request.getContextPath()%>/job/delete/" + id;
+
+
+                }
+            })
+        }
 </script>

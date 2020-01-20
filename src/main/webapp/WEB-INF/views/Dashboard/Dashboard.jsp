@@ -93,24 +93,24 @@
 
                             <div class="col-lg-12">
                                 <div class="card-header">
-                                    <h4 class="card-title">Job List  </h4>
+                                    <div class="col-lg-6">
+                                        <h4 class="card-title">Job List  </h4></div>
+
+                                    <div class="col-lg-5  input-group">                                        
+                                            <span class="input-group-addon" style="    padding-left: 10px;    padding-right: 10px;">
+                                                <i class="fa fa-search"></i>
+                                            </span>
+                                            <input id="myInput" class="form-control" onkeyup="myFunction()" type="text" placeholder="Search by Job Name/Number..">
+                                     </div>
+
                                 </div>  
                                 <div class="card-content">
 
                                     <div class="card-body card-dashboard">
                                         <div class="table-responsive">
-                                            <table class="table zero-configuration">
+                                            <table id="myTable" class="table zero-configuration">
                                                 <thead>
-                                                    <tr>
-                                                        <!--                                                        <th>Company Name</th>                                             
-                                                                                                                <th>Job Number</th>                                             
-                                                                                                                <th>Job Date</th>  
-                                                                                                                <th>Job Status</th>  
-                                                                                                                <th> Total Dumps</th>
-                                                                                                                <th>Completed Dumps</th>
-                                                                                                                <th> Total Driver </th>
-                                                                                                                <th> Driver Names </th>-->
-
+                                                    <tr>     
                                                         <th>Job Name</th>                                             
                                                         <th>Job Number</th>                                             
                                                         <th>Job Date</th>                                                          
@@ -119,7 +119,6 @@
                                                         <th>Completed Dumps</th>
                                                         <th>Job Status</th>  
                                                         <th> Total Drivers </th>
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -344,65 +343,88 @@
 <!--<script src="<%=request.getContextPath()%>/assets-new/app-assets/js/scripts/charts/gmaps/maps.min.js"></script>-->
 
 <script>
-    $(document).ready(function () {
 
+
+                                                    function myFunction() {
+                                                        var input, filter, table, tr, td_col1, td_col2, i, txtValue_col1, txtValue_col2;
+                                                        input = document.getElementById("myInput");
+                                                        filter = input.value.toUpperCase();
+                                                        table = document.getElementById("myTable");
+                                                        tr = table.getElementsByTagName("tr");
+                                                        for (i = 0; i < tr.length; i++) {
+                                                            td_col1 = tr[i].getElementsByTagName("td")[0];
+                                                            td_col2 = tr[i].getElementsByTagName("td")[1];
+                                                            if (td_col1 || td_col2) {
+                                                                txtValue_col1 = td_col1.textContent || td_col1.innerText;
+                                                                txtValue_col2 = td_col2.textContent || td_col2.innerText;
+                                                                if (txtValue_col1.toUpperCase().indexOf(filter) > -1) {
+                                                                    tr[i].style.display = "";
+                                                                } else if (txtValue_col2.toUpperCase().indexOf(filter) > -1) {
+                                                                    tr[i].style.display = "";
+                                                                } else {
+                                                                    tr[i].style.display = "none";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    $(document).ready(function () {
     <% List<JobPojo> maJobses = (List<JobPojo>) request.getAttribute("maJobsesList");%>
-        //Pickup Site Map
-        map = new GMaps({
-            div: '#pickupMap',
-            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "29.974490"%>,
-            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "-95.817450"%>,
-            zoom: 11
-        });
-        //Loding address
+                                                        //Pickup Site Map
+                                                        map = new GMaps({
+                                                            div: '#pickupMap',
+                                                            lat: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlatitude() : "29.974490"%>,
+                                                            lng: <%= maJobses.size() > 0 ? maJobses.get(0).getFromlongitude() : "-95.817450"%>,
+                                                            zoom: 11
+                                                        });
+                                                        //Loding address
     <% for (JobPojo maJobs : maJobses) {%>
-        map.addMarker({
-            lat: <%= maJobs.getFromlatitude()%>,
-            lng: <%= maJobs.getFromlongitude()%>,
-            title: '<%= maJobs.getJobname()%>',
-            infoWindow: {
-                content: '<p><%= maJobs.getJobname()%></p>'
-            }
-        });
+                                                        map.addMarker({
+                                                            lat: <%= maJobs.getFromlatitude()%>,
+                                                            lng: <%= maJobs.getFromlongitude()%>,
+                                                            title: '<%= maJobs.getJobname()%>',
+                                                            infoWindow: {
+                                                                content: '<p><%= maJobs.getJobname()%></p>'
+                                                            }
+                                                        });
     <%}%>
     <% for (JobPojo maJobs : maJobses) {%>
-        map.addMarker({
-            lat: <%= maJobs.getTolatitude()%>,
-            lng: <%= maJobs.getTolongitude()%>,
-            title: '<%= maJobs.getJobname()%>',
-            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-            infoWindow: {
-                content: '<p><%= maJobs.getJobname()%></p>'
-            }
-        });
+                                                        map.addMarker({
+                                                            lat: <%= maJobs.getTolatitude()%>,
+                                                            lng: <%= maJobs.getTolongitude()%>,
+                                                            title: '<%= maJobs.getJobname()%>',
+                                                            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                                                            infoWindow: {
+                                                                content: '<p><%= maJobs.getJobname()%></p>'
+                                                            }
+                                                        });
     <%}%>
 
 //Loding address
     <%  for (JobPojo maJobs2 : maJobses) {%>
-        map.addMarker({
-            lat: <%= maJobs2.getFromlatitude()%>,
-            lng: <%= maJobs2.getFromlongitude()%>,
-            title: '<%= maJobs2.getJobname()%>',
-            infoWindow: {
-                content: "<p>Job Name: <%= maJobs2.getJobname()%> </br> Total Driver: <%= maJobs2.getDrivercount()%> </br>Job Number: <%= maJobs2.getJobnumber()%></p>"
-            }
-        });
+                                                        map.addMarker({
+                                                            lat: <%= maJobs2.getFromlatitude()%>,
+                                                            lng: <%= maJobs2.getFromlongitude()%>,
+                                                            title: '<%= maJobs2.getJobname()%>',
+                                                            infoWindow: {
+                                                                content: "<p>Job Name: <%= maJobs2.getJobname()%> </br> Total Driver: <%= maJobs2.getDrivercount()%> </br>Job Number: <%= maJobs2.getJobnumber()%></p>"
+                                                            }
+                                                        });
     <%}%>
 //Dumping address
     <% for (JobPojo maJobs : maJobses) {%>
-        map.addMarker({
-            lat: <%= maJobs.getTolatitude()%>,
-            lng: <%= maJobs.getTolongitude()%>,
-            title: '<%= maJobs.getJobname()%>',
-            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-            infoWindow: {
-                content: '<p>Job Name:<%= maJobs.getJobname()%></br> Total Driver: <%= maJobs.getDrivercount()%> </br>Job Number: <%= maJobs.getJobnumber()%></p>'
-            }
-        });
+                                                        map.addMarker({
+                                                            lat: <%= maJobs.getTolatitude()%>,
+                                                            lng: <%= maJobs.getTolongitude()%>,
+                                                            title: '<%= maJobs.getJobname()%>',
+                                                            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                                                            infoWindow: {
+                                                                content: '<p>Job Name:<%= maJobs.getJobname()%></br> Total Driver: <%= maJobs.getDrivercount()%> </br>Job Number: <%= maJobs.getJobnumber()%></p>'
+                                                            }
+                                                        });
     <%}%>
 
 
-    });
+                                                    });
 
 
 
@@ -423,46 +445,46 @@
             }
         }
     %>
-    var lineChartOptionsA = {
-        chart: {
-            height: 350,
-            type: 'line',
-            zoom: {
-                enabled: false
-            }
-        },
-        colors: ['#7367F0'],
-        dataLabels: {
-            enabled: false
-        },
-        stroke: {
-            curve: 'straight'
-        },
-        series: [{
-                name: "Job",
-                data: [<%=cnt%>],
-            }],
-        title: {
-            // text: 'Product Trends by Month',
-            align: 'left'
-        },
-        grid: {
-            row: {
-                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                opacity: 0.5
-            },
-        },
-        xaxis: {
-            categories: [<%=month%>],
-        },
-        yaxis: {
-            tickAmount: 1,
-        }
-    }
-    var lineChartA = new ApexCharts(
-            document.querySelector("#line-chart"),
-            lineChartOptionsA
-            );
-    lineChartA.render();
+                                                    var lineChartOptionsA = {
+                                                        chart: {
+                                                            height: 350,
+                                                            type: 'line',
+                                                            zoom: {
+                                                                enabled: false
+                                                            }
+                                                        },
+                                                        colors: ['#7367F0'],
+                                                        dataLabels: {
+                                                            enabled: false
+                                                        },
+                                                        stroke: {
+                                                            curve: 'straight'
+                                                        },
+                                                        series: [{
+                                                                name: "Job",
+                                                                data: [<%=cnt%>],
+                                                            }],
+                                                        title: {
+                                                            // text: 'Product Trends by Month',
+                                                            align: 'left'
+                                                        },
+                                                        grid: {
+                                                            row: {
+                                                                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                                                                opacity: 0.5
+                                                            },
+                                                        },
+                                                        xaxis: {
+                                                            categories: [<%=month%>],
+                                                        },
+                                                        yaxis: {
+                                                            tickAmount: 1,
+                                                        }
+                                                    }
+                                                    var lineChartA = new ApexCharts(
+                                                            document.querySelector("#line-chart"),
+                                                            lineChartOptionsA
+                                                            );
+                                                    lineChartA.render();
 
 </script>
