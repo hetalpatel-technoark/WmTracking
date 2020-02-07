@@ -7,7 +7,6 @@ package com.wmtrucking.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,19 +27,25 @@ import javax.validation.constraints.Size;
  * @author Admin
  */
 @Entity
-@Table(name = "ma_customer")
-@SequenceGenerator(name = "ma_customer_seq", sequenceName = "ma_customer_seq", allocationSize = 1)
+@Table(name = "ma_customer_history")
+@SequenceGenerator(name = "ma_customer_history_seq", sequenceName = "ma_customer_history_seq", allocationSize = 1)
 @NamedQueries({
-    @NamedQuery(name = "MaCustomer.findAll", query = "SELECT m FROM MaCustomer m")})
-public class MaCustomer implements Serializable {
+    @NamedQuery(name = "MaCustomerHistory.findAll", query = "SELECT m FROM MaCustomerHistory m")})
+public class MaCustomerHistory implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ma_customer_history_seq")
+    @Column(name = "id")
+    private Long id;
     @Size(max = 2147483647)
     @Column(name = "companyname")
     private String companyname;
     @Size(max = 2147483647)
     @Column(name = "firstname")
     private String firstname;
-
     @Size(max = 2147483647)
     @Column(name = "middlename")
     private String middlename;
@@ -70,44 +74,27 @@ public class MaCustomer implements Serializable {
     @Column(name = "pincode")
     private String pincode;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 2147483647)
     @Column(name = "phone")
     private String phone;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 2147483647)
     @Column(name = "email")
     private String email;
     @Size(max = 2147483647)
     @Column(name = "status")
-    private String status;   
+    private String status;
+    @Size(max = 2147483647)
+    @Column(name = "countrycode")
+    private String countrycode;
     @Column(name = "createddate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createddate;
-    @Column(name = "countrycode")
-    private String countrycode;
-    @OneToMany(mappedBy = "customerId")
-    private List<MaJobCustomer> maJobCustomerList;
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ma_customer_seq")
 
-    @Column(name = "id")
-    private Long id;
-    @OneToMany(mappedBy = "custId")
-    private List<MaJobs> maJobsList;
-
-    public MaCustomer() {
+    public MaCustomerHistory() {
     }
 
-    public MaCustomer(Long id) {
+    public MaCustomerHistory(Long id) {
         this.id = id;
     }
 
@@ -117,63 +104,6 @@ public class MaCustomer implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public List<MaJobs> getMaJobsList() {
-        return maJobsList;
-    }
-
-    public Date getCreateddate() {
-        return createddate;
-    }
-
-    public void setCreateddate(Date createddate) {
-        this.createddate = createddate;
-    }
-
-    public void setMaJobsList(List<MaJobs> maJobsList) {
-        this.maJobsList = maJobsList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MaCustomer)) {
-            return false;
-        }
-        MaCustomer other = (MaCustomer) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.wmtrucking.entities.MaCustomer[ id=" + id + " ]";
-    }
-
-    public List<MaJobCustomer> getMaJobCustomerList() {
-        return maJobCustomerList;
-    }
-
-    public void setMaJobCustomerList(List<MaJobCustomer> maJobCustomerList) {
-        this.maJobCustomerList = maJobCustomerList;
-    }
-
-    public String getCountrycode() {
-        return countrycode;
-    }
-
-    public void setCountrycode(String countrycode) {
-        this.countrycode = countrycode;
     }
 
     public String getCompanyname() {
@@ -287,6 +217,46 @@ public class MaCustomer implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
-   
+
+    public String getCountrycode() {
+        return countrycode;
+    }
+
+    public void setCountrycode(String countrycode) {
+        this.countrycode = countrycode;
+    }
+
+    public Date getCreateddate() {
+        return createddate;
+    }
+
+    public void setCreateddate(Date createddate) {
+        this.createddate = createddate;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof MaCustomerHistory)) {
+            return false;
+        }
+        MaCustomerHistory other = (MaCustomerHistory) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.wmtrucking.entities.MaCustomerHistory[ id=" + id + " ]";
+    }
 
 }

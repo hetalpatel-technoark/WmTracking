@@ -25,6 +25,9 @@ public class customerService {
     public void save(MaCustomer maCustomer) {
         cuRepository.save(maCustomer);
     }
+     public void delete(MaCustomer maCustomer) {
+        cuRepository.delete(maCustomer);
+    }
 
     public List<MaCustomer> list(String satus) {
         return cuRepository.list(satus);

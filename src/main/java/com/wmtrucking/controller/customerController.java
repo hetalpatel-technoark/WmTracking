@@ -6,7 +6,9 @@
 package com.wmtrucking.controller;
 
 import com.wmtrucking.entities.MaCustomer;
+import com.wmtrucking.entities.MaCustomerHistory;
 import com.wmtrucking.exception.UnAthorizedUserException;
+import com.wmtrucking.services.CustomerHistoryService;
 import com.wmtrucking.services.customerService;
 import com.wmtrucking.utils.CommonUtils;
 import com.wmtrucking.utils.Constant;
@@ -33,34 +35,36 @@ import org.springframework.web.servlet.ModelAndView;
 @Scope("request")
 @Controller
 public class customerController {
-    
+
     @Autowired
     SessionUtils sessionUtils;
     @Autowired
+    CustomerHistoryService customerHistoryService;
+    @Autowired
     customerService cusService;
-    
+
     @ModelAttribute(value = "customer")
     public void customer(HttpServletRequest request, Model model) throws UnAthorizedUserException {
         if (sessionUtils.getSessionValue(request, Constant.AUTHSESSION.toString()) == null) {
             throw new UnAthorizedUserException("");
         }
     }
-    
+
     @RequestMapping(value = "/customerList", method = RequestMethod.GET)
     public String createnote(HttpServletRequest request, Model model) {
-        
+
         List<MaCustomer> maCustomer = cusService.list(Constant.DETETED.toString());
         model.addAttribute("maCustomer", maCustomer);
-        
+
         return "Customer/List";
     }
-    
+
     @RequestMapping(value = "/Create", method = RequestMethod.GET)
     public String Create(HttpServletRequest request, Model model) {
-        
+
         return "Customer/Create";
     }
-    
+
     @RequestMapping(value = "/PostCreate", method = RequestMethod.POST)
     public String PostCreate(HttpServletRequest request, Model model) {
         List<String> errors = new ArrayList<>();
@@ -82,7 +86,8 @@ public class customerController {
         // validateUtil.checkNull(request, "countryCode", "Country Code", errors);
 
         CommonUtils commonUtils = new CommonUtils();
-        if (!commonUtils.validatePhoneNumber(request.getParameter("phone"))) {
+        String mob = request.getParameter("phone").replace("-", "");
+        if (!commonUtils.validatePhoneNumber(mob)) {
             errors.add("Please enter proper Phone number ");
         }
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
@@ -99,55 +104,78 @@ public class customerController {
             return "Customer/Create";
         }
         // MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"), request.getParameter("countryCode"));
-        MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"));
-        if (checkMobile != null) {
+//        MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"));
+//        if (checkMobile != null) {
+//            errors.add("Mobile is already exist");
+//            model.addAttribute(Constant.ERRORPARAM.toString(), errors);
+//            return "Customer/Create";
+//        }
+        try {
+            MaCustomer maCustomer = new MaCustomer();
+            maCustomer.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
+            maCustomer.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
+            maCustomer.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
+            maCustomer.setCompanyname(validateUtil.getStringValue(request.getParameter("cmpname")));
+            maCustomer.setAddress1(validateUtil.getStringValue(request.getParameter("add1")));
+//        maCustomer.setAddress2(validateUtil.getStringValue(request.getParameter("add2")));
+//        maCustomer.setAddress3(validateUtil.getStringValue(request.getParameter("add3")));
+            maCustomer.setCity(validateUtil.getStringValue(request.getParameter("city")));
+            maCustomer.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
+            maCustomer.setState(validateUtil.getStringValue(request.getParameter("state")));
+//        maCustomer.setCountry(validateUtil.getStringValue(request.getParameter("country")));
+            maCustomer.setEmail(validateUtil.getStringValue(request.getParameter("email")));
+            maCustomer.setPhone(validateUtil.getStringValue(mob));
+            //  maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
+            maCustomer.setStatus(validateUtil.getStringValue(request.getParameter("status")));
+            maCustomer.setCreateddate(new Date());
+            //maCustomer.setStatus(Constant.ACTIVE.toString());
+
+            cusService.save(maCustomer);
+        } catch (Exception e) {
+            //catch (ConstraintViolationException e) {
             errors.add("Mobile is already exist");
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Customer/Create";
         }
-        
-        MaCustomer maCustomer = new MaCustomer();
-        maCustomer.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
-        maCustomer.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
-        maCustomer.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
-        maCustomer.setCompanyname(validateUtil.getStringValue(request.getParameter("cmpname")));
-        maCustomer.setAddress1(validateUtil.getStringValue(request.getParameter("add1")));
-//        maCustomer.setAddress2(validateUtil.getStringValue(request.getParameter("add2")));
-//        maCustomer.setAddress3(validateUtil.getStringValue(request.getParameter("add3")));
-        maCustomer.setCity(validateUtil.getStringValue(request.getParameter("city")));
-        maCustomer.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
-        maCustomer.setState(validateUtil.getStringValue(request.getParameter("state")));
-//        maCustomer.setCountry(validateUtil.getStringValue(request.getParameter("country")));
-        maCustomer.setEmail(validateUtil.getStringValue(request.getParameter("email")));
-        maCustomer.setPhone(validateUtil.getStringValue(request.getParameter("phone")));
-        //  maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
-        maCustomer.setStatus(validateUtil.getStringValue(request.getParameter("status")));
-        maCustomer.setCreateddate(new Date());
-        //maCustomer.setStatus(Constant.ACTIVE.toString());
-
-        cusService.save(maCustomer);
         return "redirect:/customer/customerList?m=c";
     }
-    
+
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String Delete(HttpServletRequest request, Model model, @PathVariable("id") String id) {
-        
-        MaCustomer maCustomer = cusService.findoneDelete(Constant.ACTIVE.toString(), Long.parseLong(id));
-        
-        if (maCustomer != null) {
-            maCustomer.setStatus(Constant.DETETED.toString());
-            cusService.save(maCustomer);
-            return "redirect:/customer/customerList?m=d";
+
+        MaCustomer maCustomers = cusService.findoneDelete(Constant.ACTIVE.toString(), Long.parseLong(id));
+
+        if (maCustomers != null) {
+//            maCustomer.setStatus(Constant.DETETED.toString());
+//            cusService.save(maCustomer);
+
+            MaCustomerHistory maCustomer = new MaCustomerHistory();
+            maCustomer.setFirstname(maCustomers.getFirstname());
+            maCustomer.setMiddlename(maCustomers.getMiddlename());
+            maCustomer.setLastname(maCustomers.getLastname());
+            maCustomer.setCompanyname(maCustomers.getCompanyname());
+            maCustomer.setAddress1(maCustomers.getAddress1());
+            maCustomer.setCity(maCustomers.getCity());
+            maCustomer.setPincode(maCustomers.getPincode());
+            maCustomer.setState(maCustomers.getState());
+            maCustomer.setEmail(maCustomers.getEmail());
+            maCustomer.setPhone(maCustomers.getPhone());
+            maCustomer.setStatus(maCustomers.getStatus());
+            maCustomer.setCreateddate(new Date());
+            customerHistoryService.save(maCustomer);
             
+            cusService.delete(maCustomers);
+            return "redirect:/customer/customerList?m=d";
+
         }
         return "redirect:/customer/customerList?m=n";
     }
-    
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String edit(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
-        
+
         MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), id);
-        
+
         if (maCustomer != null) {
             model.addAttribute("maCustomer", maCustomer);
             return "Customer/Edit";
@@ -155,7 +183,7 @@ public class customerController {
         model.addAttribute("message", "notFound");
         return "redirect:/customer/customerList";
     }
-    
+
     @RequestMapping(value = "/postEdit", method = RequestMethod.POST)
     public String postEdit(HttpServletRequest request, Model model) {
         MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("id")));
@@ -178,14 +206,15 @@ public class customerController {
         validateUtil.checkLength(errors, request, "email", "Email", 255, 0);
         validateUtil.checkLength(errors, request, "phone", "Phone", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
-        
+
         if (errors.size() > 0) {
             model.addAttribute("maCustomer", maCustomer);
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Customer/Edit";
         }
         CommonUtils commonUtils = new CommonUtils();
-        if (!commonUtils.validatePhoneNumber(request.getParameter("phone"))) {
+        String mob = request.getParameter("phone").replace("-", "");
+        if (!commonUtils.validatePhoneNumber(mob)) {
             errors.add("Please enter proper Phone number ");
         }
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
@@ -198,42 +227,49 @@ public class customerController {
             }
         }
 
-        //MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"), request.getParameter("countryCode"));
-        MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"));
-        if (checkMobile != null && !maCustomer.getPhone().equals(checkMobile.getPhone())) {
-            errors.add("Mobile is already exist");
-        }
+//        MaCustomer checkMobile = cusService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("phone"));
+//        if (checkMobile != null && !maCustomer.getPhone().equals(checkMobile.getPhone())) {
+//            errors.add("Mobile is already exist");
+//        }
         if (errors.size() > 0) {
             model.addAttribute("maCustomer", maCustomer);
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Customer/Edit";
         }
+        try {
 //        maCustomer.setStatus(validateUtil.getStringValue(request.getParameter("status")));
-        maCustomer.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
-        maCustomer.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
-        maCustomer.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
-        maCustomer.setCompanyname(validateUtil.getStringValue(request.getParameter("cmpname")));
-        maCustomer.setAddress1(validateUtil.getStringValue(request.getParameter("add1")));
+            maCustomer.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
+            maCustomer.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
+            maCustomer.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
+            maCustomer.setCompanyname(validateUtil.getStringValue(request.getParameter("cmpname")));
+            maCustomer.setAddress1(validateUtil.getStringValue(request.getParameter("add1")));
 //        maCustomer.setAddress2(validateUtil.getStringValue(request.getParameter("add2")));
 //        maCustomer.setAddress3(validateUtil.getStringValue(request.getParameter("add3")));
-        maCustomer.setCity(validateUtil.getStringValue(request.getParameter("city")));
-        maCustomer.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
-        maCustomer.setState(validateUtil.getStringValue(request.getParameter("state")));
+            maCustomer.setCity(validateUtil.getStringValue(request.getParameter("city")));
+            maCustomer.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
+            maCustomer.setState(validateUtil.getStringValue(request.getParameter("state")));
 //        maCustomer.setCountry(validateUtil.getStringValue(request.getParameter("country")));
-        maCustomer.setEmail(validateUtil.getStringValue(request.getParameter("email")));
-        maCustomer.setPhone(validateUtil.getStringValue(request.getParameter("phone")));
-        //  maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
+            maCustomer.setEmail(validateUtil.getStringValue(request.getParameter("email")));
+            // maCustomer.setPhone(validateUtil.getStringValue(request.getParameter("phone")));
+            maCustomer.setPhone(validateUtil.getStringValue(mob));
+            //  maCustomer.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
 //        maCustomer.setStatus(Constant.ACTIVE.toString());
 
-        cusService.save(maCustomer);
+            cusService.save(maCustomer);
+        } catch (Exception e) {
+            model.addAttribute("maCustomer", maCustomer);
+            errors.add("Mobile is already exist");
+            model.addAttribute(Constant.ERRORPARAM.toString(), errors);
+           return "Customer/Edit";
+        }
         return "redirect:/customer/customerList?m=e";
     }
-    
+
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String view(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
-        
+
         MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), id);
-        
+
         if (maCustomer != null) {
             model.addAttribute("maCustomer", maCustomer);
             return "Customer/view";
@@ -241,7 +277,7 @@ public class customerController {
         model.addAttribute("message", "notFound");
         return "redirect:/customer/customerList";
     }
-    
+
     @ExceptionHandler(Exception.class)
     public ModelAndView handleError(HttpServletRequest req, Exception ex) {
         StringWriter errors = new StringWriter();
@@ -252,5 +288,5 @@ public class customerController {
         mav.setViewName("redirect:/");
         return mav;
     }
-    
+
 }

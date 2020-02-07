@@ -85,13 +85,13 @@ public class MaDriver implements Serializable {
     private String mobile;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 2147483647)
     @Column(name = "email")
     private String email;
     @Size(max = 2147483647)
     @Column(name = "status")
-    private String status;
-
+    private String status;   
     @Column(name = "driverlicense")
     private String driverlicense;
     @Column(name = "drivernumber")
@@ -276,6 +276,12 @@ public class MaDriver implements Serializable {
     public void setMaInvoiceList(List<MaInvoice> maInvoiceList) {
         this.maInvoiceList = maInvoiceList;
     }
+    public List<MaPushNotification> getMaPushNotificationList() {
+        return maPushNotificationList;
+    }
+    public void setMaPushNotificationList(List<MaPushNotification> maPushNotificationList) {
+        this.maPushNotificationList = maPushNotificationList;
+    }
 
     public String getLicensenumber() {
         return licensenumber;
@@ -389,12 +395,5 @@ public class MaDriver implements Serializable {
         this.status = status;
     }
 
-    public List<MaPushNotification> getMaPushNotificationList() {
-        return maPushNotificationList;
-    }
-
-    public void setMaPushNotificationList(List<MaPushNotification> maPushNotificationList) {
-        this.maPushNotificationList = maPushNotificationList;
-    }
-
+    
 }

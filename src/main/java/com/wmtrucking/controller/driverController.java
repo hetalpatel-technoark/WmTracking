@@ -6,7 +6,9 @@
 package com.wmtrucking.controller;
 
 import com.wmtrucking.entities.MaDriver;
+import com.wmtrucking.entities.MaDriverHistory;
 import com.wmtrucking.exception.UnAthorizedUserException;
+import com.wmtrucking.services.DriverHistoryService;
 import com.wmtrucking.services.driverService;
 import com.wmtrucking.utils.CommonUtils;
 import com.wmtrucking.utils.Constant;
@@ -38,6 +40,8 @@ public class driverController {
 
     @Autowired
     SessionUtils sessionUtils;
+    @Autowired
+    DriverHistoryService driverHistoryService;
     @Autowired
     driverService drService;
 
@@ -114,64 +118,90 @@ public class driverController {
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Driver/Create";
         }
-        //String mobile = "+" + request.getParameter("countryCode") + request.getParameter("mob");
-        // String mobile = request.getParameter("mob");
-        // MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mobile, request.getParameter("countryCode"));
-        MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mob);
-        if (checkMobile != null) {
-            errors.add("Mobile is already exist");
-            model.addAttribute(Constant.ERRORPARAM.toString(), errors);
-            return "Driver/Create";
-        }
+//        MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mob);
+//        if (checkMobile != null) {
+//            errors.add("Mobile is already exist");
+//            model.addAttribute(Constant.ERRORPARAM.toString(), errors);
+//            return "Driver/Create";
+//        }
         MaDriver checkDriverId = drService.checkDriverId(Constant.ACTIVE.toString(), request.getParameter("driverid"));
         if (checkDriverId != null) {
             errors.add("This Driver Id is already exist");
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Driver/Create";
         }
+        try {
+            MaDriver maDriver = new MaDriver();
+            maDriver.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
+            maDriver.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
+            maDriver.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
 
-        MaDriver maDriver = new MaDriver();
-        maDriver.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
-        maDriver.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
-        maDriver.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
+            maDriver.setDrivernumber(validateUtil.getStringValue(request.getParameter("driverid")));
+            maDriver.setDriverlicense(validateUtil.getStringValue(request.getParameter("driverLicNo")));
+            maDriver.setCompanyname(validateUtil.getStringValue(request.getParameter("cmpname")));
 
-        maDriver.setDrivernumber(validateUtil.getStringValue(request.getParameter("driverid")));
-        maDriver.setDriverlicense(validateUtil.getStringValue(request.getParameter("driverLicNo")));
-        maDriver.setCompanyname(validateUtil.getStringValue(request.getParameter("cmpname")));
+            maDriver.setLicensenumber(validateUtil.getStringValue(request.getParameter("lno")));
+            maDriver.setAddress1(validateUtil.getStringValue(request.getParameter("add1")));
+            maDriver.setCity(validateUtil.getStringValue(request.getParameter("city")));
+            maDriver.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
+            maDriver.setState(validateUtil.getStringValue(request.getParameter("state")));
+            maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
+            maDriver.setMobile(mob);
+            //  maDriver.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
+            //maDriver.setStatus(Constant.ACTIVE.toString());
+            maDriver.setCreateddate(new Date());
+            maDriver.setStatus(validateUtil.getStringValue(request.getParameter("status")));
 
-        maDriver.setLicensenumber(validateUtil.getStringValue(request.getParameter("lno")));
-        maDriver.setAddress1(validateUtil.getStringValue(request.getParameter("add1")));
-        maDriver.setCity(validateUtil.getStringValue(request.getParameter("city")));
-        maDriver.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
-        maDriver.setState(validateUtil.getStringValue(request.getParameter("state")));
-        maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
-        maDriver.setMobile(mob);
-        //  maDriver.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
-        //maDriver.setStatus(Constant.ACTIVE.toString());
-        maDriver.setCreateddate(new Date());
-        maDriver.setStatus(validateUtil.getStringValue(request.getParameter("status")));
+            OTPutils oTPutils = new OTPutils();
+            String code = String.valueOf(oTPutils.otp(6));
+            String sms_text = "Your password is : " + code;
+            System.out.println("Your password is ....." + code);
+            //oTPutils.sendSMS(request.getParameter("countryCode") + mobile, sms_text);
+            oTPutils.sendSMS(mob, sms_text);
 
-        OTPutils oTPutils = new OTPutils();
-        String code = String.valueOf(oTPutils.otp(6));
-        String sms_text = "Your password is : " + code;
-        System.out.println("Your password is ....." + code);
-        //oTPutils.sendSMS(request.getParameter("countryCode") + mobile, sms_text);
-        oTPutils.sendSMS(mob, sms_text);
+            maDriver.setPassword(code);
 
-        maDriver.setPassword(code);
+            drService.save(maDriver);
+        } catch (Exception e) {
 
-        drService.save(maDriver);
+            errors.add("Mobile is already exist");
+            model.addAttribute(Constant.ERRORPARAM.toString(), errors);
+            return "Driver/Create";
+        }
         return "redirect:/driver/drivelist?m=c";
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String Delete(HttpServletRequest request, Model model, @PathVariable("id") String id) {
 
-        MaDriver maDriver = drService.findoneDelete(Constant.ACTIVE.toString(), Long.parseLong(id));
+        MaDriver maDrivers = drService.findoneDelete(Constant.ACTIVE.toString(), Long.parseLong(id));
 
-        if (maDriver != null) {
-            maDriver.setStatus(Constant.DETETED.toString());
-            drService.save(maDriver);
+        if (maDrivers != null) {
+//            maDriver.setStatus(Constant.DETETED.toString());
+//            drService.save(maDriver);
+
+            MaDriverHistory maDriver = new MaDriverHistory();
+            maDriver.setFirstname(maDrivers.getFirstname());
+            maDriver.setMiddlename(maDrivers.getMiddlename());
+            maDriver.setLastname(maDrivers.getLastname());
+
+            maDriver.setDrivernumber(maDrivers.getDrivernumber());
+            maDriver.setDriverlicense(maDrivers.getDriverlicense());
+            maDriver.setCompanyname(maDrivers.getCompanyname());
+
+            maDriver.setLicensenumber(maDrivers.getLicensenumber());
+            maDriver.setAddress1(maDrivers.getAddress1());
+            maDriver.setCity(maDrivers.getCity());
+            maDriver.setPincode(maDrivers.getPincode());
+            maDriver.setState(maDrivers.getState());
+            maDriver.setEmail(maDrivers.getEmail());
+            maDriver.setMobile(maDrivers.getMobile());
+            maDriver.setCreateddate(new Date());
+            maDriver.setStatus(maDrivers.getStatus());
+            maDriver.setPassword(maDrivers.getPassword());
+            driverHistoryService.save(maDriver);
+
+            drService.deleted(maDrivers);
             return "redirect:/driver/drivelist?m=d";
         }
         return "redirect:/driver/drivelist?m=n";
@@ -244,11 +274,11 @@ public class driverController {
             errors.add("Please enter proper Pincode ");
         }
         String mob = request.getParameter("mob").replace("-", "");
-        MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mob);
-        if (checkMobile != null && !maDriver.getMobile().equals(checkMobile.getMobile())) {
-            errors.add("Mobile is already exist");
-        }
-        MaDriver checkDriverId = drService.checkDriverId(Constant.ACTIVE.toString(), request.getParameter("jno"));
+//        MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mob);
+//        if (checkMobile != null && !maDriver.getMobile().equals(checkMobile.getMobile())) {
+//            errors.add("Mobile is already exist");
+//        }
+        MaDriver checkDriverId = drService.checkDriverId(Constant.ACTIVE.toString(), request.getParameter("driverid"));
 
         if (checkDriverId != null && !checkDriverId.getDrivernumber().equals(checkDriverId.getDrivernumber())) {
             errors.add("This Driver Id is already exist");
@@ -272,27 +302,33 @@ public class driverController {
             model.addAttribute("maDriver", maDriver);
             return "Driver/Edit";
         }
-        maDriver.setStatus(validateUtil.getStringValue(request.getParameter("status")));
+        try {
+            maDriver.setStatus(validateUtil.getStringValue(request.getParameter("status")));
 
-        maDriver.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
-        maDriver.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
-        maDriver.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
+            maDriver.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
+            maDriver.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
+            maDriver.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
 
-        maDriver.setDrivernumber(validateUtil.getStringValue(request.getParameter("driverid")));
-        maDriver.setDriverlicense(validateUtil.getStringValue(request.getParameter("driverLicNo")));
-        maDriver.setCompanyname(validateUtil.getStringValue(request.getParameter("cmpname")));
+            maDriver.setDrivernumber(validateUtil.getStringValue(request.getParameter("driverid")));
+            maDriver.setDriverlicense(validateUtil.getStringValue(request.getParameter("driverLicNo")));
+            maDriver.setCompanyname(validateUtil.getStringValue(request.getParameter("cmpname")));
 
-        maDriver.setLicensenumber(validateUtil.getStringValue(request.getParameter("lno")));
-        maDriver.setAddress1(validateUtil.getStringValue(request.getParameter("add1")));
-        maDriver.setCity(validateUtil.getStringValue(request.getParameter("city")));
-        maDriver.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
-        maDriver.setState(validateUtil.getStringValue(request.getParameter("state")));
-        maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
-        maDriver.setMobile(validateUtil.getStringValue(mob));
-        // maDriver.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
+            maDriver.setLicensenumber(validateUtil.getStringValue(request.getParameter("lno")));
+            maDriver.setAddress1(validateUtil.getStringValue(request.getParameter("add1")));
+            maDriver.setCity(validateUtil.getStringValue(request.getParameter("city")));
+            maDriver.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
+            maDriver.setState(validateUtil.getStringValue(request.getParameter("state")));
+            maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
+            maDriver.setMobile(validateUtil.getStringValue(mob));
 
-        //maDriver.setStatus(Constant.ACTIVE.toString());
-        drService.save(maDriver);
+            drService.save(maDriver);
+        } catch (Exception e) {
+
+            errors.add("Mobile is already exist");
+            model.addAttribute(Constant.ERRORPARAM.toString(), errors);
+            model.addAttribute("maDriver", maDriver);
+            return "Driver/Edit";
+        }
         return "redirect:/driver/drivelist?m=e";
     }
 

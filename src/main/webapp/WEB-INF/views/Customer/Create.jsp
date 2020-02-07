@@ -50,7 +50,7 @@
                     <div class="card">
                         <div class="card-content">
                             <div class="card-body">
-                                <form method="post"  class="form-horizontal bordered-row" id="user-form" action="<%=request.getContextPath()%>/customer/PostCreate">
+                                <form method="post"  class="form-horizontal bordered-row" id="user-form" action="<%=request.getContextPath()%>/customer/PostCreate" id="customer_frm">
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-6">
@@ -201,9 +201,6 @@
             </div>
         </section>
         <!-- // Basic Horizontal form layout section end -->
-
-
-
     </div>
 </div>
 
@@ -211,6 +208,21 @@
 <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
 <script>
     $('#mobile').inputmask("999-999-9999");
+    
+    $("#btn_submit").click(function () {
+        
+        $('#btn_submit').prop('disabled', true);
+       // alert("hii");
+        $('#customer_frm').submit();
+    });
+
+//    $('#customer_frm').validator().on('submit', function (e) {
+//        var isValid = $("#customer_frm").valid();
+//        if (e.isDefaultPrevented()) {
+//        } else {
+//            $("#btn_submit").attr("disabled", true);
+//        }
+//    });
 
 </script>
 <!-- END: Content-->

@@ -324,7 +324,7 @@
                                                                                                         </div>-->
 
                                                     <div class="col-md-8">
-                                                        <input type="text" required="" id="first-name" class="form-control" name="phone" value="<%=checkInput.checkValueEdit(maCustomer.getPhone(), request.getParameter("phone"))%>" placeholder="Phone Number">
+                                                        <input type="text" required="" class="form-control" name="phone" value="<%=checkInput.checkValueEdit(maCustomer.getPhone(), request.getParameter("phone"))%>" id="mobile" placeholder="Phone Number">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -435,6 +435,27 @@
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+<script>
+    $('#mobile').inputmask("999-999-9999");
+    
+    $("#btn_submit").click(function () {
+        
+        $('#btn_submit').prop('disabled', true);
+       // alert("hii");
+        $('#customer_frm').submit();
+    });
+
+//    $('#customer_frm').validator().on('submit', function (e) {
+//        var isValid = $("#customer_frm").valid();
+//        if (e.isDefaultPrevented()) {
+//        } else {
+//            $("#btn_submit").attr("disabled", true);
+//        }
+//    });
+
+</script>
 <!-- END: Content-->
 <jsp:include page="../Template/pageEnd.jsp"></jsp:include>    
 

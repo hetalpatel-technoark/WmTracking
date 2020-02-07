@@ -25,6 +25,9 @@ public class driverService {
     public void save(MaDriver maDriver) {
         dRepository.save(maDriver);
     }
+     public void deleted(MaDriver maDriver) {
+        dRepository.delete(maDriver);
+    }
 
     public List<MaDriver> list(String satus) {
         return dRepository.list(satus);

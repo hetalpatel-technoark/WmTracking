@@ -96,14 +96,15 @@
                                                     List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
                                                     if (!maCustomers.isEmpty()) {
                                                         for (MaCustomer maCustomer : maCustomers) {
+                                                            String mobile = maCustomer.getPhone()!= null ?maCustomer.getPhone().replaceFirst("(\\d{3})(\\d{3})(\\d+)", "$1-$2-$3") : "";
                                                             String name = maCustomer.getFirstname() + "" + (maCustomer.getMiddlename() != null ? " " + maCustomer.getMiddlename() : "") + "" + (maCustomer.getLastname() != null ? " " + maCustomer.getLastname() : "");
                                             %>
                                             <tr >
                                                 <td><%=name%></td>                                               
                                                 <td><%=checkInput.checkValue(maCustomer.getCompanyname())%></td>
-                                         
-<!--                                                <td><%=checkInput.checkValue((maCustomer.getCountrycode() != null ? maCustomer.getCountrycode() + " " : "") + (maCustomer.getPhone()!= null ? maCustomer.getPhone() : ""))%></td>-->
-                                                <td><%=checkInput.checkValue( (maCustomer.getPhone()!= null ? maCustomer.getPhone() : ""))%></td>
+
+<!--                                                <td><%=checkInput.checkValue((maCustomer.getCountrycode() != null ? maCustomer.getCountrycode() + " " : "") + (maCustomer.getPhone() != null ? maCustomer.getPhone() : ""))%></td>-->
+                                                <td><%=checkInput.checkValue(mobile)%></td>
 
                                                 <td><%=checkInput.checkValue(maCustomer.getEmail())%></td>                                             
 <!--                                                <td><%=checkInput.checkValue(maCustomer.getAddress1())%></td>
