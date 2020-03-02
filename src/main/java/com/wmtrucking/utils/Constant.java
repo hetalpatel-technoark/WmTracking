@@ -5,8 +5,8 @@ public enum Constant {
     MODE {
         @Override
         public String toString() {
-            //  return "Live";
-            return "Local";
+              return "Live";
+//            return "Local";
         }
     },
     FCM_SERVERKEY {

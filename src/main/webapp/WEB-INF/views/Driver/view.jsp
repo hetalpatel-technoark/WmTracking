@@ -140,7 +140,7 @@
                                                     <span>Mobile</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input readonly type="text" readonly=""  class="form-control" name="phone" value="<%=checkInput.checkValueEdit(madriver.getMobile(), request.getParameter("phone"))%>" placeholder="Mobile no">
+                                                    <input  type="text" readonly=""  id="mobile"  class="form-control" name="phone" value="<%=checkInput.checkValueEdit(madriver.getMobile(), request.getParameter("phone"))%>" placeholder="Mobile Number">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -190,6 +190,14 @@
 </div>
 
 <!-- END: Content-->
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+<script>
+    $('#mobile').inputmask("999-999-9999");
+
+</script>
 <jsp:include page="../Template/pageEnd.jsp"></jsp:include>    
 
 <jsp:include page="../Template/footer.jsp"></jsp:include>

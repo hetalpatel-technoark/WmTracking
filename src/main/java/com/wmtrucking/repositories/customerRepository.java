@@ -36,7 +36,8 @@ public interface customerRepository extends JpaRepository<MaCustomer, Long> {
     @Query(nativeQuery = true, value = "select u.* from ma_customer u where u.status!=?1 and u.email=?2")
     MaCustomer checkEmail(String satus, String email);
 
-    @Query(nativeQuery = true, value = "select count(u.id) from ma_customer u where (u.status=?1 or u.status='Inactive') and cast(u.createddate as date)=?2")
+    @Query(nativeQuery = true, value = "select count(u.id) from ma_customer u where (u.status=?1 or u.status='Inactive') and "
+            + "cast(u.createddate as date)=?2 ")
     Long customercount(String satus, Date createddate);
 //    @Query(nativeQuery = true, value = "select count(u.id) from ma_customer u where (u.status=?1 or u.status='Inactive' ) and "
 //            + "u.id in(select customer_id from ma_job_customer where job_id in (select id from ma_jobs where status=?1 and cast(jobdate as date)=?2 )) ")

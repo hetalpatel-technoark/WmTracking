@@ -5,6 +5,7 @@
  */
 package com.wmtrucking.controller;
 
+import com.google.gson.JsonObject;
 import com.wmtrucking.exception.UnAthorizedUserException;
 import com.wmtrucking.pojo.JobPojo;
 import com.wmtrucking.services.customerService;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -78,7 +80,6 @@ public class DashboardController {
 //            model.addAttribute("customerWiseJob", customerWiseJob);
 //        }
         // contains only date information without time
-       
         List<JobPojo> maJobsesList = joService.getJobList(Constant.ACTIVE.toString(), new Date());
         model.addAttribute("maJobsesList", maJobsesList);
         model.addAttribute("jobDate", new DateUtils().dateWithFormat(new Date(), "MMMM dd, yyyy"));
@@ -111,6 +112,57 @@ public class DashboardController {
         model.addAttribute("jobDate", new DateUtils().dateWithFormat(myDate, "MMMM dd, yyyy"));
         model.addAttribute("maJobsesList", maJobsesList);
         return "Dashboard/Dashboard";
+    }
+
+    //owner list show after modify ownership
+    @RequestMapping(value = "/getJobList", method = RequestMethod.POST)
+    @ResponseBody
+    public String getJobList(HttpServletRequest request, Model model) throws UnAthorizedUserException {
+
+        List<JobPojo> maJobsesList = null;
+
+        DateUtils dateutil = new DateUtils();
+        Date sourceDate = dateutil.stringToDate(request.getParameter("jobdate"), "MMMM dd, yyyy");
+
+        if (request.getParameter("searchtext") != null && !request.getParameter("searchtext").equals(" ")) {
+            maJobsesList = joService.searchJobList(Constant.ACTIVE.toString(), sourceDate, request.getParameter("searchtext"));
+        } else {
+            maJobsesList = joService.getJobList(Constant.ACTIVE.toString(), sourceDate);
+        }
+        JsonObject response = new JsonObject();
+        StringBuilder str = new StringBuilder();
+
+        if (maJobsesList.isEmpty()) {
+            str.append("<tr><td colspan='8' style='text-align:center'>No records found</td></tr>");
+        } else {
+            for (JobPojo jobPojo : maJobsesList) {
+                str.append("<tr><td>");
+                str.append(jobPojo.getJobname());
+                str.append("</td><td>");
+                str.append(jobPojo.getJobnumber());
+                str.append("</td><td>");
+                str.append(jobPojo.getJobdate());
+                str.append("</td><td>");
+                str.append(jobPojo.getTotaldumps());
+                str.append("</td><td>");
+                str.append(jobPojo.getPickupddumps());
+                str.append("</td><td>");
+                str.append(jobPojo.getCompleteddumps());
+                str.append("</td><td>");
+                if (jobPojo.getJobStatus().equals("Completed")) {
+                    str.append("<span class='label label-success' >Completed</span>");
+                } else if (jobPojo.getJobStatus().equals("Active")) {
+                    str.append("<span class='label label-info' >Active</span>");
+                } else if (jobPojo.getJobStatus().equals("Pending")) {
+                    str.append("<span class='label label-danger'>Pending</span>");
+                }
+                str.append("</td><td>");
+                str.append(jobPojo.getDrivercount());
+                str.append("</td></tr>");
+            }
+        }
+        response.addProperty("table", str.toString());
+        return response.toString();
     }
 
     @RequestMapping(value = "/PrevJobDate/{jobDate}", method = RequestMethod.GET)

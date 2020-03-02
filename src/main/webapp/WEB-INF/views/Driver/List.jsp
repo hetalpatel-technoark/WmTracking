@@ -77,7 +77,7 @@
                                                 <th>License Plate </th>
                                                 <th>Driver License</th>
                                                 <th>Mobile</th>
-<!--                                                <th>Email</th>-->
+                                                <!--                                                <th>Email</th>-->
                                                 <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -91,14 +91,19 @@
                                                     if (!madrivers.isEmpty()) {
                                                         for (MaDriver madriver : madrivers) {
                                                             String name = madriver.getFirstname() + "" + (madriver.getMiddlename() != null ? " " + madriver.getMiddlename() : "") + "" + (madriver.getLastname() != null ? " " + madriver.getLastname() : "");
-                                                            String mobile = ((madriver.getCountrycode() != null && madriver.getCountrycode().equals("")) ? madriver.getCountrycode() + " " : "") + madriver.getMobile();
+                                                            // String mobile = ((madriver.getCountrycode() != null && madriver.getCountrycode().equals("")) ? madriver.getCountrycode() + " " : "") + madriver.getMobile();
+                                                            String mobile =madriver.getMobile()!=null? madriver.getMobile().replaceFirst("(\\d{3})(\\d{3})(\\d+)", "$1-$2-$3"):"";
+//                                                            String input = "1234567890";
+//                                                            String number = input.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+                                                            System.out.println(mobile);
                                             %>
                                             <tr>
                                                 <td><%=name%></td>
 
                                                 <td><%=checkInput.checkValue(madriver.getLicensenumber())%></td>
                                                 <td><%=checkInput.checkValue(madriver.getDriverlicense())%></td>
-                                                <td><%=checkInput.checkValue((madriver.getMobile()!=null? madriver.getMobile():""))%></td>
+<!--                                                <td><%=checkInput.checkValue((madriver.getMobile() != null ? madriver.getMobile() : ""))%></td>-->
+                                                <td><%=mobile%></td>
                                                 <td><span class="label <%=madriver.getStatus().equals("Active") ? "label-success" : "label-danger"%>"><%=madriver.getStatus()%></span></td>
 
                                                 <td>

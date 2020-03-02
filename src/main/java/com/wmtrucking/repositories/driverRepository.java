@@ -35,6 +35,9 @@ public interface driverRepository extends JpaRepository<MaDriver, Long> {
     @Query(nativeQuery = true, value = "select u.* from ma_driver u where (u.status=?1 or u.status='Inactive' ) and u.email=?2")
     MaDriver checkEmail(String satus, String email);
 
+    @Query(nativeQuery = true, value = "select u.* from ma_driver u where (u.status=?1 or u.status='Inactive' ) and u.drivernumber=?2")
+    MaDriver checkDriverId(String satus, String driverId);
+    
     @Query(nativeQuery = true, value = "select u.* from ma_driver u where (u.status=?1 or u.status='Inactive' ) and u.mobile=?2")
     MaDriver checkMobile(String satus, String mobile);
 //    @Query(nativeQuery = true, value = "select u.* from ma_driver u where (u.status=?1 or u.status='Inactive' ) and u.mobile=?2 and u.countrycode=?3")
@@ -50,8 +53,9 @@ public interface driverRepository extends JpaRepository<MaDriver, Long> {
 //    @Query(nativeQuery = true, value = "select count(u.id) from ma_driver u where (u.status=?1 or u.status='Inactive' ) and "
 //            + "u.id in(select driver_id from ma_job_driver where job_id in (select id from ma_jobs where status=?1 and cast(jobdate as date)=?2 )) ")
 //    Long count(String satus, Date createddate);
-    @Query(nativeQuery = true, value = " select count(u.id) from ma_driver u where (u.status=?1 or u.status='Inactive' ) and "
-            + " u.id in(select driver_id from ma_job_driver where cast(createddate as date)=?2 and job_id in (select id from ma_jobs where status=?1)) ")
+    @Query(nativeQuery = true, value = "select count(u.id) from ma_driver u where (u.status=?1 or u.status='Inactive' ) and "
+            + " u.id in(select driver_id from ma_job_driver where cast(createddate as date)=?2 and "
+            + "job_id in (select id from ma_jobs where status=?1 and isarchive='False')) ")
     Long count(String satus, Date createddate);
 
 }

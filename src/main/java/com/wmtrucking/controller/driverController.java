@@ -96,7 +96,8 @@ public class driverController {
         if (request.getParameter("driverid") != null && !commonUtils.isBigInteger(request.getParameter("driverid"))) {
             errors.add("Please Enter Proper Driver Id");
         }
-        if (!commonUtils.validatePhoneNumber(request.getParameter("mob"))) {
+        String mob = request.getParameter("mob").replace("-", "");
+        if (!commonUtils.validatePhoneNumber(mob)) {
             errors.add("Please enter proper Phone number ");
         }
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
@@ -114,11 +115,17 @@ public class driverController {
             return "Driver/Create";
         }
         //String mobile = "+" + request.getParameter("countryCode") + request.getParameter("mob");
-        String mobile = request.getParameter("mob");
+        // String mobile = request.getParameter("mob");
         // MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mobile, request.getParameter("countryCode"));
-        MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mobile);
+        MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mob);
         if (checkMobile != null) {
             errors.add("Mobile is already exist");
+            model.addAttribute(Constant.ERRORPARAM.toString(), errors);
+            return "Driver/Create";
+        }
+        MaDriver checkDriverId = drService.checkDriverId(Constant.ACTIVE.toString(), request.getParameter("driverid"));
+        if (checkDriverId != null) {
+            errors.add("This Driver Id is already exist");
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
             return "Driver/Create";
         }
@@ -138,7 +145,7 @@ public class driverController {
         maDriver.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
         maDriver.setState(validateUtil.getStringValue(request.getParameter("state")));
         maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
-        maDriver.setMobile(mobile);
+        maDriver.setMobile(mob);
         //  maDriver.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
         //maDriver.setStatus(Constant.ACTIVE.toString());
         maDriver.setCreateddate(new Date());
@@ -149,7 +156,7 @@ public class driverController {
         String sms_text = "Your password is : " + code;
         System.out.println("Your password is ....." + code);
         //oTPutils.sendSMS(request.getParameter("countryCode") + mobile, sms_text);
-        oTPutils.sendSMS(mobile, sms_text);
+        oTPutils.sendSMS(mob, sms_text);
 
         maDriver.setPassword(code);
 
@@ -230,17 +237,23 @@ public class driverController {
         if (!commonUtils.isBigInteger(request.getParameter("driverid"))) {
             errors.add("Please Enter Proper Driver Id");
         }
-        if (!commonUtils.validatePhoneNumber(request.getParameter("mob"))) {
-            errors.add("Please enter proper Phone number ");
-        }
+//        if (!commonUtils.validatePhoneNumber(request.getParameter("mob"))) {
+//            errors.add("Please enter proper Phone number ");
+//        }
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
             errors.add("Please enter proper Pincode ");
         }
-        //MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("mob"), request.getParameter("countryCode"));
-        MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), request.getParameter("mob"));
+        String mob = request.getParameter("mob").replace("-", "");
+        MaDriver checkMobile = drService.checkMobile(Constant.ACTIVE.toString(), mob);
         if (checkMobile != null && !maDriver.getMobile().equals(checkMobile.getMobile())) {
             errors.add("Mobile is already exist");
         }
+        MaDriver checkDriverId = drService.checkDriverId(Constant.ACTIVE.toString(), request.getParameter("jno"));
+
+        if (checkDriverId != null && !checkDriverId.getDrivernumber().equals(checkDriverId.getDrivernumber())) {
+            errors.add("This Driver Id is already exist");
+        }
+
         if (!maDriver.getStatus().equals(request.getParameter("status"))) {
             MaDriver maDriver1 = drService.findoneEdit(maDriver.getId());
             if (maDriver1 == null) {
@@ -275,7 +288,7 @@ public class driverController {
         maDriver.setPincode(validateUtil.getStringValue(request.getParameter("pin")));
         maDriver.setState(validateUtil.getStringValue(request.getParameter("state")));
         maDriver.setEmail(validateUtil.getStringValue(request.getParameter("email")));
-        maDriver.setMobile(validateUtil.getStringValue(request.getParameter("mob")));
+        maDriver.setMobile(validateUtil.getStringValue(mob));
         // maDriver.setCountrycode(validateUtil.getStringValue(request.getParameter("countryCode")));
 
         //maDriver.setStatus(Constant.ACTIVE.toString());

@@ -68,12 +68,15 @@
                                 <h4 class="card-title">Job - List</h4>
                             </div>
                             <div class="col-lg-10 row bg-default content-box text-right pad20A mrg25T">
-                                <div class=" input-group col-lg-1"></div>
-                                <div class=" input-group col-lg-5">                                        
-                                    <span class="input-group-addon" style=" padding-top: 0.6rem !important; padding-bottom:0px !important; padding-left: 10px;padding-right: 10px; border-radius: 2px;">
-                                        <i class="fa fa-search"></i>
-                                    </span>
-                                    <input id="myInput" class="form-control" onkeyup="myFunction()" type="text" placeholder="Search by Job Name/Number..">
+
+                                <div class=" input-group col-lg-6">                                        
+                                    <!--                                    <span class="input-group-addon" style=" padding-top: 0.6rem !important; padding-bottom:0px !important; padding-left: 10px;padding-right: 10px; border-radius: 2px;">
+                                                                            <i class="fa fa-search"></i>
+                                                                        </span>
+                                                                        <input id="myInput" class="form-control" onkeyup="myFunction()" type="text" placeholder="Search by Job Name/Number..">-->
+                                    <input id="myInput" class="form-control"  type="text" placeholder="Search by Job Name/Number..">
+                                    <a class="btn bg-gradient-primary" href="javascript:void(0);" onclick="getJobList('<%=request.getContextPath()%>/job/getJobList')" style="border-radius:0rem !important;padding: 0.9rem 0.4rem !important;">
+                                        <i class="fa fa-search"></i> Search</a>
                                 </div>
                                 <div class="col-lg-6">
                                     <a class="btn bg-gradient-primary" href="<%=request.getContextPath()%>/job/Create">
@@ -147,11 +150,11 @@
                                                 <th>Completed Dumps</th>
                                                 <th>Job Status</th>  
                                                 <th> Total Drivers </th> 
-                                                 <th >Driver Names </th>
+                                                <th >Driver Names </th>
                                                 <th>Actions</th>    
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="row_dashboard__list">
                                             <%
                                                 CheckInput checkInput = new CheckInput();
                                                 List<JobPojo> majobs = (List<JobPojo>) request.getAttribute("maJobs");
@@ -173,7 +176,7 @@
                                                 <td><span class="label label-danger " >Pending</span></td>
                                                 <%}%>
                                                 <td><%=checkInput.checkValue(majob.getDrivercount())%></td>
-                                              <td> 
+                                                <td> 
                                                     <%if (majob.getDrivercount() > 0) {%>
                                                     <div class="tooltip-wrap">
 
@@ -181,13 +184,13 @@
                                                         <div class="tooltip-content">
                                                             <p>  <% if (majob.getDrivername() != null) {
                                                                     String[] driver = majob.getDrivername().split(","); %>
-                                                           
+
                                                                 <%   for (int i = 0; i < driver.length; i++) {
                                                                 %>
-                                                               <span class="label label-orange " ><%= driver[i]%></span>
-                                                                        <%}%>
-                                                            
-                                                            <%}%></p>
+                                                                <span class="label label-orange " ><%= driver[i]%></span>
+                                                                <%}%>
+
+                                                                <%}%></p>
                                                         </div> 
                                                     </div><%}%></td>
                                                 <td>
@@ -212,9 +215,9 @@
                                                                 </a>
                                                                 <%}
                                                                 } else {%>
-                                                                <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/assignJobDr/<%=majob.getId()%>?flag=complete">
+<!--                                                                <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/job/assignJobDr/<%=majob.getId()%>?flag=complete">
                                                                     <i class="feather icon-user "></i><span>View Assign Driver</span>
-                                                                </a> 
+                                                                </a> -->
                                                                 <a class="dropdown-item"  style="font-size: 15px;" href="<%=request.getContextPath()%>/invoice/list/<%=majob.getId()%>">
                                                                     <i class="feather icon-eye "></i><span>Show Invoice</span>
                                                                 </a>
@@ -238,7 +241,9 @@
                                         </tr>
                                         <%}%>
                                         </tbody>
+                                        <tbody style="display: none;" id="row_search_list">
 
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -256,6 +261,26 @@
 <jsp:include page="../Template/footer.jsp"></jsp:include>
     <script>
 
+        function getJobList(url) {
+            var request = $.ajax({
+                url: url,
+                method: "POST",
+                data: {searchtext: $('#myInput').val()},
+                dataType: "json",
+                success: function (data) {
+                    $('#row_search_list').html(data.table);
+                    $('#row_search_list').show();
+                    $('#row_dashboard__list').hide();
+                  //  mApp.unblock("#row_search_list");
+                }, beforeSend: function (xhr) {
+                    if ($('#myInput').val() == '' || $('#myInput').val() == undefined || $('#myInput').val() == null) {
+                        $.growl.error({message: "Please enter some value in textbox"});
+                      //  mApp.unblock("#row_search_list");
+                        return false;
+                    }
+                }
+            });
+        }
 
         function myFunction() {
             var input, filter, table, tr, td, td2, i, txtValue, txtValue1;
@@ -294,20 +319,7 @@
 <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
 
 <script>
-
-
-
-//                                                                    $(document).ready(function () {
-//                                                                        var e = document.getElementById('icon');
-//                                                                        e.onmouseover = function () {
-//                                                                            document.getElementById('info').style.display = 'block';
-//                                                                        }
-//                                                                        e.onmouseout = function () {
-//                                                                            document.getElementById('info').style.display = 'none';
-//                                                                        }
-//                                                                    });
-
-        function archive(status, id) {
+   function archive(status, id) {
             Swal.fire({
                 title: "Are You Sure to " + status + " This Job?",
                 text: "You Are Going to " + status + " Job",

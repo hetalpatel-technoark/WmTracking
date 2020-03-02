@@ -49,7 +49,7 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
             + " isarchive=?3 ")
     MaJobs findPendingJob(String satus, Long id, Boolean isarchive);
 
-    @Query(nativeQuery = true, value = "select count(u.id) from ma_jobs u where u.status=?1 and cast(u.createddate as date)=?2")
+    @Query(nativeQuery = true, value = "select count(u.id) from ma_jobs u where u.status=?1 and cast(u.createddate as date)=?2 and u.isarchive='False'")
     Long count(String satus, Date createddate);
 
     @Query(nativeQuery = true, value = "SELECT to_char(jobdate,'MON-YY'),count(id) FROM ma_jobs where jobdate is not null and status='Active'"
@@ -67,15 +67,15 @@ public interface jobRepository extends JpaRepository<MaJobs, Long> {
     @Query(nativeQuery = true, value = "select u.* from ma_jobs u where u.status=?1 and cast(u.jobdate as date)=?2 ORDER BY u.id desc")
     public List<MaJobs> listOfJob(String satus, Date jobdate);
 
-    @Query(nativeQuery = true, value = "select sum(totaljobcount) from ma_jobs where cast(createddate as date)=?2 and status=?1")
+    @Query(nativeQuery = true, value = "select sum(totaljobcount) from ma_jobs where cast(createddate as date)=?2 and status=?1 and isarchive='False'")
     Long totalDumpCount(String satus, Date createdDate);
 
     @Query(nativeQuery = true, value = "select count(id) from ma_job_transaction where cast(starttime as date)=?2 and "
-            + "job_id in(select id from ma_jobs where status=?1)")
+            + "job_id in(select id from ma_jobs where status=?1 and isarchive='False') ")
     Long countDumpingPickup(String satus, Date starttime);
 
     @Query(nativeQuery = true, value = "select count(id) from ma_job_transaction where cast(endtime as date)=?2 and "
-            + "job_id in(select id from ma_jobs where status=?1)")
+            + "job_id in(select id from ma_jobs where status=?1 and isarchive='False') ")
     Long countDumpingDone(String satus, Date endtime);
 
 //     @Query(nativeQuery = true, value = "select count(id) from ma_job_transaction where status=?2 "

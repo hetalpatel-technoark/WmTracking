@@ -156,7 +156,7 @@
                 </tr>               
                 <tr class="heading">                    
                     <td >
-                        Discription
+                        Description 
                     </td>
                     <td style="width: 20%; text-align:right ">
                         Invoice Amount 

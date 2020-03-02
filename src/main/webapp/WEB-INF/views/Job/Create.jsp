@@ -303,13 +303,15 @@
                                                             function showSave() {
                                                                 if ($("#price").val() !== null && $("#price").val() !== "") {
                                                                     $("#save").show();
-                                                                }else{
-                                                                      $("#save").hide();
+                                                                } else {
+                                                                    $("#save").hide();
                                                                 }
                                                             }
 
                                                             $(document).ready(function () {
-
+                                                                if ($("#price").val() !== null && $("#price").val() !== "") {
+                                                                    $("#save").show();
+                                                                }
                                                                 $(".pickadate1").pickadate({
                                                                     format: "mmmm dd, yyyy",
                                                                     min: new Date(),

@@ -14,7 +14,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/Dashboard/Dashboard">Home</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/customer/List">Driver</a>
+                            <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/driver/drivelist">Driver</a>
                             </li>
                             <li class="breadcrumb-item"><a href="#">Create</a>
                             </li>
@@ -155,7 +155,7 @@
                                                         <span>Mobile Number*</span>
                                                     </div>                                                  
                                                     <div class="col-md-8">
-                                                        <input type="text"   required="" id="mobile" class="form-control" name="mob" value="<%=checkInput.checkValue(request.getParameter("mob"))%>" placeholder="Mobile Number">
+                                                        <input type="text" required="" id="mobile" class="form-control" name="mob" value="<%=checkInput.checkValue(request.getParameter("mob"))%>" placeholder="Mobile Number">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">

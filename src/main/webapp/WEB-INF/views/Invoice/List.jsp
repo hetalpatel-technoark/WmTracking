@@ -41,7 +41,7 @@
                 </div>
                              <div class="col-3">
                     <div class="bg-default content-box text-right pad20A mrg25T">
-                        <a class="btn bg-gradient-primary mr-1 mb-1 waves-effect waves-light" href="<%= request.getContextPath()%>/job/List">
+                        <a class="btn bg-gradient-primary mr-1 mb-1 waves-effect waves-light" href="javascript:window.history.back();">
                             <i class="fa fa-backward"></i> Back</a>
                     </div>
                 </div>

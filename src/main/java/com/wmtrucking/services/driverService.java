@@ -50,6 +50,10 @@ public class driverService {
         return dRepository.checkMobile(satus, mobile);
     }
 
+    public MaDriver checkDriverId(String satus, String mobile) {
+        return dRepository.checkDriverId(satus, mobile);
+    }
+
     public List<MaDriver> activeList(String satus) {
         return dRepository.activeList(satus);
     }

@@ -22,7 +22,10 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/Dashboard/Dashboard">Home</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/job/List">Job</a>
+                            <li class="breadcrumb-item">
+                                <%if (request.getParameter("flag") != null && request.getParameter("flag").equals("true")) {%>
+                                <a href="<%= request.getContextPath()%>/job/archiveList">Archive Job List</a><%} else {%>
+                                <a href="<%= request.getContextPath()%>/job/List">Job</a><%}%>
                             </li>
                             <li class="breadcrumb-item"><a href="#">View</a>
                             </li>
@@ -100,7 +103,7 @@
                                                     <span>Price *</span>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input type="number" disabled="" required="" class="form-control" name="price" value="<%=checkInput.checkValueEdit(majob.getPrice(),request.getParameter("price"))%>"  >
+                                                    <input type="number" disabled="" required="" class="form-control" name="price" value="<%=checkInput.checkValueEdit(majob.getPrice(), request.getParameter("price"))%>"  >
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -226,7 +229,9 @@
                                             </div>
                                         </div>
                                         <div class="col-md-8 offset-md-4">
-                                            <a href="<%= request.getContextPath()%>/job/List" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a>
+                                             <%if (request.getParameter("flag") != null && request.getParameter("flag").equals("true")) {%>
+                                            <a href="<%= request.getContextPath()%>/job/archiveList" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a>
+                                          <%}else{%>  <a href="<%= request.getContextPath()%>/job/List" class="btn btn-danger mr-1 mb-1 waves-effect waves-light">Cancel</a><%}%>
                                         </div>
                                     </div>
                                 </div>

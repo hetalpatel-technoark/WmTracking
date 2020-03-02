@@ -5,6 +5,7 @@
  */
 package com.wmtrucking.controller;
 
+import com.google.gson.JsonObject;
 import com.wmtrucking.entities.MaAuthobject;
 import com.wmtrucking.entities.MaCustomer;
 import com.wmtrucking.entities.MaDriver;
@@ -23,6 +24,7 @@ import com.wmtrucking.services.jobService;
 import com.wmtrucking.utils.APNPushUtil;
 import com.wmtrucking.utils.CommonUtils;
 import com.wmtrucking.utils.Constant;
+import com.wmtrucking.utils.DateUtils;
 import com.wmtrucking.utils.FirebaseNotification;
 import com.wmtrucking.utils.SessionUtils;
 import com.wmtrucking.utils.ValidateUtil;
@@ -45,6 +47,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @RequestMapping(value = "/job")
@@ -92,6 +95,121 @@ public class jobController {
         model.addAttribute("maJobs", maJobs);
 
         return "Job/ArchiveList";
+    }
+
+    @RequestMapping(value = "/getJobList", method = RequestMethod.POST)
+    @ResponseBody
+    public String getJobList(HttpServletRequest request, Model model) throws UnAthorizedUserException {
+
+        List<JobPojo> maJobsesList = null;
+        Boolean flag = Boolean.FALSE;
+        if (request.getParameter("flag") != null && request.getParameter("flag").equals("archive")) {
+            flag = Boolean.TRUE;
+        }
+        if (request.getParameter("searchtext") != null && !request.getParameter("searchtext").equals(" ")) {
+            maJobsesList = jobService.searchJobList(Constant.ACTIVE.toString(), flag, request.getParameter("searchtext"));
+        } else {
+            maJobsesList = jobService.getJobList(Constant.ACTIVE.toString(), flag);
+        }
+
+        JsonObject response = new JsonObject();
+        StringBuilder str = new StringBuilder();
+        if (maJobsesList.isEmpty()) {
+            str.append("<tr><td colspan='8' style='text-align:center'>No records found</td></tr>");
+        } else {
+            for (JobPojo jobPojo : maJobsesList) {
+                str.append("<tr><td>");
+                str.append(jobPojo.getJobname());
+                str.append("</td><td>");
+                str.append(jobPojo.getJobnumber());
+                str.append("</td><td>");
+                str.append(jobPojo.getJobdate());
+                str.append("</td><td>");
+                str.append(jobPojo.getTotaldumps());
+                str.append("</td><td>");
+                str.append(jobPojo.getPickupddumps());
+                str.append("</td><td>");
+                str.append(jobPojo.getCompleteddumps());
+                str.append("</td><td>");
+                if (jobPojo.getJobStatus().equals("Completed")) {
+                    str.append("<span class='label label-success' >Completed</span>");
+                } else if (jobPojo.getJobStatus().equals("Active")) {
+                    str.append("<span class='label label-info' >Active</span>");
+                } else if (jobPojo.getJobStatus().equals("Pending")) {
+                    str.append("<span class='label label-danger'>Pending</span>");
+                }
+                str.append("</td><td>");
+                str.append(jobPojo.getDrivercount());
+                str.append("</td><td>");
+                if (jobPojo.getDrivercount() > 0) {
+                    str.append("<div class='tooltip-wrap'><i class='feather icon-users'></i><div class='tooltip-content'><p>");
+                    if (jobPojo.getDrivername() != null) {
+                        String[] driver = jobPojo.getDrivername().split(",");
+                        for (int i = 0; i < driver.length; i++) {
+                            str.append("<span  class ='label label-orange '>");
+                            str.append(driver[i]);
+                            str.append(" </span>");
+                        }
+                    }
+                    str.append("</p> </div> </div> ");
+                }
+                String view = "";
+                if (flag) {
+                    view = request.getContextPath() + "/job/view/" + jobPojo.getId() + "\"?flag=false";
+                } else {
+                    view = request.getContextPath() + "/job/view/" + jobPojo.getId() + "\"?flag=true";
+
+                }
+
+                str.append("</td > <td ><div class='btn-group'><div class='dropdown'><button class='btn btn-flat-primary dropdown-toggle mr-1 mb-1'"
+                        + " type='button' id='dropdownMenuButton100' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
+                        + " <i class='feather icon-menu'></i> </button><div class='dropdown-menu' aria-labelledby='dropdownMenuButton100'>"
+                        + " <a class='dropdown-item'  style='font-size: 15px;' href='");
+                str.append(view);
+                str.append("'> <i class='feather icon-eye'></i><span>View</span></a>");
+
+                if (flag) {
+                    str.append("<a class='dropdown-item'  style='font-size: 15px;' href='");
+                    str.append(request.getContextPath());
+                    str.append("/invoice/list/");
+                    str.append(jobPojo.getId());
+                    str.append("'><i class='feather icon-eye '></i><span>Show Invoice</span></a> <a class='dropdown-item'  onclick='unarchive('Unarchive','");
+                    str.append(jobPojo.getId());
+                    str.append("')'><i class='feather icon-archive '></i> <span>Unarchive</span></a>");
+                } else {
+                    if (!jobPojo.getTransectionstatus().equals("0")) {
+                        str.append(" <a class='dropdown-item'  style='font-size: 15px;' href='");
+                        str.append(request.getContextPath());
+                        str.append("/job/assignJobDr/");
+                        str.append(jobPojo.getId());
+                        str.append("'><i class='feather icon-user'></i><span>Assign Driver</span></a> ");
+
+                        if (!jobPojo.getTransectionstatus().equals("3")) {
+                            str.append(" <a class='dropdown-item' onclick='changeStatus(\"Delete\",\"");
+                            str.append(jobPojo.getId());
+                            str.append("\")'><i class='feather icon-trash'></i> <span>Delete</span></a>");
+                        }
+                    } else {
+
+                        str.append("<a class='dropdown-item'  style='font-size: 15px;' href='");
+                        str.append(request.getContextPath());
+                        str.append("/invoice/list/");
+                        str.append(jobPojo.getId());
+                        str.append("'><i class='feather icon-eye '></i><span>Show Invoice</span></a> <a class='dropdown-item'  onclick='archive(\"Archive\", '");
+                        str.append(jobPojo.getId());
+                        str.append("')'><i class='feather icon-archive '></i> <span>Archive</span></a>");
+                    }
+                    str.append("<a class='dropdown-item' href='");
+                    str.append(request.getContextPath());
+                    str.append("/job/edit/");
+                    str.append(jobPojo.getId());
+                    str.append("'><i class='feather icon-edit'></i> <span>Edit</span></a>");
+                }
+                str.append("</div></div></div></td></tr>");
+            }
+        }
+        response.addProperty("table", str.toString());
+        return response.toString();
     }
 
     @RequestMapping(value = "/Create", method = RequestMethod.GET)
@@ -449,8 +567,8 @@ public class jobController {
                     String android = maDriver.getMaPushNotificationList().stream().filter(line -> "Android".equalsIgnoreCase(line.getType()))
                             .collect(Collectors.toList()).stream().map(c -> c.getDevicetoken()).collect(Collectors.joining(","));
 
-                    threadPoolTaskExecutor.execute(new APNPushUtil(ios, "You have assigned in job" + majob.getJobname()));
-                    threadPoolTaskExecutor.execute(new FirebaseNotification(android, "You have assigned in " + majob.getJobname()));
+                    threadPoolTaskExecutor.execute(new APNPushUtil(ios, "You have assigned in job " + majob.getJobname()));
+                    threadPoolTaskExecutor.execute(new FirebaseNotification(android, "You have assigned in job " + majob.getJobname()));
 
                 }
             }
@@ -514,10 +632,11 @@ public class jobController {
             model.addAttribute("maJobDrivers", maJobDrivers);
             String majobcustomer = jobcustomerService.list(Constant.ACTIVE.toString(), id);
             model.addAttribute("majobcustomer", majobcustomer);
+            // model.addAttribute("flag", flag);
 
             return "Job/view";
         }
-        return "redirect:/jov/List?m=n";
+        return "redirect:/job/List?m=n";
     }
 
     @ExceptionHandler(Exception.class)
