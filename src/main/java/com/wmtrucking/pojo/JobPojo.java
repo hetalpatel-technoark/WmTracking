@@ -13,14 +13,14 @@ import java.math.BigDecimal;
  */
 public class JobPojo {
 
-    String customername, jobname, jobnumber, status, transectionstatus, drivername, jobdate, starttime, endtime, jobStatus;
+    String customername, jobname, jobnumber, status, transectionstatus, drivername, jobdate, starttime, endtime, jobStatus,fromlatitude, fromlongitude, tolatitude, tolongitude;;
 
     Long id, totaldumps, completeddumps, drivercount,pickupddumps;
 
 //    String jobname, jobnumber, transectionstatus, drivername;
 //    Long id, totaljobcount, transactioncount, drivercount;
 //    Date jobdate;
-    BigDecimal fromlatitude, fromlongitude, tolatitude, tolongitude;
+   // BigDecimal fromlatitude, fromlongitude, tolatitude, tolongitude;
 
     public String getCustomername() {
         return customername;
@@ -102,35 +102,35 @@ public class JobPojo {
         this.drivername = drivername;
     }
 
-    public BigDecimal getFromlatitude() {
+    public String getFromlatitude() {
         return fromlatitude;
     }
 
-    public void setFromlatitude(BigDecimal fromlatitude) {
+    public void setFromlatitude(String fromlatitude) {
         this.fromlatitude = fromlatitude;
     }
 
-    public BigDecimal getFromlongitude() {
+    public String getFromlongitude() {
         return fromlongitude;
     }
 
-    public void setFromlongitude(BigDecimal fromlongitude) {
+    public void setFromlongitude(String fromlongitude) {
         this.fromlongitude = fromlongitude;
     }
 
-    public BigDecimal getTolatitude() {
+    public String getTolatitude() {
         return tolatitude;
     }
 
-    public void setTolatitude(BigDecimal tolatitude) {
+    public void setTolatitude(String tolatitude) {
         this.tolatitude = tolatitude;
     }
 
-    public BigDecimal getTolongitude() {
+    public String getTolongitude() {
         return tolongitude;
     }
 
-    public void setTolongitude(BigDecimal tolongitude) {
+    public void setTolongitude(String tolongitude) {
         this.tolongitude = tolongitude;
     }
 

@@ -5,6 +5,7 @@
 <%@page import="com.wmtrucking.entities.MaJobs"%>
 <%@page import="com.wmtrucking.entities.MaDriver"%>
 <%@page import="com.wmtrucking.utils.DateUtils"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import="java.util.List"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets-new/app-assets/vendors/css/pickers/pickadate/pickadate.css">  
@@ -159,7 +160,7 @@
                                                             <span> Loading latitude*</span>
                                                         </div>
                                                         <div class="col-md-8">
-                                                            <input type="number" id="loding_lat"   class="form-control" name="loding_lat" value="<%=checkInput.checkValue(request.getParameter("loding_lat"))%>"  placeholder="Loading Latitude ">
+                                                            <input type="text" id="loding_lat"   class="form-control" name="loding_lat" value="<%=checkInput.checkValue(request.getParameter("loding_lat"))%>"  placeholder="Loading Latitude ">
                                                         </div>
                                                     </div>
 
@@ -168,7 +169,7 @@
                                                             <span> Loading longitude*</span>
                                                         </div>
                                                         <div class="col-md-8">
-                                                            <input type="number" id="loding_log"   class="form-control" name="loding_log" value="<%=checkInput.checkValue(request.getParameter("loding_log"))%>"  placeholder="Loading Longitude ">
+                                                            <input type="text" id="loding_log"   class="form-control" name="loding_log" value="<%=checkInput.checkValue(request.getParameter("loding_log"))%>"  placeholder="Loading Longitude ">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row" >
@@ -176,7 +177,7 @@
                                                             <span> Dumping latitude*</span>
                                                         </div>
                                                         <div class="col-md-8">
-                                                            <input type="number" id="dumping_lat"   class="form-control" name="dumping_lat" value="<%=checkInput.checkValue(request.getParameter("dumping_lat"))%>"  placeholder="Dumping latitude ">
+                                                            <input type="text" id="dumping_lat"   class="form-control" name="dumping_lat" value="<%=checkInput.checkValue(request.getParameter("dumping_lat"))%>"  placeholder="Dumping latitude ">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row" >
@@ -184,7 +185,7 @@
                                                             <span> Dumping longitude*</span>
                                                         </div>
                                                         <div class="col-md-8">
-                                                            <input type="number" id="dumping_log"   class="form-control" name="dumping_log" value="<%=checkInput.checkValue(request.getParameter("dumping_log"))%>"  placeholder="Dumping Longitude ">
+                                                            <input type="text" id="dumping_log"   class="form-control" name="dumping_log" value="<%=checkInput.checkValue(request.getParameter("dumping_log"))%>"  placeholder="Dumping Longitude ">
                                                         </div>
                                                     </div>
                                                 </div>

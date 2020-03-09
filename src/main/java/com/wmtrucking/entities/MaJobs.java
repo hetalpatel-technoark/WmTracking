@@ -6,7 +6,6 @@
 package com.wmtrucking.entities;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -51,14 +50,23 @@ public class MaJobs implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "request_status")
     private String requestStatus;
+//    @Column(name = "fromlatitude")
+//    private BigDecimal fromlatitude;
+//    @Column(name = "tolatitude")
+//    private BigDecimal tolatitude;
+//    @Column(name = "fromlongitude")
+//    private BigDecimal fromlongitude;
+//    @Column(name = "tolongitude")
+//    private BigDecimal tolongitude;
     @Column(name = "fromlatitude")
-    private BigDecimal fromlatitude;
+    private String fromlatitude;
     @Column(name = "tolatitude")
-    private BigDecimal tolatitude;
+    private String tolatitude;
     @Column(name = "fromlongitude")
-    private BigDecimal fromlongitude;
+    private String fromlongitude;
     @Column(name = "tolongitude")
-    private BigDecimal tolongitude;
+    private String tolongitude;
+    
     @Column(name = "totaljobcount")
     private Long totaljobcount;
     @OneToMany(mappedBy = "jobid")
@@ -70,7 +78,7 @@ public class MaJobs implements Serializable {
 
     @Column(name = "isarchive")
     private Boolean isarchive;
-    
+
     @Column(name = "hauloff")
     private Boolean hauloff;
 
@@ -489,35 +497,35 @@ public class MaJobs implements Serializable {
         this.status = status;
     }
 
-    public BigDecimal getFromlatitude() {
+    public String getFromlatitude() {
         return fromlatitude;
     }
 
-    public void setFromlatitude(BigDecimal fromlatitude) {
+    public void setFromlatitude(String fromlatitude) {
         this.fromlatitude = fromlatitude;
     }
 
-    public BigDecimal getTolatitude() {
+    public String getTolatitude() {
         return tolatitude;
     }
 
-    public void setTolatitude(BigDecimal tolatitude) {
+    public void setTolatitude(String tolatitude) {
         this.tolatitude = tolatitude;
     }
 
-    public BigDecimal getFromlongitude() {
+    public String getFromlongitude() {
         return fromlongitude;
     }
 
-    public void setFromlongitude(BigDecimal fromlongitude) {
+    public void setFromlongitude(String fromlongitude) {
         this.fromlongitude = fromlongitude;
     }
 
-    public BigDecimal getTolongitude() {
+    public String getTolongitude() {
         return tolongitude;
     }
 
-    public void setTolongitude(BigDecimal tolongitude) {
+    public void setTolongitude(String tolongitude) {
         this.tolongitude = tolongitude;
     }
 

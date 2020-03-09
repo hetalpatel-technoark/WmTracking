@@ -100,7 +100,7 @@
                                         <h4 class="card-title">Job List  </h4></div>
 
                                     <div class="col-lg-5  input-group">                                        
-                                       
+
                                         <!--                                            <input id="myInput" class="form-control" onkeyup="myFunction()" type="text" placeholder="Search by Job Name/Number..">-->
                                         <input id="myInput" class="form-control"  type="text" placeholder="Search by Job Name/Number..">
                                         <a class="btn bg-gradient-primary" href="javascript:void(0);" onclick="getOwnerList('<%=request.getContextPath()%>/Dashboard/getJobList', '<%= request.getAttribute("jobDate")%>')" style="border-radius:0rem !important">
@@ -156,7 +156,7 @@
                                                 <%}%>
                                                 </tbody>
                                                 <tbody style="display: none;" id="row_search_list">
-                                                 
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -318,12 +318,6 @@
 
 <script>
                                             function getOwnerList(url, jobdate) {
-//                                                mApp.block("#row_search_list", {
-//                                                    overlayColor: "#000000",
-//                                                    type: "loader",
-//                                                    state: "success",
-//                                                    message: "Please wait..."
-//                                                });
                                                 var request = $.ajax({
                                                     url: url,
                                                     method: "POST",
@@ -342,36 +336,30 @@
                                                         }
                                                     }
                                                 });
-
-                                                request.done(function (msg) {
-                                                });
-
-                                                request.fail(function (jqXHR, textStatus) {
-                                                });
                                             }
 
-                                            function myFunction() {
-                                                var input, filter, table, tr, td_col1, td_col2, i, txtValue_col1, txtValue_col2;
-                                                input = document.getElementById("myInput");
-                                                filter = input.value.toUpperCase();
-                                                table = document.getElementById("myTable");
-                                                tr = table.getElementsByTagName("tr");
-                                                for (i = 0; i < tr.length; i++) {
-                                                    td_col1 = tr[i].getElementsByTagName("td")[0];
-                                                    td_col2 = tr[i].getElementsByTagName("td")[1];
-                                                    if (td_col1 || td_col2) {
-                                                        txtValue_col1 = td_col1.textContent || td_col1.innerText;
-                                                        txtValue_col2 = td_col2.textContent || td_col2.innerText;
-                                                        if (txtValue_col1.toUpperCase().indexOf(filter) > -1) {
-                                                            tr[i].style.display = "";
-                                                        } else if (txtValue_col2.toUpperCase().indexOf(filter) > -1) {
-                                                            tr[i].style.display = "";
-                                                        } else {
-                                                            tr[i].style.display = "none";
-                                                        }
-                                                    }
-                                                }
-                                            }
+//                                            function myFunction() {
+//                                                var input, filter, table, tr, td_col1, td_col2, i, txtValue_col1, txtValue_col2;
+//                                                input = document.getElementById("myInput");
+//                                                filter = input.value.toUpperCase();
+//                                                table = document.getElementById("myTable");
+//                                                tr = table.getElementsByTagName("tr");
+//                                                for (i = 0; i < tr.length; i++) {
+//                                                    td_col1 = tr[i].getElementsByTagName("td")[0];
+//                                                    td_col2 = tr[i].getElementsByTagName("td")[1];
+//                                                    if (td_col1 || td_col2) {
+//                                                        txtValue_col1 = td_col1.textContent || td_col1.innerText;
+//                                                        txtValue_col2 = td_col2.textContent || td_col2.innerText;
+//                                                        if (txtValue_col1.toUpperCase().indexOf(filter) > -1) {
+//                                                            tr[i].style.display = "";
+//                                                        } else if (txtValue_col2.toUpperCase().indexOf(filter) > -1) {
+//                                                            tr[i].style.display = "";
+//                                                        } else {
+//                                                            tr[i].style.display = "none";
+//                                                        }
+//                                                    }
+//                                                }
+//                                            }
                                             $(document).ready(function () {
     <% List<JobPojo> maJobses = (List<JobPojo>) request.getAttribute("maJobsesList");%>
                                                 //Pickup Site Map

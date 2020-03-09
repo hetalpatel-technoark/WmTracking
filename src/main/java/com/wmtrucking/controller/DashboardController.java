@@ -67,18 +67,6 @@ public class DashboardController {
         model.addAttribute("driver", drService.count(Constant.ACTIVE.toString(), new Date()));
         model.addAttribute("customer", cuService.customercount(Constant.ACTIVE.toString(), new Date()));
 
-//        List<Object[]> monthWiseJob = joService.findMonthWiseJob();
-//        if (!monthWiseJob.isEmpty()) {
-//            model.addAttribute("monthWiseJob", monthWiseJob);
-//        }
-//        List<Object[]> DriverWiseJob = joService.findDriverWiseJob();
-//        if (!DriverWiseJob.isEmpty()) {
-//            model.addAttribute("DriverWiseJob", DriverWiseJob);
-//        }
-//        List<Object[]> customerWiseJob = joService.findCustomerWiseJob();
-//        if (!customerWiseJob.isEmpty()) {
-//            model.addAttribute("customerWiseJob", customerWiseJob);
-//        }
         // contains only date information without time
         List<JobPojo> maJobsesList = joService.getJobList(Constant.ACTIVE.toString(), new Date());
         model.addAttribute("maJobsesList", maJobsesList);

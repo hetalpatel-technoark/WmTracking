@@ -24,13 +24,11 @@ import com.wmtrucking.services.jobService;
 import com.wmtrucking.utils.APNPushUtil;
 import com.wmtrucking.utils.CommonUtils;
 import com.wmtrucking.utils.Constant;
-import com.wmtrucking.utils.DateUtils;
 import com.wmtrucking.utils.FirebaseNotification;
 import com.wmtrucking.utils.SessionUtils;
 import com.wmtrucking.utils.ValidateUtil;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -244,7 +242,6 @@ public class jobController {
             validateUtil.checkNull(request, "loding_log", "Loding logitude", errors);
             validateUtil.checkNull(request, "dumping_lat", "Dumping latitude", errors);
             validateUtil.checkNull(request, "dumping_log", "Dumping logitude", errors);
-
         } else {
             validateUtil.checkNull(request, "loding_lat_txt", "loding latitude", errors);
             validateUtil.checkNull(request, "loding_log_txt", "Loding logitude", errors);
@@ -280,26 +277,26 @@ public class jobController {
         MaJobs majob = new MaJobs();
         if (request.getParameter("lat_log") != null && !request.getParameter("lat_log").equals("") && request.getParameter("lat_log").equals("on")) {
 
-            if (!commonUtils.isBigDecimal(request.getParameter("loding_lat")) && !commonUtils.isBigDecimal(request.getParameter("loding_log"))
-                    && !commonUtils.isBigDecimal(request.getParameter("dumping_lat")) && !commonUtils.isBigDecimal(request.getParameter("dumping_log"))) {
-                List<MaCustomer> maCustomer = cusService.activeList(Constant.ACTIVE.toString());
-                model.addAttribute("maCustomer", maCustomer);
-                List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
-                model.addAttribute("maDriver", maDriver);
-                errors.add("Please Provide Proper Latitude and Logitude ");
-                model.addAttribute(Constant.ERRORPARAM.toString(), errors);
-                return "Job/Create";
-            }
+//            if (!commonUtils.isBigDecimal(request.getParameter("loding_lat")) && !commonUtils.isBigDecimal(request.getParameter("loding_log"))
+//                    && !commonUtils.isBigDecimal(request.getParameter("dumping_lat")) && !commonUtils.isBigDecimal(request.getParameter("dumping_log"))) {
+//                List<MaCustomer> maCustomer = cusService.activeList(Constant.ACTIVE.toString());
+//                model.addAttribute("maCustomer", maCustomer);
+//                List<MaDriver> maDriver = drService.activeList(Constant.ACTIVE.toString());
+//                model.addAttribute("maDriver", maDriver);
+//                errors.add("Please Provide Proper Latitude and Logitude ");
+//                model.addAttribute(Constant.ERRORPARAM.toString(), errors);
+//                return "Job/Create";
+//            }
 
-            majob.setFromlatitude(new BigDecimal(request.getParameter("loding_lat")));
-            majob.setFromlongitude(new BigDecimal(request.getParameter("loding_log")));
-            majob.setTolatitude(new BigDecimal(request.getParameter("dumping_lat")));
-            majob.setTolongitude(new BigDecimal(request.getParameter("dumping_log")));
+            majob.setFromlatitude(validateUtil.getStringValue(request.getParameter("loding_lat")));
+            majob.setFromlongitude(validateUtil.getStringValue(request.getParameter("loding_log")));
+            majob.setTolatitude(validateUtil.getStringValue(request.getParameter("dumping_lat")));
+            majob.setTolongitude(validateUtil.getStringValue(request.getParameter("dumping_log")));
         } else {
-            majob.setFromlatitude(new BigDecimal(request.getParameter("loding_lat_txt")));
-            majob.setFromlongitude(new BigDecimal(request.getParameter("loding_log_txt")));
-            majob.setTolatitude(new BigDecimal(request.getParameter("dumping_lat_txt")));
-            majob.setTolongitude(new BigDecimal(request.getParameter("dumping_log_txt")));
+            majob.setFromlatitude(validateUtil.getStringValue(request.getParameter("loding_lat_txt")));
+            majob.setFromlongitude(validateUtil.getStringValue(request.getParameter("loding_log_txt")));
+            majob.setTolatitude(validateUtil.getStringValue(request.getParameter("dumping_lat_txt")));
+            majob.setTolongitude(validateUtil.getStringValue(request.getParameter("dumping_log_txt")));
         }
         majob.setDumpingaddress(validateUtil.getStringValue(request.getParameter("DumpingAddress")));
         majob.setLodingaddress(validateUtil.getStringValue(request.getParameter("lodingAddress")));
@@ -442,18 +439,18 @@ public class jobController {
             majob.setTotaljobcount(validateUtil.getLongValue(request.getParameter("count")));
 
             if (request.getParameter("lat_log") != null && !request.getParameter("lat_log").equals("") && request.getParameter("lat_log").equals("on")) {
-                majob.setFromlatitude(new BigDecimal(request.getParameter("loding_lat")));
-                majob.setFromlongitude(new BigDecimal(request.getParameter("loding_log")));
-                majob.setTolatitude(new BigDecimal(request.getParameter("dumping_lat")));
-                majob.setTolongitude(new BigDecimal(request.getParameter("dumping_log")));
+                majob.setFromlatitude(validateUtil.getStringValue(request.getParameter("loding_lat")));
+                majob.setFromlongitude(validateUtil.getStringValue(request.getParameter("loding_log")));
+                majob.setTolatitude(validateUtil.getStringValue(request.getParameter("dumping_lat")));
+                majob.setTolongitude(validateUtil.getStringValue(request.getParameter("dumping_log")));
             } else {
                 if ((request.getParameter("loding_lat_txt") != null && !request.getParameter("loding_lat_txt").equals("")) && (request.getParameter("loding_log_txt") != null && !request.getParameter("loding_log_txt").equals(""))) {
-                    majob.setFromlatitude(new BigDecimal(request.getParameter("loding_lat_txt")));
-                    majob.setFromlongitude(new BigDecimal(request.getParameter("loding_log_txt")));
+                    majob.setFromlatitude(validateUtil.getStringValue(request.getParameter("loding_lat_txt")));
+                    majob.setFromlongitude(validateUtil.getStringValue(request.getParameter("loding_log_txt")));
                 }
                 if ((request.getParameter("dumping_lat_txt") != null && !request.getParameter("dumping_lat_txt").equals("")) && (request.getParameter("dumping_log_txt") != null && !request.getParameter("dumping_log_txt").equals(""))) {
-                    majob.setTolatitude(new BigDecimal(request.getParameter("dumping_lat_txt")));
-                    majob.setTolongitude(new BigDecimal(request.getParameter("dumping_log_txt")));
+                    majob.setTolatitude(validateUtil.getStringValue(request.getParameter("dumping_lat_txt")));
+                    majob.setTolongitude(validateUtil.getStringValue(request.getParameter("dumping_log_txt")));
                 }
             }
 
