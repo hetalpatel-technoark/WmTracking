@@ -1,10 +1,13 @@
+
+<%@page import="java.util.Date"%>
+<%@page import="com.wmtrucking.utils.DateUtils"%>
 </div>
 <div class="sidenav-overlay"></div>
 <div class="drag-target"></div>
 
 <!-- BEGIN: Footer-->
 <footer class="footer footer-static footer-light">
-    <p class="clearfix blue-grey lighten-2 mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2019
+    <p class="clearfix blue-grey lighten-2 mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; <%= new DateUtils().dateWithFormat(new Date(), "yyy") %>
             <!--                <a class="text-bold-800 grey darken-2" href="https://themeforest.net/user/pixinvent/portfolio?ref=pixinvent" target="_blank">Pixinvent,</a>-->
             WM Trucking & Excavating</span>
 

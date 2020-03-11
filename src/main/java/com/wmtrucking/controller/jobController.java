@@ -22,7 +22,6 @@ import com.wmtrucking.services.jobCustomerService;
 import com.wmtrucking.services.jobDriverService;
 import com.wmtrucking.services.jobService;
 import com.wmtrucking.utils.APNPushUtil;
-import com.wmtrucking.utils.CommonUtils;
 import com.wmtrucking.utils.Constant;
 import com.wmtrucking.utils.FirebaseNotification;
 import com.wmtrucking.utils.SessionUtils;
@@ -364,6 +363,8 @@ public class jobController {
     public String PostEdit(HttpServletRequest request, Model model) {
         //  JsonObject errors = new JsonObject();
         List<String> errors = new ArrayList<>();
+        MaJobs majob = jobService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")), Boolean.FALSE);
+
         ValidateUtil validateUtil = new ValidateUtil();
         validateUtil.checkNull(request, "jno", "Customer PO", errors);
         validateUtil.checkNull(request, "count", "Total Dumps", errors);
@@ -384,8 +385,16 @@ public class jobController {
             validateUtil.checkNull(request, "loding_log", "Loding Logitude", errors);
             validateUtil.checkNull(request, "dumping_lat", "Dumping Latitude", errors);
             validateUtil.checkNull(request, "dumping_log", "Dumping Logitude", errors);
+        } else {
+            if (majob.getDumpingaddress() != null && !majob.getDumpingaddress().equals(request.getParameter("DumpingAddress"))) {
+                validateUtil.checkNull(request, "dumping_lat_txt", "Dumping latitude", errors);
+                validateUtil.checkNull(request, "dumping_log_txt", "Dumping logitude", errors);
+            }
+            if (majob.getLodingaddress() != null && !majob.getLodingaddress().equals(request.getParameter("lodingAddress"))) {
+                validateUtil.checkNull(request, "loding_lat_txt", "loding latitude", errors);
+                validateUtil.checkNull(request, "loding_log_txt", "Loding logitude", errors);
+            }
         }
-        MaJobs majob = jobService.findone(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")), Boolean.FALSE);
 
         Long jobTransaction = jobTransactionService.totalJobTransactionCount(majob.getId());
         if (jobTransaction <= Long.parseLong(request.getParameter("count"))) {
@@ -404,7 +413,7 @@ public class jobController {
 //        }
         if (request.getParameter("lodingAddress") != null && request.getParameter("DumpingAddress") != null
                 && request.getParameter("lodingAddress").equals(request.getParameter("DumpingAddress"))) {
-            errors.add("Loading and Dumping  Site Address should not be same");
+            errors.add("Loading and Dumping Site Address should not be same");
         }
 
         if (errors.size() > 0) {
@@ -418,7 +427,7 @@ public class jobController {
             model.addAttribute("maJobDrivers", maJobDrivers);
             String majobcustomer = jobcustomerService.list(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
             model.addAttribute("majobcustomer", majobcustomer);
-             return "Job/Edit";
+            return "Job/Edit";
         }
 
         //HNot completed completed job
@@ -443,7 +452,8 @@ public class jobController {
                 majob.setTolatitude(validateUtil.getStringValue(request.getParameter("dumping_lat")));
                 majob.setTolongitude(validateUtil.getStringValue(request.getParameter("dumping_log")));
             } else {
-                if ((request.getParameter("loding_lat_txt") != null && !request.getParameter("loding_lat_txt").equals("")) && (request.getParameter("loding_log_txt") != null && !request.getParameter("loding_log_txt").equals(""))) {
+                if ((request.getParameter("loding_lat_txt") != null && !request.getParameter("loding_lat_txt").equals(""))
+                        && (request.getParameter("loding_log_txt") != null && !request.getParameter("loding_log_txt").equals(""))) {
                     majob.setFromlatitude(validateUtil.getStringValue(request.getParameter("loding_lat_txt")));
                     majob.setFromlongitude(validateUtil.getStringValue(request.getParameter("loding_log_txt")));
                 }

@@ -246,7 +246,7 @@ public class customerController {
             return "Customer/Edit";
         }
         try {
-//        maCustomer.setStatus(validateUtil.getStringValue(request.getParameter("status")));
+            maCustomer.setStatus(validateUtil.getStringValue(request.getParameter("status")));
             maCustomer.setFirstname(validateUtil.getStringValue(request.getParameter("fname")));
             maCustomer.setMiddlename(validateUtil.getStringValue(request.getParameter("mname")));
             maCustomer.setLastname(validateUtil.getStringValue(request.getParameter("lname")));
