@@ -43,30 +43,7 @@
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-6">
-                                            <div class="form-group row">
-                                                <div class="col-md-4">
-                                                    <span>First Name*</span>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input readonly  type="text" class="form-control" name="fname" value="<%=checkInput.checkValueEdit(maCustomer.getFirstname(), request.getParameter("fname"))%>" placeholder="First Name">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-4">
-                                                    <span>Middle Name</span>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input readonly type="text" class="form-control" name="mname" value="<%=checkInput.checkValueEdit(maCustomer.getMiddlename(), request.getParameter("mname"))%>" placeholder="Middle Name">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-4">
-                                                    <span>Last Name*</span>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input readonly type="text" class="form-control" name="lname" value="<%=checkInput.checkValueEdit(maCustomer.getLastname(), request.getParameter("lname"))%>" placeholder="Last Name">
-                                                </div>
-                                            </div>
+
 
 
                                             <div class="form-group row">
@@ -80,7 +57,7 @@
 
                                             <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <span>Phone Number*</span>
+                                                    <span>Phone Number</span>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input readonly type="text" readonly="" class="form-control" name="phone" value="<%=checkInput.checkValueEdit(maCustomer.getPhone(), request.getParameter("phone"))%>" placeholder="Phone Number">
@@ -155,6 +132,36 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input type="text" disabled="" id="first-name" class="form-control" name="invoicehistory" value="" placeholder="Invoice History">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-8">
+                                                    <b> <span>Company Representative</span></b>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
+                                                    <span>First Name</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input readonly  type="text" class="form-control" name="fname" value="<%=checkInput.checkValueEdit(maCustomer.getFirstname(), request.getParameter("fname"))%>" placeholder="First Name">
+                                                </div>
+                                            </div>
+                                            <!--                                            <div class="form-group row">
+                                                                                            <div class="col-md-4">
+                                                                                                <span>Middle Name</span>
+                                                                                            </div>
+                                                                                            <div class="col-md-8">
+                                                                                                <input readonly type="text" class="form-control" name="mname" value="<%=checkInput.checkValueEdit(maCustomer.getMiddlename(), request.getParameter("mname"))%>" placeholder="Middle Name">
+                                                                                            </div>
+                                                                                        </div>-->
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
+                                                    <span>Last Name</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input readonly type="text" class="form-control" name="lname" value="<%=checkInput.checkValueEdit(maCustomer.getLastname(), request.getParameter("lname"))%>" placeholder="Last Name">
                                                 </div>
                                             </div>
                                         </div>

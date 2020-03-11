@@ -20,7 +20,6 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -97,9 +96,9 @@ public class driverController {
         validateUtil.checkLength(errors, request, "mob", "Mobile", 255, 1);
         validateUtil.checkLength(errors, request, "status", "Status", 255, 0);
         CommonUtils commonUtils = new CommonUtils();
-        if (request.getParameter("driverid") != null && !commonUtils.isBigInteger(request.getParameter("driverid"))) {
-            errors.add("Please Enter Proper Driver Id");
-        }
+//        if (request.getParameter("driverid") != null && !commonUtils.isBigInteger(request.getParameter("driverid"))) {
+//            errors.add("Please Enter Proper Driver Id");
+//        }
         String mob = request.getParameter("mob").replace("-", "");
         if (!commonUtils.validatePhoneNumber(mob)) {
             errors.add("Please enter proper Phone number ");
@@ -264,9 +263,9 @@ public class driverController {
             return "Driver/Edit";
         }
         CommonUtils commonUtils = new CommonUtils();
-        if (!commonUtils.isBigInteger(request.getParameter("driverid"))) {
-            errors.add("Please Enter Proper Driver Id");
-        }
+//        if (!commonUtils.isBigInteger(request.getParameter("driverid"))) {
+//            errors.add("Please Enter Proper Driver Id");
+//        }
 //        if (!commonUtils.validatePhoneNumber(request.getParameter("mob"))) {
 //            errors.add("Please enter proper Phone number ");
 //        }
@@ -280,7 +279,7 @@ public class driverController {
 //        }
         MaDriver checkDriverId = drService.checkDriverId(Constant.ACTIVE.toString(), request.getParameter("driverid"));
 
-        if (checkDriverId != null && !checkDriverId.getDrivernumber().equals(checkDriverId.getDrivernumber())) {
+        if (checkDriverId != null && !checkDriverId.getDrivernumber().equals(maDriver.getDrivernumber())) {
             errors.add("This Driver Id is already exist");
         }
 

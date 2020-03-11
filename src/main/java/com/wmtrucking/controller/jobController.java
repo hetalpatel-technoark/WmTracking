@@ -225,7 +225,7 @@ public class jobController {
         ValidateUtil validateUtil = new ValidateUtil();
         List<String> errors = new ArrayList<>();
 
-        validateUtil.checkNull(request, "jno", "Job Number", errors);
+        validateUtil.checkNull(request, "jno", "Customer PO", errors);
         validateUtil.checkNull(request, "count", "Total Dumps", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
         validateUtil.checkNull(request, "jname", "Job Name", errors);
@@ -255,13 +255,13 @@ public class jobController {
 
         MaJobs checkjob = jobService.checkJobNumber(Constant.ACTIVE.toString(), request.getParameter("jno"));
         if (checkjob != null) {
-            errors.add("This Job Number is already exist");
+            errors.add("This Customer PO is already exist");
         }
 
-        CommonUtils commonUtils = new CommonUtils();
-        if (request.getParameter("jno") != null && !commonUtils.isBigInteger(request.getParameter("jno"))) {
-            errors.add("Please Enter Proper Job number");
-        }
+        //       CommonUtils commonUtils = new CommonUtils();
+//        if (request.getParameter("jno") != null && !commonUtils.isBigInteger(request.getParameter("jno"))) {
+//            errors.add("Please Enter Proper Job number");
+//        }
         if (request.getParameter("lodingAddress") != null && request.getParameter("DumpingAddress") != null
                 && request.getParameter("lodingAddress").equals(request.getParameter("DumpingAddress"))) {
             errors.add("Loading and Dumping  Site Address should not be same");
@@ -287,7 +287,6 @@ public class jobController {
 //                model.addAttribute(Constant.ERRORPARAM.toString(), errors);
 //                return "Job/Create";
 //            }
-
             majob.setFromlatitude(validateUtil.getStringValue(request.getParameter("loding_lat")));
             majob.setFromlongitude(validateUtil.getStringValue(request.getParameter("loding_log")));
             majob.setTolatitude(validateUtil.getStringValue(request.getParameter("dumping_lat")));
@@ -366,12 +365,12 @@ public class jobController {
         //  JsonObject errors = new JsonObject();
         List<String> errors = new ArrayList<>();
         ValidateUtil validateUtil = new ValidateUtil();
-        validateUtil.checkNull(request, "jno", "Job Number", errors);
+        validateUtil.checkNull(request, "jno", "Customer PO", errors);
         validateUtil.checkNull(request, "count", "Total Dumps", errors);
         validateUtil.checkNull(request, "jobdate", "Job Date", errors);
         validateUtil.checkNull(request, "jname", "Job Name", errors);
         validateUtil.checkNull(request, "price", "Price", errors);
-        validateUtil.checkLength(errors, request, "jno", "Job Number", 255, 0);
+        validateUtil.checkLength(errors, request, "jno", "Customer PO", 255, 0);
         validateUtil.checkLength(errors, request, "count", "Total Dumps", 255, 1);
         validateUtil.checkLength(errors, request, "jname", "Job Name", 255, 1);
         validateUtil.checkLength(errors, request, "others", "Others", 255, 0);
@@ -397,12 +396,12 @@ public class jobController {
 
         MaJobs checkjob = jobService.checkJobNumber(Constant.ACTIVE.toString(), request.getParameter("jno"));
         if (checkjob != null && !majob.getJobnumber().equals(checkjob.getJobnumber())) {
-            errors.add("This Job Number is already exist");
+            errors.add("This Customer PO is already exist");
         }
-        CommonUtils commonUtils = new CommonUtils();
-        if (request.getParameter("jno") != null && !commonUtils.isBigInteger(request.getParameter("jno"))) {
-            errors.add("Please Enter Proper Job number");
-        }
+//        CommonUtils commonUtils = new CommonUtils();
+//        if (request.getParameter("jno") != null && !commonUtils.isBigInteger(request.getParameter("jno"))) {
+//            errors.add("Please Enter Proper Job number");
+//        }
         if (request.getParameter("lodingAddress") != null && request.getParameter("DumpingAddress") != null
                 && request.getParameter("lodingAddress").equals(request.getParameter("DumpingAddress"))) {
             errors.add("Loading and Dumping  Site Address should not be same");
@@ -419,7 +418,7 @@ public class jobController {
             model.addAttribute("maJobDrivers", maJobDrivers);
             String majobcustomer = jobcustomerService.list(Constant.ACTIVE.toString(), Long.parseLong(request.getParameter("id")));
             model.addAttribute("majobcustomer", majobcustomer);
-            return "Job/Edit";
+             return "Job/Edit";
         }
 
         //HNot completed completed job

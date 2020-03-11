@@ -126,7 +126,7 @@
                                 </td>
                                 <td style="text-align: right">
                                     Invoice #: <%= invoices.getId()%><br/>
-                                    Job Number: <%=invoices.getJobid().getJobnumber()%><br/>
+                                    Customer PO: <%=invoices.getJobid().getJobnumber()%><br/>
                                     Create Date: <%=new DateUtils().dateWithFormat(invoices.getCreateddate(), "MMMM dd, yyyy")%><br/>
 
                                 </td>

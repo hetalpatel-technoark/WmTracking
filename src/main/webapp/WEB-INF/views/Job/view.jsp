@@ -74,7 +74,7 @@
                                         <div class="col-6">
                                             <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <span>Customer /Company</span>
+                                                    <span>Company Name</span>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <select disabled class="select2 form-control"  name="customer" required multiple="multiple">
@@ -84,7 +84,7 @@
                                                             for (MaCustomer maCustomer : maCustomers) {
                                                         %>
                                                         <option disabled=""  <%=selectedCustomer != null && selectedCustomer.contains(checkInput.checkValueEdit(maCustomer.getId(), request.getParameter("customer"))) ? "selected" : ""%>
-                                                                value="<%=maCustomer.getId()%>"><%= maCustomer.getFirstname()%></option>
+                                                                value="<%=maCustomer.getId()%>"><%= maCustomer.getCompanyname()%></option>
                                                         <%                                                                }%>
                                                     </select>
                                                 </div>
@@ -126,7 +126,7 @@
                                         <div class="col-6">
                                             <div class="form-group row">
                                                 <div class="col-md-4">
-                                                    <span>Job Number*</span>
+                                                    <span>Customer PO*</span>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input readonly  type="text" class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber(), request.getParameter("jno"))%>" >

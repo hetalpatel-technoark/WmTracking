@@ -56,32 +56,6 @@
                                             <div class="col-6">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>First Name*</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text" required="" id="first-name" class="form-control" name="fname" value="<%=checkInput.checkValue(request.getParameter("fname"))%>" placeholder="First Name">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Middle Name</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text"  class="form-control" name="mname" value="<%=checkInput.checkValue(request.getParameter("mname"))%>" placeholder="Middle Name">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <span>Last Name *</span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text" required="" class="form-control" name="lname" value="<%=checkInput.checkValue(request.getParameter("lname"))%>" placeholder="Last Name">
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
                                                         <span>Company Name *</span>
                                                     </div>
                                                     <div class="col-md-8">
@@ -89,12 +63,16 @@
                                                     </div>
                                                 </div>
 
+
+
+
+
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Phone Number*</span>
+                                                        <span>Phone Number</span>
                                                     </div>    
                                                     <div class="col-md-8">
-                                                        <input type="text" required="" id="mobile" class="form-control" name="phone" value="<%=checkInput.checkValue(request.getParameter("phone"))%>" placeholder="Phone Number">
+                                                        <input type="text" id="mobile" class="form-control" name="phone" value="<%=checkInput.checkValue(request.getParameter("phone"))%>" placeholder="Phone Number">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -119,6 +97,7 @@
 
                                             </div>
                                             <div class="col-6">
+
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
                                                         <span>Address </span>
@@ -186,6 +165,36 @@
                                                         <input type="text" class="form-control" name="invoicehistory" value="" placeholder="Invoice History">
                                                     </div>
                                                 </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-8">
+                                                        <b> <span>Company Representative</span></b>
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>First Name</span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="first-name" class="form-control" name="fname" value="<%=checkInput.checkValue(request.getParameter("fname"))%>" placeholder="First Name">
+                                                    </div>
+                                                </div>
+                                                <!--                                                <div class="form-group row">
+                                                                                                    <div class="col-md-4">
+                                                                                                        <span>Middle Name</span>
+                                                                                                    </div>
+                                                                                                    <div class="col-md-8">
+                                                                                                        <input type="text"  class="form-control" name="mname" value="<%=checkInput.checkValue(request.getParameter("mname"))%>" placeholder="Middle Name">
+                                                                                                    </div>
+                                                                                                </div>-->
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <span>Last Name </span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text"  class="form-control" name="lname" value="<%=checkInput.checkValue(request.getParameter("lname"))%>" placeholder="Last Name">
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-md-8 offset-md-4">
                                                 <button type="submit" class="btn btn-primary mr-1 mb-1">Save Information</button>
@@ -208,11 +217,11 @@
 <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
 <script>
     $('#mobile').inputmask("999-999-9999");
-    
+
     $("#btn_submit").click(function () {
-        
+
         $('#btn_submit').prop('disabled', true);
-       // alert("hii");
+        // alert("hii");
         $('#customer_frm').submit();
     });
 

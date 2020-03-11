@@ -116,7 +116,7 @@
                                                 <thead>
                                                     <tr>     
                                                         <th>Job Name</th>                                             
-                                                        <th>Job Number</th>                                             
+                                                        <th>Customer PO</th>                                             
                                                         <th>Job Date</th>                                                          
                                                         <th> Total Dumps</th>
                                                         <th>Pickup Dumps</th>
@@ -399,7 +399,7 @@
                                                     lng: <%= maJobs2.getFromlongitude()%>,
                                                     title: '<%= maJobs2.getJobname()%>',
                                                     infoWindow: {
-                                                        content: "<p>Job Name: <%= maJobs2.getJobname()%> </br> Total Driver: <%= maJobs2.getDrivercount()%> </br>Job Number: <%= maJobs2.getJobnumber()%></p>"
+                                                        content: "<p>Job Name: <%= maJobs2.getJobname()%> </br> Total Driver: <%= maJobs2.getDrivercount()%> </br>Customer PO: <%= maJobs2.getJobnumber()%></p>"
                                                     }
                                                 });
     <%}%>
@@ -411,7 +411,7 @@
                                                     title: '<%= maJobs.getJobname()%>',
                                                     icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
                                                     infoWindow: {
-                                                        content: '<p>Job Name:<%= maJobs.getJobname()%></br> Total Driver: <%= maJobs.getDrivercount()%> </br>Job Number: <%= maJobs.getJobnumber()%></p>'
+                                                        content: '<p>Job Name:<%= maJobs.getJobname()%></br> Total Driver: <%= maJobs.getDrivercount()%> </br>Customer PO: <%= maJobs.getJobnumber()%></p>'
                                                     }
                                                 });
     <%}%>

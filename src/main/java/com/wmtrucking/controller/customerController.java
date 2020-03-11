@@ -69,10 +69,12 @@ public class customerController {
     public String PostCreate(HttpServletRequest request, Model model) {
         List<String> errors = new ArrayList<>();
         ValidateUtil validateUtil = new ValidateUtil();
-        validateUtil.checkNull(request, "fname", "First Name", errors);
-        validateUtil.checkNull(request, "phone", "Phone number", errors);
-        validateUtil.checkNull(request, "lname", "Last Name", errors);
+        // validateUtil.checkNull(request, "fname", "First Name", errors);
+        // validateUtil.checkNull(request, "phone", "Phone number", errors);
+        // validateUtil.checkNull(request, "lname", "Last Name", errors);
         validateUtil.checkNull(request, "cmpname", "Company Name", errors);
+
+        validateUtil.checkLength(errors, request, "phone", "Phone number", 255, 0);
         validateUtil.checkLength(errors, request, "fname", "First Name", 255, 0);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
         validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
@@ -86,9 +88,12 @@ public class customerController {
         // validateUtil.checkNull(request, "countryCode", "Country Code", errors);
 
         CommonUtils commonUtils = new CommonUtils();
-        String mob = request.getParameter("phone").replace("-", "");
-        if (!commonUtils.validatePhoneNumber(mob)) {
-            errors.add("Please enter proper Phone number ");
+        String mob = null;
+        if (request.getParameter("phone") != null && !request.getParameter("phone").equals("")) {
+            mob = request.getParameter("phone").replace("-", "");
+            if (!commonUtils.validatePhoneNumber(mob)) {
+                errors.add("Please enter proper Phone number ");
+            }
         }
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
             errors.add("Please enter proper Pincode ");
@@ -163,7 +168,7 @@ public class customerController {
             maCustomer.setStatus(maCustomers.getStatus());
             maCustomer.setCreateddate(new Date());
             customerHistoryService.save(maCustomer);
-            
+
             cusService.delete(maCustomers);
             return "redirect:/customer/customerList?m=d";
 
@@ -189,10 +194,11 @@ public class customerController {
         MaCustomer maCustomer = cusService.findone(Constant.DETETED.toString(), Long.parseLong(request.getParameter("id")));
         List<String> errors = new ArrayList<>();
         ValidateUtil validateUtil = new ValidateUtil();
-        validateUtil.checkNull(request, "fname", "First Name", errors);
-        validateUtil.checkNull(request, "phone", "Phone number", errors);
-        validateUtil.checkNull(request, "lname", "Last Name", errors);
+//        validateUtil.checkNull(request, "fname", "First Name", errors);
+//        validateUtil.checkNull(request, "phone", "Phone number", errors);
+//        validateUtil.checkNull(request, "lname", "Last Name", errors);
         validateUtil.checkNull(request, "cmpname", "Company Name", errors);
+        validateUtil.checkLength(errors, request, "phone", "Phone Number", 255, 0);
         validateUtil.checkLength(errors, request, "fname", "First Name", 255, 0);
         validateUtil.checkLength(errors, request, "mname", "middle Name", 255, 0);
         validateUtil.checkLength(errors, request, "lname", "Last Name", 255, 0);
@@ -213,9 +219,12 @@ public class customerController {
             return "Customer/Edit";
         }
         CommonUtils commonUtils = new CommonUtils();
-        String mob = request.getParameter("phone").replace("-", "");
-        if (!commonUtils.validatePhoneNumber(mob)) {
-            errors.add("Please enter proper Phone number ");
+        String mob = null;
+        if (request.getParameter("phone") != null && !request.getParameter("phone").equals("")) {
+            mob = request.getParameter("phone").replace("-", "");
+            if (!commonUtils.validatePhoneNumber(mob)) {
+                errors.add("Please enter proper Phone number ");
+            }
         }
         if (!commonUtils.checkLong(request.getParameter("pin"))) {
             errors.add("Please enter proper Pincode ");
@@ -260,7 +269,7 @@ public class customerController {
             model.addAttribute("maCustomer", maCustomer);
             errors.add("Mobile is already exist");
             model.addAttribute(Constant.ERRORPARAM.toString(), errors);
-           return "Customer/Edit";
+            return "Customer/Edit";
         }
         return "redirect:/customer/customerList?m=e";
     }

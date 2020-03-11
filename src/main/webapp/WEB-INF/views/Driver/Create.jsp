@@ -60,7 +60,7 @@
                                                         <span>Driver ID *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="number" required  class="form-control" name="driverid" value="<%=checkInput.checkValue(request.getParameter("driverid"))%>" placeholder="Driver ID">
+                                                        <input type="text" required  class="form-control" name="driverid" value="<%=checkInput.checkValue(request.getParameter("driverid"))%>" placeholder="Driver ID">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">

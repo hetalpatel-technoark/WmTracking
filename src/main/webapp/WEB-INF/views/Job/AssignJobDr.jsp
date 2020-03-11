@@ -111,7 +111,7 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Job Number</span>
+                                                        <span>Customer PO</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" disabled="" class="form-control"  value="<%=checkInput.checkValueEdit(majob.getJobnumber(), request.getParameter("jno"))%>">

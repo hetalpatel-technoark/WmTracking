@@ -71,7 +71,7 @@
                                     <table class="table zero-configuration">
                                         <thead>
                                             <tr>
-                                                <th>Job Number</th>                                            
+                                                <th>Customer PO</th>                                            
                                                 <th>Amount </th>
                                                 <th >Driver Name</th>
                                                 <th>Actions</th>

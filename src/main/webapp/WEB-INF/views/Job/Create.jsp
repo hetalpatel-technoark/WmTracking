@@ -68,7 +68,7 @@
                                             <div class="col-6">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Customer / Company </span>
+                                                        <span>Company Name</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <!--                                                        <select  onchange="searchAddress()" id="customer" class="form-control select-class" name="customer" required>-->
@@ -78,7 +78,7 @@
                                                                 List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
                                                                 for (MaCustomer maCustomer : maCustomers) {
                                                             %>
-                                                            <option <%=maCustomer.getId().toString().equals(checkInput.checkValue(request.getParameter("customer"))) ? "selected" : ""%>  value="<%=maCustomer.getId()%>"><%= maCustomer.getFirstname()%></option>
+                                                            <option <%=maCustomer.getId().toString().equals(checkInput.checkValue(request.getParameter("customer"))) ? "selected" : ""%>  value="<%=maCustomer.getId()%>"><%= maCustomer.getCompanyname()%></option>
                                                             <%}%>
                                                         </select>
                                                     </div>
@@ -176,10 +176,10 @@
                                             <div class="col-6">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Job Number *</span>
+                                                        <span>Customer PO *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="number" required  class="form-control" name="jno" value="<%=checkInput.checkValue(request.getParameter("jno"))%>" placeholder="Job Number">
+                                                        <input type="text" required  class="form-control" name="jno" value="<%=checkInput.checkValue(request.getParameter("jno"))%>" placeholder="Customer PO">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">

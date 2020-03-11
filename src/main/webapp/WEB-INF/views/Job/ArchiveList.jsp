@@ -144,7 +144,7 @@
                                             <tr>
 
                                                 <th>Job Name</th>                                             
-                                                <th>Job Number</th>                                             
+                                                <th>Customer PO</th>                                             
                                                 <th>Job Date</th>                                                          
                                                 <th> Total Dumps</th>
                                                 <th>Pickup Dumps</th>

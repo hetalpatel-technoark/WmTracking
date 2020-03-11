@@ -77,7 +77,7 @@
                                             <div class="col-6">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Customer /Company</span>
+                                                        <span>Company Name</span>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <select class="select2 form-control"  name="customer"  multiple="multiple">
@@ -86,8 +86,8 @@
                                                                 List<MaCustomer> maCustomers = (List<MaCustomer>) request.getAttribute("maCustomer");
                                                                 for (MaCustomer maCustomer : maCustomers) {
                                                             %>
-                                                            <option  <%=selectedCustomer != null && selectedCustomer.contains(checkInput.checkValueEdit(maCustomer.getId(), request.getParameter("customer"))) ? "selected" : ""%>
-                                                                value="<%=maCustomer.getId()%>"><%= maCustomer.getFirstname()%></option>
+                                                            <option  <%=selectedCustomer != null && selectedCustomer.contains(checkInput.checkValue(maCustomer.getId())) ? "selected" : ""%>
+                                                                value="<%=maCustomer.getId()%>"><%= maCustomer.getCompanyname()%></option>
                                                             <%                                                                }%>
                                                         </select>
                                                     </div>
@@ -195,10 +195,10 @@
                                             <div class="col-6">
                                                 <div class="form-group row">
                                                     <div class="col-md-4">
-                                                        <span>Job Number*</span>
+                                                        <span>Customer PO *</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="number" required="" class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber(), request.getParameter("jno"))%>" placeholder="Job Number">
+                                                        <input type="text" required="" class="form-control" name="jno" value="<%=checkInput.checkValueEdit(majob.getJobnumber(), request.getParameter("jno"))%>" placeholder="Customer PO">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
