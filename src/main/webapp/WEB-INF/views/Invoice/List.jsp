@@ -85,7 +85,7 @@
                                                     for (MaInvoice maInvoice : maInvoices) {
                                             %>
                                             <tr>
-                                                <td><%=checkInput.checkValue(maInvoice.getJobid().getJobname())%></td>
+                                                <td><%=checkInput.checkValue(maInvoice.getJobid().getJobnumber())%></td>
                                                 <td>$<%=checkInput.checkValue(maInvoice.getAmount())%></td>
                                                 <td><%=checkInput.checkValue(maInvoice.getDriverid().getFirstname())%></td>  
                                                 <td>

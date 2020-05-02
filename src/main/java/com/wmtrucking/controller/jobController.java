@@ -397,9 +397,9 @@ public class jobController {
         }
 
         Long jobTransaction = jobTransactionService.totalJobTransactionCount(majob.getId());
-        if (jobTransaction <= Long.parseLong(request.getParameter("count"))) {
+        if (Long.parseLong(request.getParameter("count")) > jobTransaction ) {
             majob.setJob_status(Constant.PENDING.toString());
-        } else if (jobTransaction >= Long.parseLong(request.getParameter("count"))) {
+        } else if (Long.parseLong(request.getParameter("count")) < jobTransaction) {
             errors.add("Your Transaction is already completed. So, You can't able to decrease Total Dumps");
         }
 

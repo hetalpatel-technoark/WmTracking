@@ -72,7 +72,7 @@ public class jobDriverService {
     public List<DriverPojo> getDriverList(Long jobid) {
         String query = "select	j.id,j.job_id,(SELECT TO_CHAR(j.createddate, 'Month DD, YYYY') as createddate),(select firstname from ma_driver where id=j.driver_id),"
                 + "(select count(id) from ma_job_transaction where job_id=j.job_id and driverid=j.driver_id and status='Ended')as  donejobcount,"
-                + "(select count(id) from ma_job_transaction where job_id=j.job_id and driverid=j.driver_id and status='Started')as  pickupjobcount           "
+                + "(select count(id) from ma_job_transaction where job_id=j.job_id and driverid=j.driver_id and starttime is not null)as  pickupjobcount           "
                 + "                                	from ma_job_driver j where j.job_id=? ORDER BY j.id desc";
         List<DriverPojo> driverpojo = jdbcTemplate.query(query, new Object[]{jobid}, new BeanPropertyRowMapper<DriverPojo>(DriverPojo.class));
         return driverpojo;
