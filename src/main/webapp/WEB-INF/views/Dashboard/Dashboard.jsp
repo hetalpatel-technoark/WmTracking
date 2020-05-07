@@ -305,7 +305,8 @@
 
 <jsp:include page="../Template/pageEnd.jsp"></jsp:include>    
 
-    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBgjNW0WA93qphgZW-joXVR6VC3IiYFjfo"></script>
+<!--    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBgjNW0WA93qphgZW-joXVR6VC3IiYFjfo"></script>-->
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyCmvJHsGSCxv8odbFr-3mDcH-QMnIrysOo"></script>
     <script src="<%=request.getContextPath()%>/assets-new/app-assets/vendors/js/charts/gmaps.min.js"></script>
 
 <jsp:include page="../Template/footer.jsp"></jsp:include>
